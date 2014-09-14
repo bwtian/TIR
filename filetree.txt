@@ -1,0 +1,44 @@
+.
+  |-DESCRIPTION
+  |-filetree.txt
+  |-.git
+  |  |-branches
+  |  |-config
+  |  |-description
+  |  |-HEAD
+  |  |-hooks
+  |  |  |-applypatch-msg.sample
+  |  |  |-commit-msg.sample
+  |  |  |-post-update.sample
+  |  |  |-pre-applypatch.sample
+  |  |  |-pre-commit.sample
+  |  |  |-prepare-commit-msg.sample
+  |  |  |-pre-push.sample
+  |  |  |-pre-rebase.sample
+  |  |  |-update.sample
+  |-.gitignore
+  |  |-info
+  |  |  |-exclude
+  |  |-objects
+  |  |  |-info
+  |  |  |-pack
+  |  |-refs
+  |  |  |-heads
+  |  |  |-tags
+  |-man
+  |  |-TIR-package.Rd
+  |-NAMESPACE
+  |-packrat
+  |  |-init.R
+  |  |-lib
+  |  |-lib-ext
+  |  |-packrat.opts
+  |  |-src
+  |  |  |-packrat
+  |  |  |  |-packrat_0.4.1-1.tar.gz
+  |-R
+  |-.Rbuildignore
+  |-Read-and-delete-me
+  |-.Rprofile
+  |  |-TIR.R
+  |-TIR.Rproj
