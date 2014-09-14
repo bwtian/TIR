@@ -9,7 +9,7 @@ getGoogleMap <- function(lon, lat, zoom, prefix = "google"){
         for (i in c("terrain", "satellite", "roadmap", "hybrid")){
                 fileName  <-  paste0(prefix,"_google_", i,"_",x,"_",y,"_zoom", z, now, ".Rds")
                 file  <- get_googlemap(center = c(lon = lon, lat = lat), zoom = zoom,
-                             maptype = i, filename = fileName)
+                                       maptype = i, filename = fileName)
                 saveRDS(file, file = fileName)
-         }
+        }
 }
