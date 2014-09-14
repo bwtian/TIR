@@ -1,0 +1,48 @@
+.
+  |-DESCRIPTION
+  |-filetree.txt
+  |-.git
+  |  |-branches
+  |  |-config
+  |  |-description
+  |  |-HEAD
+  |  |-hooks
+  |  |  |-applypatch-msg.sample
+  |  |  |-commit-msg.sample
+  |  |  |-post-update.sample
+  |  |  |-pre-applypatch.sample
+  |  |  |-pre-commit.sample
+  |  |  |-prepare-commit-msg.sample
+  |  |  |-pre-push.sample
+  |  |  |-pre-rebase.sample
+  |  |  |-update.sample
+  |-.gitignore
+  |  |-info
+  |  |  |-exclude
+  |  |-objects
+  |  |  |-info
+  |  |  |-pack
+  |  |-refs
+  |  |  |-heads
+  |  |  |-tags
+  |-man
+  |  |-TIR-package.Rd
+  |-NAMESPACE
+  |-R
+  |-.Rbuildignore
+  |-Read-and-delete-me
+  |-.Rhistory
+  |-.Rproj.user
+  |  |-BD727FBA
+  |  |  |-ctx
+  |  |  |-pcs
+  |  |  |  |-files-pane.pper
+  |  |  |  |-source-pane.pper
+  |  |  |  |-windowlayoutstate.pper
+  |  |  |  |-workbench-pane.pper
+  |  |  |-presentation
+  |  |  |-sdb
+  |  |  |  |-s-3488ACD9
+  |  |  |  |  |-lock_file
+  |  |-TIR.R
+  |-TIR.Rproj
