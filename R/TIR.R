@@ -10,7 +10,7 @@
 #' @details
 #' This fucntion will get the Google map from the
 #'
-library(ggmap)
+#' @importFrom ggmap get_googlemap
 getGoogleMap <- function(lon, lat, zoom, prefix = "google"){
         ### ggmap 4 type of google map and save to Rds 08-15
         require(ggmap)
