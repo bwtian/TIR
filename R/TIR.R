@@ -3,7 +3,10 @@
 #' This is a function to get Google map using
 #'
 #'
-#' @param lon Lon
+#' @param lon Longitude
+#' @param lat Latitude
+#' @param zoom Zoom
+#' @param prefix Prefix for the data saved
 #' @import ggmap
 #' @export
 #' @author Bingwei Tian
