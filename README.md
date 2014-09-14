@@ -1,4 +1,4 @@
 TIR
 ===
 
-Thermal Infrared Remote Sensing
+A R package for Thermal Infrared Remote Sensing
