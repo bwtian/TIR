@@ -3,4 +3,12 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^paper/
-
+.gitignore
+tikzDictionary$
+aux$
+log$
+out$
+png$
+NEWS.md
+FAQ.md
+Makefile
