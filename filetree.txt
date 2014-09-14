@@ -28,6 +28,7 @@
   |-man
   |  |-TIR-package.Rd
   |-NAMESPACE
+<<<<<<< HEAD
   |-packrat
   |  |-init.R
   |  |-lib
@@ -40,5 +41,23 @@
   |-.Rbuildignore
   |-Read-and-delete-me
   |-.Rprofile
+=======
+  |-R
+  |-.Rbuildignore
+  |-Read-and-delete-me
+  |-.Rhistory
+  |-.Rproj.user
+  |  |-BD727FBA
+  |  |  |-ctx
+  |  |  |-pcs
+  |  |  |  |-files-pane.pper
+  |  |  |  |-source-pane.pper
+  |  |  |  |-windowlayoutstate.pper
+  |  |  |  |-workbench-pane.pper
+  |  |  |-presentation
+  |  |  |-sdb
+  |  |  |  |-s-3488ACD9
+  |  |  |  |  |-lock_file
+>>>>>>> 713461012d207396a1995d7a7fe8322f8ad11607
   |  |-TIR.R
   |-TIR.Rproj

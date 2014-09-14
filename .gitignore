@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 packrat/lib*/
 .Rproj.user
+=======
+.Rproj.user
+.Rhistory
+.RData
+>>>>>>> 713461012d207396a1995d7a7fe8322f8ad11607
