@@ -1,4 +1,6 @@
 library(ggmap)
+#' @import ggmap
+#' @export
 getGoogleMap <- function(lon, lat, zoom, prefix = "google"){
         ### ggmap 4 type of google map and save to Rds 08-15
         require(ggmap)
