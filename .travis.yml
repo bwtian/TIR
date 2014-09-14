@@ -12,7 +12,7 @@ before_install:
   - ./travis-tool.sh bootstrap
   - ./travis-tool.sh bootstrap
     # teamlucc R depends
-  - ./travis-tool.sh install_r_binary raster Rcpp RcppArmadillo
+  - ./travis-tool.sh install_r_binary raster Rcpp RcppArmadillo ggmap
     # teamlucc R imports deps
   - ./travis-tool.sh install_r_binary rgeos rgdal mgcv plyr reshape2 ggplot2 kernlab e1071 randomForest caret sp mclust lubridate XML
   - ./travis-tool.sh install_r SDMTools wrspathrowData wrspathrow glcm spatial.tools
