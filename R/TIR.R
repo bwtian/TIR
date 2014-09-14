@@ -1,8 +1,5 @@
 #' Get Google Man using ggmap function
 #'
-#' This is a function to get Google map using
-#'
-#'
 #' @param lon Longitude
 #' @param lat Latitude
 #' @param zoom Zoom
