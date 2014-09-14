@@ -4,4 +4,10 @@ packrat/lib*/
 =======
 .Rhistory
 .RData
+*-tikzDictionary
+*.aux
+*.log
+*.out
+*.Rhistory
+NEWS
 >>>>>>> 713461012d207396a1995d7a7fe8322f8ad11607
