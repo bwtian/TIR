@@ -1,0 +1,22 @@
+sitecode,path,row,zoi coverage
+CSN,229,56,redundant
+CSN,229,58,none
+CSN,230,57,none
+CAX,226,61,redundant
+CAX,225,62,redundant
+COU,3,68,redundant
+COU,3,69,none
+BIF,172,61,redundant
+BBS,125,63,none
+BBS,123,64,redundant
+MAS,232,61,none
+MAS,230,61,none
+NNN,182,59,none
+NNN,181,59,none
+PSH,127,57,redundant
+PSH,127,58,slight
+VB,15,52,redundant
+VB,14,53,redundant
+YAN,6,68,none
+RNF,159,74,redundant
+RNF,159,75,slight
