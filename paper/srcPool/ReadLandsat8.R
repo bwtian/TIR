@@ -7,7 +7,7 @@
 #' ReadLandsat8("LC80522102014165LGN00")
 #' }
 #'
-#' @note  Provided by rLandsat8
+#' @note  Function in Package rLandsat8
 #'
 #' @export
 #' @import raster
