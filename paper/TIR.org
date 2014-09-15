@@ -1,5 +1,3 @@
-
-
 TIR(idList) Object: 1 click get all results
 * Credits and Source code Pool
 |--------------------+------------------+---------+------------------+-------------+-------------------------+-------------|
@@ -62,6 +60,4 @@ TIR(idList) Object: 1 click get all results
 #+RESULTS: r:figA
 *** TODO untar by list
 *** Atmospheric Correction
-*** 
 
-[[https://github.com/azvoleff][Alex Zvoleff]]
