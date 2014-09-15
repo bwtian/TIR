@@ -1,3 +1,4 @@
+
 Object: 1 click get all results
 * Workfolw of The TIR
 #+NAME: fig:TIRworkflow
@@ -19,16 +20,21 @@ Object: 1 click get all results
 [[file:./Figures/TIRWorkflow.png]]
 * R code
 ** R
-*** untar 
+*** DONE to down  from list
+- State "DONE"       from "DOING"      [2014-09-15 Mon 16:24]
+*** DONE untar 
 #+HEADER: :cache yes :tangle yes
 #+NAME: r:figA 
 #+BEGIN_SRC R :session :file ~/Dropbox/3figs/iamg/preffix-.png :results graphics
-###############################################################################
-## R code chunk:
-###############################################################################
-
+  ###############################################################################
+  ## R code chunk:
+  ###############################################################################
+  #'
+  #' 
 
 #+END_SRC
 #+CAPTION: Table/figure name Out put of above code
 #+NAME: fig:A  
-#+RESULTS: r:figA  
+#+RESULTS: r:figA
+*** TODO untar by list
+*** Atmospheric Correction
