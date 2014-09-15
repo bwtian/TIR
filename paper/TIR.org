@@ -1,0 +1,19 @@
+Object: 1 click get all results
+* Workfolw
+#+NAME: fig:TIRworkflow
+#+HEADER: :cache yes :tangle yes :exports none
+#+HEADER: :results output graphics
+#+BEGIN_SRC dot :file ./Figures/TIRWorkflow.png 
+digraph {
+node [shape = box]
+L0 [label = "atSensor"]
+L1 [label = "atTOA"]
+L2 [label = "atSurface"]
+L0 -> L1 -> L2
+
+}
+#+END_SRC
+
+#+RESULTS[8dac44fb8517e228508ad3e4ea29b5294be99ca3]: fig:TIRworkflow
+[[file:./Figures/TIRWorkflow.png]]
+
