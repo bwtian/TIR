@@ -1,0 +1,1498 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>landsat</title>
+<!-- 2014-06-07 Sat 11:23 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="tian" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">landsat</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. BSL.R</a></li>
+<li><a href="#sec-2">2. clouds.R</a></li>
+<li><a href="#sec-3">3. ddate.R</a></li>
+<li><a href="#sec-4">4. DOS.R</a></li>
+<li><a href="#sec-5">5. ESdist.R</a></li>
+<li><a href="#sec-6">6. georef.R</a></li>
+<li><a href="#sec-7">7. geoshift.R</a></li>
+<li><a href="#sec-8">8. histmatch.R</a></li>
+<li><a href="#sec-9">9. lssub.R</a></li>
+<li><a href="#sec-10">10. minnaert.R</a></li>
+<li><a href="#sec-11">11. movingwindow.R</a></li>
+<li><a href="#sec-12">12. PIF.R</a></li>
+<li><a href="#sec-13">13. radiocorr.R</a></li>
+<li><a href="#sec-14">14. RCS.R</a></li>
+<li><a href="#sec-15">15. relnorm.R</a></li>
+<li><a href="#sec-16">16. slopeasp.R</a></li>
+<li><a href="#sec-17">17. tasscap.R</a></li>
+<li><a href="#sec-18">18. thermalband.R</a></li>
+<li><a href="#sec-19">19. topocorr.R</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> BSL.R</h2>
+<div class="outline-text-2" id="text-1">
+<div class="org-src-container">
+
+<pre class="src src-R">BSL &lt;-
+function(band3, band4, method = "quantile", ulimit = .99, llimit = .005)
+{
+    # find Bare Soil Line and vegetation peak
+
+    if(is.character(band3)) {
+        band3 &lt;- read.asciigrid(band3)
+        band3 &lt;- band3@data[,1]
+    } else {
+        if(class(band3) == "SpatialGridDataFrame") {
+            band3 &lt;- band3@data[,1]
+        } else {
+            band3 &lt;- as.vector(as.matrix(band3))
+        }
+    } 
+
+    if(is.character(band4)) {
+        band4 &lt;- read.asciigrid(band4)
+        band4 &lt;- band4@data[,1]
+    } else {
+        if(class(band4) == "SpatialGridDataFrame") {
+            band4 &lt;- band4@data[,1]
+        } else {
+            band4 &lt;- as.vector(as.matrix(band4))
+        }
+    } 
+
+
+    # find joint minimum and maximum
+    bsl.joint &lt;- cbind(band3, band4)
+    bsl.joint &lt;- bsl.joint[apply(bsl.joint, 1, function(x)!any(is.na(x))), ]
+    bsl.joint &lt;- bsl.joint[apply(bsl.joint, 1, function(x)all(x &lt; 255)), ]
+
+    ratio43 &lt;- bsl.joint[,2]/bsl.joint[,1]
+
+    if(method == "quantile") {
+        bsl.lmodel2 &lt;- lmodel2(bsl.joint[ratio43 &lt; quantile(ratio43, llimit), 2] ~ bsl.joint[ratio43 &lt; quantile(ratio43, llimit), 1])
+    }
+    else if(method == "minimum") {
+        # want lowest band4 value for each band3 value (lowest NIR for each red)
+        bsl.min &lt;- factor(bsl.joint[,1], levels=1:254)
+        bsl.min &lt;- split(bsl.joint[,2], bsl.min, drop=TRUE)
+        bsl.min &lt;- lapply(bsl.min, min)
+
+        bsl.lmodel2 &lt;- lmodel2(as.numeric(bsl.min) ~ as.numeric(names(bsl.min)))
+    }
+    else {
+        stop("Method not found.\n")
+    }
+
+    bsl.lm &lt;- unlist(bsl.lmodel2$regression.results[2, 2:3])
+    names(bsl.lm) &lt;- c("Intercept", "Slope")
+
+    ### next, find top vegetation point
+
+    bsl.test &lt;- bsl.joint
+    bsl.test[,2] &lt;- 255 - bsl.test[,2] # want high values of band 4
+    bsl.test &lt;- apply(bsl.test, 1, sum)
+
+    # want high veg cover
+    bsl.top &lt;- bsl.joint[ratio43 &gt; quantile(ratio43, ulimit, na.rm=TRUE), ]
+    bsl.test &lt;- bsl.test[ratio43 &gt; quantile(ratio43, ulimit, na.rm=TRUE)]
+    bsl.top &lt;- bsl.top[bsl.test == min(bsl.test), ]
+    if(!is.null(dim(bsl.top))) bsl.top &lt;- bsl.top[sample(1:nrow(bsl.top), 1),]
+
+    list(BSL=bsl.lm, top=bsl.top)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> clouds.R</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-R">clouds &lt;- function(band1, band6, level = 0.0014, buffer=5) {
+    # simple function to create a cloud mask
+    # uses bands 6 and 1 as specified in the arguments
+    # cloud target: band6 is low; band1 is high
+
+    # clouds have high reflectance in band1 and
+    # low temperature (band 6)
+    # thus ratio band1/band6 is high for clouds
+
+    if(is.character(band1)) {
+        band1 &lt;- read.asciigrid(band1)
+        results &lt;- band1
+        dims &lt;- band1@grid@cells.dim
+        band1 &lt;- band1@data[,1]
+    } else {
+        if(class(band1) == "SpatialGridDataFrame") {
+            results &lt;- band1
+            dims &lt;- band1@grid@cells.dim
+            band1 &lt;- band1@data[,1]
+        } else {
+            results &lt;- band1
+            dims &lt;- dim(as.matrix(band1))
+            band1 &lt;- as.vector(as.matrix(band1))
+        }
+    } 
+
+    if(is.character(band6)) {
+        band6 &lt;- read.asciigrid(band6)
+        band6 &lt;- band6@data[,1]
+    } else {
+        if(class(band6) == "SpatialGridDataFrame") {
+            band6 &lt;- band6@data[,1]
+        } else {
+            band6 &lt;- as.vector(as.matrix(band6))
+        }
+    } 
+
+
+    cloudmask &lt;- ifelse(band1/band6 &gt; level, 1, 0) # 6 low AND 1 high
+    ## want to add a buffer around identified areas
+    cloudmask &lt;- movingwindow(matrix(cloudmask,  nrow=dims[1], ncol=dims[2]), matrix(rep(1, buffer*buffer), buffer, buffer))
+    cloudmask &lt;- ifelse(as.vector(cloudmask) &gt; 0, 1, NA)
+
+    # return the same structure as the input values
+    if(class(results) == "SpatialGridDataFrame")
+        results@data[,1] &lt;- cloudmask
+    else if(is.data.frame(results))
+        results &lt;- data.frame(matrix(cloudmask, nrow=nrow(results), ncol=ncol(results)))
+    else if(is.matrix(results))
+        results &lt;- matrix(cloudmask, nrow=nrow(results), ncol=ncol(results))
+    else # return a vector 
+        results &lt;- cloudmask
+
+    results
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> ddate.R</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+
+<pre class="src src-R">ddate &lt;-
+function(year, month, day)
+{
+    # convert year, month, day to decimal date
+    if(length(year) &gt; 1) {
+        month &lt;- year[2]
+        day &lt;- year[3]
+        year &lt;- year[1]
+    }
+    year + julian(as.Date(paste(year, month, day, sep="-")), origin=as.Date(paste(year-1, "12", "31", sep="-")))[[1]]/365
+
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> DOS.R</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+
+<pre class="src src-R">DOS &lt;-
+function(sat=5, scattering.coef=c(-4, -2, -1, -.7, -.5), SHV, SHV.band, gain, offset, Grescale, Brescale, sunelev, edist, Esun=c(198.3, 179.6, 153.6, 103.1, 22, 8.34), blackadjust = 0.01)
+{
+
+### Improved Dark Object Subtraction method from Chavez 1989
+### Implements the 1% adjustment (can be changed with blackadjust argument)
+
+### Dark Object Subtraction method from Chavez 1988
+### with some modifications 
+### calculates DN to subtract for each band for a range of
+### scattering.coef: scattering coefficients. Default values:
+###     -4.0: Very Clear        SHV &lt;= 55
+###     -2.0: Clear             SHV 56-75
+###     -1.0: Moderate          SHV 76-95
+###     -0.7: Hazy              SHV 96-115
+###     -0.5: Very Hazy         SHV &gt;115
+### sat: 5 or 7 for Landsat platform
+### sunelev: sun elevation in degrees
+### satzenith: satellite zenith angle in degrees (= 0 for Landsat)
+### edist: Earth-Sun distance (calculated from DOY)
+### Esun: extrasolar radiation
+### gain and offset or gain and bias
+### SHV: lowest DN value; from a black object
+### SHV.band: band from which SHV was taken
+### blackadjust: lowest DN not from an absolutely black object; reduce it by 1% or other value
+
+### returns the mean version of Chavez 1988 and a slightly more
+### sophisticated approximation over the entire band's wavelengths
+
+    if(sat == 5)
+        bands &lt;- data.frame(
+            lmin=c(0.45, 0.52, 0.63, 0.76, 1.55, 2.08),
+            lmax=c(0.52, 0.60, 0.69, 0.90, 1.75, 2.35))
+    else if(sat == 7)
+        bands &lt;- data.frame(
+            lmin=c(0.45, 0.52, 0.63, 0.77, 1.55, 2.09),
+            lmax=c(0.52, 0.60, 0.69, 0.90, 1.75, 2.35))
+    else stop("Unknown satellite.\n")
+
+    rownames(bands) &lt;- c("band1", "band2", "band3", "band4", "band5", "band7")
+
+
+    ### Chavez 1988 Table 1
+    ### Values of specific functions for the Landsat bands
+
+    scattering.mean &lt;- matrix(apply(bands, 1, mean), byrow=FALSE, nrow=nrow(bands), ncol=length(scattering.coef))
+    rownames(scattering.mean) &lt;- rownames(bands)
+    colnames(scattering.mean) &lt;- paste("coef", scattering.coef, sep="")
+    scattering.mean &lt;- sweep(scattering.mean, 2, scattering.coef, "^")
+    scattering.mean.pct &lt;- sweep(scattering.mean, 2, apply(scattering.mean, 2, sum), "/")
+
+    # alternate version using curve approximation
+    scattering.approx &lt;- matrix(NA, nrow=nrow(bands), ncol=length(scattering.coef))
+    rownames(scattering.approx) &lt;- rownames(bands)
+    colnames(scattering.approx) &lt;- paste("coef", scattering.coef, sep="")
+
+    grain &lt;- 0.0001
+    for(i in 1:nrow(bands)) {
+        thisband &lt;- seq(bands[i, 1], bands[i, 2], by=grain)
+        for(j in 1:length(scattering.coef)) {
+            scattering.approx[i, j] &lt;- mean(thisband ^ scattering.coef[j])
+        }
+    }
+    scattering.approx.pct &lt;- sweep(scattering.approx, 2, apply(scattering.approx, 2, sum), "/")
+
+    ### Chavez 1988 Table 2
+    ### Multiplication factors to predict haze values in other spectral 
+    ### bands given a starting haze value and band
+
+    corrband.mean &lt;- scattering.mean[SHV.band, ]
+    corrband.mean &lt;- sweep(scattering.mean, 2, corrband.mean, "/")
+
+    corrband.approx &lt;- scattering.approx[SHV.band, ]
+    corrband.approx &lt;- sweep(scattering.approx, 2, corrband.approx, "/")
+
+    ### Chavez 1988 Table 3; Chavez 1989 Table 1
+    ### Gain, offset and normalization factors
+
+    # most new references provide gain and bias
+    # need gain and offset
+
+    # most new references provide gain and bias
+    # want gain and offset
+    if(missing(offset)) {
+        offset &lt;- -1 * Brescale / Grescale
+        gain &lt;- 1/Grescale
+    }
+
+    NORM &lt;- gain / gain[SHV.band]
+
+    ### convert sunelev in degrees to sun zenith angle in radians
+    suntheta &lt;- (90-sunelev) * pi / 180
+    suntheta &lt;- cos(suntheta)
+
+    ### Calculate Eo from Esun and edist
+    Eo &lt;- Esun[SHV.band]/edist^2
+
+    # subtract 1% - assume that black in the image is not really black
+    SHV &lt;- SHV - gain[SHV.band] * blackadjust * Eo * suntheta / pi
+
+
+    ## from here on, follow DOS algorithm of Chavez 1988
+
+
+    SHV &lt;- SHV - offset[SHV.band]
+
+    DNfinal.mean &lt;- SHV * corrband.mean 
+    DNfinal.mean &lt;- sweep(DNfinal.mean, 1, NORM, "*")
+    DNfinal.mean &lt;- sweep(DNfinal.mean, 1, offset, "+")
+
+    DNfinal.approx &lt;- SHV * corrband.approx 
+    DNfinal.approx &lt;- sweep(DNfinal.approx, 1, NORM, "*")
+    DNfinal.approx &lt;- sweep(DNfinal.approx, 1, offset, "+")
+
+
+    list(DNfinal.mean = DNfinal.mean, DNfinal.approx = DNfinal.approx)
+
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> ESdist.R</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+
+<pre class="src src-R">ESdist &lt;-
+function(adate)
+
+{
+    # estimate Earth-Sun distance for date adate
+    # in format "YYYY-MM-DD"
+    # result is in AU
+
+    edist &lt;- julian(as.Date(adate), origin=as.Date(paste(substring(adate, 1, 4), "12", "31", sep="-")))[[1]]
+    edist &lt;- 1 - 0.016729 * cos((2*pi) * (0.9856 * (edist - 4)/360))
+
+    edist
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> georef.R</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+
+<pre class="src src-R">georef &lt;-
+function(target, tofix, maxdist = 1000, startx = 0, starty = 0)
+{
+    ## find best-match shift of tofix to target
+    ## returns coefficients, but geoshift() must be used to 
+    ## actually adjust the matrix/dataframe/SpatialGridDataFrame
+
+    # minimum-path fitting of tofix matrix to target matrix
+
+    target &lt;- as.matrix(target)
+    tofix &lt;- as.matrix(tofix)
+
+    # if startx or starty != 0, shift matrices initially
+    # this is intended to get away from local minima
+    if( startx != 0 | starty != 0) {
+        padx &lt;- pady &lt;- max(abs(startx), abs(starty))
+        target &lt;- geoshift(target, padx, pady, 0, 0)
+        tofix &lt;- geoshift(tofix, padx, pady, startx, starty)
+    }
+
+    if(!all(dim(target) == dim(tofix))) stop("target and tofix must be the same size.\n")
+
+    # initial configuration
+    thisx &lt;- thisy &lt;- 0
+    currrmse &lt;- sqrt(sum((as.vector(target) - as.vector(tofix))^2, na.rm=TRUE) / (sum(!is.na(as.vector(target)) &amp; !is.na(as.vector(tofix)))))
+    prevrmse &lt;- currrmse + 1
+    maxx &lt;- maxy &lt;- 1
+    newx &lt;- newy &lt;- 0
+    initrmse &lt;- currrmse
+
+    while(currrmse &lt; prevrmse) {
+#        cat(newx, ", ", newy, ": ", currrmse, "\n")
+
+        results &lt;- matrix(NA, nrow=9, ncol=3)
+        colnames(results) &lt;- c("x", "y", "RMSE")
+
+        target2 &lt;- geoshift(target, maxx, maxy, 0,  0)
+        target2 &lt;- as.vector(target2)
+
+        currrow &lt;- 1
+
+        for(x in seq(newx-1, newx+1, by=1)) {
+            for(y in seq(newy-1, newy+1, by=1)) {
+                tofix2 &lt;- geoshift(tofix, maxx, maxy, x, y)
+                tofix2 &lt;- as.vector(tofix2)
+                results[currrow, 1:2] &lt;- c(x, y)
+                results[currrow, 3] &lt;- sqrt(sum((target2 - tofix2)^2, na.rm=TRUE) / (sum(!is.na(target2) &amp; !is.na(tofix2))))
+                currrow &lt;- currrow + 1
+            }
+        }
+
+        prevrmse &lt;- currrmse
+        currrmse &lt;- min(results[, "RMSE"])
+
+        newx &lt;- results[results[,"RMSE"] == currrmse, "x"]
+        newy &lt;- results[results[,"RMSE"] == currrmse, "y"]
+        maxx &lt;- max(abs(newx-1), abs(newx+1))
+        maxy &lt;- max(abs(newy-1), abs(newy+1))
+
+        # check to see if the loop should stop anyway
+        if(abs(newx) &gt; maxdist | abs(newy) &gt; maxdist) currrmse &lt;- 9999
+
+    }
+    list(shiftx=newx, shifty=newy, initrmse=initrmse, currrmse=currrmse)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> geoshift.R</h2>
+<div class="outline-text-2" id="text-7">
+<div class="org-src-container">
+
+<pre class="src src-R">geoshift &lt;-
+function(mat, padx, pady, shiftx, shifty, nodata=NA)
+{
+
+    results &lt;- mat
+
+    if(is.data.frame(mat)) mat &lt;- as.matrix(mat)
+    if(is.matrix(mat)) {
+        # pad a matrix and slide it over a given amount
+        newmat &lt;- matrix(nodata, nrow=(nrow(mat) + 2 * padx), ncol=(ncol(mat) + 2 * pady))
+        newmat[(shiftx + padx + 1):(nrow(mat) + shiftx + padx), (shifty + pady + 1):(ncol(mat) + shifty + pady)] &lt;- mat
+    }
+    if(class(mat) == "SpatialGridDataFrame") {
+        mat.data &lt;- as.matrix(mat)
+        mat.data &lt;- geoshift(mat.data, padx, pady, shiftx, shifty, nodata=nodata)
+        mat@data &lt;- data.frame(as.vector(mat.data))
+
+        # S4 class
+        mat.grid &lt;- mat@grid
+        mat.grid@cellcentre.offset[1] &lt;- mat.grid@cellcentre.offset[1] - (padx * mat.grid@cellsize[1])
+        mat.grid@cellcentre.offset[2] &lt;- mat.grid@cellcentre.offset[2] - (pady * mat.grid@cellsize[2])
+        mat.grid@cells.dim[1] &lt;- as.integer(mat.grid@cells.dim[1] + 2*padx)
+        mat.grid@cells.dim[2] &lt;- as.integer(mat.grid@cells.dim[2] + 2*pady)
+        mat@grid &lt;- mat.grid
+
+## obsoleted by sp_0.9-94
+#-#        # not S4 class
+#-#        mat.coords &lt;- coordinates(mat)
+#-#        mat.coords[1, 1] &lt;- mat.coords[1, 1] - (padx * mat.grid@cellsize[1])
+#-#        mat.coords[2, 1] &lt;- mat.coords[2, 1] + (padx * mat.grid@cellsize[1])
+#-#        mat.coords[1, 2] &lt;- mat.coords[1, 2] - (pady * mat.grid@cellsize[2])
+#-#        mat.coords[2, 2] &lt;- mat.coords[2, 2] + (pady * mat.grid@cellsize[2])
+#-#        mat@coords &lt;- mat.coords
+
+        # not S4 class
+        mat.bbox &lt;- bbox(mat)
+        mat.bbox[1, "min"] &lt;- mat.bbox[1, "min"] - (padx * mat.grid@cellsize[1])
+        mat.bbox[1, "max"] &lt;- mat.bbox[1, "max"] + (padx * mat.grid@cellsize[1])
+        mat.bbox[2, "min"] &lt;- mat.bbox[2, "min"] - (pady * mat.grid@cellsize[2])
+        mat.bbox[2, "max"] &lt;- mat.bbox[2, "max"] + (pady * mat.grid@cellsize[2])
+        mat@bbox &lt;- mat.bbox
+    }
+
+    # return the same structure as the input values
+    if(class(results) == "SpatialGridDataFrame")
+        results &lt;- mat
+    else if(is.data.frame(results))
+        results &lt;- data.frame(newmat)
+    else if(is.matrix(results))
+        results &lt;- newmat
+    else # no result
+        results &lt;- NA
+
+    results
+
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> histmatch.R</h2>
+<div class="outline-text-2" id="text-8">
+<div class="org-src-container">
+
+<pre class="src src-R">histmatch &lt;-
+function(master, tofix, mask, minval=0, maxval=255, by=1)
+{
+        # simple histogram matching function
+    # mask should contain NA for values to use; all other values will be omitted
+        results &lt;- tofix # want to return results in same format
+        master &lt;- as.vector(as.matrix(master))
+        tofix &lt;- as.vector(as.matrix(tofix))
+
+    if(missing(mask)) mask &lt;- rep(NA, length(master))
+    else mask &lt;- as.vector(as.matrix(mask))
+    results.final &lt;- rep(NA, length(mask))
+
+    master &lt;- master[is.na(mask)]
+    tofix &lt;- tofix[is.na(mask)]
+
+        breaks &lt;- seq(minval, maxval, by=by)
+        master.cdf &lt;- hist(master, breaks=breaks, plot=FALSE) 
+        master.cdf &lt;- c(0, cumsum(master.cdf$counts/sum(master.cdf$counts)))
+        tofix.cdf &lt;- hist(tofix, breaks=breaks, plot=FALSE) 
+        tofix.cdf &lt;- c(0, cumsum(tofix.cdf$counts/sum(tofix.cdf$counts)))
+
+    # fixed 2012-07-16 to work with continuous data
+    # originally written to work with integer data
+        results.recode &lt;- breaks
+    results.values &lt;- rep(NA, length(tofix))
+    # original #        for(i in 1:length(breaks)) {
+    # original #        testvals &lt;- breaks[master.cdf &lt; tofix.cdf[i]]
+    # original #        if(length(testvals) &gt; 0)
+    # original #            results.recode[i] &lt;- max(testvals)
+    # original #        results.values[tofix == breaks[i]] &lt;- results.recode[i]
+    # original #    }
+
+    for (i in 2:length(breaks)) {
+        testvals &lt;- breaks[master.cdf &lt; tofix.cdf[i]]
+        if (length(testvals) &gt; 0) 
+            results.recode[i] &lt;- max(testvals)
+        results.values[tofix &gt; breaks[i-1] &amp; tofix &lt;= breaks[i]] &lt;- results.recode[i]
+    }
+
+    results.final[is.na(mask)] &lt;- results.values
+
+    if(class(results) == "SpatialGridDataFrame")
+        results@data[,1] &lt;- results.final
+    else if(is.data.frame(results))
+        results &lt;- data.frame(matrix(results.final, nrow=nrow(results), ncol=ncol(results)))
+    else if(is.matrix(results))
+        results &lt;- matrix(results.final, nrow=nrow(results), ncol=ncol(results))
+    else
+        results &lt;- results.final
+
+    list(recode=results.recode, newimage=results)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> lssub.R</h2>
+<div class="outline-text-2" id="text-9">
+<div class="org-src-container">
+
+<pre class="src src-R">lssub &lt;-
+function(filename, outname, centerx, centery, centerepsg, widthx, widthy)
+{
+
+### subset a landsat image 
+
+    ## get information about the landsat image
+    ## assuming that gdalinfo always provides the same format
+    lsinfo &lt;- system(paste("gdalinfo ", filename, sep=""), intern=TRUE)
+
+    lsorigin &lt;- lsinfo[23]
+    lsorigin &lt;- strsplit(lsorigin, " ")[[1]][3]
+    lsorigin &lt;- gsub("\\(", "", lsorigin)
+    lsorigin &lt;- gsub("\\)", "", lsorigin)
+    lsorigin &lt;- as.numeric(strsplit(lsorigin, ",")[[1]])
+
+    lspixelsize &lt;- lsinfo[24]
+    lspixelsize &lt;- strsplit(lspixelsize, " ")[[1]][4]
+    lspixelsize &lt;- gsub("\\(", "", lspixelsize)
+    lspixelsize &lt;- gsub("\\)", "", lspixelsize)
+    lspixelsize &lt;- as.numeric(strsplit(lspixelsize, ",")[[1]])
+    lspixelsize &lt;- abs(lspixelsize)
+
+    lsepsg &lt;- lsinfo[22]
+    lsepsg &lt;- strsplit(lsepsg, '"')[[1]][4]
+
+    # reproject target point if necessary
+    if(!missing(centerepsg)) {
+        if(centerepsg != lsepsg) {
+            cat("reprojecting...\n")
+            newcenter &lt;- system(paste("echo ", centerx, " ", centery, " | gdaltransform -s_srs EPSG:", centerepsg, " -t_srs EPSG:", lsepsg, 
+                sep=""), intern=TRUE)
+            newcenter &lt;- as.numeric(strsplit(newcenter, " ")[[1]][1:2])
+            centerx &lt;- newcenter[1]
+            centery &lt;- newcenter[2]
+        }
+    }
+
+    # shift target point the minimum necessary to match pixel boundaries
+    shiftval &lt;- centerx - lsorigin[1]
+    shiftval &lt;- ((shiftval / lspixelsize[1]) - floor(shiftval / lspixelsize[1])) * lspixelsize[1]
+    if(shiftval != 0) {
+        #    if(shiftval &lt; lspixelsize[1]) shiftval &lt;- shiftval - lspixelsize[1]
+        centerx &lt;- centerx - shiftval
+    }
+    shiftval &lt;- centery - lsorigin[2]
+    shiftval &lt;- ((shiftval / lspixelsize[2]) - floor(shiftval / lspixelsize[2])) * lspixelsize[2]
+    if(shiftval != 0) {
+        #    if(shiftval &lt; lspixelsize[2]) shiftval &lt;- shiftval - lspixelsize[2]
+        centery &lt;- centery - shiftval
+    }
+
+    system(paste("gdal_translate -projwin ", centerx - (lspixelsize[1]*widthx), " ", centery + (lspixelsize[2]*widthy), " ", centerx + (lspixelsize[1]*widthx), " ", centery - (lspixelsize[2]*widthy), " ", filename, " ", outname, sep=""), intern=TRUE)
+
+    invisible()
+
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> minnaert.R</h2>
+<div class="outline-text-2" id="text-10">
+<div class="org-src-container">
+
+<pre class="src src-R">minnaert &lt;- function(x, slope, aspect, sunelev, sunazimuth, na.value=NA, GRASS.aspect=FALSE, IL.epsilon=0.000001, slopeclass = c(1, 5, 10, 15, 20, 25, 30, 45), coverclass)
+{
+# pixel-based Minnaert correction
+# Lu et al. 2008. PE&amp;RS 74:1343-1350.
+# topographic correction for image x based on
+# topography and sun location
+# require(mgcv)
+
+# IL.epsilon: if IL == 0, the corrected value is Inf (division by zero)
+# adding a tiny increment eliminates the Inf
+
+## aspect may be GRASS output: counterclockwise from east
+## or nonGRASS output: clockwise from north
+## require the latter for further calculations
+## because sunazimuth is always measured clockwise from north
+    if(GRASS.aspect) {
+        aspect &lt;- as.matrix(aspect)
+        aspect &lt;- -1 * aspect + 90
+        aspect &lt;- (aspect + 360) %% 360
+    }
+
+# all inputs are in degrees, but we need radians
+    sloper &lt;- (pi/180) * as.matrix(slope)
+    sloped &lt;- as.matrix(slope)
+    aspect &lt;- (pi/180) * as.matrix(aspect)
+    sunzenith &lt;- (pi/180) * (90 - sunelev)
+    sunazimuth &lt;- (pi/180) * sunazimuth
+
+    x.orig &lt;- x
+    x &lt;- as.matrix(x)
+    x[x == na.value] &lt;- NA
+
+    IL &lt;- cos(sloper) * cos(sunzenith) + sin(sloper) * sin(sunzenith) * cos(sunazimuth - aspect)
+    IL[IL == 0] &lt;- IL.epsilon
+
+    if(missing(coverclass)) 
+        coverclass &lt;- rep(TRUE, length(as.vector(x)))
+
+    ## Minnaert
+    ## K is between 0 and 1
+        # IL can be &lt;=0 under certain conditions
+        # but that makes it impossible to take log10 so remove those elements
+    K &lt;- data.frame(x = as.vector(x), IL = as.vector(IL), slope=as.vector(sloped))
+    K &lt;- K[coverclass, ]
+    K &lt;- K[!apply(K, 1, function(x)any(is.na(x))),]
+    K &lt;- K[K$x &gt; 0, ]
+    K &lt;- K[K$IL &gt; 0, ]
+
+    ## calculate overall K value; only use points with greater than 5% slope
+    targetslope &lt;- (180/pi) * atan(.05)
+    allcoef &lt;- coefficients(lm(log10(K$x)[K$slope &gt;= targetslope] ~ log10(K$IL/cos(sunzenith))[K$slope &gt;= targetslope]))[[2]]
+
+    results &lt;- data.frame(matrix(0, nrow=length(slopeclass)-1, ncol=3))
+    colnames(results) &lt;- c("midpoint", "n", "k")
+    results[,1] &lt;- diff(slopeclass)/2 + slopeclass[1:length(slopeclass)-1]
+
+    K.cut &lt;- as.numeric(cut(K$slope, slopeclass)) # don't use slopes outside slopeclass range
+    if(nrow(results) != length(table(K.cut))) stop("slopeclass is inappropriate for these data (empty classes)\n")
+    results[,2] &lt;- table(K.cut)
+
+    #            sapply(unique(K.cut), function(i)coefficients(lm(log10(K$x)[K.cut == i] ~ log10(K$IL/cos(sunzenith))[K.cut == i]))[[2]])
+   for(i in sort(unique(K.cut[!is.na(K.cut)]))) {
+        results[i, 3] &lt;- coefficients(lm(log10(K$x)[K.cut == i] ~ log10(K$IL/cos(sunzenith))[K.cut == i]))[[2]]
+    }
+
+    model &lt;- with(results, gam(k ~ s(midpoint, k=length(midpoint)-1)))
+
+    K.all &lt;- data.frame(midpoint = as.vector(as.matrix(slope)))
+    K.all[K.all &gt; max(slopeclass)] &lt;- max(slopeclass) # if slope is greater than modeled range, use maximum of modeled range
+    K.all[K.all &lt; min(slopeclass)] &lt;- 0 # if slope is less than modeled range, treat it as flat
+    K.all &lt;- predict(model, newdata=K.all)
+    K.all[K.all &gt; 1] &lt;- 1
+    K.all[K.all &lt; 0] &lt;- 0
+
+    xout &lt;- as.vector(as.matrix(x)) * (cos(sunzenith)/as.vector(as.matrix(IL))) ^ K.all
+    xout[K.all == 0 &amp; !is.na(K.all)] &lt;- as.vector(as.matrix(x))[K.all == 0 &amp; !is.na(K.all)] # don't correct flat areas
+
+    ## if x was a SpatialGridDataFrame, return an object of the same class
+    if(class(x.orig) == "SpatialGridDataFrame") {
+        x.orig@data[,1] &lt;- as.vector(xout)
+        xout &lt;- x.orig
+    }
+
+    list(allcoef=allcoef, classcoef=results, model=model, minnaert=xout)
+
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> movingwindow.R</h2>
+<div class="outline-text-2" id="text-11">
+<div class="org-src-container">
+
+<pre class="src src-R">movingwindow &lt;-
+function(x, kernel)
+{
+    # apply kernel as a moving window to x
+    results &lt;- x
+    x &lt;- as.matrix(x)
+
+    mwoffset &lt;- (nrow(kernel)-1)/2
+
+    newmat &lt;- matrix(NA, nrow=nrow(x), ncol=ncol(x))
+
+    for(i in (1+mwoffset):(nrow(x)-mwoffset)) {
+        for(j in (1+mwoffset):(ncol(x)-mwoffset)) {
+            newmat[i, j] &lt;- sum(kernel * x[(i-mwoffset):(i+mwoffset), (j-mwoffset):(j+mwoffset)])
+        }
+    }
+
+    # return the same structure as the input values
+    if(class(results) == "SpatialGridDataFrame")
+        results@data[,1] &lt;- as.vector(newmat)
+    else if(is.data.frame(results))
+        results &lt;- data.frame(matrix(newmat, nrow=nrow(results), ncol=ncol(results)))
+    else if(is.matrix(results))
+        results &lt;- matrix(newmat, nrow=nrow(results), ncol=ncol(results))
+
+    results
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> PIF.R</h2>
+<div class="outline-text-2" id="text-12">
+<div class="org-src-container">
+
+<pre class="src src-R">PIF &lt;-
+function(band3, band4, band7, level=.99) {
+# identify pseudo-invariant features after SSV1988
+
+    if(is.character(band3)) {
+        band3 &lt;- read.asciigrid(band3)
+        pifgrid &lt;- band3
+        band3 &lt;- band3@data[,1]
+    } else {
+        pifgrid &lt;- band3
+        band3 &lt;- as.vector(as.matrix(band3))
+    } 
+
+    if(is.character(band4)) {
+        band4 &lt;- read.asciigrid(band4)@data[,1]
+    } else {
+        band4 &lt;- as.vector(as.matrix(band4))
+    }
+
+    if(is.character(band7)) {
+        band7 &lt;- read.asciigrid(band7)@data[,1]
+    } else {
+        band7 &lt;- as.vector(as.matrix(band7))
+    }
+
+    band43 &lt;- band4/band3
+
+    band43.level &lt;- quantile(band43, 1-level, na.rm=TRUE)
+    band7.level &lt;- quantile(band7, level, na.rm=TRUE)
+
+    pifmask &lt;- ifelse(band43 &lt; band43.level &amp; band7 &gt; band7.level &amp; band7 &lt; 255, 1, 0)
+
+    # return the same structure as the input values
+    if(class(pifgrid) == "SpatialGridDataFrame")
+        pifgrid@data[,1] &lt;- pifmask
+    else if(is.data.frame(pifgrid))
+        pifgrid &lt;- data.frame(matrix(pifmask, nrow=nrow(pifgrid), ncol=ncol(pifgrid)))
+    else if(is.matrix(pifgrid))
+        pifgrid &lt;- matrix(pifmask, nrow=nrow(pifgrid), ncol=ncol(pifgrid))
+    else # return a vector 
+        pifgrid &lt;- pifmask
+
+    pifgrid
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> radiocorr.R</h2>
+<div class="outline-text-2" id="text-13">
+<div class="org-src-container">
+
+<pre class="src src-R">radiocorr &lt;-
+function(x, gain, offset, Grescale, Brescale, sunelev, satzenith=0, edist, Esun, Lhaze, method="apparentreflectance")
+{
+
+### Radiometric correction following one of four models:
+###   - 1: Absolute Radiance
+###   - 2: Dark Object Subtraction (DOS) of Chavez 1989
+###   - 3: COSTZ of Chavez 1996
+###   - 4: DOS4 of SWS+2001
+### x: image data
+### gain and offset or gain and bias or Lmin and Lmax
+### sunelev: sun elevation in degrees
+### satzenith: satellite zenith angle in degrees (= 0 for Landsat)
+### edist: Earth-Sun distance (calculated from DOY)
+### Esun: extrasolar radiation
+### Lhaze: result of DOS() for this band, if needed
+### crosscalib: cross-calibration coefficient of Teillet et al. 2006 or other
+###    multiplicative adjustment to be applied to at-sensor reflectance - NOT DONE!
+
+    results &lt;- x
+    x &lt;- as.vector(as.matrix(x))
+
+    METHODS &lt;- c("apparentreflectance", "DOS", "COSTZ", "DOS4")
+    method &lt;- pmatch(method, METHODS)
+    if (is.na(method)) 
+        stop("invalid method")
+    if (method == -1) 
+        stop("ambiguous method")
+
+    suntheta &lt;- (90-sunelev) * pi / 180
+    suntheta &lt;- cos(suntheta)
+
+    satzenith &lt;- satzenith * pi / 180
+    satphi &lt;- cos(satzenith)
+
+    # most new references provide gain and bias
+    # want gain and offset
+    if(missing(offset)) {
+        offset &lt;- -1 * Brescale / Grescale
+        gain &lt;- 1/Grescale
+    }
+
+    ### Done with basic setup.
+
+    if(method == 1) {
+    ## 1. Apparent Reflectance
+        TAUz &lt;- 1.0
+        TAUv &lt;- 1.0
+        Edown &lt;- 0.0 
+        Lhaze &lt;- 0.0
+    }
+    else if(method == 2) {
+    ## 2. DOS
+        TAUz &lt;- 1.0
+        TAUv &lt;- 1.0
+        Edown &lt;- 0.0 
+        if(missing(Lhaze)) stop("This model requires Lhaze to be specified.\n") 
+    }
+    else if(method == 3) {
+    ## 3. COSTZ
+        TAUz &lt;- suntheta
+        TAUv &lt;- satphi
+        Edown &lt;- 0.0
+        if(missing(Lhaze)) stop("This model requires Lhaze to be specified.\n")
+    } 
+    else if(method == 4) {
+    ## 4. DOS4 of SWS+2001
+        TAUv &lt;- TAUz &lt;- 1
+        taudiff &lt;- 1
+            tau &lt;- 9999
+            Edown &lt;- 0
+
+        Lhaze.orig &lt;- Lhaze
+
+        while(abs(taudiff) &gt; 0.0000001) {
+            taudiff &lt;- tau
+
+            ## if Lhaze is too large, the formula tries to take log of a negative number
+            ## iteratively adjust Lhaze downward until it works
+            ## This is a lazy kludge!!!
+
+            Eo &lt;- Esun/edist^2
+
+            Lp &lt;- (Lhaze - offset) / gain - 0.01 * (Eo * suntheta * TAUz + Edown) * TAUv / pi
+
+            taustep &lt;- 1 - (4 * pi * Lp) / (Eo * suntheta)
+
+            while(taustep &lt; 0) {
+                Lhaze &lt;- Lhaze - 1
+                Lp &lt;- (Lhaze - offset) / gain - 0.01 * (Eo * suntheta * TAUz + Edown) * TAUv / pi
+                taustep &lt;- 1 - (4 * pi * Lp) / (Eo * suntheta)
+            }
+
+            tau &lt;- -1 * suntheta * log(1 - (4 * pi * Lp) / (Eo * suntheta))
+            TAUv &lt;- exp(-1 * tau / satphi)
+            TAUz &lt;- exp(-1 * tau / suntheta)            
+            Edown &lt;- pi * Lp
+
+                    taudiff &lt;- taudiff - tau
+
+        }
+
+        if(!identical(Lhaze.orig, Lhaze)) warning(paste("Lhaze adjusted from ", Lhaze.orig, " to ", Lhaze, sep=""))
+
+        if(missing(Lhaze)) stop("This model requires Lhaze to be specified.\n")
+    #-#
+
+    }
+
+
+    ## Applying the models
+    ## REF &lt;-  (pi * edist^2 * (Lsat - Lhaze)) / (TAUv * (Esun * cos(sunzenith) * TAUz + Edown))
+
+    ## First convert DN to at-sensor radiance
+    ## Lhaze output from DOS() is in DN, so this is done as a separate step
+
+    # subtract Lhaze and convert DN to radiance
+    x &lt;- x - Lhaze
+    x &lt;- (x - offset) / gain
+
+    ## proceed with radiometric correction
+    ## calculate at-surface reflectance
+
+    x &lt;-  (pi * edist^2 * x) / (TAUv * (Esun * suntheta * TAUz + Edown))
+
+    # return the same structure as the input values
+    if(class(results) == "SpatialGridDataFrame")
+        results@data[,1] &lt;- x
+    else if(is.data.frame(x))
+        results &lt;- data.frame(matrix(x, nrow=nrow(results), ncol=ncol(results)))
+    else # return a matrix 
+        results &lt;- x
+
+    results
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> RCS.R</h2>
+<div class="outline-text-2" id="text-14">
+<div class="org-src-container">
+
+<pre class="src src-R">RCS &lt;-
+function(data.tc, level=.01) {
+# radiometric control sets, HSNG199
+# takes output of tasscap
+#    list(Brightness=Brightness, Greenness=Greenness, Wetness=Wetness)
+# or named data frame, which is also a list
+
+    rcsgrid &lt;- data.tc$Brightness
+
+    brightness &lt;- as.vector(as.matrix(data.tc$Brightness))
+    greenness &lt;- as.vector(as.matrix(data.tc$Greenness))
+
+    bright.llevel &lt;- quantile(brightness, level, na.rm=TRUE)
+    bright.ulevel &lt;- quantile(brightness, 1-level, na.rm=TRUE)
+    green.level &lt;- quantile(greenness, level, na.rm=TRUE)
+
+    rcsmask &lt;- ifelse(brightness &lt; bright.llevel &amp; greenness &lt; green.level, 1, 0)
+    rcsmask &lt;- ifelse(brightness &gt; bright.ulevel &amp; greenness &lt; green.level, 1, rcsmask)
+
+    # return the same structure as the input values
+    if(class(rcsgrid) == "SpatialGridDataFrame") 
+        rcsgrid@data[,1] &lt;- rcsmask
+    else if(is.data.frame(rcsgrid)) 
+        rcsgrid &lt;- data.frame(matrix(rcsmask, nrow=nrow(rcsgrid), ncol=ncol(rcsgrid)))
+    else if(is.matrix(rcsgrid)) 
+        rcsgrid &lt;- matrix(rcsmask, nrow=nrow(rcsgrid), ncol=ncol(rcsgrid))
+    else # return a vector 
+        rcsgrid &lt;- rcsmask
+
+    rcsgrid
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> relnorm.R</h2>
+<div class="outline-text-2" id="text-15">
+<div class="org-src-container">
+
+<pre class="src src-R">relnorm &lt;-
+function(master, tofix, mask, method="MA", nperm=1000)
+{
+    # relative normalization of tofix to match master
+    # based on values in mask and using regression
+    # method OLS, MA, or SMA
+    # mask should contain NA for values to include; all other values will be omitted
+
+    results &lt;- tofix
+
+    master &lt;- as.vector(as.matrix(master))
+    tofix &lt;- as.vector(as.matrix(tofix))
+
+    if(missing(mask)) { 
+        mask &lt;- rep(NA, length(master))
+    } else {
+        mask &lt;- as.vector(as.matrix(mask))
+    }
+
+    master.mask &lt;- master[is.na(mask)]
+    x.mask &lt;- tofix[is.na(mask)]
+
+    master.lm &lt;- lmodel2(master.mask ~ x.mask, nperm=nperm)
+
+    master.lm &lt;- master.lm$regression.results[master.lm$regression.results[, "Method"] == method, ]
+    names(master.lm) &lt;- gsub("^ *", "", names(master.lm))
+
+    x.transform &lt;- master.lm$Slope * tofix + master.lm$Intercept
+
+    x.transform[!is.na(mask)] &lt;- NA
+
+
+    # return the same structure as the input values
+    if(class(results) == "SpatialGridDataFrame")
+        results@data[,1] &lt;- x.transform
+    else if(is.data.frame(results))
+        results &lt;- data.frame(matrix(x.transform, nrow=nrow(results), ncol=ncol(results)))
+    else if(is.matrix(results))
+        results &lt;- matrix(x.transform, nrow=nrow(results), ncol=ncol(results))
+    else # return a vector 
+        results &lt;- x.transform
+
+    list(regression.results = master.lm, newimage = results)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> slopeasp.R</h2>
+<div class="outline-text-2" id="text-16">
+<div class="org-src-container">
+
+<pre class="src src-R">slopeasp &lt;- function (x, EWres, NSres, EWkernel, NSkernel, smoothing = 1) 
+{
+    if(class(x) == "SpatialGridDataFrame") {
+        xmat &lt;- t(as.matrix(x))
+    }
+    else {
+       xmat &lt;- as.matrix(x)
+    }
+    if (missing(EWres)) {
+        if (class(x) == "SpatialGridDataFrame") {
+            EWres &lt;- x@grid@cellsize[1]
+        }
+        else {
+            stop("EWres must be specified if x is not a SpatialGridDataFrame.\n")
+        }
+    }
+    if (missing(NSres)) {
+        if (class(x) == "SpatialGridDataFrame") {
+            NSres &lt;- x@grid@cellsize[2]
+        }
+        else {
+            stop("NSres must be specified if x is not a SpatialGridDataFrame.\n")
+        }
+    }
+    if (missing(EWkernel)) {
+        EWkernel &lt;- matrix(c(-1/8, 0, 1/8, -2/8, 0, 2/8, -1/8, 
+            0, 1/8), ncol = 3, nrow = 3, byrow = TRUE)
+    }
+    EW.mat &lt;- movingwindow(xmat, EWkernel)/EWres
+    if (missing(NSkernel)) {
+        NSkernel &lt;- matrix(c(1/8, 2/8, 1/8, 0, 0, 0, -1/8, -2/8, 
+            -1/8), ncol = 3, nrow = 3, byrow = TRUE)
+    }
+    NS.mat &lt;- movingwindow(xmat, NSkernel)/NSres
+    slope &lt;- atan(sqrt(EW.mat^2 + NS.mat^2)/smoothing)
+    slope &lt;- (180/pi) * slope
+    aspect &lt;- 180 - (180/pi) * atan(NS.mat/EW.mat) + 90 * (EW.mat/abs(EW.mat))
+    aspect[slope == 0] &lt;- 0
+    if (class(x) == "SpatialGridDataFrame") {
+        temp &lt;- x
+        temp@data[, 1] &lt;- as.vector(t(aspect))
+        aspect &lt;- temp
+        temp@data[, 1] &lt;- as.vector(t(slope))
+        slope &lt;- temp
+    }
+    list(slope = slope, aspect = aspect)
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> tasscap.R</h2>
+<div class="outline-text-2" id="text-17">
+<div class="org-src-container">
+
+<pre class="src src-R">tasscap &lt;-
+function(basename, sat=7)
+
+{
+    # basename is the name of the band data files, which will have the band number appended
+    # should be in at-sensor reflectance (rc1)
+    # sat: 5 = Landsat 5 (TM) or 7 = Landsat 7 (ETM+)
+
+        # original papers
+        # Kauth and Thomas
+        # Crist and Cicone
+
+    band1 &lt;- get(paste(basename, "1", sep=""))
+    band2 &lt;- get(paste(basename, "2", sep=""))
+    band3 &lt;- get(paste(basename, "3", sep=""))
+    band4 &lt;- get(paste(basename, "4", sep=""))
+    band5 &lt;- get(paste(basename, "5", sep=""))
+    band7 &lt;- get(paste(basename, "7", sep=""))
+
+    if(class(band1) == "SpatialGridDataFrame") {
+        output.sgdf &lt;- band1
+            use.sgdf &lt;- TRUE
+        band1 &lt;- band1@data[,1]
+        band2 &lt;- band2@data[,1]
+        band3 &lt;- band3@data[,1]
+        band4 &lt;- band4@data[,1]
+        band5 &lt;- band5@data[,1]
+        band7 &lt;- band7@data[,1]
+    }
+
+    all.bands &lt;- cbind(band1, band2, band3, band4, band5, band7)
+
+
+    if(sat == 7) {
+        tc.coef &lt;- matrix(c(
+        # Tasseled cap coefficients for Landsat 7 ETM+ at-satellite reflectance from HWY+2002
+    # Band 1     Band 2       Band 3     Band 4     Band 5        Band 7     Index
+     0.3561,     0.3972,      0.3904,    0.6966,    0.2286,       0.1596,    #  Brightness       
+    -0.3344,    -0.3544,     -0.4556,    0.6966,   -0.0242,      -0.2630,    #  Greenness       
+     0.2626,     0.2141,      0.0926,    0.0656,   -0.7629,      -0.5388,    #  Wetness          
+     0.0805,    -0.0498,      0.1950,   -0.1327,    0.5752,      -0.7775,    #  Fourth           
+    -0.7252,    -0.0202,      0.6683,    0.0631,   -0.1494,      -0.0274,    #  Fifth           
+     0.4000,    -0.8172,      0.3832,    0.0602,   -0.1095,       0.0985     #  Sixth            
+    ), ncol=6, byrow=TRUE)
+    } else if(sat == 5) {
+        tc.coef &lt;- matrix(c(
+        # TM Tasseled Cap Equivalent Transformation Matrix for Band Reflectance Factor from Crist1985
+    # Band 1     Band 2       Band 3     Band 4     Band 5        Band 7     Index
+     0.2043,     0.4158,      0.5524,    0.5741,    0.3124,       0.2303,    #  Brightness
+    -0.1603,    -0.2819,     -0.4934,    0.7940,    0.0002,      -0.1446,    #  Greenness
+     0.0315,     0.2021,      0.3102,    0.1594,    0.6806,      -0.6109,    #  Wetness
+    -0.2117,    -0.0284,      0.1302,   -0.1007,    0.6529,      -0.7078,    #  Fourth
+    -0.8669,    -0.1835,      0.3856,    0.0408,    0.1132,       0.2272,    #  Fifth
+     0.3677,    -0.8200,      0.4354,    0.0518,    0.0066,      -0.0104     #  Sixth
+    ), ncol=6, byrow=TRUE)
+    } else {
+        stop("sat not recognized.\n")
+    }
+
+    colnames(tc.coef) &lt;- c("band1", "band2", "band3", "band4", "band5", "band7")
+    rownames(tc.coef) &lt;- c("Brightness", "Greenness", "Wetness", "Fourth", "Fifth", "Sixth")
+    tc.coef &lt;- t(tc.coef)
+
+    output &lt;- all.bands %*% tc.coef
+    output &lt;- as.data.frame(output[,1:3])
+
+    if(use.sgdf) {
+        Brightness &lt;- output.sgdf
+        Brightness@data[,1] &lt;- output[, "Brightness"]
+        Greenness &lt;- output.sgdf
+        Greenness@data[,1] &lt;- output[, "Greenness"]
+        Wetness &lt;- output.sgdf
+        Wetness@data[,1] &lt;- output[, "Wetness"]
+        output &lt;- list(Brightness=Brightness, Greenness=Greenness, Wetness=Wetness)
+    }
+
+    output
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> thermalband.R</h2>
+<div class="outline-text-2" id="text-18">
+<div class="org-src-container">
+
+<pre class="src src-R">thermalband &lt;-
+function(x, band)
+{
+## convert thermal band from DN to temperature
+
+        # coefs: gain, bias, K1, K2 from Chander et al. 2009
+        if(band == 6) band.coefs &lt;- c(0.055376, 1.18, 607.76, 1260.56)
+        if(band == 61) band.coefs &lt;- c(0.067087, -0.07, 666.09, 1282.71)
+        if(band == 62) band.coefs &lt;- c(0.037205, 3.16, 666.09, 1282.7)
+
+        results &lt;- x
+        x &lt;- as.vector(as.matrix(x))
+
+        # at-sensor radiance
+        x &lt;- x * band.coefs[1] + band.coefs[2]
+
+        x &lt;- band.coefs[4] / log(band.coefs[3]/x + 1)
+
+    # return the same structure as the input values
+    if(class(results) == "SpatialGridDataFrame")
+        results@data[,1] &lt;- x
+    else if(is.data.frame(results))
+        results &lt;- data.frame(matrix(x, nrow=nrow(results), ncol=ncol(results)))
+    else if(is.matrix(results))
+        results &lt;- matrix(x, nrow=nrow(results), ncol=ncol(results))
+    else # return a vector 
+        results &lt;- x
+
+    results
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> topocorr.R</h2>
+<div class="outline-text-2" id="text-19">
+<div class="org-src-container">
+
+<pre class="src src-R">topocorr &lt;-
+function(x, slope, aspect, sunelev, sunazimuth, method="cosine", na.value=NA, GRASS.aspect=FALSE, IL.epsilon=0.000001)
+{
+# topographic correction for image x based on
+# topography and sun location
+
+# IL.epsilon: if IL == 0, the corrected value is Inf (division by zero)
+# adding a tiny increment eliminates the Inf
+
+## aspect may be GRASS output: counterclockwise from east
+## or nonGRASS output: clockwise from north
+## require the latter for further calculations
+## because sunazimuth is always measured clockwise from north
+    if(GRASS.aspect) {
+        aspect &lt;- as.matrix(aspect)
+        aspect &lt;- -1 * aspect + 90
+        aspect &lt;- (aspect + 360) %% 360
+    }
+
+# all inputs are in degrees, but we need radians
+    slope &lt;- (pi/180) * as.matrix(slope)
+    aspect &lt;- (pi/180) * as.matrix(aspect)
+    sunzenith &lt;- (pi/180) * (90 - sunelev)
+    sunazimuth &lt;- (pi/180) * sunazimuth
+
+    x.orig &lt;- x
+    x &lt;- as.matrix(x)
+    x[x == na.value] &lt;- NA
+
+    IL &lt;- cos(slope) * cos(sunzenith) + sin(slope) * sin(sunzenith) * cos(sunazimuth - aspect)
+    IL[IL == 0] &lt;- IL.epsilon
+
+        METHODS &lt;- c("cosine", "improvedcosine", "minnaert", "minslope", "ccorrection", "gamma", "SCS", "illumination")
+        method &lt;- pmatch(method, METHODS)
+        if (is.na(method)) 
+            stop("invalid method")
+        if (method == -1) 
+            stop("ambiguous method")
+
+    if(method == 1){
+        ## Cosine method
+        xout &lt;- x * (cos(sunzenith)/IL)
+    }
+    else if(method == 2) {
+    ## Improved cosine method
+        ILmean &lt;- mean(as.vector(IL), na.rm=TRUE)
+        xout &lt;- x + (x * (ILmean - IL)/ILmean)
+    }
+    else if(method == 3) {
+        ## Minnaert
+        ## K is between 0 and 1
+        ## only use points with greater than 5% slope
+        targetslope &lt;- atan(.05)
+
+        if(all(x[slope &gt;= targetslope] &lt; 0, na.rm=TRUE)) {
+            K &lt;- 1
+        }
+        else {
+            # IL can be &lt;=0 under certain conditions
+            # but that makes it impossible to take log10 so remove those elements
+            K &lt;- data.frame(y = as.vector(x[slope &gt;= targetslope]), x = as.vector(IL[slope &gt;= targetslope])/cos(sunzenith))
+            K &lt;- K[!apply(K, 1, function(x)any(is.na(x))),]
+            K &lt;- K[K$x &gt; 0, ]
+            K &lt;- K[K$y &gt; 0, ]
+
+            K &lt;- lm(log10(K$y) ~ log10(K$x))
+            K &lt;- coefficients(K)[[2]] # need slope
+            if(K &gt; 1) K &lt;- 1
+            if(K &lt; 0) K &lt;- 0
+        }
+
+        xout &lt;- x * (cos(sunzenith)/IL) ^ K
+    }
+    else if(method == 4) {
+        ## Minnaert with slope
+        ## K is between 0 and 1
+        ## only use points with greater than 5% slope
+        targetslope &lt;- atan(.05)
+
+        if(all(x[slope &gt;= targetslope] &lt; 0, na.rm=TRUE)) {
+            K &lt;- 1
+        }
+        else {
+            # IL can be &lt;=0 under certain conditions
+            # but that makes it impossible to take log10 so remove those elements
+            K &lt;- data.frame(y=as.vector(x[slope &gt;= targetslope]), x=as.vector(IL[slope &gt;= targetslope])/cos(sunzenith))
+            K &lt;- K[!apply(K, 1, function(x)any(is.na(x))),]
+            K &lt;- K[K$x &gt; 0, ]
+            K &lt;- K[K$y &gt; 0, ]
+
+            K &lt;- lm(log10(K$y) ~ log10(K$x))
+            K &lt;- coefficients(K)[[2]] # need slope
+            if(K &gt; 1) K &lt;- 1
+            if(K &lt; 0) K &lt;- 0
+        }
+
+        xout &lt;- x * cos(slope) * (cos(sunzenith) / (IL * cos(slope))) ^ K
+    }
+    else if(method == 5) {
+        ## C correction
+        band.lm &lt;- lm(as.vector(x) ~ as.vector(IL))
+        C &lt;- coefficients(band.lm)[[1]]/coefficients(band.lm)[[2]]
+
+        xout &lt;- x * (cos(sunzenith) + C) / (IL + C)
+    }
+    else if(method == 6) {
+        ## Gamma
+        ## assumes zenith viewing angle
+        viewterrain &lt;- pi/2 - slope
+        xout &lt;- x * (cos(sunzenith) + cos(pi / 2)) / (IL + cos(viewterrain))
+    }
+    else if(method == 7) {
+        ## SCS method from GZ2009
+        xout &lt;- x * (cos(sunzenith) * cos(slope))/IL
+    }
+    else if(method == 8) {
+        ## illumination only
+        xout &lt;- IL
+    }
+
+    ## if slope is zero, reflectance does not change
+    if(method != 8) 
+        xout[slope == 0 &amp; !is.na(slope)] &lt;- x[slope == 0 &amp; !is.na(slope)]
+
+    ## if x was a SpatialGridDataFrame, return an object of the same class
+    if(class(x.orig) == "SpatialGridDataFrame") {
+        x.orig@data[,1] &lt;- as.vector(xout)
+        xout &lt;- x.orig
+    }
+
+
+    xout
+
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: tian</p>
+<p class="date">Created: 2014-06-07 Sat 11:23</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.6)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
