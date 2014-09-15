@@ -11,7 +11,7 @@ TIR(idList) Object: 1 click get all results
 |------------+---------+------------------+------------------+-------------+-------------------------+-------------|
 | landsat    |    1.08 |                  |                  |             |                         |             |
 | [[https://github.com/bleutner/RStoolbox][RStoolbox]]  |    0.02 | [[https://github.com/bleutner][Benjamin Leutner]] | [2014-05-06 Tue] |             |                         |             |
-| rLandsat8  |         |                  |                  |             |                         |             |
+| [[https://github.com/Terradue/rLandsat8][rLandsat8]]  |         | [[https://github.com/Terradue][Terradue]]         |                  |             |                         |             |
 | teamlucc   |         | [[https://github.com/azvoleff][Alex Zvoleff]]     |                  |             |                         |             |
 | [[https://github.com/ConservationInternational/teamcode][teamcode]]   |         | [[https://github.com/azvoleff][Alex Zvoleff]]     |                  |             |                         |             |
 | [[https://github.com/azvoleff/wrspathrow][wrspathrow]] |         | [[https://github.com/azvoleff][Alex Zvoleff]]     |                  |             |                         |             |
