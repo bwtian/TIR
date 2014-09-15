@@ -18,3 +18,17 @@ Object: 1 click get all results
 #+RESULTS[48acf4d752613056e28e90ae509396828a6e0aab]: fig:TIRworkflow
 [[file:./Figures/TIRWorkflow.png]]
 * R code
+** R
+*** untar 
+#+HEADER: :cache yes :tangle yes
+#+NAME: r:figA 
+#+BEGIN_SRC R :session :file ~/Dropbox/3figs/iamg/preffix-.png :results graphics
+###############################################################################
+## R code chunk:
+###############################################################################
+
+
+#+END_SRC
+#+CAPTION: Table/figure name Out put of above code
+#+NAME: fig:A  
+#+RESULTS: r:figA  
