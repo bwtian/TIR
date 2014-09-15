@@ -1,5 +1,22 @@
 
-Object: 1 click get all results
+
+TIR(idList) Object: 1 click get all results
+* Credit and Source Pool
+|-----------+---------+-------------+---------+---------|
+| Package   | Started | Last Update | Creator | Authors |
+|-----------+---------+-------------+---------+---------|
+| raster    |         |             |         |         |
+| sp        |         |             |         |         |
+| rgdal     |         |             |         |         |
+|-----------+---------+-------------+---------+---------|
+| landsat   |         |             |         |         |
+| RStoolbox |         |             |         |         |
+| rLandsat8 |         |             |         |         |
+| teamlucc  |         |             |         |         |
+|           |         |             |         |         |
+|           |         |             |         |         |
+|           |         |             |         |         |
+|-----------+---------+-------------+---------+---------|
 * Workfolw of The TIR
 #+NAME: fig:TIRworkflow
 #+HEADER: :cache yes :tangle yes :exports none
