@@ -4,16 +4,17 @@ Object: 1 click get all results
 #+HEADER: :cache yes :tangle yes :exports none
 #+HEADER: :results output graphics
 #+BEGIN_SRC dot :file ./Figures/TIRWorkflow.png 
-digraph {
-node [shape = box]
-L0 [label = "atSensor"]
-L1 [label = "atTOA"]
-L2 [label = "atSurface"]
-L0 -> L1 -> L2
+  digraph {
+  node [shape = box]
+  L0 [label = "atSensor"]
+  L1 [label = "atTOA"]
+  L2 [label = "atSurface"]
+  L3 [label = "atNeeds"]
+  L0 -> L1 -> L2 -> L3
 
-}
+  }
 #+END_SRC
 
-#+RESULTS[8dac44fb8517e228508ad3e4ea29b5294be99ca3]: fig:TIRworkflow
+#+RESULTS[48acf4d752613056e28e90ae509396828a6e0aab]: fig:TIRworkflow
 [[file:./Figures/TIRWorkflow.png]]
 
