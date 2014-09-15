@@ -2,21 +2,21 @@
 
 TIR(idList) Object: 1 click get all results
 * Credits and Source code Pool
-|------------+--------------+---------+-------------+-------------------------+-------------|
-| R Packages | Creator      | Started | Last Update | Maintainer and  Authors | Source code |
-|------------+--------------+---------+-------------+-------------------------+-------------|
-| raster     |              |         |             |                         |             |
-| sp         |              |         |             |                         |             |
-| rgdal      |              |         |             |                         |             |
-|------------+--------------+---------+-------------+-------------------------+-------------|
-| landsat    |              |         |             |                         |             |
-| RStoolbox  |              |         |             |                         |             |
-| rLandsat8  |              |         |             |                         |             |
-| teamlucc   | [[https://github.com/azvoleff][Alex Zvoleff]] |         |             |                         |             |
-| [[https://github.com/ConservationInternational/teamcode][teamcode]]   | [[https://github.com/azvoleff][Alex Zvoleff]] |         |             |                         |             |
-| [[https://github.com/azvoleff/wrspathrow][wrspathrow]] | [[https://github.com/azvoleff][Alex Zvoleff]] |         |             |                         |             |
-|            | [[https://github.com/azvoleff][Alex Zvoleff]] |         |             |                         |             |
-|------------+--------------+---------+-------------+-------------------------+-------------|
+|------------+---------+------------------+------------------+-------------+-------------------------+-------------|
+| R Packages | Version | Creator          | Started          | Last Update | Maintainer and  Authors | Source code |
+|------------+---------+------------------+------------------+-------------+-------------------------+-------------|
+| raster     |         |                  |                  |             |                         |             |
+| sp         |         |                  |                  |             |                         |             |
+| rgdal      |         |                  |                  |             |                         |             |
+|------------+---------+------------------+------------------+-------------+-------------------------+-------------|
+| landsat    |    1.08 |                  |                  |             |                         |             |
+| [[https://github.com/bleutner/RStoolbox][RStoolbox]]  |    0.02 | [[https://github.com/bleutner][Benjamin Leutner]] | [2014-05-06 Tue] |             |                         |             |
+| rLandsat8  |         |                  |                  |             |                         |             |
+| teamlucc   |         | [[https://github.com/azvoleff][Alex Zvoleff]]     |                  |             |                         |             |
+| [[https://github.com/ConservationInternational/teamcode][teamcode]]   |         | [[https://github.com/azvoleff][Alex Zvoleff]]     |                  |             |                         |             |
+| [[https://github.com/azvoleff/wrspathrow][wrspathrow]] |         | [[https://github.com/azvoleff][Alex Zvoleff]]     |                  |             |                         |             |
+|            |         | [[https://github.com/azvoleff][Alex Zvoleff]]     |                  |             |                         |             |
+|------------+---------+------------------+------------------+-------------+-------------------------+-------------|
 * Workfolw of The TIR
 #+NAME: fig:TIRworkflow
 #+HEADER: :cache yes :tangle yes :exports none
