@@ -1,7 +1,7 @@
 
 
 TIR(idList) Object: 1 click get all results
-* Credit and Source Pool
+* Credit and Source code Pool
 |-----------+---------+-------------+---------+---------+-------------|
 | Package   | Started | Last Update | Creator | Authors | Source code |
 |-----------+---------+-------------+---------+---------+-------------|
@@ -13,7 +13,7 @@ TIR(idList) Object: 1 click get all results
 | RStoolbox |         |             |         |         |             |
 | rLandsat8 |         |             |         |         |             |
 | teamlucc  |         |             |         |         |             |
-|           |         |             |         |         |             |
+| wrs       |         |             |         |         |             |
 |           |         |             |         |         |             |
 |           |         |             |         |         |             |
 |-----------+---------+-------------+---------+---------+-------------|
