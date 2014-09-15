@@ -2,22 +2,22 @@
 
 TIR(idList) Object: 1 click get all results
 * Credits and Source code Pool
-|------------+---------+------------------+------------------+-------------+-------------------------+-------------|
-| R Packages | Version | Creator          | Started          | Last Update | Maintainer and  Authors | Source code |
-|------------+---------+------------------+------------------+-------------+-------------------------+-------------|
-| raster     |         |                  |                  |             |                         |             |
-| sp         |         |                  |                  |             |                         |             |
-| rgdal      |         |                  |                  |             |                         |             |
-|------------+---------+------------------+------------------+-------------+-------------------------+-------------|
-| landsat    |    1.08 |                  |                  |             |                         |             |
-| [[https://github.com/bleutner/RStoolbox][RStoolbox]]  |    0.02 | [[https://github.com/bleutner][Benjamin Leutner]] | [2014-05-06 Tue] |             |                         |             |
-| [[https://github.com/Terradue/rLandsat8][rLandsat8]]  |         | [[https://github.com/Terradue][Terradue]]         |                  |             |                         |             |
-| L8Thermal  |         | [[https://github.com/Terradue][Terradue]]         |                  |             |                         |             |
-| teamlucc   |         | [[https://github.com/azvoleff][Alex Zvoleff]]     |                  |             |                         |             |
-| [[https://github.com/ConservationInternational/teamcode][teamcode]]   |         | [[https://github.com/azvoleff][Alex Zvoleff]]     |                  |             |                         |             |
-| [[https://github.com/azvoleff/wrspathrow][wrspathrow]] |         | [[https://github.com/azvoleff][Alex Zvoleff]]     |                  |             |                         |             |
-|            |         | [[https://github.com/azvoleff][Alex Zvoleff]]     |                  |             |                         |             |
-|------------+---------+------------------+------------------+-------------+-------------------------+-------------|
+|--------------------+------------------+---------+------------------+-------------+-------------------------+-------------|
+| R Packages         | Creator          | Version | Started          | Last Update | Maintainer and  Authors | Source code |
+|--------------------+------------------+---------+------------------+-------------+-------------------------+-------------|
+| raster             |                  |         |                  |             |                         |             |
+| sp                 |                  |         |                  |             |                         |             |
+| rgdal              |                  |         |                  |             |                         |             |
+| landsat            |                  |    1.08 |                  |             |                         |             |
+|--------------------+------------------+---------+------------------+-------------+-------------------------+-------------|
+| [[https://github.com/bleutner/RStoolbox][RStoolbox]]          | [[https://github.com/bleutner][Benjamin Leutner]] |    0.02 | [2014-05-06 Tue] |             |                         |             |
+| [[https://github.com/Terradue/rLandsat8][rLandsat8]]          | [[https://github.com/Terradue][Terradue]]         |         |                  |             |                         |             |
+| [[https://github.com/Terradue/dcs-r-landsat8-thermal][L8Thermal]]          | [[https://github.com/Terradue][Terradue]]         |         |                  |             |                         |             |
+| [[https://github.com/azvoleff/teamlucc][teamlucc]]           | [[https://github.com/azvoleff][Alex Zvoleff]]     |         |                  |             |                         |             |
+| [[https://github.com/ConservationInternational/teamcode][teamcode]]           | [[https://github.com/azvoleff][Alex Zvoleff]]     |         |                  |             |                         |             |
+| [[https://github.com/azvoleff/wrspathrow][wrspathrow]]         | [[https://github.com/azvoleff][Alex Zvoleff]]     |         |                  |             |                         |             |
+| [[https://github.com/azvoleff/Landsat_Processing][Landsat-Processing]] | [[https://github.com/azvoleff][Alex Zvoleff]]     |    code |                  |             |                         |             |
+|--------------------+------------------+---------+------------------+-------------+-------------------------+-------------|
 * Workfolw of The TIR
 #+NAME: fig:TIRworkflow
 #+HEADER: :cache yes :tangle yes :exports none
