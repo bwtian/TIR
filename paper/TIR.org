@@ -1,5 +1,5 @@
 
-TIR(idList) Object: 1 click get all results
+TIR(idList) Object: 1 click get all results from a list
 * Credits and Source code Pool
 |--------------------+------------------+---------+------------------+-------------+-------------------------+-------------|
 | R Packages         | Creator          | Version | Started          | Last Update | Maintainer and  Authors | Source code |
@@ -45,6 +45,23 @@ TIR(idList) Object: 1 click get all results
 ** R
 *** DONE to down  from list
 - State "DONE"       from "DOING"      [2014-09-15 Mon 16:24]
+#+HEADER: :tangle ~/SparkleShare/TIR/R/rs.todown.R
+#+BEGIN_SRC R
+  rs.todown <- function(list, downeddir, tolistName){
+          downedFiles  <- list.files(downeddir)
+          todownList   <-  setdiff(list, downedFiles)
+          Now <- format(Sys.time(), "_%y%m%d_%H%M%S")
+          todownListName <- paste0(todownListName, Now, ".txt")
+          write.table(todownList , todownListName, quote = F, row.names = F,col.names = F)
+  }
+#+END_SRC
+
+
+
+
+
+
+
 *** DONE rs.untar
 #+HEADER: :tangle ~/SparkleShare/TIR/R/phd.untar.R
 #+BEGIN_SRC R
