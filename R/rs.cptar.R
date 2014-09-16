@@ -7,7 +7,7 @@
             if (all(list %in% dir(fromdir))){
                     for (i in list){
                             file.copy(file.path(fromdir,i), todir)
-                            utils::untar(tarfile = i, exdir = file.path(todir,tools::file_path_sans_ext(basename(i))))
+                            utils::untar(tarfile = file.path(todir,i), exdir = file.path(todir,tools::file_path_sans_ext(basename(i))))
                             file.remove(file.path(todir,i))
                     }
             } else {
