@@ -57,7 +57,7 @@ rs.untar  <- function(path = ".", outdir = "../tif", pattern = ".tgz") {
 *** rsCptar
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.cptar.R
 #+BEGIN_SRC R 
-#' Copy file in the list from fromdir to todir
+#' Copy files in the list from fromdir to todir
 
     rs.cptar <- function(list, fromdir, todir){
             if (all(list %in% dir(fromdir))){
@@ -65,7 +65,7 @@ rs.untar  <- function(path = ".", outdir = "../tif", pattern = ".tgz") {
                             file.copy(file.path(fromdir,i), todir)
                     }
             } else {
-                    stop (paste("The file is not in the", fromdir))
+                    stop (paste("Not all the files in", fromdir))
             }
     }
 #+END_SRC
