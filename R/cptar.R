@@ -1,5 +1,5 @@
 
-cptar <- function(list, fromdir, todir){
+rs.cptar <- function(list, fromdir, todir){
         todir <- getwd()
         if (list %in% dir(fromdir)){
                 for (i in list){
