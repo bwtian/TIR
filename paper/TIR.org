@@ -75,7 +75,8 @@ TIR(idList) Object: 1 click get all results from a list
 - State "DONE"       from "DOING"      [2014-09-16 Tue 15:26]
 - State "DOING"      from "TODO"       [2014-09-16 Tue 15:26]
 - State "TODO"       from ""           [2014-09-16 Tue 17:26]
-
+.tgz test ok
+.tar.gz get the wrong basename identifire.tar
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.cptar.R
 #+BEGIN_SRC R 
   #' Copy files in the list from fromdir to todir, untar and delete tarballs
@@ -86,7 +87,8 @@ TIR(idList) Object: 1 click get all results from a list
               if (all(list %in% dir(fromdir))){
                       for (i in list){
                               file.copy(file.path(fromdir,i), todir)
-                              utils::untar(tarfile = file.path(todir,i), exdir = file.path(todir,tools::file_path_sans_ext(basename(i))))
+                              #utils::untar(tarfile = file.path(todir,i), exdir = file.path(todir,tools::file_path_sans_ext(basename(i))))
+                              utils::untar(tarfile = file.path(todir,i), exdir = gsub(pattern = "(^[^.]+)(.*)", replacement = "\\1", i))
                               file.remove(file.path(todir,i))
                       }
               } else {
