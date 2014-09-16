@@ -83,7 +83,7 @@ TIR(idList) Object: 1 click get all results
                       for (i in list){
                               file.copy(file.path(fromdir,i), todir)
                               ifile <- file.path(todir,i)
-                              untar(tarfile = ifile, exdir = file.path(todir,tools::file_path_sans_ext(basename(ifile))))
+                              utils::untar(tarfile = ifile, exdir = file.path(todir,tools::file_path_sans_ext(basename(ifile))))
                               file.remove(i)
                       }
               } else {
