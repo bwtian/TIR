@@ -64,6 +64,7 @@ TIR(idList) Object: 1 click get all results
 #+HEADER: :tangle ~/SparkleShare/TIR/R/cptar.R
 #+BEGIN_SRC R 
   cptar <- function(list, fromdir, todir){
+          
           todir <- getwd()
           if (list %in% dir(fromdir)){
                   for (i in list){
