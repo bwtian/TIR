@@ -6,6 +6,6 @@ cptar <- function(list, fromdir, todir){
                         file.copy(file.path(fromdir,i), todir)
                 }
         } else {
-                stop (paste("The file is not in the", fromdir)
+                stop (paste("The file is not in the", fromdir))
         }
 }

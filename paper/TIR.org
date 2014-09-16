@@ -70,7 +70,7 @@ TIR(idList) Object: 1 click get all results
                           file.copy(file.path(fromdir,i), todir)
                   }
           } else {
-                  stop (paste("The file is not in the", fromdir)
+                  stop (paste("The file is not in the", fromdir))
           }
   }
 #+END_SRC
