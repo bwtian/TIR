@@ -8,7 +8,7 @@
             if (all(list %in% dir(fromdir))){
                     for (i in list){
                             file.copy(file.path(fromdir,i), todir)
-                            untar(tarfile = i, exdir = file.path(todir, tools::file_path_sans_ext(basename(i))))
+                            untar(tarfile = i, exdir = tools::file_path_sans_ext(basename(i)))
                             file.remove(i)
                     }
             } else {
