@@ -8,7 +8,7 @@
                     for (i in list){
                             file.copy(file.path(fromdir,i), todir)
                             #utils::untar(tarfile = file.path(todir,i), exdir = file.path(todir,tools::file_path_sans_ext(basename(i))))
-                            utils::untar(tarfile = file.path(todir,i), exdir = gsub(pattern = "(^[^.]+)(.*)", replacement = "\\1", i))
+                            utils::untar(tarfile = file.path(todir,i), exdir = file.path(todir,gsub(pattern = "(^[^.]+)(.*)", replacement = "\\1", i)))
                             file.remove(file.path(todir,i))
                     }
             } else {
