@@ -53,24 +53,11 @@ TIR(idList) Object: 1 click get all results
           sapply(tarFiles_v, function(i) {utils::untar(tarfile = i, exdir = file.path(outdir, tools::file_path_sans_ext(basename(i))))})
   }
 #+END_SRC
-*** DOING untar by list
-- State "DOING"      from "TODO"       [2014-09-16 Tue 16:34]
-#+HEADER: :tangle ~/SparkleShare/TIR/R/rs.untar.R
-#+BEGIN_SRC R
-  rs.untar  <- function(list, outdir = "../tif", pattern = ".tgz") {
-          
-          sapply(list, function(i) {untar(tarfile = i, exdir = file.path(outdir, tools::file_path_sans_ext(basename(i))))})
-  }
-#+END_SRC
 
-
-
-
-
-*** DONE rs.cptar copy file in the list
+*** DONE rs.cptar copy file in the list and untar
 - State "DONE"       from "DOING"      [2014-09-16 Tue 15:26]
 - State "DOING"      from "TODO"       [2014-09-16 Tue 15:26]
-- State "TODO"       from ""           [2014-09-16 Tue 16:26]
+- State "TODO"       from ""           [2014-09-16 Tue 17:26]
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.cptar.R
 #+BEGIN_SRC R 
   #' Copy files in the list from fromdir to todir, untar and delete tarballs
@@ -92,7 +79,9 @@ TIR(idList) Object: 1 click get all results
 
 
 
-*** Read Landsat8
+*** TODO Read Landsat8
+- State "TODO"       from ""           [2014-09-16 Tue 17:48]
+#+HEADER: :tangle ~/SparkleShare/TIR/R/rs.readL8.R
 #+BEGIN_SRC R
 
 
