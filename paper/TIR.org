@@ -45,29 +45,50 @@ TIR(idList) Object: 1 click get all results
 ** R
 *** DONE to down  from list
 - State "DONE"       from "DOING"      [2014-09-15 Mon 16:24]
-*** DONE untar 
+*** DONE rs.untar
+#+HEADER: :tangle ~/SparkleShare/TIR/R/phd.untar.R
+#+BEGIN_SRC R
+  rs.untar  <- function(list, path = ".", outdir = "../tif", pattern = ".tgz") {
+          tarFiles_v <- list.files(path = path, pattern = pattern, all.files = T, full.names = T) 
+          sapply(tarFiles_v, function(i) {untar(tarfile = i, exdir = file.path(outdir, tools::file_path_sans_ext(basename(i))))})
+  }
+#+END_SRC
+*** DOING untar by list
+- State "DOING"      from "TODO"       [2014-09-16 Tue 16:34]
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.untar.R
 #+BEGIN_SRC R
-rs.untar  <- function(path = ".", outdir = "../tif", pattern = ".tgz") {
-        tarFiles_v <- list.files(path = path, pattern = pattern, all.files = T, full.names = T) 
-        sapply(tarFiles_v, function(i) {untar(tarfile = i, exdir = file.path(outdir, tools::file_path_sans_ext(basename(i))))})
-}
+  rs.untar  <- function(list, outdir = "../tif", pattern = ".tgz") {
+          
+          sapply(list, function(i) {untar(tarfile = i, exdir = file.path(outdir, tools::file_path_sans_ext(basename(i))))})
+  }
 #+END_SRC
-*** TODO untar by list
-*** rsCptar
+
+
+
+
+
+*** DONE rs.cptar copy file in the list
+- State "DONE"       from "DOING"      [2014-09-16 Tue 15:26]
+- State "DOING"      from "TODO"       [2014-09-16 Tue 15:26]
+- State "TODO"       from ""           [2014-09-16 Tue 16:26]
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.cptar.R
 #+BEGIN_SRC R 
-#' Copy files in the list from fromdir to todir
+  #' Copy files in the list from fromdir to todir
+  #' @param list LC81050292013262LGN00.tgz
+  #' @param formdir folders contain the Image usrally the download or database
+  #' @param todir  Where the files will copy to, usually the workdir
 
-    rs.cptar <- function(list, fromdir, todir){
-            if (all(list %in% dir(fromdir))){
-                    for (i in list){
-                            file.copy(file.path(fromdir,i), todir)
-                    }
-            } else {
-                    stop (paste("Not all the files in", fromdir))
-            }
-    }
+      rs.cptar <- function(list, fromdir, todir){
+              if (all(list %in% dir(fromdir))){
+                      for (i in list){
+                              file.copy(file.path(fromdir,i), todir)
+                              untar(tarfile = i, exdir = file.path(todir, tools::file_path_sans_ext(basename(i))))
+                              file.remove(i)
+                      }
+              } else {
+                      stop (paste("Not all the files in", fromdir))
+              }
+      }
 #+END_SRC
 
 
