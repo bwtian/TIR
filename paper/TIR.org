@@ -50,7 +50,7 @@ TIR(idList) Object: 1 click get all results
 #+BEGIN_SRC R
 rs.untar  <- function(path = ".", outdir = "../tif", pattern = ".tgz") {
         tarFiles_v <- list.files(path = path, pattern = pattern, all.files = T, full.names = T) 
-        sapply(tarFiles_v, function(i) {untar(tarfile = i, exdir = file.path(outdir,tools::file_path_sans_ext(basename(i))))})
+        sapply(tarFiles_v, function(i) {untar(tarfile = i, exdir = file.path(outdir, tools::file_path_sans_ext(basename(i))))})
 }
 #+END_SRC
 *** TODO untar by list
@@ -58,8 +58,8 @@ rs.untar  <- function(path = ".", outdir = "../tif", pattern = ".tgz") {
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.cptar.R
 #+BEGIN_SRC R 
   rs.cptar <- function(list, fromdir, todir){
-          todir <- getwd()
-          if (list %in% dir(fromdir)){
+          todir <- dir.create(todir)
+          if (match(list, dir(fromdir)))t{
                   for (i in list){
                           file.copy(file.path(fromdir,i), todir)
                   }

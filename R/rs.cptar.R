@@ -1,7 +1,7 @@
 
 rs.cptar <- function(list, fromdir, todir){
-        todir <- getwd()
-        if (list %in% dir(fromdir)){
+        todir <- dir.create(todir)
+        if (match(list, dir(fromdir)))t{
                 for (i in list){
                         file.copy(file.path(fromdir,i), todir)
                 }
