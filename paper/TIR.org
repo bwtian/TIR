@@ -77,19 +77,30 @@ TIR(idList) Object: 1 click get all results from a list
 - State "TODO"       from ""           [2014-09-16 Tue 17:26]
 .tgz test ok
 .tar.gz get the wrong basename identifire.tar
+tips:
+: utils::untar, some time untar not work
+: tools::file_path_as_absolute, untar also need absolute path if workdir not specified 
+: basename not work for .tar.gz so use gsub
+: untar need time
+#+BEGIN_EXAMPLE
+  file.copy(file.path(fromdir,i), todir)
+  utils::untar(tarfile = file.path(todir,i), exdir = file.path(todir,tools::file_path_sans_ext(basename(i))))
+  utils::untar(tarfile = file.path(todir,i), exdir = file.path(todir, gsub(pattern = "(^[^.]+)(.*)", replacement = "\\1", i)))
+  file.remove(file.path(todir,i))
+
+#+END_EXAMPLE
+
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.cptar.R
 #+BEGIN_SRC R 
-  #' Copy files in the list from fromdir to todir, untar and delete tarballs
-  #' @param list LC81050292013262LGN00.tgz
+  #' Select and untar files in the list form tar dir to tif dir 
+  #' @param list like LC81050292013262LGN00.tgz or LC81050292013262LGN00.tar.gz
   #' @param formdir folders contain the Image usrally the download or database
   #' @param todir  Where the files will copy to, usually the workdir
       rs.cptar <- function(list, fromdir, todir){
               if (all(list %in% dir(fromdir))){
                       for (i in list){
-                              file.copy(file.path(fromdir,i), todir)
-                              #utils::untar(tarfile = file.path(todir,i), exdir = file.path(todir,tools::file_path_sans_ext(basename(i))))
-                              utils::untar(tarfile = file.path(todir,i), exdir = file.path(todir,gsub(pattern = "(^[^.]+)(.*)", replacement = "\\1", i)))
-                              file.remove(file.path(todir,i))
+                              idir <- gsub(pattern = "(^[^.]+)(.*)", replacement = "\\1", i)
+                              utils::untar(tarfile = file.path(fromdir,i), exdir = tools::file_path_as_absolute(file.path(todir, idir)))
                       }
               } else {
                       stop (paste("Not all the files in", fromdir))
