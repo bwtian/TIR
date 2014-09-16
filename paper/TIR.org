@@ -59,5 +59,6 @@ TIR(idList) Object: 1 click get all results
 #+NAME: fig:A  
 #+RESULTS: r:figA
 *** TODO untar by list
+*** Read Landsat8
 *** Atmospheric Correction
 
