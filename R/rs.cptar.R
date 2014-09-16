@@ -9,7 +9,7 @@
                     for (i in list){
                             file.copy(file.path(fromdir,i), todir)
                             utils::untar(tarfile = i, exdir = file.path(todir,tools::file_path_sans_ext(basename(i))))
-                            file.remove(i)
+                            file.remove(file.path(todir,i))
                     }
             } else {
                     stop (paste("Not all the files in", fromdir))
