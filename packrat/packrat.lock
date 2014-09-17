@@ -7,16 +7,42 @@ Repos: CRAN=http://cran.ism.ac.jp/,
     BioCexp=http://bioconductor.org/packages/2.14/data/experiment,
     BioCextra=http://bioconductor.org/packages/2.14/extra
 
+Package: bitops
+Source: CRAN
+Version: 1.0-6
+Hash: cb26464a8321628636b547518994c931
+
+Package: digest
+Source: CRAN
+Version: 0.6.4
+Hash: e4bf0e79b15a352510aff0de905d31e2
+
+Package: jsonlite
+Source: CRAN
+Version: 0.9.11
+Hash: 9eda817b04b4253e3dc1ba685b0bd612
+
+Package: memoise
+Source: CRAN
+Version: 0.2.1
+Hash: fc52fa39dfd216c44d64812ff31b1c67
+Requires: digest
+
 Package: packrat
 Source: github
 Version: 0.4.0.12
+Hash: e738f79a22521c57fad67a1679302385973cd958
 GithubRepo: packrat
 GithubUsername: rstudio
 GithubRef: v0.98.1000
 GithubSha1: e738f79a22521c57fad67a1679302385973cd958
-Hash: e738f79a22521c57fad67a1679302385973cd958
 
 Package: stringr
 Source: CRAN
 Version: 0.6.2
 Hash: cdde0cfa0f52cffeaca23a11a3899779
+
+Package: whisker
+Source: CRAN
+Version: 0.3-2
+Hash: 186ab2937fec1694c8a63009a2389c4e
