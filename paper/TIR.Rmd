@@ -1,0 +1,178 @@
+#+PROPERY: tangle no
+TIR(idList) Object: 1 click get all results from a list
+*** DONE rs.untar untar file in the list to sceneDir
+- State "DONE"       from "DOING"      [2014-09-16 Tue 15:26]
+- State "DOING"      from "TODO"       [2014-09-16 Tue 15:26]
+- State "TODO"       from ""           [2014-09-16 Tue 17:26]
+#+HEADER: :tangle ~/SparkleShare/TIR/R/rs.untar.R
+#+BEGIN_SRC R 
+  #' Select and untar files in the list form tar dir to tif dir 
+  #' @param list like LC81050292013262LGN00.tgz or LC81050292013262LGN00.tar.gz
+  #' @param formdir folders contain the Image usrally the download or database
+  #' @param todir  Where the files will copy to, usually the workdir
+  rs.untar <- function(list, fromdir, todir){
+          if (all(list %in% dir(fromdir))){
+                  sapply(list, function(i) {
+                          sceneDir <-file.path(tools::file_path_as_absolute(todir), gsub(pattern = "(^[^.]+)(.*)", replacement = "\\1", i))
+                          utils::untar(tarfile = file.path(tools::file_path_as_absolute(fromdir),i), exdir = sceneDir)
+                  })
+            } else {
+                    stop (paste("Not all the files in", fromdir))
+            }
+  }
+#+END_SRC
+**** Code Note
+.tgz test ok
+.tar.gz get the wrong basename identifire.tar
+tips:
+: utils::untar, some time untar not work
+: tools::file_path_as_absolute, untar also need absolute path if workdir not specified 
+: basename not work for .tar.gz so use gsub
+: untar need time
+#+BEGIN_EXAMPLE
+  file.copy(file.path(fromdir,i), todir)
+  utils::untar(tarfile = file.path(todir,i), exdir = file.path(todir,tools::file_path_sans_ext(basename(i))))
+  utils::untar(tarfile = file.path(todir,i), exdir = file.path(todir, gsub(pattern = "(^[^.]+)(.*)", replacement = "\\1", i)))
+  file.remove(file.path(todir,i))
+for (i in list){
+utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_as_absolute(todir), gsub(pattern = "(^[^.]+)(.*)", replacement = "\\1", i)))
+}
+#+END_EXAMPLE
+
+
+
+*** DONE rs.readL8 Read Landsat8
+- State "DONE"       from "DOING"      [2014-09-16 Tue 22:50]
+- State "DOING"      from "TODO"       [2014-09-16 Tue 22:50]
+- State "TODO"       from ""           [2014-09-16 Tue 17:48]
+#+HEADER: :tangle ~/SparkleShare/TIR/R/rs.readL8.R
+#+BEGIN_SRC R
+  #' Reads a Landsat 8 product
+  #' @description Reads a Landsat 8 product
+  #'
+  #' @param product name of the product, e.g. LC80522102014165LGN00. It must be in the working directory
+  #' @return list with metadata and raster bands
+  #' @examples \dontrun{
+  #' ReadLandsat8("LC80522102014165LGN00")
+  #' }
+  #'
+  #' @note  ReadLandsat8 Function orignally from Package rLandsat8
+  #'
+  #' @export
+  #' @import raster
+
+  ReadLandsat8 <- function(product) {
+
+    raster.files <- list("aerosol"="file_name_band_1",
+      "blue"="file_name_band_2",
+      "green"="file_name_band_3",
+      "red"="file_name_band_4",
+      "nir"="file_name_band_5",
+      "swir1"="file_name_band_6",
+      "swir2"="file_name_band_7",
+      "panchromatic"="file_name_band_8",
+      "cirrus"="file_name_band_9",
+      "tirs1"="file_name_band_10",
+      "tirs2"="file_name_band_11"
+      )
+
+    meta.file <- paste0(product, "/", product, "_MTL.txt")
+
+    if (!file.exists(meta.file))
+         stop(paste(meta.file, "file not found."))
+
+    textLines <- readLines(meta.file)
+
+    counts <- count.fields(textConnection(textLines), sep="=")
+
+    met <- read.table(text=textLines[counts == 2], as.is=TRUE, header=FALSE, sep="=", strip.white=TRUE, stringsAsFactors=FALSE)
+
+    met <- read.table(text=textLines[counts == 2], as.is=TRUE, header=FALSE, sep="=", strip.white=TRUE, stringsAsFactors=FALSE, row.names = NULL, col.names=c("name", "value"))
+
+    met <- met[!met$name == "GROUP", ]
+    met <- met[!met$name == "END_GROUP", ]
+    rownames(met) <- tolower(met[, "name"])
+    met[, "name"] <- NULL
+
+    met <- as.list(as.data.frame(t(met), stringsAsFactors=FALSE))
+
+    bands=lapply(raster.files, function(x) {
+      r <- raster(paste0(product, "/", met[[x]]))
+      r@title <- names(raster.files)[seq_along(raster.files)[sapply(raster.files, function(a) x %in% a)]]
+      NAvalue(r) <- 0
+      return(r)
+    })
+
+    return(list(metadata=met,
+      band=bands)
+    )
+  }
+  require(raster)
+  rs.readL8 <- ReadLandsat8
+
+
+#+END_SRC
+
+*** TODO l8.DNtoTOARadiance
+#+HEADER: :tangle ~/SparkleShare/TIR/R/l8.DNtoTOARadiance.R
+#+BEGIN_SRC R
+   #' creates a raster with the TOA radiance 
+   #' @description Creates a raster with the TOA radiance
+   #'
+   #' @param landsat8 list returned by rLandsat8::ReadLandsat8
+   #' @param band Landsat 11 bandname (one of "aerosol", "blue", "green", "red", "nir", "swir1", "swir2", "panchromatic", "cirrus", "tirs1", "tirs2" 
+   #' @return TOA Radiance raster
+   #' @examples \dontrun{
+   #' ls8 <- ReadLandsat8("LC81880342014174LGN00")
+   #' r <- ToTOARadiance(ls8, "red")
+   #' }
+   #' @note form rLandsat8
+   #' @export
+   #' @import raster
+
+   ToTOARadiance <- function(landsat8, band) {
+
+     bandnames <-c("aerosol", "blue", "green", "red",
+     "nir", "swir1", "swir2",
+     "panchromatic",
+     "cirrus",
+     "tirs1", "tirs2")
+     
+     allowedbands <- bandnames
+     
+     if (!band %in% allowedbands)
+     {
+          stop(paste(band, "band not allowed"))
+     }
+     
+     idx <- seq_along(bandnames)[sapply(bandnames, function(x) band %in% x)]
+
+     ml <- as.numeric(landsat8$metadata[[paste0("radiance_mult_band_",idx)]])
+     al <- as.numeric(landsat8$metadata[[paste0("radiance_add_band_",idx)]])
+     
+     TOArad <- landsat8$band[[band]] * ml + al
+     
+     return(TOArad)
+     
+   }
+
+   ## Add new
+   l8.DNtoTOARadiance <- function(idenfier){
+  bandnames <-c("aerosol", "blue", "green", "red",
+     "nir", "swir1", "swir2",
+     "panchromatic",
+     "cirrus",
+     "tirs1", "tirs2")
+
+     sapply(bandnames, function(i){ToTOARadiance(idenfier, i)}) 
+   }
+
+#+END_SRC
+
+
+
+
+*** Atmospheric Correction
+** man
+** inst
+
