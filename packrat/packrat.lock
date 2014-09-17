@@ -17,6 +17,12 @@ Source: CRAN
 Version: 0.6.4
 Hash: e4bf0e79b15a352510aff0de905d31e2
 
+Package: evaluate
+Source: CRAN
+Version: 0.5.5
+Hash: 20881970e590ee68de97a468694db7b0
+Requires: stringr
+
 Package: jsonlite
 Source: CRAN
 Version: 0.9.11
