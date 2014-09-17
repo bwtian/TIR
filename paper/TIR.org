@@ -24,22 +24,30 @@ TIR(idList) Object: 1 click get all results from a list
 |                    |                  |         |                  |             |                         |             |
 |--------------------+------------------+---------+------------------+-------------+-------------------------+-------------|
 * Workfolw of The TIR
+
 #+NAME: fig:TIRworkflow
 #+HEADER: :cache yes :tangle yes :exports none
 #+HEADER: :results output graphics
 #+BEGIN_SRC dot :file ./Figures/TIRWorkflow.png 
   digraph {
   node [shape = box]
-  L0 [label = "atSensor"]
-  L1 [label = "atTOA"]
-  L2 [label = "atSurface"]
-  L3 [label = "atNeeds"]
-  L0 -> L1 -> L2 -> L3
-
+  L0 [label = "atSensor \n L0"]
+  L1 [label = "atTOA \n L1"]
+  L2 [label = "atSurface \n L2"]
+  L3 [label = "atNeeds\n L3"]
+  L4 [label = "atPaper\n L4"]
+  L5 [label = "atProduct\n L5"]
+  L0 -> L1 -> L2 -> L3 -> L4 -> L5
+  {rank =same; L0, L1,L2,L3,L4,L5}
+  L0 -> "dir.tar" -> "dir.tif"
+  L1 -> "dir.toaRad" -> {"dir.toaRef", "dir.toaBT"}
+  "dir.dem" -> L2 -> "dir.rst"
+  "dir.shp" -> L3 -> "dir.gis"
+  L4 -> "dir.fig"
   }
 #+END_SRC
 
-#+RESULTS[48acf4d752613056e28e90ae509396828a6e0aab]: fig:TIRworkflow
+#+RESULTS[3f8abe0c21243c28255cf226796c6b4fc1d4e102]: fig:TIRworkflow
 [[file:./Figures/TIRWorkflow.png]]
 * R code
 ** R
@@ -233,12 +241,39 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
      "panchromatic",
      "cirrus",
      "tirs1", "tirs2")
-
+     
      sapply(bandnames, function(i){ToTOARadiance(idenfier, i)}) 
    }
 
 #+END_SRC
 
+
+
+*** DNtoTOARadiance
+
+#+BEGIN_SRC R
+  library(raster)
+  l8.lst  <- lapply(dir(dir.tif), ReadLandsat8)
+  dir.toaRad  <- "~/Share500sda/Landsat8/at1_TOA/toaRad/"
+  bandnames <-c("aerosol", "blue", "green", "red",
+       "nir", "swir1", "swir2",
+       "panchromatic",
+       "cirrus",
+       "tirs1", "tirs2")
+  for(i in l8.lst) {
+    sceneName  <- i$metadata$landsat_scene_id
+    for(j in bandnames){
+       idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] # a number
+       bandidx <- ("file_name_band_", idx)
+       grepl(i$metadata, bandidx)
+       bandName <-   i$metadata$paste0
+       Rad.rst  <- ToTOARadiance(i, j)
+       writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName, bandName), overwrite = T)
+      }
+  }
+
+
+#+END_SRC
 
 
 
