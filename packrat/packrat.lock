@@ -1,6 +1,6 @@
 PackratFormat: 1.4
 PackratVersion: 0.4.0.12
-RVersion: 3.1.0
+RVersion: 3.1.1
 Repos: CRAN=http://cran.ism.ac.jp/,
     BioCsoft=http://bioconductor.org/packages/2.14/bioc,
     BioCann=http://bioconductor.org/packages/2.14/data/annotation,
@@ -15,3 +15,8 @@ GithubUsername: rstudio
 GithubRef: v0.98.1000
 GithubSha1: e738f79a22521c57fad67a1679302385973cd958
 Hash: e738f79a22521c57fad67a1679302385973cd958
+
+Package: stringr
+Source: CRAN
+Version: 0.6.2
+Hash: cdde0cfa0f52cffeaca23a11a3899779
