@@ -24,7 +24,7 @@ for (i in l8.lst) {
                 bandName <-  sapply(i, "[[", bandidx)[[1]]
                 # fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOARefSun.tif")
                 Ref.rst  <- ToTOAReflectance(i, j, is.suncorrected = TRUE)
-                writeRaster(Ref.rst, filename = file.path(dir.toaRefSun, bandName, fileName), overwrite = T)
+                writeRaster(Ref.rst, filename = file.path(dir.toaRefSun, bandName), overwrite = T)
                 raster::removeTmpFiles(h = 0.5) ## Improtant tips for save hardisk
         }
 }
