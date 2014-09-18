@@ -1,4 +1,5 @@
 #+PROPERY: tangle no
+#+TODO: CODE(!) DEMO(!) | DONE(!)
 TIR(idList) Object: 1 click get all results from a list
 * Credits and Source code Pool
 |--------------------+------------------+---------+------------------+-------------+-------------------------+-------------|
@@ -53,7 +54,9 @@ TIR(idList) Object: 1 click get all results from a list
 ** R
 
 
-*** DONE rs.untar1
+*** DEMO rs.untar1
+- State "DEMO"       from "CODE"       [2014-09-18 Thu 14:22]
+- State "CODE"       from ""           [2014-09-18 Thu 14:22]
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.untar1.R
 #+BEGIN_SRC R
   rs.untar  <- function(list, path = ".", outdir = "../tif", pattern = ".tgz") {
@@ -62,7 +65,9 @@ TIR(idList) Object: 1 click get all results from a list
   }
 #+END_SRC
 
-*** DONE rs.untar untar file in the list to sceneDir
+*** DEMO rs.untar untar file in the list to sceneDir
+- State "DEMO"       from "CODE"       [2014-09-18 Thu 14:22]
+- State "CODE"       from ""           [2014-09-18 Thu 14:22]
 - State "DONE"       from "DOING"      [2014-09-16 Tue 15:26]
 - State "DOING"      from "TODO"       [2014-09-16 Tue 15:26]
 - State "TODO"       from ""           [2014-09-16 Tue 17:26]
@@ -102,7 +107,9 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 #+END_EXAMPLE
 
 
-*** DONE rs.todown data need to download from list
+*** DEMO rs.todown data need to download from list
+- State "DEMO"       from "CODE"       [2014-09-18 Thu 14:21]
+- State "CODE"       from ""           [2014-09-18 Thu 14:21]
 - State "DONE"       from "DOING"      [2014-09-15 Mon 16:24]
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.todown.R
 #+BEGIN_SRC R
@@ -118,7 +125,8 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 
 
 
-*** DONE rs.readL8 Read Landsat8
+*** DEMO rs.readL8 Read Landsat8
+- State "DEMO"       from "DONE"       [2014-09-18 Thu 14:21]
 - State "DONE"       from "DOING"      [2014-09-16 Tue 22:50]
 - State "DOING"      from "TODO"       [2014-09-16 Tue 22:50]
 - State "TODO"       from ""           [2014-09-16 Tue 17:48]
@@ -190,10 +198,10 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 
 #+END_SRC
 
-*** TODO rs.DNtoTOARadiance
-- State "TODO"       from ""           [2014-09-18 Thu 10:58]
+*** CODE rs.DNtoTOARadiance
+- State "CODE"       from "DEMO"       [2014-09-18 Thu 14:22]
 
-*** TODO l8.DNtoTOARadiance
+*** CODE l8.DNtoTOARadiance
 #+HEADER: :tangle ~/SparkleShare/TIR/R/l8.DNtoTOARadiance.R
 #+BEGIN_SRC R
    #' creates a raster with the TOA radiance 
@@ -254,7 +262,8 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 #+BEGIN_SRC R
 
 #+END_SRC
-*** DNtoTOARadiance
+*** CODE DNtoTOARadiance
+- State "CODE"       from ""           [2014-09-18 Thu 14:21]
 
 #+BEGIN_SRC R
   library(raster)
@@ -279,8 +288,10 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 
 
 #+END_SRC
-
-
+*** DNtoTOAReflectance
+*** DNtoTOABT
+*** RadtoTOARef
+*** RadtoTOABT
 
 *** Atmospheric Correction
 ** man
