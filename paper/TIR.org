@@ -217,7 +217,32 @@ rs.todown(worklist, dir.tar, "todown")
 
 ** CODE rs.DNtoTOARadiance
 - State "CODE"       from "DEMO"       [2014-09-18 Thu 14:22]
+*** Reference DNtoTOARadiance
+- State "CODE"       from ""           [2014-09-18 Thu 14:21]
 
+#+BEGIN_SRC R
+  library(raster)
+  l8.lst  <- lapply(dir(dir.tif), ReadLandsat8)
+  dir.toaRad  <- "~/Share500sda/Landsat8/at1_TOA/toaRad/"
+  bandnames <-c("aerosol", "blue", "green", "red",
+       "nir", "swir1", "swir2",
+       "panchromatic",
+       "cirrus",
+       "tirs1", "tirs2")
+  for(i in l8.lst) {
+    sceneName  <- i$metadata$landsat_scene_id
+    for(j in bandnames){
+       idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] # a number
+       bandidx <- ("file_name_band_", idx)
+       grepl(i$metadata, bandidx)
+       bandName <-   i$metadata$paste0
+       Rad.rst  <- ToTOARadiance(i, j)
+       writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName, bandName), overwrite = T)
+      }
+  }
+
+
+#+END_SRC
 *** Code
 
 *** Demo
@@ -256,8 +281,6 @@ for (i in l8.lst) {
 
 #+END_SRC 
 
-
-** CODE  
 ** CODE l8.DNtoTOARadiance
 *** refercode rLandsat8::ToTOARadiance
 #+HEADER: :tangle ~/SparkleShare/TIR/R/l8.DNtoTOARadiance.R
@@ -325,36 +348,60 @@ for (i in l8.lst) {
 *** Code
 *** Demo
 
-** CODE DNtoTOARadiance
-- State "CODE"       from ""           [2014-09-18 Thu 14:21]
+** CODE DNtoTOAReflectance
+- State "CODE"       from ""           [2014-09-18 Thu 15:16]
 
-#+BEGIN_SRC R
+*** Code
+*** Demo
+#+HEADER: :tangle ../demo/rs11_DNtoTOAReflectance.R
+#+BEGIN_SRC R 
+  sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
+  sourceDir("~/SparkleShare/TIR/R/")
+  dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
+  dir.toaRef  <- "~/Share500sda/Landsat8/at1_TOA/toaRef"
   library(raster)
-  l8.lst  <- lapply(dir(dir.tif), ReadLandsat8)
-  dir.toaRad  <- "~/Share500sda/Landsat8/at1_TOA/toaRad/"
+  setwd(dir.tif)  ## very important tips for use rLandsat8
+  ## files  <- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)
+  ## basename(files)
+  ## l8.lst  <- lapply(basename(files), ReadLandsat8)
+  l8.lst   <- lapply(dir(dir.tif), ReadLandsat8)
   bandnames <-c("aerosol", "blue", "green", "red",
-       "nir", "swir1", "swir2",
-       "panchromatic",
-       "cirrus",
-       "tirs1", "tirs2")
-  for(i in l8.lst) {
-    sceneName  <- i$metadata$landsat_scene_id
-    for(j in bandnames){
-       idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] # a number
-       bandidx <- ("file_name_band_", idx)
-       grepl(i$metadata, bandidx)
-       bandName <-   i$metadata$paste0
-       Rad.rst  <- ToTOARadiance(i, j)
-       writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName, bandName), overwrite = T)
-      }
+                "nir", "swir1", "swir2",
+                "panchromatic",
+                "cirrus",
+                "tirs1", "tirs2")
+  for (i in l8.lst) {
+          sceneName  <- i$metadata$landsat_scene_id
+          if (!file.exists(file.path(dir.toaRad, sceneName))) {
+                  dir.create(file.path(dir.toaRad, sceneName), recursive = T)
+          }
+          for(j in bandnames){
+                  idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] # a number
+                  bandidx <- paste0("file_name_band_", idx)
+                  bandName <-  sapply(i, "[[", bandidx)[[1]]
+                  fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOARef.tif")
+                  Rad.rst  <- ToTOARadiance(i, j)
+                  writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName, fileName), overwrite = T)
+                  raster::removeTmpFiles(h = 0.03) ## Improtant tips for save hardisk
+          }
   }
 
+#+END_SRC 
 
-#+END_SRC
-** DNtoTOAReflectance
+
+
+
+
 ** DNtoTOABT
 ** RadtoTOARef
 ** RadtoTOABT
 
 ** Atmospheric Correction
+
+
+
+
+
+
+
 
