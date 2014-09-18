@@ -65,10 +65,8 @@ TIR(idList) Object: 1 click get all results from a list
 ** DONE rs.untar untar file in the list to sceneDir
 - State "DONE"       from "DEMO"       [2014-09-18 Thu 14:50]
 - State "DEMO"       from "CODE"       [2014-09-18 Thu 14:22]
-- State "CODE"       from ""           [2014-09-18 Thu 14:22]
 - State "DONE"       from "DOING"      [2014-09-16 Tue 15:26]
 - State "DOING"      from "TODO"       [2014-09-16 Tue 15:26]
-- State "TODO"       from ""           [2014-09-16 Tue 17:26]
 - 
 *** Code
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.untar.R
@@ -116,8 +114,8 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 #+END_EXAMPLE
 
 
-
-** DEMO rs.todown data need to download from list
+** DONE rs.todown data need to download from list
+- State "DONE"       from "DEMO"       [2014-09-18 Thu 14:56]
 - State "DEMO"       from "CODE"       [2014-09-18 Thu 14:21]
 - State "CODE"       from ""           [2014-09-18 Thu 14:21]
 - State "DONE"       from "DOING"      [2014-09-15 Mon 16:24]
@@ -141,6 +139,9 @@ dir.tar  <- "~/Share300sdb/Landsat8/N0/LISTEJapan"
 rs.todown(worklist, dir.tar, "todown")
 #+END_SRC 
 
+** rs.minCloud
+** rs.bestSesson
+** rs.shortBaseline
 ** DEMO rs.readL8 Read Landsat8
 - State "DEMO"       from "DONE"       [2014-09-18 Thu 14:21]
 - State "DONE"       from "DOING"      [2014-09-16 Tue 22:50]
