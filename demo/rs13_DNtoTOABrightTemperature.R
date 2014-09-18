@@ -16,7 +16,7 @@ for (i in l8.lst) {
                 dir.create(file.path(dir.toaBT, sceneName), recursive = T)
         }
         for(j in bandnames){
-                idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] # a number
+                idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] + 9 # a number
                 bandidx <- paste0("file_name_band_", idx)
                 bandName <-  sapply(i, "[[", bandidx)[[1]]
                 #fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOABT.tif")
