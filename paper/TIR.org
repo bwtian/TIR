@@ -50,11 +50,8 @@ TIR(idList) Object: 1 click get all results from a list
 
 #+RESULTS[3f8abe0c21243c28255cf226796c6b4fc1d4e102]: fig:TIRworkflow
 [[file:./Figures/TIRWorkflow.png]]
-* R code
-** R
-
-
-*** DEMO rs.untar1
+* R and Demo Floder
+** DEMO rs.untar1
 - State "DEMO"       from "CODE"       [2014-09-18 Thu 14:22]
 - State "CODE"       from ""           [2014-09-18 Thu 14:22]
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.untar1.R
@@ -65,7 +62,7 @@ TIR(idList) Object: 1 click get all results from a list
   }
 #+END_SRC
 
-*** DEMO rs.untar untar file in the list to sceneDir
+** DEMO rs.untar untar file in the list to sceneDir
 - State "DEMO"       from "CODE"       [2014-09-18 Thu 14:22]
 - State "CODE"       from ""           [2014-09-18 Thu 14:22]
 - State "DONE"       from "DOING"      [2014-09-16 Tue 15:26]
@@ -88,7 +85,7 @@ TIR(idList) Object: 1 click get all results from a list
             }
   }
 #+END_SRC
-**** Code Note
+*** Code Note
 .tgz test ok
 .tar.gz get the wrong basename identifire.tar
 tips:
@@ -107,7 +104,7 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 #+END_EXAMPLE
 
 
-*** DEMO rs.todown data need to download from list
+** DEMO rs.todown data need to download from list
 - State "DEMO"       from "CODE"       [2014-09-18 Thu 14:21]
 - State "CODE"       from ""           [2014-09-18 Thu 14:21]
 - State "DONE"       from "DOING"      [2014-09-15 Mon 16:24]
@@ -125,7 +122,7 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 
 
 
-*** DEMO rs.readL8 Read Landsat8
+** DEMO rs.readL8 Read Landsat8
 - State "DEMO"       from "DONE"       [2014-09-18 Thu 14:21]
 - State "DONE"       from "DOING"      [2014-09-16 Tue 22:50]
 - State "DOING"      from "TODO"       [2014-09-16 Tue 22:50]
@@ -198,10 +195,11 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 
 #+END_SRC
 
-*** CODE rs.DNtoTOARadiance
+** CODE rs.DNtoTOARadiance
 - State "CODE"       from "DEMO"       [2014-09-18 Thu 14:22]
 
-*** CODE l8.DNtoTOARadiance
+** CODE l8.DNtoTOARadiance
+*** refercode rLandsat8::ToTOARadiance
 #+HEADER: :tangle ~/SparkleShare/TIR/R/l8.DNtoTOARadiance.R
 #+BEGIN_SRC R
    #' creates a raster with the TOA radiance 
@@ -262,7 +260,12 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 #+BEGIN_SRC R
 
 #+END_SRC
-*** CODE DNtoTOARadiance
+
+*** refercode
+*** Code
+*** Demo
+
+** CODE DNtoTOARadiance
 - State "CODE"       from ""           [2014-09-18 Thu 14:21]
 
 #+BEGIN_SRC R
@@ -288,12 +291,10 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 
 
 #+END_SRC
-*** DNtoTOAReflectance
-*** DNtoTOABT
-*** RadtoTOARef
-*** RadtoTOABT
+** DNtoTOAReflectance
+** DNtoTOABT
+** RadtoTOARef
+** RadtoTOABT
 
-*** Atmospheric Correction
-** man
-** inst
+** Atmospheric Correction
 
