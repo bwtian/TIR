@@ -10,6 +10,6 @@ rs.untar <- function(list, fromdir, todir){
                         utils::untar(tarfile = file.path(tools::file_path_as_absolute(fromdir),i), exdir = sceneDir)
                 })
           } else {
-                  stop (paste("Not all the files in", fromdir))
+                  stop (paste("Not all the files in", fromdir, "Using rs.todown check it"))
           }
 }

@@ -46,6 +46,6 @@ bandnames <-c("aerosol", "blue", "green", "red",
    "panchromatic",
    "cirrus",
    "tirs1", "tirs2")
-
+   
    sapply(bandnames, function(i){ToTOARadiance(idenfier, i)}) 
  }
