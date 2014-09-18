@@ -16,8 +16,8 @@ bandnames <-c("aerosol", "blue", "green", "red",
               "tirs1", "tirs2")
 for (i in l8.lst) {
         sceneName  <- i$metadata$landsat_scene_id
-        if (!file.exists(file.path(dir.toaRad, sceneName))) {
-                dir.create(file.path(dir.toaRad, sceneName), recursive = T)
+        if (!file.exists(file.path(dir.toaRef, sceneName))) {
+                dir.create(file.path(dir.toaRef, sceneName), recursive = T)
         }
         for(j in bandnames){
                 idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] # a number
