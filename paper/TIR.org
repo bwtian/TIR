@@ -51,22 +51,6 @@ TIR(idList) Object: 1 click get all results from a list
 [[file:./Figures/TIRWorkflow.png]]
 * R code
 ** R
-*** DONE rs.todown  from list
-- State "DONE"       from "DOING"      [2014-09-15 Mon 16:24]
-#+HEADER: :tangle ~/SparkleShare/TIR/R/rs.todown.R
-#+BEGIN_SRC R
-  rs.todown <- function(list, downeddir, tolistName){
-          downedFiles  <- list.files(downeddir)
-          todownList   <-  setdiff(list, downedFiles)
-          Now <- format(Sys.time(), "_%y%m%d_%H%M%S")
-          todownListName <- paste0(todownListName, Now, ".txt")
-          write.table(todownList , todownListName, quote = F, row.names = F,col.names = F)
-  }
-#+END_SRC
-
-
-
-
 
 
 *** DONE rs.untar1
@@ -116,6 +100,22 @@ for (i in list){
 utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_as_absolute(todir), gsub(pattern = "(^[^.]+)(.*)", replacement = "\\1", i)))
 }
 #+END_EXAMPLE
+
+
+*** DONE rs.todown data need to download from list
+- State "DONE"       from "DOING"      [2014-09-15 Mon 16:24]
+#+HEADER: :tangle ~/SparkleShare/TIR/R/rs.todown.R
+#+BEGIN_SRC R
+  rs.todown <- function(list, downeddir, tolistName){
+          downedFiles  <- list.files(downeddir)
+          todownList   <-  setdiff(list, downedFiles)
+          Now <- format(Sys.time(), "_%y%m%d_%H%M%S")
+          todownListName <- paste0(todownListName, Now, ".txt")
+          write.table(todownList , todownListName, quote = F, row.names = F,col.names = F)
+  }
+#+END_SRC
+
+
 
 
 
