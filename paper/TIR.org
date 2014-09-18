@@ -95,7 +95,7 @@ TIR(idList) Object: 1 click get all results from a list
                           utils::untar(tarfile = file.path(tools::file_path_as_absolute(fromdir),i), exdir = sceneDir)
                   })
             } else {
-                    stop (paste("Not all the files in", fromdir, "Using rs.todown check it"))
+                    stop (paste("Not all the files in", fromdir, "Use rs.todown to check it!"))
             }
   }
 #+END_SRC
