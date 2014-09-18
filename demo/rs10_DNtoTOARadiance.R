@@ -4,6 +4,8 @@ sourceDir("~/SparkleShare/TIR/R/")
 worklist  <- paste0(hkdMinCloud$ID,".tgz")
 dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
 dir.toaRad  <- "~/Share500sda/Landsat8/at1_TOA/toaRad"
+dir.tmp <- "~/Share500sda/raster_tmp"
+rasterOptions(tmpdir = dir.tmp)  
 library(raster)
 setwd(dir.tif)  ## very important tips for use rLandsat8
 ## files  <- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)

@@ -252,6 +252,8 @@ rs.todown(worklist, dir.tar, "todown")
   worklist  <- paste0(hkdMinCloud$ID,".tgz")
   dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
   dir.toaRad  <- "~/Share500sda/Landsat8/at1_TOA/toaRad"
+  dir.tmp <- "~/Share500sda/raster_tmp"
+  rasterOptions(tmpdir = dir.tmp)  
   library(raster)
   setwd(dir.tif)  ## very important tips for use rLandsat8
   ## files  <- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)
@@ -359,7 +361,10 @@ rs.todown(worklist, dir.tar, "todown")
   sourceDir("~/SparkleShare/TIR/R/")
   dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
   dir.toaRef  <- "~/Share500sda/Landsat8/at1_TOA/toaRef"
+ dir.tmp <- "~/Share500sda/raster_tmp"
   library(raster)
+  rasterOptions(tmpdir = dir.tmp)  
+
   setwd(dir.tif)  ## very important tips for use rLandsat8
   ## files  <- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)
   ## basename(files)
@@ -396,7 +401,9 @@ rs.todown(worklist, dir.tar, "todown")
   sourceDir("~/SparkleShare/TIR/R/")
   dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
   dir.toaRefSun  <- "~/Share500sda/Landsat8/at1_TOA/toaRefSun"
+  dir.tmp <- "~/Share500sda/raster_tmp"
   library(raster)
+  rasterOptions(tmpdir = dir.tmp)  
   setwd(dir.tif)  ## very important tips for use rLandsat8
   ## files  <- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)
   ## basename(files)

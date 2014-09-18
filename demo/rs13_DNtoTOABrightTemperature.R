@@ -3,7 +3,9 @@ sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
 sourceDir("~/SparkleShare/TIR/R/")
 dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
 dir.toaBT  <- "~/Share500sda/Landsat8/at1_TOA/toaBT"
+dir.tmp <- "~/Share500sda/raster_tmp"
 library(raster)
+rasterOptions(tmpdir = dir.tmp)
 setwd(dir.tif)  ## very important tips for use rLandsat8
 ## files  <- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)
 ## basename(files)
@@ -22,6 +24,6 @@ for (i in l8.lst) {
                 #fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOABT.tif")
                 BT.rst  <- ToAtSatelliteBrightnessTemperature(i, j)
                 writeRaster(BT.rst, filename = file.path(dir.toaBT, sceneName, bandName), overwrite = T)
-                raster::removeTmpFiles(h = 0.5) ## Improtant tips for save hardisk
+                raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
         }
 }
