@@ -118,7 +118,6 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 
 
 
-
 *** DONE rs.readL8 Read Landsat8
 - State "DONE"       from "DOING"      [2014-09-16 Tue 22:50]
 - State "DOING"      from "TODO"       [2014-09-16 Tue 22:50]
@@ -191,6 +190,9 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 
 #+END_SRC
 
+*** TODO rs.DNtoTOARadiance
+- State "TODO"       from ""           [2014-09-18 Thu 10:58]
+
 *** TODO l8.DNtoTOARadiance
 #+HEADER: :tangle ~/SparkleShare/TIR/R/l8.DNtoTOARadiance.R
 #+BEGIN_SRC R
@@ -248,7 +250,10 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 #+END_SRC
 
 
+#+HEADER: :tangle ~/SparkleShare/TIR/R/rs.readL8.R
+#+BEGIN_SRC R
 
+#+END_SRC
 *** DNtoTOARadiance
 
 #+BEGIN_SRC R
