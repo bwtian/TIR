@@ -29,29 +29,6 @@ hkdMinCloud = ord[complete.cases(match(ord$combine, minCloud$combine)),]
 #write.csv(hkdMinCloud, "hkdMinCloud.csv", quote = F)
 
 
-```
-```{r}
-
-### less senson diffirence
-t  <- subset(ord, (monthN > 4 & monthN <= 10) & cloud < 20)
-t
-wrs  <- unique(ord[,c(2,3)])
-wrs
-ID  <- subset(ord, as.numeric(cloud) < 10, select = c(ID))
-unique()
-```
-
-
-```{r loadLib}
-
-```
-## Test rs.untar OK
-```{r unzip}
-worklist  <- paste0(hkdMinCloud$ID,".tgz")
-dir.tar  <- "~/Share300sdb/Landsat8/N0/LISTEJapan"
-dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
-rs.untar(worklist, fromdir = dir.tar, todir = dir.tif)
-```
 ### Single Test
 ```{r}
 l  <- ReadLandsat8("LC81050292014153LGN00")
@@ -85,19 +62,17 @@ idx <- 4
 ```{r DNtoToARad}
 sourceDir("~/SparkleShare/rLandsat8/src/main//R//rLandsat8//R")
 sourceDir("~/SparkleShare/TIR/R/")
-sourceDir("~/SparkleShare/")
 worklist  <- paste0(hkdMinCloud$ID,".tgz")
-dir.tar  <- "~/Share300sdb/Landsat8/N0/LISTEJapan"
 dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
-dir.rad  <- 
+dir.toaRad  <- "~/Share500sda/Landsat8/at1_TOA/toaRad"
 library(raster)
-setwd(dir.tif)  ## very important tips also huge hardisk /root is required
+setwd(dir.tif)  ## very important tips for use rLandsat8
 files  <- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)
 files
 basename(files)
 l8.lst  <- lapply(basename(files), ReadLandsat8)
 l8.lst   <- lapply(basename)
-dir.toaRad  <- "~/Share500sda/Landsat8/at1_TOA/toaRad"
+
 bandnames <-c("aerosol", "blue", "green", "red",
      "nir", "swir1", "swir2",
      "panchromatic",
