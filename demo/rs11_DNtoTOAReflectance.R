@@ -12,8 +12,7 @@ l8.lst   <- lapply(dir(dir.tif), ReadLandsat8)
 bandnames <-c("aerosol", "blue", "green", "red",
               "nir", "swir1", "swir2",
               "panchromatic",
-              "cirrus",
-              "tirs1", "tirs2")
+              "cirrus")
 for (i in l8.lst) {
         sceneName  <- i$metadata$landsat_scene_id
         if (!file.exists(file.path(dir.toaRef, sceneName))) {
@@ -26,6 +25,6 @@ for (i in l8.lst) {
                 fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOARef.tif")
                 Ref.rst  <- ToTOAReflectance(i, j)
                 writeRaster(Ref.rst, filename = file.path(dir.toaRef, sceneName, fileName), overwrite = T)
-                raster::removeTmpFiles(h = 0.2) ## Improtant tips for save hardisk
+                raster::removeTmpFiles(h = 0.5) ## Improtant tips for save hardisk
         }
 }
