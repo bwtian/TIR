@@ -89,7 +89,7 @@ for (i in l8.lst) {
      bandName <-  sapply(i, "[[", bandidx)[[1]]
      Rad.rst  <- ToTOARadiance(i, j)
      writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName, bandName), overwrite = T)
-     raster::removeTmpFiles(h = 0.03)
+     raster::removeTmpFiles(h = 0.5)
     }
 }
 
