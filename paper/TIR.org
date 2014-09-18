@@ -1,5 +1,5 @@
 #+PROPERY: tangle no
-#+TODO: CODE(!) DEMO(!) | DONE(!)
+#+TODO: TODO(!) CODE(!) DEMO(!) | DONE(!) SOMEDAY(!)
 TIR(idList) Object: 1 click get all results from a list
 * Credits and Source code Pool
 |--------------------+------------------+---------+------------------+-------------+-------------------------+-------------|
@@ -113,7 +113,6 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 }
 #+END_EXAMPLE
 
-
 ** DONE rs.todown data need to download from list
 - State "DONE"       from "DEMO"       [2014-09-18 Thu 14:56]
 - State "DEMO"       from "CODE"       [2014-09-18 Thu 14:21]
@@ -139,9 +138,9 @@ dir.tar  <- "~/Share300sdb/Landsat8/N0/LISTEJapan"
 rs.todown(worklist, dir.tar, "todown")
 #+END_SRC 
 
-** rs.minCloud
-** rs.bestSesson
-** rs.shortBaseline
+** SOMEDAY rs.minCloud
+** SOMEDAY rs.bestSesson
+** SOMEDAY rs.shortBaseline
 ** DEMO rs.readL8 Read Landsat8
 - State "DEMO"       from "DONE"       [2014-09-18 Thu 14:21]
 - State "DONE"       from "DOING"      [2014-09-16 Tue 22:50]
@@ -427,9 +426,8 @@ rs.todown(worklist, dir.tar, "todown")
 
 
 
-
-
-** DNtoTOABT
+** SOMEDAY Sun elevation Correction pixel by pixel, caculate sun elv use oce
+** CODE DNtoTOABT
 *** Demo
 #+HEADER: :tangle ../demo/rs13_DNtoTOABrightTemperature.R
 #+BEGIN_SRC R 
@@ -450,7 +448,7 @@ rs.todown(worklist, dir.tar, "todown")
                   dir.create(file.path(dir.toaBT, sceneName), recursive = T)
           }
           for(j in bandnames){
-                  idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] # a number
+                  idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] + 9 # a number
                   bandidx <- paste0("file_name_band_", idx)
                   bandName <-  sapply(i, "[[", bandidx)[[1]]
                   #fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOABT.tif")
@@ -461,7 +459,6 @@ rs.todown(worklist, dir.tar, "todown")
   }
 
 #+END_SRC 
-
 
 ** RadtoTOARef
 ** RadtoTOABT
