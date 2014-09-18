@@ -62,7 +62,8 @@ TIR(idList) Object: 1 click get all results from a list
   }
 #+END_SRC
 
-** DEMO rs.untar untar file in the list to sceneDir
+** DONE rs.untar untar file in the list to sceneDir
+- State "DONE"       from "DEMO"       [2014-09-18 Thu 14:50]
 - State "DEMO"       from "CODE"       [2014-09-18 Thu 14:22]
 - State "CODE"       from ""           [2014-09-18 Thu 14:22]
 - State "DONE"       from "DOING"      [2014-09-16 Tue 15:26]
@@ -120,6 +121,7 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 - State "DEMO"       from "CODE"       [2014-09-18 Thu 14:21]
 - State "CODE"       from ""           [2014-09-18 Thu 14:21]
 - State "DONE"       from "DOING"      [2014-09-15 Mon 16:24]
+*** Code
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.todown.R
 #+BEGIN_SRC R
   rs.todown <- function(list, downeddir, tolistName){
@@ -130,9 +132,12 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
           write.table(todownList , todownListName, quote = F, row.names = F,col.names = F)
   }
 #+END_SRC
+*** Demo
+#+HEADER: :tangle ../demo/rs02_todownlist.R
+#+BEGIN_SRC R 
 
 
-
+#+END_SRC 
 
 ** DEMO rs.readL8 Read Landsat8
 - State "DEMO"       from "DONE"       [2014-09-18 Thu 14:21]
