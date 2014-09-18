@@ -68,6 +68,8 @@ TIR(idList) Object: 1 click get all results from a list
 - State "DONE"       from "DOING"      [2014-09-16 Tue 15:26]
 - State "DOING"      from "TODO"       [2014-09-16 Tue 15:26]
 - State "TODO"       from ""           [2014-09-16 Tue 17:26]
+- 
+*** Code
 #+HEADER: :tangle ~/SparkleShare/TIR/R/rs.untar.R
 #+BEGIN_SRC R 
   #' Select and untar files in the list form tar dir to tif dir 
@@ -85,6 +87,15 @@ TIR(idList) Object: 1 click get all results from a list
             }
   }
 #+END_SRC
+*** Demo
+#+HEADER: :tangle ../demo/rs01_untarLandsat8.R
+#+BEGIN_SRC R 
+worklist  <- paste0(hkdMinCloud$ID,".tgz")
+dir.tar  <- "~/Share300sdb/Landsat8/N0/LISTEJapan"
+dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
+rs.untar(worklist, fromdir = dir.tar, todir = dir.tif)
+#+END_SRC 
+
 *** Code Note
 .tgz test ok
 .tar.gz get the wrong basename identifire.tar
@@ -102,6 +113,7 @@ for (i in list){
 utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_as_absolute(todir), gsub(pattern = "(^[^.]+)(.*)", replacement = "\\1", i)))
 }
 #+END_EXAMPLE
+
 
 
 ** DEMO rs.todown data need to download from list
@@ -297,10 +309,4 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 ** RadtoTOABT
 
 ** Atmospheric Correction
-
-#+HEADER: :tangle ../R/r.function.R
-#+BEGIN_SRC R 
-test -> 1
-
-#+END_SRC 
 
