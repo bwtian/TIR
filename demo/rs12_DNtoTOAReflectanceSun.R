@@ -22,9 +22,9 @@ for (i in l8.lst) {
                 idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] # a number
                 bandidx <- paste0("file_name_band_", idx)
                 bandName <-  sapply(i, "[[", bandidx)[[1]]
-                fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOARefSun.tif")
+                # fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOARefSun.tif")
                 Ref.rst  <- ToTOAReflectance(i, j, is.suncorrected = TRUE)
-                writeRaster(Ref.rst, filename = file.path(dir.toaRefSun, sceneName, fileName), overwrite = T)
+                writeRaster(Ref.rst, filename = file.path(dir.toaRefSun, bandName, fileName), overwrite = T)
                 raster::removeTmpFiles(h = 0.5) ## Improtant tips for save hardisk
         }
 }
