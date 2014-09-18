@@ -1,0 +1,126 @@
+---
+title: "Landsat8Processing"
+output:
+  html_document:
+    toc: yes
+---
+
+```{r hkdlist, purl = FALSE}
+raw <- read.table("~/Dropbox/2data/dataRaw/LANDSAT_8_37926_lst.csv", sep =",")
+sub  <-raw[,c(3,4,5,16,20,21,22,36,37,14,15)]
+colnames(sub)  <- c("ID", "path", "row", "date", "cloud", "sunE", "sunA", "lat", "lon","lvl","sensor")
+ord  <- sub[-1,]
+ord[,4]  <- as.Date(ord[,4])
+ord[,5]  <- as.numeric(ord[,5])
+ord$monthC  <- months(ord[,4])
+ord$monthN  <- as.numeric(substr(ord[,4], 6,7))
+ord <- ord[order(ord[,2], ord[,13], ord[,3],ord[,5]),]
+ord  <- ord[order(ord[,6]),]
+subset(ord, month == "September" | month = "Octorber" , select = c(ID))
+### lessest cloud
+subset(ord, cloud < 10)
+minCloud  <- cbind(by(ord[,5], ord[,c(2,3)],min))
+library("reshape")
+minCloud  <- na.omit(melt(minCloud))
+ord$combine = as.character(interaction(ord$path, ord$row, ord$cloud))
+minCloud$combine = as.character(interaction(minCloud$X1,minCloud$X2,minCloud$value))
+
+hkdMinCloud = ord[complete.cases(match(ord$combine, minCloud$combine)),]
+#write.csv(hkdMinCloud, "hkdMinCloud.csv", quote = F)
+
+
+```
+```{r}
+
+### less senson diffirence
+t  <- subset(ord, (monthN > 4 & monthN <= 10) & cloud < 20)
+t
+wrs  <- unique(ord[,c(2,3)])
+wrs
+ID  <- subset(ord, as.numeric(cloud) < 10, select = c(ID))
+unique()
+```
+
+
+```{r loadLib}
+
+```
+## Test rs.untar OK
+```{r unzip}
+worklist  <- paste0(hkdMinCloud$ID,".tgz")
+dir.tar  <- "~/Share300sdb/Landsat8/N0/LISTEJapan"
+dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
+rs.untar(worklist, fromdir = dir.tar, todir = dir.tif)
+```
+### Single Test
+```{r}
+l  <- ReadLandsat8("LC81050292014153LGN00")
+rad  <- ToTOARadiance (l, "red")
+str(l    )
+class(l)
+l[[1]]$"file_name_band_1"
+l8.lst  <- lapply(dir(dir.tif), ReadLandsat8)
+lapply(l,function(x) grep("elevation_source",x)) 
+l[which(sapply(l, `[[`, 1) == "elevation_source")]
+l8.lst[[1]]$metadata$landsat_scene_id
+sapply(bandnames, function(x) "red" %in% x)
+seq_along(bandnames)[sapply(bandnames, function(x) "red" %in% x)]
+l[[grepl("file_name_band_4", l)]]
+grepl("file_name_band_4", l[][)
+ bandName <-  unlist(sapply(l, "[[", bandidx))
+sapply(l, "[[", "file_name_band_4")[[1]]
+l$metadata$file_name_band_4
+l[[1]]$metadata
+l$metadata
+tools::file_path_as_absolute(file.path(dir.toaRad, sceneName, bandName))
+(file.path(dir.toaRad, sceneName))
+paste0(file.path(dir.toaRad, sceneName), "/", "")
+idx <- 4
+     bandidx <- paste0("file_name_band_", idx)
+     bandName <-  sapply(i, "[[", bandidx)[[1]]
+     Rad.rst  <- ToTOARadiance(l, "nir")
+     writeRaster(Rad.rst, filename = (file.path(dir.toaRad, sceneName, bandName), overwrite = T))
+    }
+### DN to Radiance Tes
+```{r DNtoToARad}
+sourceDir("~/SparkleShare/rLandsat8/src/main//R//rLandsat8//R")
+sourceDir("~/SparkleShare/TIR/R/")
+sourceDir("~/SparkleShare/")
+worklist  <- paste0(hkdMinCloud$ID,".tgz")
+dir.tar  <- "~/Share300sdb/Landsat8/N0/LISTEJapan"
+dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
+dir.rad  <- 
+library(raster)
+setwd(dir.tif)  ## very important tips also huge hardisk /root is required
+files  <- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)
+files
+basename(files)
+l8.lst  <- lapply(basename(files), ReadLandsat8)
+l8.lst   <- lapply(basename)
+dir.toaRad  <- "~/Share500sda/Landsat8/at1_TOA/toaRad"
+bandnames <-c("aerosol", "blue", "green", "red",
+     "nir", "swir1", "swir2",
+     "panchromatic",
+     "cirrus",
+     "tirs1", "tirs2")
+for (i in l8.lst) {
+  sceneName  <- i$metadata$landsat_scene_id
+  if (!file.exists(file.path(dir.toaRad, sceneName))) {
+     dir.create(file.path(dir.toaRad, sceneName), recursive = T)
+   }
+  for(j in bandnames){
+     idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] # a number
+     bandidx <- paste0("file_name_band_", idx)
+     bandName <-  sapply(i, "[[", bandidx)[[1]]
+     Rad.rst  <- ToTOARadiance(i, j)
+     writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName, bandName), overwrite = T)
+     raster::removeTmpFiles(h = 0.03)
+    }
+}
+
+
+library(devtools)
+install_github("bleutner/RStoolbox")
+
+```
+
