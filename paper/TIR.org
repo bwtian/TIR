@@ -135,8 +135,10 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 *** Demo
 #+HEADER: :tangle ../demo/rs02_todownlist.R
 #+BEGIN_SRC R 
-
-
+rs.todown()
+worklist  <- paste0(hkdMinCloud$ID,".tgz")
+dir.tar  <- "~/Share300sdb/Landsat8/N0/LISTEJapan"
+rs.todown(worklist, dir.tar, "todown")
 #+END_SRC 
 
 ** DEMO rs.readL8 Read Landsat8
