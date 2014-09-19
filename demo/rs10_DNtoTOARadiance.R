@@ -1,7 +1,6 @@
 
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
 sourceDir("~/SparkleShare/TIR/R/")
-worklist  <- paste0(hkdMinCloud$ID,".tgz")
 dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
 dir.toaRad  <- "~/Share500sda/Landsat8/at1_TOA/toaRad"
 dir.tmp <- "~/Share500sda/raster_tmp"
