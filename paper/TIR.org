@@ -49,16 +49,16 @@ TIR(idList) Object: 1 click get all results from a list
   "dir.tmp" -> L1 -> "dir.toaRad" -> {"dir.toaRef","dir.toaBT"}
   "dir.toaRef" -> "dir.toaRefSun" -> "dir.toaRefSunPixel"
   "dir.toaBT" -> "dir.mapBT"
-  "dir.dem" -> L2 -> "dir.corAtmospher" -> "dir.corTerrain" -> "dir.corEmissivity" -> "dir.corUnderGroud"
+  "dir.DEM" -> L2 -> "dir.corAtmospher" -> "dir.corTerrain" -> "dir.corEmissivity" -> "dir.corUnderGroud"
    L3 -> "dir.VI" -> "dir.NDVI"
   "dir.GIS" -> L4 -> "dir.LUCC"
    L5 -> "dir.Figures"
   }
 #+END_SRC
 
-#+RESULTS[21cc19048ca3c8747ca9466d898ea9b5fb61ba69]: fig:TIRworkflow
+#+RESULTS[38fb0af01600f04d37c99f7ac56107b14fd74e34]: fig:TIRworkflow
 [[file:./Figures/TIRWorkflow.png]]
-* R and Demo Floder
+* R and Demo 
 ** DEMO rs.untar1
 - State "DEMO"       from "CODE"       [2014-09-18 Thu 14:22]
 - State "CODE"       from ""           [2014-09-18 Thu 14:22]
@@ -487,7 +487,10 @@ rs.todown(worklist, dir.tar, "todown")
 ** Map
 ** Atmospheric Correction
 
-** 
+**
+
+* Man 
+
 
 
 
