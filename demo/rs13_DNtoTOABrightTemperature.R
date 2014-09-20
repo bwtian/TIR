@@ -1,8 +1,7 @@
 
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
 sourceDir("~/SparkleShare/TIR/R/")
-driver  <- 
-dir.tif  <- paste0(di"~/Share500sda/Landsat8/at0_Sensor"
+dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
 dir.toaBT  <- "~/Share500sda/Landsat8/at1_TOA/toaBT"
 dir.tmp <- "~/Share500sda/raster_tmp"
 library(raster)
