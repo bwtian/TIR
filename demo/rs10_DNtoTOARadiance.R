@@ -2,7 +2,7 @@
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
 sourceDir("~/SparkleShare/TIR/R/")
 driver     <- "D://tian/Landsat8/"      # Windows
-driver     <- "~/Share500sda/Landsat8/" # Linux
+#driver     <- "~/Share500sda/Landsat8/" # Linux
 dir.tif    <- file.path(driver, "at0_Sensor")
 dir.toaRad <- file.path(driver, "at1_TOA/toaRad")
 dir.tmp    <- file.path(driver, "raster_tmp")
