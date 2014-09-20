@@ -32,24 +32,31 @@ TIR(idList) Object: 1 click get all results from a list
 #+BEGIN_SRC dot :file ./Figures/TIRWorkflow.png 
   digraph {
   node [shape = box]
-  L0 [label = "atSensor \n L0"]
-  L1 [label = "atTOA \n L1"]
-  L2 [label = "atSurface \n L2"]
-  L3 [label = "atNeeds\n L3"]
-  L4 [label = "atPaper\n L4"]
-  L5 [label = "atProduct\n L5"]
-  L0 -> L1 -> L2 -> L3 -> L4 -> L5
-  {rank =same; L0, L1,L2,L3,L4,L5}
+  dir [label = "Directories"]
+  driver [label = "Driver Root \n OS based"]
+  satellite [label = "Main Dir \n Satellite Name"]
+  L0 [label = "at0_Sensor"]
+  L1 [label = "at1_TOA"]
+  L2 [label = "at2_Surface"]
+  L3 [label = "at3_Index"]
+  L4 [label = "at4_Model"]
+  L5 [label = "at5_Paper"]
+  L6 [label = "at6_Products"]
+  dir -> L0 -> L1 -> L2 -> L3 -> L4 -> L5 -> L6 [color = red]
+  {rank =same; dir, L0, L1, L2, L3, L4, L5, L6 [style = filled, color = gold]}
+  dir -> "driver" -> "satellite"
   L0 -> "dir.tar" -> "dir.tif"
   "dir.tmp" -> L1 -> "dir.toaRad" -> {"dir.toaRef","dir.toaBT"}
   "dir.toaRef" -> "dir.toaRefSun" -> "dir.toaRefSunPixel"
-  "dir.dem" -> L2 -> "dir.rst"
-  "dir.shp" -> L3 -> "dir.gis"
-  L4 -> "dir.fig"
+  "dir.toaBT" -> "dir.mapBT"
+  "dir.dem" -> L2 -> "dir.corAtmospher" -> "dir.corTerrain" -> "dir.corEmissivity" -> "dir.corUnderGroud"
+   L3 -> "dir.VI" -> "dir.NDVI"
+  "dir.GIS" -> L4 -> "dir.LUCC"
+   L5 -> "dir.Figures"
   }
 #+END_SRC
 
-#+RESULTS[44401a5851a0cb26e7f8d4a76b81d77e07d96a48]: fig:TIRworkflow
+#+RESULTS[21cc19048ca3c8747ca9466d898ea9b5fb61ba69]: fig:TIRworkflow
 [[file:./Figures/TIRWorkflow.png]]
 * R and Demo Floder
 ** DEMO rs.untar1
@@ -475,9 +482,9 @@ rs.todown(worklist, dir.tar, "todown")
 
 #+END_SRC 
 
-** RadtoTOARef
-** RadtoTOABT
-
+** SOMEDAY RadtoTOARef
+** SOMEDAY RadtoTOABT
+** Map
 ** Atmospheric Correction
 
 ** 
