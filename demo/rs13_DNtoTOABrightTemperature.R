@@ -1,9 +1,10 @@
 
+source("~/SparkleShare/Rprofile/R/sourceDir.R")
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
 sourceDir("~/SparkleShare/TIR/R/")
 dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
 dir.toaBT  <- "~/Share500sda/Landsat8/at1_TOA/toaBT"
-dir.tmp <- "~/Share500sda/raster_tmp"
+dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
 library(raster)
 rasterOptions(tmpdir = dir.tmp)
 setwd(dir.tif)  ## very important tips for use rLandsat8
