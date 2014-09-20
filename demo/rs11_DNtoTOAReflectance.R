@@ -1,4 +1,5 @@
 
+source("~/SparkleShare/Rprofile/R/sourceDir.R")
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
 sourceDir("~/SparkleShare/TIR/R/")
 dir.tif  <- "~/Share500sda/Landsat8/at0_Sensor"
