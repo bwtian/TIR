@@ -2,7 +2,7 @@
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
 sourceDir("~/SparkleShare/TIR/R/")
 driver     <- "D://tian/Landsat8/"      # Windows
-#driver     <- "~/Share500sda/Landsat8/" # Linux
+driver     <- "~/Share500sda/Landsat8/" # Linux
 dir.tif    <- file.path(driver, "at0_Sensor")
 dir.toaRad <- file.path(driver, "at1_TOA/toaRad")
 dir.tmp    <- file.path(driver, "raster_tmp")
@@ -30,6 +30,6 @@ for (i in l8.lst) {
                 # fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOARad.tif")               
                 Rad.rst  <- ToTOARadiance(i, j)
                 writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName, bandName), overwrite = T)
-                raster::removeTmpFiles(h = 0.2) ## Improtant tips for save hardisk
+                raster::removeTmpFiles(h = 0.5) ## Improtant tips for save hardisk
         }
 }
