@@ -41,14 +41,15 @@ TIR(idList) Object: 1 click get all results from a list
   L0 -> L1 -> L2 -> L3 -> L4 -> L5
   {rank =same; L0, L1,L2,L3,L4,L5}
   L0 -> "dir.tar" -> "dir.tif"
-  L1 -> "dir.toaRad" -> {"dir.toaRef", "dir.toaBT"}
+  "dir.tmp" -> L1 -> "dir.toaRad" -> {"dir.toaRef","dir.toaBT"}
+  "dir.toaRef" -> "dir.toaRefSun" -> "dir.toaRefSunPixel"
   "dir.dem" -> L2 -> "dir.rst"
   "dir.shp" -> L3 -> "dir.gis"
   L4 -> "dir.fig"
   }
 #+END_SRC
 
-#+RESULTS[3f8abe0c21243c28255cf226796c6b4fc1d4e102]: fig:TIRworkflow
+#+RESULTS[44401a5851a0cb26e7f8d4a76b81d77e07d96a48]: fig:TIRworkflow
 [[file:./Figures/TIRWorkflow.png]]
 * R and Demo Floder
 ** DEMO rs.untar1
@@ -431,7 +432,6 @@ rs.todown(worklist, dir.tar, "todown")
 #+END_SRC 
 
 
-
 ** SOMEDAY Sun elevation Correction pixel by pixel, caculate sun elv use oce
 ** CODE DNtoTOABT
 *** Demo
@@ -473,6 +473,7 @@ rs.todown(worklist, dir.tar, "todown")
 
 ** Atmospheric Correction
 
+** 
 
 
 
