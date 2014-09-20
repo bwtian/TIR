@@ -29,7 +29,7 @@ for (i in l8.lst) {
                 bandName <-  sapply(i, "[[", bandidx)[[1]]
                 # fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOARad.tif")               
                 Rad.rst  <- ToTOARadiance(i, j)
-                writeRaster(Rad.rst, filename = file.path(dir.toaRad, bandName, fileName), overwrite = T)
+                writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName, bandName), overwrite = T)
                 raster::removeTmpFiles(h = 0.2) ## Improtant tips for save hardisk
         }
 }
