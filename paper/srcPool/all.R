@@ -40,7 +40,7 @@ temps <- c('H:/Temp', # Buffalo drive
 temp <- temps[match(TRUE, unlist(lapply(temps, function(x) file_test('-d', x))))]
 rasterOptions(tmpdir=temp)
 
-# Specify how many processors to use for parallel processing. On CI-TEAM, this 
+# Specify how many processors to use for parallel processing. On CI-TEAM, this
 # should be set to 6. On your laptop, set it somewhere between 2 and 4.
 if (Sys.info()[4] == 'CI-TEAM') {
     n_cpus <- 8
@@ -50,8 +50,8 @@ if (Sys.info()[4] == 'CI-TEAM') {
     n_cpus <- 3
 }
 
-# Should any existing output files be overwritten as the script runs? If set to 
-# FALSE, and there ARE existing files for earlier runs of the script, the 
+# Should any existing output files be overwritten as the script runs? If set to
+# FALSE, and there ARE existing files for earlier runs of the script, the
 # script will raise an error and stop running.
 overwrite <- TRUE
 
@@ -73,7 +73,7 @@ is_preprocessed <- function(image_dir) {
     date_re <- '[0-9]{4}-[0-9]{3}'
     sensor_re <- '((L[45]T)|(L[78]E))SR(_tc)?.tif$'
     preprocessed_files <- dir(image_dir,
-                              pattern=paste(sitecode, pathrow_re, date_re, 
+                              pattern=paste(sitecode, pathrow_re, date_re,
                                             sensor_re, sep='_'))
     if (length(preprocessed_files) >= 1) {
         return(TRUE)
@@ -158,7 +158,7 @@ for (sitecode in sitecodes) {
     these_image_files <- dir(image_basedir, pattern=pattern, full.names=TRUE)
 
     output_files <- file.path(output_dir,
-                              paste0(file_path_sans_ext(basename(these_image_files)), 
+                              paste0(file_path_sans_ext(basename(these_image_files)),
                                      '_predictors.tif'))
     if (length(these_image_files) >= 1 & !reprocess) {
         these_image_files <- these_image_files[!file_test('-f', output_files)]
@@ -169,12 +169,12 @@ for (sitecode in sitecodes) {
     }
 
     dem_file <- file.path(image_basedir, paste0(sitecode, '_mosaic_dem.tif'))
-    slopeaspect_file <- file.path(image_basedir, paste0(sitecode, 
+    slopeaspect_file <- file.path(image_basedir, paste0(sitecode,
                                                   '_mosaic_slopeaspect.tif'))
 
     image_files <- c(image_files, these_image_files)
     dem_files <- c(dem_files, rep(dem_file, length(these_image_files)))
-    slopeaspect_files <- c(slopeaspect_files, rep(slopeaspect_file, 
+    slopeaspect_files <- c(slopeaspect_files, rep(slopeaspect_file,
                                                   length(these_image_files)))
 }
 
@@ -193,8 +193,8 @@ foreach (image_file=iter(image_files), dem_file=iter(dem_files),
     rasterOptions(tmpdir=raster_tmpdir)
     dem <- raster(dem_file)
     slopeaspect <- stack(slopeaspect_file)
-    auto_calc_predictors(image_file, dem, slopeaspect, output_path=output_dir, 
-                         overwrite=overwrite, window=window_size, 
+    auto_calc_predictors(image_file, dem, slopeaspect, output_path=output_dir,
+                         overwrite=overwrite, window=window_size,
                          n_grey=n_grey, shift=shift)
 
     removeTmpFiles(h=0)
@@ -270,8 +270,8 @@ get_status <- function(pattern, name) {
             these_paths <- gsub('[_-]', '', str_extract(these_files, '_[0-9]{3}-'))
             these_rows <- gsub('[_-]', '', str_extract(these_files, '-[0-9]{3}_'))
             these_dates <- gsub('[_]', '', str_extract(these_files, '_[0-9]{4}-[0-9]{3}'))
-            statuses <- data.frame(site=sitecode, pathrow=these_paths, 
-                                   path=these_paths, row=these_rows, 
+            statuses <- data.frame(site=sitecode, pathrow=these_paths,
+                                   path=these_paths, row=these_rows,
                                    date=these_dates, this_status=TRUE)
         } else {
             statuses <- data.frame()
@@ -302,7 +302,7 @@ imgs_by_site <- summarize(group_by(imgs_by_pathrow, site),
                           mean_num_imgs=mean(num_imgs))
 imgs_by_site[order(imgs_by_site$mean_num_imgs), ]
 
-summarize(group_by(statuses, site, pathrow=paste(path, row, sep='-')), 
+summarize(group_by(statuses, site, pathrow=paste(path, row, sep='-')),
           num_imgs=length(!is.na(cf)))
 
 statuses[statuses$site == 'UDZ', ]
@@ -316,7 +316,7 @@ get_mosaic_status <- function(pattern, name) {
         these_files <- dir(base_dir, pattern=pattern)
         if (length(these_files) >= 1) {
             these_dates <- gsub('[_]', '', str_extract(these_files, '_[0-9]{4}'))
-            statuses <- data.frame(site=sitecode, date=these_dates, 
+            statuses <- data.frame(site=sitecode, date=these_dates,
                                    this_status=TRUE)
         } else {
             statuses <- data.frame()
@@ -332,8 +332,8 @@ mosaic_norm_status <- get_mosaic_status('^[a-zA-Z]*_mosaic_normalized_[0-9]{4}.t
 mosaic_statuses <- merge(mosaic_raw_status, mosaic_norm_status, all=TRUE)
 mosaic_statuses
 
-summarize(group_by(mosaic_statuses, site), 
-          num_raw_imgs=length(!is.na(mosaic_raw)), 
+summarize(group_by(mosaic_statuses, site),
+          num_raw_imgs=length(!is.na(mosaic_raw)),
           num_norm_imgs=length(!is.na(mosaic_norm)))
 
 dcast(mosaic_statuses, site ~ date, value.var='mosaic_raw')
@@ -359,7 +359,7 @@ get_dem_status <- function(pattern, name) {
 mosaic_dem_status <- get_dem_status('^[a-zA-Z]*_mosaic_dem.tif$', 'mosaic_dem')
 mosaic_slopeaspect_status <- get_dem_status('^[a-zA-Z]*_mosaic_slopeaspect.tif$', 'mosaic_slpasp')
 mosaic_dem_statuses <- merge(mosaic_dem_status, mosaic_slopeaspect_status, all=TRUE)
-mosaic_dem_statuses 
+mosaic_dem_statuses
 
 ###############################################################################
 # Summarize training data
@@ -380,8 +380,8 @@ train_map_status <- get_train_status('^[a-zA-Z]*_Landsat_Training_Map.qgs$', 'ma
 train_statuses <- merge(train_shp_status, train_map_status, all=TRUE)
 train_statuses
 
-        
-dir(file.path(prefix, 'Landsat'), pattern='^[a-zA-Z]*_training_pixels.RData$', 
+
+dir(file.path(prefix, 'Landsat'), pattern='^[a-zA-Z]*_training_pixels.RData$',
     recursive=TRUE)
 
 dir(file.path(prefix, 'Landsat'), pattern='^[a-zA-Z]*_rfmodel.RData$',
@@ -429,21 +429,21 @@ if (reprocess) {
     mosaic_stats <- foreach(mosaic_file=iter(mosaic_files),
                             .packages=c('raster', 'tools', 'stringr'),
                             .combine=rbind) %dopar% {
-        fmask <- raster(paste0(file_path_sans_ext(mosaic_file), '_masks', 
+        fmask <- raster(paste0(file_path_sans_ext(mosaic_file), '_masks',
                                    extension(mosaic_file)),
                         band=2)
         sitecode <- str_extract(basename(mosaic_file), '^[a-zA-Z]*')
         year <- as.numeric(str_extract(basename(mosaic_file), '[0-9]{4}'))
 
         # Mask out area outside of ZOI
-        zoi_file <- dir(zoi_folder, pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'), 
+        zoi_file <- dir(zoi_folder, pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'),
                         full.names=TRUE)
         stopifnot(length(zoi_file) == 1)
         load(zoi_file)
         zoi <- spTransform(zoi, CRS(proj4string(fmask)))
 
-        # Set masked areas to 99 so they can be differentiated from other NAs 
-        # in fmask.  Don't use mask as it has a bug where it doesn't set NA 
+        # Set masked areas to 99 so they can be differentiated from other NAs
+        # in fmask.  Don't use mask as it has a bug where it doesn't set NA
         # areas in the image to the updatevalue
         zoi <- rasterize(zoi, fmask, 1, silent=TRUE)
         fmask[is.na(zoi)] <- 99
@@ -456,7 +456,7 @@ if (reprocess) {
         num_snow <- 0
         num_missing <- 0
         for (block_num in 1:bs$n) {
-            fmask_bl <- getValuesBlock(fmask, row=bs$row[block_num], 
+            fmask_bl <- getValuesBlock(fmask, row=bs$row[block_num],
                                        nrows=bs$nrows[block_num])
             num_missing <- num_missing + sum(is.na(fmask_bl))
             num_fill <- num_fill + sum(fmask_bl == 255, na.rm=TRUE)
@@ -466,20 +466,20 @@ if (reprocess) {
             num_snow <- num_snow + sum(fmask_bl == 3, na.rm=TRUE)
         }
         num_pixels <- num_fill + num_cloud + num_clear + num_water + num_snow + num_missing
-        return(data.frame(site=sitecode, date=year, num_fill=num_fill, 
-                          num_missing=num_missing, num_cloud=num_cloud, 
-                          num_clear=num_clear, num_water=num_water, 
+        return(data.frame(site=sitecode, date=year, num_fill=num_fill,
+                          num_missing=num_missing, num_cloud=num_cloud,
+                          num_clear=num_clear, num_water=num_water,
                           num_snow=num_snow, total_pixels=num_pixels))
     }
 
-    # Add rows with num_fill equal to the number of pixels in the whole image for 
+    # Add rows with num_fill equal to the number of pixels in the whole image for
     # sites without any data for a particular year.  Do this with a merge.
     miss_data <- data.frame(site=rep(unique(mosaic_stats$site), each=5))
     miss_data$date <- rep(unique(mosaic_stats$date), length.out=nrow(miss_data))
-    miss_data$num_fill <- mosaic_stats$total_pixels[match(miss_data$site, 
+    miss_data$num_fill <- mosaic_stats$total_pixels[match(miss_data$site,
                                                           mosaic_stats$site)]
     miss_data$total_pixels <- miss_data$num_fill
-    miss_data <- miss_data[!(paste(miss_data$site, miss_data$date) %in% 
+    miss_data <- miss_data[!(paste(miss_data$site, miss_data$date) %in%
                              paste(mosaic_stats$site, mosaic_stats$date)), ]
 
     stopifnot(sum(is.na(mosaic_stats)) == 0)
@@ -587,7 +587,7 @@ get_dem_status <- function(pattern, name) {
 mosaic_dem_status <- get_dem_status('^[a-zA-Z]*_mosaic_dem.tif$', 'mosaic_dem')
 mosaic_slopeaspect_status <- get_dem_status('^[a-zA-Z]*_mosaic_slopeaspect.tif$', 'mosaic_slpasp')
 mosaic_dem_statuses <- merge(mosaic_dem_status, mosaic_slopeaspect_status, all=TRUE)
-mosaic_dem_statuses 
+mosaic_dem_statuses
 source('0_settings.R')
 
 library(stringr)
@@ -630,9 +630,9 @@ overwrite <- TRUE
 
 ntree <- 501
 
-predictor_names <- c('b1', 'b2', 'b3', 'b4', 'b5', 'b7', 'msavi', 
-                     'msavi_glcm_mean', 'msavi_glcm_variance', 
-                     'msavi_glcm_dissimilarity', 'elev', 'slope', 'aspect', 
+predictor_names <- c('b1', 'b2', 'b3', 'b4', 'b5', 'b7', 'msavi',
+                     'msavi_glcm_mean', 'msavi_glcm_variance',
+                     'msavi_glcm_dissimilarity', 'elev', 'slope', 'aspect',
                      'year')
 
 tr_polys_dir <- file.path(prefix, 'Landsat', 'LCLUC_Training')
@@ -648,7 +648,7 @@ for (sitecode in sitecodes) {
     message(paste0('Processing ', sitecode, '...'))
 
     image_files <- dir(image_basedir,
-                       pattern=paste0('^', sitecode, 
+                       pattern=paste0('^', sitecode,
                                       '_mosaic_[0-9]{4}_predictors.tif$'))
 
     output_files <- paste0(file_path_sans_ext(image_files), '_classified.tif')
@@ -675,8 +675,8 @@ for (sitecode in sitecodes) {
         tr_polys <- readOGR(tr_polys_dir, file_path_sans_ext(tr_polys_file))
 
         # rbind will fail when it tries to rbind a pixel_data object an
-        # empty data.frame. And making an empty pixel_data object is difficult.  
-        # So use the kludge of creating an rbind function that will ignore a 
+        # empty data.frame. And making an empty pixel_data object is difficult.
+        # So use the kludge of creating an rbind function that will ignore a
         # data.frame and only rbind if y is a pixel_data object
         rbind_if_pixel_data <- function(x, y) {
             if(class(y) == 'pixel_data') {
@@ -691,18 +691,18 @@ for (sitecode in sitecodes) {
             image_stack <- stack(file.path(image_basedir, image_file))
             image_year <- gsub('_', '', str_extract(image_file, '_[0-9]{4}_'))
 
-            # # Drop the 13th layer (aspect) as it isn't all that useful for 
+            # # Drop the 13th layer (aspect) as it isn't all that useful for
             # # these predictions.
             # image_stack <- dropLayer(image_stack, 13)
 
             # Add year as a predictor
             image_stack$year <- as.numeric(image_year)
 
-            # Assign standardized layer names to input image so that different 
+            # Assign standardized layer names to input image so that different
             # images can be used with the same model
             names(image_stack) <- predictor_names
 
-            # Find which column has the indicator of whether or not this polygon is 
+            # Find which column has the indicator of whether or not this polygon is
             # valid for this year.
             year_col_name <- paste0('Class_', image_year)
             year_col_index <- which(names(tr_polys) == year_col_name)
@@ -722,13 +722,13 @@ for (sitecode in sitecodes) {
 
     ##########################################################################
     # Train classifier
-    
-    # Function to subsample any classes in a pixel_data object that have more 
+
+    # Function to subsample any classes in a pixel_data object that have more
     # than maxpix pixels
     subsample_classes <- function(x, maxpix=4000) {
         lg_classes <- levels(x)[table(x@y) > maxpix]
         training_flag(x, lg_classes) <- FALSE
-        x <- subsample(x, maxpix, strata='classes', classes=lg_classes, 
+        x <- subsample(x, maxpix, strata='classes', classes=lg_classes,
                        type='testing')
         return(x)
     }
@@ -770,9 +770,9 @@ library(tools)
 redo_classify <- TRUE
 overwrite <- TRUE
 
-predictor_names <- c('b1', 'b2', 'b3', 'b4', 'b5', 'b7', 'msavi', 
-                     'msavi_glcm_mean', 'msavi_glcm_variance', 
-                     'msavi_glcm_dissimilarity', 'elev', 'slope', 'aspect', 
+predictor_names <- c('b1', 'b2', 'b3', 'b4', 'b5', 'b7', 'msavi',
+                     'msavi_glcm_mean', 'msavi_glcm_variance',
+                     'msavi_glcm_dissimilarity', 'elev', 'slope', 'aspect',
                      'year')
 
 zoi_folder <- file.path(prefix, 'TEAM', 'ZOIs')
@@ -785,7 +785,7 @@ model_files <- c()
 zoi_files <- c()
 for (sitecode in sitecodes) {
     these_image_files <- dir(image_basedir,
-                             pattern=paste0('^', sitecode, 
+                             pattern=paste0('^', sitecode,
                                             '_mosaic_[0-9]{4}_predictors.tif$'))
 
     if (length(these_image_files) >= 1 & !redo_classify) {
@@ -803,9 +803,9 @@ for (sitecode in sitecodes) {
     if (!file_test('-f', this_model_file)) {
         next
     }
-    
+
     this_zoi_file <- dir(zoi_folder,
-                         pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'), 
+                         pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'),
                          full.names=TRUE)
     stopifnot(length(this_zoi_file) == 1)
 
@@ -828,7 +828,7 @@ num_res <- foreach (image_file=iter(image_files),
                                paste(sample(c(letters, 0:9), 15), collapse='')))
     dir.create(raster_tmpdir)
     rasterOptions(tmpdir=raster_tmpdir)
-    
+
     sitecode <- str_extract(basename(image_file), '^[a-zA-Z]{2,3}')
     year <- str_extract(image_file, '[0-9]{4}')
 
@@ -837,13 +837,13 @@ num_res <- foreach (image_file=iter(image_files),
     image_stack <- stack(file.path(image_basedir, image_file))
     # Need to add a year layer since year is a predictor in the model
     image_stack$year <- as.numeric(year)
-        
-    fmask <- raster(file.path(image_basedir, 
-                             paste0(file_path_sans_ext(image_file), 
-                                    '_masks', extension(image_file))), 
+
+    fmask <- raster(file.path(image_basedir,
+                             paste0(file_path_sans_ext(image_file),
+                                    '_masks', extension(image_file))),
                     layer=2)
-    
-    # Assign standardized layer names to input image so that different 
+
+    # Assign standardized layer names to input image so that different
     # images can be used with the same model
     names(image_stack) <- predictor_names
 
@@ -858,16 +858,16 @@ num_res <- foreach (image_file=iter(image_files),
         ret[(msk == 2) | (msk == 4) | (is.na(msk)) | (msk == 255)] <- NA
         return(ret)
     })
-    
+
     classes <- results$classes * image_mask
     out_base <- file_path_sans_ext(file.path(out_dir, image_file))
     classes_file <- paste0(out_base, '_predclasses', extension(image_file))
-    classes <- writeRaster(classes, filename=classes_file, 
+    classes <- writeRaster(classes, filename=classes_file,
                            datatype='INT2S', overwrite=overwrite)
-    
+
     # Copy masks file so it is available with output predclasses images
-    orig_masks_file <- file.path(image_basedir, 
-                                 paste0(file_path_sans_ext(image_file), 
+    orig_masks_file <- file.path(image_basedir,
+                                 paste0(file_path_sans_ext(image_file),
                                     '_masks', extension(image_file)))
     new_masks_file <- paste0(out_base, '_masks', extension(image_file))
     file.copy(orig_masks_file, new_masks_file)
@@ -875,7 +875,7 @@ num_res <- foreach (image_file=iter(image_files),
     probs <- round(results$probs * 100)
     probs <- probs * image_mask
     probs_file <- paste0(out_base, '_predprobs', extension(image_file))
-    probs <- writeRaster(probs, filename=probs_file, datatype='INT2S', 
+    probs <- writeRaster(probs, filename=probs_file, datatype='INT2S',
                          overwrite=overwrite)
 
     key_file <- paste0(out_base, '_classeskey.csv')
@@ -886,8 +886,8 @@ num_res <- foreach (image_file=iter(image_files),
     zoi <- spTransform(zoi, CRS(proj4string(classes)))
     zoi <- rasterize(zoi, classes, 1, silent=TRUE)
 
-    # Set masked areas to 99 so they can be differentiated. Don't use mask as 
-    # it has a bug where it doesn't set NA areas in the image to the 
+    # Set masked areas to 99 so they can be differentiated. Don't use mask as
+    # it has a bug where it doesn't set NA areas in the image to the
     # updatevalue
     classes_masked <- classes
     classes_masked[is.na(zoi)] <- 99
@@ -934,7 +934,7 @@ classes_file_1s <- c()
 classes_file_2s <- c()
 for (sitecode in sitecodes) {
     these_classes_files <- dir(image_basedir,
-                               pattern=paste0('^', sitecode, 
+                               pattern=paste0('^', sitecode,
                                               '_mosaic_[0-9]{4}_predictors_predclasses.tif$'),
                                full.names=TRUE)
 
@@ -958,7 +958,7 @@ stopifnot(length(classes_file_1s) == length(classes_file_2s))
 # Run chg magnitude/direction calculation on each pair
 notify(paste0('Starting chg magnitude/direction calculation. ',
               length(classes_file_1s), ' image sets to process.'))
-num_res <- foreach (classes_file_1=iter(classes_file_1s), 
+num_res <- foreach (classes_file_1=iter(classes_file_1s),
                     classes_file_2=iter(classes_file_2s),
                     .packages=c('teamlucc', 'notifyR', 'stringr', 'rgdal'),
                     .combine=c, .inorder=FALSE) %dopar% {
@@ -975,10 +975,10 @@ num_res <- foreach (classes_file_1=iter(classes_file_1s),
                                                   '_[0-9]{4}_')))
     stopifnot(year_1 < year_2)
 
-    out_basename <- paste0(sitecode, '_', year_1, '-', year_2, 
+    out_basename <- paste0(sitecode, '_', year_1, '-', year_2,
                            '_chgdetect')
 
-    output_files <- dir(out_dir, pattern=paste0(out_basename, '_chgdir.tif'), 
+    output_files <- dir(out_dir, pattern=paste0(out_basename, '_chgdir.tif'),
                         full.names=TRUE)
     if (length(output_files) >= 1 & !redo_chg_detection) {
         return()
@@ -995,7 +995,7 @@ num_res <- foreach (classes_file_1=iter(classes_file_1s),
     class_key <- read.csv(key_file_1)
     classnames <- class_key$class
 
-    # Make a mask of 1s and NAs, with clear areas marked with 1s. This needs to 
+    # Make a mask of 1s and NAs, with clear areas marked with 1s. This needs to
     # take into account BOTH images.
     mask_1 <- raster(mask_file_1, layer=2)
     mask_2 <- raster(mask_file_2, layer=2)
@@ -1011,19 +1011,19 @@ num_res <- foreach (classes_file_1=iter(classes_file_1s),
     t2_probs <- stack(probs_file_2)
 
     chg_dir_filename <- file.path(out_dir,
-                                  paste(out_basename, 'chgdir.tif', 
+                                  paste(out_basename, 'chgdir.tif',
                                         sep='_'))
     chg_dir_image <- chg_dir(t1_probs, t2_probs)
     chg_dir_image <- chg_dir_image * image_mask
-    writeRaster(chg_dir_image, filename=chg_dir_filename, 
+    writeRaster(chg_dir_image, filename=chg_dir_filename,
                 overwrite=overwrite, datatype=dataType(chg_dir_image))
 
     chg_mag_filename <- file.path(out_dir,
-                                  paste(out_basename, 'chgmag.tif', 
+                                  paste(out_basename, 'chgmag.tif',
                                         sep='_'))
     chg_mag_image <- chg_mag(t1_probs, t2_probs)
     chg_mag_image <- chg_mag_image * image_mask
-    writeRaster(chg_mag_image, filename=chg_mag_filename, 
+    writeRaster(chg_mag_image, filename=chg_mag_filename,
                 overwrite=overwrite, datatype=dataType(chg_mag_image))
 
     removeTmpFiles(h=0)
@@ -1074,16 +1074,16 @@ for (sitecode in sitecodes) {
         next
     }
     this_zoi_file <- dir(zoi_folder,
-                         pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'), 
+                         pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'),
                          full.names=TRUE)
     stopifnot(length(this_zoi_file) == 1)
-    
+
     these_year_1s <- as.numeric(gsub('[_-]','', str_extract(these_chgmag_files, '_[0-9]{4}-')))
     these_year_2s <- as.numeric(gsub('[_-]','', str_extract(these_chgmag_files, '-[0-9]{4}_')))
     stopifnot(these_year_1s < these_year_2s)
     year_1s <- c(year_1s, these_year_1s)
     year_2s <- c(year_2s, these_year_2s)
-    
+
     for (this_year_1 in these_year_1s) {
         classes_1_filename <- dir(predictions_dir,
                                   pattern=paste0(sitecode, '_mosaic_', this_year_1,
@@ -1092,9 +1092,9 @@ for (sitecode in sitecodes) {
         stopifnot(length(classes_1_filename) == 1)
         classes_1_filenames <- c(classes_1_filenames, classes_1_filename)
     }
-    
+
     chgmag_files <- c(chgmag_files, these_chgmag_files)
-    
+
     zoi_files <- c(zoi_files, rep(this_zoi_file, length(these_chgmag_files)))
 }
 stopifnot(length(chgmag_files) == length(zoi_files))
@@ -1125,7 +1125,7 @@ num_res <- foreach (chgmag_file=iter(chgmag_files), zoi_file=iter(zoi_files),
 
     out_basename <- paste0(sitecode, '_', year_1, '-', year_2, '_chgdetect')
 
-    output_files <- dir(out_dir, pattern=paste0(out_basename, '_chgtraj.tif'), 
+    output_files <- dir(out_dir, pattern=paste0(out_basename, '_chgtraj.tif'),
                         full.names=TRUE)
     if (length(output_files) >= 1 & !redo_chg_detection) {
         return()
@@ -1134,7 +1134,7 @@ num_res <- foreach (chgmag_file=iter(chgmag_files), zoi_file=iter(zoi_files),
     chgmag_image <- raster(chgmag_file)
 
     chgdir_filename <- file.path(out_dir,
-                                  paste(out_basename, 'chgdir.tif', 
+                                  paste(out_basename, 'chgdir.tif',
                                         sep='_'))
     chgdir_image <- raster(chgdir_filename)
 
@@ -1153,38 +1153,38 @@ num_res <- foreach (chgmag_file=iter(chgmag_files), zoi_file=iter(zoi_files),
     } else {
         chg_threshold <- chg_threshold_auto
     }
-    
+
     chg_threshold_filename <- file.path(out_dir,
-                                        paste(out_basename, 'threshold.txt', 
+                                        paste(out_basename, 'threshold.txt',
                                               sep='_'))
-    write.csv(data.frame(sitecode=sitecode, year_1=year_1, year_2=year_2, 
+    write.csv(data.frame(sitecode=sitecode, year_1=year_1, year_2=year_2,
                          threshold=chg_threshold,
                          threshold_auto=chg_threshold_auto),
-              file=chg_threshold_filename, 
+              file=chg_threshold_filename,
               row.names=FALSE)
 
     key_file_1 <- gsub('predclasses.tif', 'classeskey.csv', classes_1_filename)
     class_key <- read.csv(key_file_1)
 
-    chg_traj_out <- chg_traj(chgmag_image, chgdir_image, 
+    chg_traj_out <- chg_traj(chgmag_image, chgdir_image,
                              chg_threshold=chg_threshold)
 
-    chg_traj_filename <- file.path(out_dir, paste(out_basename, 'chgtraj.tif', 
+    chg_traj_filename <- file.path(out_dir, paste(out_basename, 'chgtraj.tif',
                                                   sep='_'))
     # Recheck - but below masking line should no longer be needed
     #chg_traj_image <- chg_traj_out$traj * image_mask
-    chg_traj_image <- writeRaster(chg_traj_out, 
-                                  filename=chg_traj_filename, 
+    chg_traj_image <- writeRaster(chg_traj_out,
+                                  filename=chg_traj_filename,
                                   overwrite=overwrite, datatype='INT2S')
 
     chg_traj_lut_filename <- file.path(out_dir,
-                                       paste(out_basename, 'chgtraj_lut.csv', 
+                                       paste(out_basename, 'chgtraj_lut.csv',
                                              sep='_'))
     lut <- traj_lut(class_key$code, class_key$class)
     write.csv(lut, file=chg_traj_lut_filename, row.names=FALSE)
 
-    # Set masked areas to 99 so they can be differentiated. Don't use mask as 
-    # it has a bug where it doesn't set NA areas in the image to the 
+    # Set masked areas to 99 so they can be differentiated. Don't use mask as
+    # it has a bug where it doesn't set NA areas in the image to the
     # updatevalue
     chg_traj_image_masked <- chg_traj_image
     chg_traj_image_masked[is.na(zoi_rast)] <- 99
@@ -1193,7 +1193,7 @@ num_res <- foreach (chgmag_file=iter(chgmag_files), zoi_file=iter(zoi_files),
     chg_freqs <- lut
     chg_freqs$freq <- traj_freqs$count[match(chg_freqs$Code, traj_freqs$value)]
     chg_freqs <- chg_freqs[order(chg_freqs$t0_name, chg_freqs$t1_name),]
-    freqs_filename <- file.path(out_dir, paste(out_basename, 
+    freqs_filename <- file.path(out_dir, paste(out_basename,
                                                'chgtraj_freqs.csv', sep='_'))
     write.csv(chg_freqs, file=freqs_filename, row.names=FALSE)
 
@@ -1242,25 +1242,25 @@ for (sitecode in sitecodes) {
         next
     }
     this_zoi_file <- dir(zoi_folder,
-                         pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'), 
+                         pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'),
                          full.names=TRUE)
     stopifnot(length(this_zoi_file) == 1)
-    
+
     these_year_1s <- as.numeric(gsub('[_-]','', str_extract(these_chgmag_files, '_[0-9]{4}-')))
     these_year_2s <- as.numeric(gsub('[_-]','', str_extract(these_chgmag_files, '-[0-9]{4}_')))
     stopifnot(these_year_1s < these_year_2s)
     year_1s <- c(year_1s, these_year_1s)
     year_2s <- c(year_2s, these_year_2s)
-    
+
     chgmag_files <- c(chgmag_files, these_chgmag_files)
-    
+
     zoi_files <- c(zoi_files, rep(this_zoi_file, length(these_chgmag_files)))
 }
 stopifnot(length(chgmag_files) == length(zoi_files))
 stopifnot(length(chgmag_files) == length(year_1s))
 stopifnot(length(chgmag_files) == length(year_2s))
 
-# Count the number of pixels in the ZOI that have good data and that are 
+# Count the number of pixels in the ZOI that have good data and that are
 # missing
 notify(paste0('Counting ZOI cells. ', length(chgmag_files), ' images to process.'))
 zoi_pix <- foreach (chgmag_file=iter(chgmag_files), zoi_file=iter(zoi_files),
@@ -1283,7 +1283,7 @@ zoi_pix <- foreach (chgmag_file=iter(chgmag_files), zoi_file=iter(zoi_files),
 
     zoi_rast <- rasterize(zoi, chgmag, 1, silent=TRUE)
 
-    # Recode areas outside ZOI as -1 so NAs outside ZOI are not counted towards 
+    # Recode areas outside ZOI as -1 so NAs outside ZOI are not counted towards
     # the missing data count. After the below code, chgmag is coded as:
     #   -1 : outside ZOI
     #    0 : good data inside ZOI
@@ -1351,19 +1351,19 @@ traj_freqs <- foreach(traj_freqs_file=iter(traj_freqs_files),
     t0 <- as.numeric(gsub('-', '', str_extract(time_string, '[0-9]{4}-')))
     t1 <- as.numeric(gsub('-', '', str_extract(time_string, '-[0-9]{4}')))
     traj_freqs <- read.csv(file.path(traj_freqs_dir, traj_freqs_file))
-    traj_freqs$t0_name <- ordered(traj_freqs$t0_name, levels=class_names_R, 
+    traj_freqs$t0_name <- ordered(traj_freqs$t0_name, levels=class_names_R,
                                   labels=class_names_pretty)
-    traj_freqs$t1_name <- ordered(traj_freqs$t1_name, levels=class_names_R, 
+    traj_freqs$t1_name <- ordered(traj_freqs$t1_name, levels=class_names_R,
                                   labels=class_names_pretty)
-    traj_freqs$t0_name_abbrev <- ordered(class_names_abbrev[match(traj_freqs$t0_name, 
-                                                             class_names_pretty)], 
+    traj_freqs$t0_name_abbrev <- ordered(class_names_abbrev[match(traj_freqs$t0_name,
+                                                             class_names_pretty)],
                                          levels=class_names_abbrev)
-    traj_freqs$t1_name_abbrev <- ordered(class_names_abbrev[match(traj_freqs$t1_name, 
-                                                             class_names_pretty)], 
+    traj_freqs$t1_name_abbrev <- ordered(class_names_abbrev[match(traj_freqs$t1_name,
+                                                             class_names_pretty)],
                                          levels=class_names_abbrev)
-    traj_freqs$Transition <- paste(traj_freqs$t0_name_abbrev, 
+    traj_freqs$Transition <- paste(traj_freqs$t0_name_abbrev,
                                    traj_freqs$t1_name_abbrev, sep=' -> ')
-    traj_freqs <- cbind(sitecode=sitecode, t0=t0, t1=t1, nyears=t1-t0, 
+    traj_freqs <- cbind(sitecode=sitecode, t0=t0, t1=t1, nyears=t1-t0,
                         traj_freqs)
     return(traj_freqs)
 }
@@ -1390,10 +1390,10 @@ class_freqs <- foreach(class_freqs_file=iter(class_freqs_files),
     class_freqs$code[class_freqs$name == 'Unknown'] <- '-1'
     # Ignore areas outside ZOI (areas coded 99)
     class_freqs <- class_freqs[!(class_freqs$code == 99), ]
-    class_freqs$name <- ordered(class_freqs$name, levels=class_names_R, 
+    class_freqs$name <- ordered(class_freqs$name, levels=class_names_R,
                                 labels=class_names_pretty)
-    class_freqs$name_abbrev <- ordered(class_names_abbrev[match(class_freqs$name, 
-                                                             class_names_pretty)], 
+    class_freqs$name_abbrev <- ordered(class_names_abbrev[match(class_freqs$name,
+                                                             class_names_pretty)],
                                        levels=class_names_abbrev)
 
     return(class_freqs)
@@ -1402,7 +1402,7 @@ class_freqs <- foreach(class_freqs_file=iter(class_freqs_files),
 write.csv(class_freqs, file="class_freqs.csv", row.names=FALSE)
 save(class_freqs, file="class_freqs.RData")
 
-# TODO: integrate number of cells in ZOI per image into calculation so that 
+# TODO: integrate number of cells in ZOI per image into calculation so that
 # results are normalized.
 
 for (sitecode in unique(traj_freqs$sitecode)) {
@@ -1416,7 +1416,7 @@ for (sitecode in unique(traj_freqs$sitecode)) {
     ggplot(site_traj_freqs) +
         theme_bw() +
         geom_tile(aes(x=t1_name_abbrev, y=t0_name_abbrev, fill=freq/sum(freq)), colour='black') +
-        #geom_text(aes(x=t0_name_abbrev, y=t0_name_abbrev, label=pct), 
+        #geom_text(aes(x=t0_name_abbrev, y=t0_name_abbrev, label=pct),
         #data=persist) +
         scale_fill_gradientn('Relative\nFrequency', limits=c(0, .25),
                              colours=c('white', 'orange', 'red')) +
@@ -1425,7 +1425,7 @@ for (sitecode in unique(traj_freqs$sitecode)) {
               legend.key.size=unit(1.5, "line"),
               panel.grid.major=element_blank()) +
         facet_wrap(~ t0)
-    ggsave(file.path(traj_freqs_dir, paste('transitions', sitecode, 
+    ggsave(file.path(traj_freqs_dir, paste('transitions', sitecode,
                                            'colorplot.png', sep='_')),
            height=img_height, width=img_width, dpi=img_dpi)
 }
@@ -1437,26 +1437,26 @@ classes <- data.frame(label=class_names_pretty,
 # Plot trajectory frequencies by site
 ggplot(traj_freqs) +
     geom_bar(aes(t0, freq_as_frac, fill=t0_name), stat="identity", position="dodge") +
-    facet_wrap(~sitecode) + 
+    facet_wrap(~sitecode) +
     scale_fill_manual("Time 0 Cover", values=classes$color, breaks=classes$label,
                       labels=classes$label, drop=FALSE) +
     xlab("Start of period") +
     ylab("Fraction of all pixels") +
     ggtitle("Time 0")
-ggsave(file.path(traj_freqs_dir, 
+ggsave(file.path(traj_freqs_dir,
                  'transition_frequencies_all_sites_normalized_time0.png'),
        height=img_height, width=img_width, dpi=img_dpi)
 
 # Plot trajectory frequencies by site
 ggplot(traj_freqs) +
     geom_bar(aes(t1, freq_as_frac, fill=t1_name), stat="identity", position="dodge") +
-    facet_wrap(~sitecode) + 
+    facet_wrap(~sitecode) +
     scale_fill_manual("Time 1 Cover", values=classes$color, breaks=classes$label,
                       labels=classes$label, drop=FALSE) +
     xlab("End of period") +
     ylab("Fraction of all pixels") +
     ggtitle("Time 1")
-ggsave(file.path(traj_freqs_dir, 
+ggsave(file.path(traj_freqs_dir,
                  'transition_frequencies_all_sites_normalized_time1.png'),
        height=img_height, width=img_width, dpi=img_dpi)
 
@@ -1465,7 +1465,7 @@ class_freqs <- group_by(class_freqs, sitecode, year)
 class_freqs <- mutate(class_freqs, pct=freq/sum(freq[!is.na(name)]))
 ggplot(class_freqs) +
     geom_line(aes(year, pct, colour=name, linetype=name)) +
-    geom_point(aes(year, pct, colour=name, shape=name)) + 
+    geom_point(aes(year, pct, colour=name, shape=name)) +
     scale_colour_manual("Site", values=rep(1:4, length.out=16)) +
     scale_shape_manual("Site", values=rep(1:4, length.out=16)) +
     scale_linetype_manual("Site", values=rep(1:4, each=4, length.out=16)) +
@@ -1523,21 +1523,21 @@ stopifnot(file_test('-d', out_dir))
 #' @importFrom plyr join
 #' @importFrom grid unit
 #' @importFrom sp spTransform CRS proj4string
-#' @param x a forest change raster layer (a single layer of the layer 
+#' @param x a forest change raster layer (a single layer of the layer
 #' stack output by \code{\link{annual_stack}}
-#' @param aoi one or more AOI polygons as a \code{SpatialPolygonsDataFrame} 
-#' object.  If there is a 'label' field  in the dataframe, it will be used to 
-#' label the polygons in the plots. If the AOI is not in WGS 1984 (EPSG:4326), 
+#' @param aoi one or more AOI polygons as a \code{SpatialPolygonsDataFrame}
+#' object.  If there is a 'label' field  in the dataframe, it will be used to
+#' label the polygons in the plots. If the AOI is not in WGS 1984 (EPSG:4326),
 #' it will be reprojected to WGS84.
-#' @param classes a \code{data.frame} with "code", "label", and (optionally) 
-#' "color" columns. The "code" column indicates the numeric code in the image 
-#' referring to a particular category or cover type, "label" indicates the 
-#' label to use for each code, and "color" indicates the color to use on the 
+#' @param classes a \code{data.frame} with "code", "label", and (optionally)
+#' "color" columns. The "code" column indicates the numeric code in the image
+#' referring to a particular category or cover type, "label" indicates the
+#' label to use for each code, and "color" indicates the color to use on the
 #' image. "color" must be specified in a format recognized by \code{ggplot2}.
 #' @param title_string the plot title
 #' @param size_scale a number used to scale the size of the plot text
 #' @param maxpixels the maximum number of pixels from x to use in plotting
-plot_trajs <- function(x, aoi, classes, title_string='', size_scale=1, 
+plot_trajs <- function(x, aoi, classes, title_string='', size_scale=1,
                        maxpixels=2e6, legend_title="Change type") {
     aoi_tr <- spTransform(aoi, CRS(proj4string(x)))
     aoi_tr$ID <- row.names(aoi_tr)
@@ -1566,7 +1566,7 @@ plot_trajs <- function(x, aoi, classes, title_string='', size_scale=1,
 
     long=lat=value=label=ID=NULL # For R CMD CHECK
     ggplot(dat) +
-        geom_raster(aes(x, y, fill=value)) + coord_fixed() + 
+        geom_raster(aes(x, y, fill=value)) + coord_fixed() +
         scale_fill_manual(legend_title, values=classes$color, breaks=classes$code,
                           labels=classes$label, drop=FALSE) +
         theme(axis.text.x=element_blank(), axis.text.y=element_blank(),
@@ -1591,19 +1591,19 @@ for (sitecode in sitecodes) {
 
     plot_titles <- str_extract(chgtraj_files, "[0-9]{4}-[0-9]{4}")
 
-    zoi_file <- dir(zoi_folder, pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'), 
+    zoi_file <- dir(zoi_folder, pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'),
                     full.names=TRUE)
     stopifnot(length(zoi_file) == 1)
     load(zoi_file)
 
-    chgtraj_rasts <- foreach (chgtraj_file=iter(chgtraj_files), 
+    chgtraj_rasts <- foreach (chgtraj_file=iter(chgtraj_files),
                         chgtraj_lut_file=iter(chgtraj_lut_files),
-                        .packages=c('stringr', 'tools', 'raster', 'plyr', 'grid', 
+                        .packages=c('stringr', 'tools', 'raster', 'plyr', 'grid',
                                     'rgdal', 'ggplot2')) %dopar% {
         sitecode <- str_extract(basename(chgtraj_file), '^[a-zA-Z]*')
         year <- str_extract(chgtraj_file, '[0-9]{4}')
         chgtraj_rast <- raster(chgtraj_file)
-        chgtraj_rast <- sampleRegular(chgtraj_rast, 1e6, asRaster=TRUE, 
+        chgtraj_rast <- sampleRegular(chgtraj_rast, 1e6, asRaster=TRUE,
                                       useGDAL=TRUE)
         # Mask out area outside of ZOI
         zoi <- spTransform(zoi, CRS(proj4string(chgtraj_rast)))
@@ -1621,7 +1621,7 @@ for (sitecode in sitecodes) {
         traj_codes
     }
 
-    make_traj_plot <- function(chg_rast, traj_codes, classes, 
+    make_traj_plot <- function(chg_rast, traj_codes, classes,
                                gain_legend, loss_legend,
                                plot_titles, plot_file) {
         plots <- foreach (chgtraj_rast=iter(chgtraj_rasts),
@@ -1676,7 +1676,7 @@ for (sitecode in sitecodes) {
     # paste0(sitecode, "_planforest_change.png")
 
     make_traj_plot(chg_rast, traj_codes, c("Plantation.forest"),
-                   "To plantation", "From plantation", plot_titles, 
+                   "To plantation", "From plantation", plot_titles,
                     paste0(sitecode, "_planforest_change.png"))
 
     make_traj_plot(chg_rast, traj_codes, c("Agriculture", "Plantation.forest"),
@@ -1727,21 +1727,21 @@ stopifnot(file_test('-d', out_dir))
 #' @importFrom plyr join
 #' @importFrom grid unit
 #' @importFrom sp spTransform CRS proj4string
-#' @param x a forest change raster layer (a single layer of the layer 
+#' @param x a forest change raster layer (a single layer of the layer
 #' stack output by \code{\link{annual_stack}}
-#' @param aoi one or more AOI polygons as a \code{SpatialPolygonsDataFrame} 
-#' object.  If there is a 'label' field  in the dataframe, it will be used to 
-#' label the polygons in the plots. If the AOI is not in WGS 1984 (EPSG:4326), 
+#' @param aoi one or more AOI polygons as a \code{SpatialPolygonsDataFrame}
+#' object.  If there is a 'label' field  in the dataframe, it will be used to
+#' label the polygons in the plots. If the AOI is not in WGS 1984 (EPSG:4326),
 #' it will be reprojected to WGS84.
-#' @param classes a \code{data.frame} with "code", "label", and (optionally) 
-#' "color" columns. The "code" column indicates the numeric code in the image 
-#' referring to a particular category or cover type, "label" indicates the 
-#' label to use for each code, and "color" indicates the color to use on the 
+#' @param classes a \code{data.frame} with "code", "label", and (optionally)
+#' "color" columns. The "code" column indicates the numeric code in the image
+#' referring to a particular category or cover type, "label" indicates the
+#' label to use for each code, and "color" indicates the color to use on the
 #' image. "color" must be specified in a format recognized by \code{ggplot2}.
 #' @param title_string the plot title
 #' @param size_scale a number used to scale the size of the plot text
 #' @param maxpixels the maximum number of pixels from x to use in plotting
-plot_classes <- function(x, aoi, classes, title_string='', size_scale=1, 
+plot_classes <- function(x, aoi, classes, title_string='', size_scale=1,
                          maxpixels=1e6) {
     aoi_tr <- spTransform(aoi, CRS(proj4string(x)))
     aoi_tr$ID <- row.names(aoi_tr)
@@ -1761,7 +1761,7 @@ plot_classes <- function(x, aoi, classes, title_string='', size_scale=1,
 
     long=lat=value=label=ID=NULL # For R CMD CHECK
     ggplot(dat) +
-        geom_raster(aes(x, y, fill=value)) + coord_fixed() + 
+        geom_raster(aes(x, y, fill=value)) + coord_fixed() +
         scale_fill_manual("Cover", values=classes$color, breaks=classes$code,
                           labels=classes$label, drop=FALSE) +
         theme(axis.text.x=element_blank(), axis.text.y=element_blank(),
@@ -1786,8 +1786,8 @@ for (sitecode in sitecodes) {
     stopifnot(length(classeskey_files) == length(predclasses_files))
 
     # Mask out area outside of ZOI
-    zoi_file <- dir(zoi_folder, pattern=paste0('^ZOI_', sitecode, 
-                                               '_[0-9]{4}.RData'), 
+    zoi_file <- dir(zoi_folder, pattern=paste0('^ZOI_', sitecode,
+                                               '_[0-9]{4}.RData'),
                     full.names=TRUE)
     stopifnot(length(zoi_file) == 1)
     load(zoi_file)
@@ -1795,7 +1795,7 @@ for (sitecode in sitecodes) {
 
     plots <- foreach (predclasses_file=iter(predclasses_files),
                       classeskey_file=iter(classeskey_files),
-                      .packages=c('stringr', 'tools', 'raster', 'plyr', 'grid', 
+                      .packages=c('stringr', 'tools', 'raster', 'plyr', 'grid',
                                   'rgdal', 'ggplot2')) %dopar% {
             year <- str_extract(predclasses_file, '[0-9]{4}')
 
@@ -1804,8 +1804,8 @@ for (sitecode in sitecodes) {
                                   label=class_names_abbrev,
                                   color=class_colors,
                                   stringsAsFactors=FALSE)
-            # Assign codes to classes that are in this image. Assign codes to the 
-            # others just so the plot code doesn't choke, and so these classes remain 
+            # Assign codes to classes that are in this image. Assign codes to the
+            # others just so the plot code doesn't choke, and so these classes remain
             # in the legend, even if they do not appear in the image.
             #
             # First fill in proper codes for classes that do appear in image
@@ -1817,7 +1817,7 @@ for (sitecode in sitecodes) {
 
 
             classes_rast <- stack(predclasses_file)
-            classes_rast <- sampleRegular(classes_rast, 1e6, asRaster=TRUE, 
+            classes_rast <- sampleRegular(classes_rast, 1e6, asRaster=TRUE,
                                           useGDAL=TRUE)
             classes_rast <- crop(classes_rast, zoi)
             zoi_rast <- rasterize(zoi, classes_rast, 1, silent=TRUE)
@@ -1829,14 +1829,14 @@ for (sitecode in sitecodes) {
     }
 
     # Below is from: http://bit.ly/1qhIgOh
-    
+
     # For all one page:
-    ggsave(file.path(out_dir, paste0(sitecode, "_classified_browse.png")), 
+    ggsave(file.path(out_dir, paste0(sitecode, "_classified_browse.png")),
            plot=do.call(arrangeGrob, plots),
            width=img_width, height=img_height, dpi=img_dpi, type=type)
 
     # # For gridded 2x2
-    # ggsave(file.path(out_dir, paste0(sitecode, "_classified_browse.png")), 
+    # ggsave(file.path(out_dir, paste0(sitecode, "_classified_browse.png")),
     #        do.call(marrangeGrob, c(l, list(nrow=2, ncol=2))),
     #        width=img_width, height=img_height, dpi=img_dpi, type=type)
 }
@@ -1865,7 +1865,7 @@ thresholds <- foreach(thresholds_file=iter(thresholds_files),
     read.csv(thresholds_file)
 }
 
-summarize(group_by(thresholds, sitecode), 
+summarize(group_by(thresholds, sitecode),
           min=min(threshold),
           max=max(threshold),
           mean=mean(threshold),
@@ -1883,7 +1883,7 @@ write.csv(thresholds, file='thresholds.csv', row.names=FALSE)
 #                         .combine=rbind, .inorder=FALSE) %do% {
 #
 #     chgmag <- raster(chgmag_file)
-#     
+#
 #     vals <- sampleRegular(chgmag, 100000, useGDAL=TRUE)
 #     hist(vals)
 #     hiu
@@ -1929,16 +1929,16 @@ for (sitecode in sitecodes) {
         next
     }
     this_zoi_file <- dir(zoi_folder,
-                         pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'), 
+                         pattern=paste0('^ZOI_', sitecode, '_[0-9]{4}.RData'),
                          full.names=TRUE)
     stopifnot(length(this_zoi_file) == 1)
-    
+
     these_year_1s <- as.numeric(gsub('[_-]','', str_extract(these_chgmag_files, '_[0-9]{4}-')))
     these_year_2s <- as.numeric(gsub('[_-]','', str_extract(these_chgmag_files, '-[0-9]{4}_')))
     stopifnot(these_year_1s < these_year_2s)
     year_1s <- c(year_1s, these_year_1s)
     year_2s <- c(year_2s, these_year_2s)
-    
+
     for (this_year_1 in these_year_1s) {
         classes_1_filename <- dir(predictions_dir,
                                   pattern=paste0(sitecode, '_mosaic_', this_year_1,
@@ -1947,9 +1947,9 @@ for (sitecode in sitecodes) {
         stopifnot(length(classes_1_filename) == 1)
         classes_1_filenames <- c(classes_1_filenames, classes_1_filename)
     }
-    
+
     chgmag_files <- c(chgmag_files, these_chgmag_files)
-    
+
     zoi_files <- c(zoi_files, rep(this_zoi_file, length(these_chgmag_files)))
 }
 
@@ -1974,7 +1974,7 @@ year_2 <- year_2s[5]
 set.seed(463)
 
 #Run change detection on each pair
-notify(paste0('Calculating accuracy assessment polygons. ', 
+notify(paste0('Calculating accuracy assessment polygons. ',
               length(chgmag_files), ' image sets to process.'))
 num_res <- foreach (chgmag_file=iter(chgmag_files), zoi_file=iter(zoi_files),
                     classes_1_filename=iter(classes_1_filenames),
@@ -1989,7 +1989,7 @@ num_res <- foreach (chgmag_file=iter(chgmag_files), zoi_file=iter(zoi_files),
     sitecode <- str_extract(basename(chgmag_file), '^[a-zA-Z]*')
 
     out_basename <- paste0(sitecode, '_', year_1, '-', year_2, '_accpolys')
-    output_files <- dir(out_dir, pattern=paste0(out_basename, '.shp'), 
+    output_files <- dir(out_dir, pattern=paste0(out_basename, '.shp'),
                         full.names=TRUE)
     if (length(output_files) >= 1 & !redo_accuracy_sampling) {
         return()
@@ -2003,10 +2003,10 @@ num_res <- foreach (chgmag_file=iter(chgmag_files), zoi_file=iter(zoi_files),
     zoi <- spTransform(zoi, CRS(proj4string(chgmag_image)))
     zoi_rast <- rasterize(zoi, chgmag_image, 1, silent=TRUE)
 
-    # Mask out areas outside ZOI - we only care about accuracy w/in the ZOI.  
+    # Mask out areas outside ZOI - we only care about accuracy w/in the ZOI.
     chgmag_image[is.na(zoi_rast)] <- NA
 
-    # And we can only evaluate accuracy where we have data for both years, so 
+    # And we can only evaluate accuracy where we have data for both years, so
     # use the NAs in the chgmag_image to mask the classes_1_image.
     classes_1_image[is.na(chgmag_image)] <- NA
 
@@ -2020,8 +2020,8 @@ num_res <- foreach (chgmag_file=iter(chgmag_files), zoi_file=iter(zoi_files),
     }
 
     # Draw sample for assessing change/no-change
-    training_polys <- sample_raster(classes_1_image, 30, 
-                                    strata=classes_1_image, 
+    training_polys <- sample_raster(classes_1_image, 30,
+                                    strata=classes_1_image,
                                     exp=expansion,
                                     side=xres(classes_1_image))
     training_polys$year_1 <- ''
@@ -2031,20 +2031,20 @@ num_res <- foreach (chgmag_file=iter(chgmag_files), zoi_file=iter(zoi_files),
     writeOGR(training_polys, out_dir, out_basename, driver="ESRI Shapefile")
 
     # Draw sample for assessing accuracy of last date classification
-    
+
     # Draw sample for assessing accuracy of trajectories
 }
 
 notify(paste0('Finished calculating accuracy assessment polygons.'))
 ###############################################################################
-# This script calculates total forest loss, in hectares for the Zone of 
-# Interaction of each TEAM site, using data from the University of Maryland 
+# This script calculates total forest loss, in hectares for the Zone of
+# Interaction of each TEAM site, using data from the University of Maryland
 # Global Forest Change dataset.
 #
-# After running this script, you can run the '2_animate_loss.R' script to 
+# After running this script, you can run the '2_animate_loss.R' script to
 # produce a series of animations of forest change at each TEAM site.
 #
-# Contact Alex Zvoleff (azvoleff@conservation.org) for the datafiles needed to 
+# Contact Alex Zvoleff (azvoleff@conservation.org) for the datafiles needed to
 # produce these animations.
 ###############################################################################
 
@@ -2101,7 +2101,7 @@ loss$threshold <- factor(loss$threshold)
 # Add some more data fields needed for plotting
 loss$year <- as.Date(paste0(loss$year, '-1-1'))
 site_codes_key <- read.csv('sitecode_key.csv')
-loss$site_name <- site_codes_key$sitename_short[match(loss$site_code, 
+loss$site_name <- site_codes_key$sitename_short[match(loss$site_code,
                                                       site_codes_key$sitecode)]
 
 # Add cumulative and percent loss fields
@@ -2133,26 +2133,26 @@ fgain$threshold <- forest_threshold
 fgain$threshold <- factor(fgain$threshold)
 
 # Calculate total loss per site
-summ_stats <- melt(fgain, id.vars=c('site_code', 'aoi', 'threshold'), 
+summ_stats <- melt(fgain, id.vars=c('site_code', 'aoi', 'threshold'),
                    measure.vars=c('gain', 'lossgain'))
 summ_stats <- ddply(summ_stats, .(threshold, site_code, aoi, variable), summarize,
                     value=sum(value, na.rm=TRUE))
 total_loss <- ddply(loss, .(threshold, site_code, aoi), summarize,
-                    variable='loss', 
+                    variable='loss',
                     value=sum(loss, na.rm=TRUE))
 summ_stats <- rbind(summ_stats, total_loss)
-summ_stats <- summ_stats[order(summ_stats$threshold, summ_stats$site_code, 
+summ_stats <- summ_stats[order(summ_stats$threshold, summ_stats$site_code,
                                summ_stats$variable, summ_stats$aoi), ]
 summ_stats$variable <- factor(summ_stats$variable,
-                              levels=c('loss', 'lossgain', 'gain'), 
+                              levels=c('loss', 'lossgain', 'gain'),
                               labels=c('Loss', 'Loss & gain', 'Gain'))
 
-# Normalize by initial cover, then multiply by 100, to get percentage of 
+# Normalize by initial cover, then multiply by 100, to get percentage of
 # initial forest cover
 initial_cover <- loss[loss$year == as.Date('2000-1-1'), ]
 initial_cover_row <- match(paste(summ_stats$site_code, summ_stats$aoi),
                            paste(initial_cover$site_code, initial_cover$aoi))
-summ_stats$value_pct <- with(summ_stats, (value / 
+summ_stats$value_pct <- with(summ_stats, (value /
                                           initial_cover$cover[initial_cover_row])*100)
 
 save(summ_stats, file="summ_stats.RData")
@@ -2250,33 +2250,33 @@ for (sitecode in unique(sitecodes)) {
         end_date <- endpts[i + 1]
         plot_title <- paste0(sitecode, ' (', start_date, ' - ', end_date, ')')
         ee_plot(these_scenes, start_date, end_date, title=plot_title)
-        ggsave(file.path(plot_folder, paste0(sitecode, '_scenes_', start_date, 
-                                             '--', end_date, '_bar.png')), 
-                         width=PLOT_WIDTH, height=PLOT_HEIGHT, 
+        ggsave(file.path(plot_folder, paste0(sitecode, '_scenes_', start_date,
+                                             '--', end_date, '_bar.png')),
+                         width=PLOT_WIDTH, height=PLOT_HEIGHT,
                dpi=PLOT_DPI)
         ee_plot(these_scenes, start_date, end_date, normalize=TRUE, title=plot_title)
-        ggsave(file.path(plot_folder, paste0(sitecode, '_scenes_', start_date, 
-                                             '--', end_date, '_line.png')), 
-                         width=PLOT_WIDTH, height=PLOT_HEIGHT, 
+        ggsave(file.path(plot_folder, paste0(sitecode, '_scenes_', start_date,
+                                             '--', end_date, '_line.png')),
+                         width=PLOT_WIDTH, height=PLOT_HEIGHT,
                dpi=PLOT_DPI)
     }
 }
 ###############################################################################
-# This script produces animations of forest loss within the Zone of Interaction 
-# of each TEAM site, using data from the University of Maryland Global Forest 
+# This script produces animations of forest loss within the Zone of Interaction
+# of each TEAM site, using data from the University of Maryland Global Forest
 # Change dataset.
 #
-# Before running this script, you must first run the '1_calculate_loss.R' 
+# Before running this script, you must first run the '1_calculate_loss.R'
 # script to produce the "loss.RData" file this script requires.
 #
-# Contact Alex Zvoleff (azvoleff@conservation.org) for the datafiles needed to 
+# Contact Alex Zvoleff (azvoleff@conservation.org) for the datafiles needed to
 # produce these animations.
 ###############################################################################
 
 library(stringr)
 library(ggplot2)
 library(scales) # for percent format
-library(gridExtra) # for grid.arrange 
+library(gridExtra) # for grid.arrange
 library(raster)
 library(gfcanalysis)
 library(animation)
@@ -2346,13 +2346,13 @@ for (n in which(site_codes %in% sites_to_plot)) {
 
     maxpixels <- ceiling((width * height * dpi^2)/1000) * 1000
 
-    site_name <- site_codes_key$sitename_short[match(site_code, 
+    site_name <- site_codes_key$sitename_short[match(site_code,
                                                      site_codes_key$sitecode)]
     plot_title <- paste(site_name, 'forest change')
 
     gfc_annual <- brick(gfc_extract_files[n])
 
-    zoi_file <- dir(this_zoi_folder, pattern=paste0('^ZOI_', site_code, 
+    zoi_file <- dir(this_zoi_folder, pattern=paste0('^ZOI_', site_code,
                                                     '_[0-9]{4}.RData$'))
     load(file.path(this_zoi_folder, zoi_file))
     zoi$label <- 'ZOI'
@@ -2366,7 +2366,7 @@ for (n in which(site_codes %in% sites_to_plot)) {
 
     size_scale <- 2
     make_frame <- function(year_num) {
-         p1 <- plot_gfc(gfc_annual[[year_num]], zoi, 
+         p1 <- plot_gfc(gfc_annual[[year_num]], zoi,
                         maxpixels=maxpixels, size_scale=size_scale)
          #               title_string=plot_title)
          p1 <- p1 + theme(legend.key.height=unit(1.5, "line"))
@@ -2377,7 +2377,7 @@ for (n in which(site_codes %in% sites_to_plot)) {
          total_loss <- sum(frame_loss$loss, na.rm=TRUE)
          current_cover <- frame_loss$cover[frame_loss$year == years[year_num]]
          hist_data <- data.frame(type='Forest loss', value=total_loss)
-         hist_data <- rbind(hist_data, 
+         hist_data <- rbind(hist_data,
                             data.frame(type='Forest', value=current_cover))
          hist_data$type <- relevel(hist_data$type, 'Forest')
 
@@ -2406,11 +2406,11 @@ for (n in which(site_codes %in% sites_to_plot)) {
                    plot.margin=unit(c(0, 0, 0, 0), "lines"),
                    panel.margin=unit(0, "lines"))
          p2
-         
+
          # Uncomment below for lineplot in bottom of frame
          # p3 <- ggplot(frame_loss, aes(year, loss_pct_cum/100)) +
          #     geom_line() + geom_point(aes(size=size)) +
-         #     scale_y_continuous(labels=percent_format(), 
+         #     scale_y_continuous(labels=percent_format(),
          #                        limits=c(0, max_loss_pct_cum/100)) +
          #     scale_size(range=c(2, 4), guide=FALSE) +
          #     xlim(min(years), max(years)) +
@@ -2423,8 +2423,8 @@ for (n in which(site_codes %in% sites_to_plot)) {
          p3 <- ggplot(hist_data, aes(type, value)) +
              geom_bar(stat='identity') +
              scale_y_continuous(limits=c(0, max_cover)) +
-             ylab(expression(paste('Area (', km^2, ')'))) + 
-             theme_bw(base_size=8*size_scale) + 
+             ylab(expression(paste('Area (', km^2, ')'))) +
+             theme_bw(base_size=8*size_scale) +
              theme(axis.ticks.x=element_blank(),
                    axis.title.x=element_blank(),
                    panel.grid.major.x=element_blank(),
@@ -2438,7 +2438,7 @@ for (n in which(site_codes %in% sites_to_plot)) {
     # if (!file_test('-d', out_dir)) {
     #     dir.create(out_dir)
     # }
-    # ani.options(outdir=out_dir, ani.width=width*dpi, ani.height=height*dpi, 
+    # ani.options(outdir=out_dir, ani.width=width*dpi, ani.height=height*dpi,
     #             verbose=FALSE)
     # saveHTML({
     #               for (year_num in 1:13) {
@@ -2451,7 +2451,7 @@ for (n in which(site_codes %in% sites_to_plot)) {
     #          htmlfile=paste0(out_basename, ".html"),
     #          autobrowse=FALSE,
     #          title=paste(site_name, 'forest change'))
- 
+
     # Uncomment below for movie output
     ani.options(ffmpeg="C:/Program Files/ffmpeg/bin/ffmpeg.exe",
                 ani.width=width*dpi, ani.height=height*dpi, verbose=TRUE,
@@ -2493,8 +2493,8 @@ load('1_all_scenes_noexclusions.RData')
 
 # Order all scenes with less than 20% cloud cover (inclusive of 0-10%
 scenes_lt20 <- scenes[scenes$Frac_Clear >= .8 & scenes$Frac_Clear <= .9, ]
-espa_scenelist(scenes_lt20, as.Date('1980/1/1'), as.Date('2015/1/1'), 
-               min_clear=0, file.path(order_folder, 
+espa_scenelist(scenes_lt20, as.Date('1980/1/1'), as.Date('2015/1/1'),
+               min_clear=0, file.path(order_folder,
                                       'scenes_allsites_lt20cloud_noexclusions.txt'))
 
 source('0_settings.R')
@@ -2513,13 +2513,13 @@ stopifnot(file_test('-d', download_folder))
 # espa_download(espa_email, '5142014-153954', download_folder) # 10-20% cover
 # espa_download(espa_email, '6162014-8585', download_folder) # 10-20% cover
 library(stringr)
-options(RCurlOptions=list(cainfo=system.file("CurlSSL", "cacert.pem", 
+options(RCurlOptions=list(cainfo=system.file("CurlSSL", "cacert.pem",
                                              package="RCurl")))
 curl=getCurlHandle()
 login_page <- unlist(strsplit(getURL('https://espa.cr.usgs.gov/login/', curl=curl), '\n'))
 csrfmiddlewaretoken <- login_page[grepl("csrfmiddlewaretoken", login_page)]
 csrfmiddlewaretoken <- gsub("(value=)|(')", '',
-                            str_extract(csrfmiddlewaretoken, 
+                            str_extract(csrfmiddlewaretoken,
                                         "value='[a-zA-Z0-9]*'"))
 params <- list('username'="azvoleff",
                'password'="0ZmNcTDR1ZtSs85",
@@ -2550,9 +2550,9 @@ downloaded_scenes <- str_extract(downloaded_landsats, '((LE[78])|(LT[45]))[0-9]{
 
 missing_scenes <- ordered_scenes[!(ordered_scenes$scene_id %in% downloaded_scenes), ]
 
-# write.table(missing_scenes$scene_id_full, 'missing_scenes_order.txt', row.names=FALSE, 
+# write.table(missing_scenes$scene_id_full, 'missing_scenes_order.txt', row.names=FALSE,
 #             col.names=FALSE, quote=FALSE, sep='\n')
-write.table(missing_scenes$scene_id_full, 'noexclusions_order.txt', row.names=FALSE, 
+write.table(missing_scenes$scene_id_full, 'noexclusions_order.txt', row.names=FALSE,
             col.names=FALSE, quote=FALSE, sep='\n')
 
 table(missing_scenes$order_file)
@@ -2568,7 +2568,7 @@ dl_scenes_process_times <- strptime(dl_scenes_process_times, format='%Y%m%d%H%M%
 scene_date <- as.Date(substr(dl_scenes, 10, 16), '%Y%j')
 
 dl_scenes <- data.frame(filename=dl_landsats,
-                        scene_id=dl_scenes, 
+                        scene_id=dl_scenes,
                         process_time=dl_scenes_process_times,
                         date=scene_date)
 
@@ -2603,7 +2603,7 @@ start_dates <- as.Date(c('1988/1/1',
 end_dates <- as.Date(c('1992/12/31',
                        '1997/12/31',
                        '2002/12/31',
-                       '2007/12/31', 
+                       '2007/12/31',
                        '2012/12/31'))
 # start_dates <- as.Date(c('1998/1/1', '2008/1/1'))
 # end_dates <- as.Date(c('2002/12/31', '2012/12/31'))
@@ -2631,10 +2631,10 @@ foreach (sitecode=iter(included_tiles$sitecode),
                        format(start_date, '%Y/%m/%d'), '-',
                        format(end_date, '%Y/%m/%d'),
                        ', pathrow ', this_pathrow))
-        tryCatch(espa_extract(in_folder, output_folder, pathrows=this_pathrow, 
+        tryCatch(espa_extract(in_folder, output_folder, pathrows=this_pathrow,
                               start_date=start_date, end_date=end_date),
                  error=function(e) {
-                     print(paste0('extract failed for ', sitecode, ' ', 
+                     print(paste0('extract failed for ', sitecode, ' ',
                                   start_date, '-', end_date))
                  })
 }
@@ -2642,7 +2642,7 @@ source('0_settings.R')
 
 library(rgeos)
 
-# NOTE IF SMOOTHING IS CHANGED NEED TO USE THE HACKED RASTER CODE AND UPDATE 
+# NOTE IF SMOOTHING IS CHANGED NEED TO USE THE HACKED RASTER CODE AND UPDATE
 # THE CALL TO AUTO_SETUO_DEM BELOW.
 smoothing <- 1
 out_dir <- 'CGIAR_SRTM_TEAM_nosmoothing'
@@ -2661,11 +2661,11 @@ for (sitecode in sitecodes) {
     aoi <- spTransform(aoi, CRS(utm_zone(aoi, proj4string=TRUE)))
     aoi <- gBuffer(aoi, width=5000)
 
-    auto_setup_dem(aoi, output_path=output_path, dem_extents=dem_extents, 
-                   n_cpus=n_cpus, overwrite=overwrite, crop_to_aoi=TRUE, 
+    auto_setup_dem(aoi, output_path=output_path, dem_extents=dem_extents,
+                   n_cpus=n_cpus, overwrite=overwrite, crop_to_aoi=TRUE,
                    verbose=verbose)
-    # auto_setup_dem(aoi, output_path=output_path, dem_extents=dem_extents, 
-    #                smoothing=smoothing, n_cpus=n_cpus, overwrite=overwrite, 
+    # auto_setup_dem(aoi, output_path=output_path, dem_extents=dem_extents,
+    #                smoothing=smoothing, n_cpus=n_cpus, overwrite=overwrite,
     #                crop_to_aoi=TRUE, verbose=verbose)
 }
 load('6_z_evaluate_DEMS.RData')
@@ -2688,7 +2688,7 @@ library(iterators)
 registerDoParallel(10)
 
 dem_freqs <- foreach(sitecode=iter(sitecodes), .combine=rbind, .inorder=FALSE,
-         .packages=c('teamlucc', 'stringr', 'rgeos', 'sp', 'rgdal', 'foreach', 
+         .packages=c('teamlucc', 'stringr', 'rgeos', 'sp', 'rgdal', 'foreach',
                      'iterators')) %dopar% {
     dem_path <- file.path(prefix, 'CGIAR_SRTM_TEAM_nosmoothing', sitecode)
     slopeaspect_files <- dir(dem_path,
@@ -2706,14 +2706,14 @@ dem_freqs <- foreach(sitecode=iter(sitecodes), .combine=rbind, .inorder=FALSE,
     aoi <- gBuffer(aoi, width=5000)
 
     # Mask DEM
-    site_dem_freqs <- foreach(slopeaspect_file=iter(slopeaspect_files), 
-                              wrspath=iter(wrspath), wrsrow=iter(wrsrow), 
-                              .combine=rbind, .packages=c('raster', 'sp'), 
+    site_dem_freqs <- foreach(slopeaspect_file=iter(slopeaspect_files),
+                              wrspath=iter(wrspath), wrsrow=iter(wrsrow),
+                              .combine=rbind, .packages=c('raster', 'sp'),
             .inorder=FALSE) %do%  {
         slope <- (brick(slopeaspect_file)[[1]] / 10000) * (180 / pi)
         slope <- mask(slope, aoi)
         quants <- quantile(slope, probs=seq(0, 1, .05), na.rm=TRUE)
-        ret <- data.frame(sitecode=sitecode, wrspath=wrspath, wrsrow=wrsrow, 
+        ret <- data.frame(sitecode=sitecode, wrspath=wrspath, wrsrow=wrsrow,
                           mean=cellStats(slope, mean, na.rm=TRUE),
                           sd=cellStats(slope, sd, na.rm=TRUE))
         ret <- cbind(ret, matrix(quants, nrow=1))
@@ -2767,10 +2767,10 @@ for (sitecode in sitecodes) {
 
     if ((length(new_image_dirs) > 1) & (!reprocess)) {
         # Do nothing if preprocessed files already exist
-        new_image_dirs <- new_image_dirs[!unlist(lapply(file.path(base_dir, 
-                                                                  new_image_dirs), 
+        new_image_dirs <- new_image_dirs[!unlist(lapply(file.path(base_dir,
+                                                                  new_image_dirs),
                                                         is_preprocessed))]
-    } 
+    }
 
     if (length(new_image_dirs) < 1) {
         next
@@ -2798,12 +2798,12 @@ stopifnot(length(sitecodes_rep) == length(image_dirs))
 stopifnot(length(sitecodes_rep) == length(do_tcs))
 
 print(paste("Images to process:", length(image_dirs)))
-foreach(sitecode=iter(sitecodes_rep), dem_path=iter(dem_paths), 
-        image_dir=iter(image_dirs), do_tc=iter(do_tcs), 
-        .packages=c('teamlucc', 'rgeos', 'sp', 'rgdal'), 
+foreach(sitecode=iter(sitecodes_rep), dem_path=iter(dem_paths),
+        image_dir=iter(image_dirs), do_tc=iter(do_tcs),
+        .packages=c('teamlucc', 'rgeos', 'sp', 'rgdal'),
         .inorder=FALSE) %dopar% {
     message(paste0('Processing ', image_dir, '...'))
-    # Set a separate raster temp dir for each worker, so that temp files can be 
+    # Set a separate raster temp dir for each worker, so that temp files can be
     # cleared after each iteration
     rasterOptions(tmpdir=paste0(tempdir(), '_raster'))
 
@@ -2813,7 +2813,7 @@ foreach(sitecode=iter(sitecodes_rep), dem_path=iter(dem_paths),
     aoi <- spTransform(aoi, CRS(utm_zone(aoi, proj4string=TRUE)))
     aoi <- gBuffer(aoi, width=5000)
     auto_preprocess_landsat(image_dir, prefix=sitecode, tc=do_tc,
-                            dem_path=dem_path, aoi=aoi, n_cpus=1, 
+                            dem_path=dem_path, aoi=aoi, n_cpus=1,
                             cleartmp=FALSE, overwrite=overwrite, verbose=TRUE)
     removeTmpFiles(h=0)
 }
@@ -2828,7 +2828,7 @@ writeLines('-------------------------')
 for (sitecode in sitecodes) {
     base_dir <- file.path(prefix, 'Landsat', sitecode)
     image_dirs <- dir(base_dir,
-                      pattern='^[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_((LT[45])|(LE7))$', 
+                      pattern='^[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_((LT[45])|(LE7))$',
                       full.names=TRUE)
 
     total_dirs <- length(image_dirs)
@@ -2845,12 +2845,12 @@ for (sitecode in sitecodes) {
 
     # print(not_preprocessed)
 
-    writeLines(paste0(sitecode, '\t', length(preprocessed), '\t', 
+    writeLines(paste0(sitecode, '\t', length(preprocessed), '\t',
                       length(not_preprocessed)))
 
 }
 writeLines('-------------------------')
-writeLines(paste0('Total:\t', total_preprocessed, '\t', 
+writeLines(paste0('Total:\t', total_preprocessed, '\t',
                   total_not_preprocessed))
 source("0_settings.R")
 
@@ -2860,7 +2860,7 @@ out_folder <- 'D:/Landsat_HDFs'
 for (sitecode in sitecodes) {
     print(paste0('*** Processing ', sitecode, ' ***'))
     image_dirs <- dir(file.path(in_folder, sitecode),
-                      pattern='^[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_((LT[45])|(LE7))$', 
+                      pattern='^[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_((LT[45])|(LE7))$',
                       full.names=TRUE)
 
     if (length(image_dirs) >= 1) {
@@ -2877,7 +2877,7 @@ for (sitecode in sitecodes) {
             print(paste('Moving files from', image_dir))
             new_dir <- file.path(out_folder, sitecode, basename(image_dir))
             if (!file_test('-d', new_dir))dir.create(new_dir)
-            ret <- file.rename(file.path(image_dir, lndsr_files), 
+            ret <- file.rename(file.path(image_dir, lndsr_files),
                                file.path(new_dir, lndsr_files))
             if (sum(ret) != length(lndsr_files))
                 stop(paste('failed to move', sum(!ret), 'files'))
@@ -2893,7 +2893,7 @@ in_folder <- 'O:/Data/CI_H_Data/Landsat'
 for (sitecode in sitecodes) {
     print(paste0('*** Processing ', sitecode, ' ***'))
     image_dirs <- dir(file.path(in_folder, sitecode),
-                      pattern='^[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_((LT[45])|(LE7))$', 
+                      pattern='^[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_((LT[45])|(LE7))$',
                       full.names=TRUE)
 
     if (length(image_dirs) >= 1) {
@@ -2937,7 +2937,7 @@ for (sitecode in sitecodes) {
     message(paste0('Processing browse images for ', sitecode, '...'))
     base_dir <- file.path(prefix, 'Landsat', sitecode)
     image_dirs <- dir(base_dir,
-                      pattern='^[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_((LT[45])|(LE7))$', 
+                      pattern='^[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_((LT[45])|(LE7))$',
                       full.names=TRUE)
 
     total_dirs <- length(image_dirs)
@@ -2946,21 +2946,21 @@ for (sitecode in sitecodes) {
     pathrow_re <- '[0-9]{3}-[0-9]{3}'
     date_re <- '[0-9]{4}-[0-9]{3}'
     sensor_re <- '((L[45]T)|(L[78]E))SR(_tc)?.tif$'
-    image_files <- dir(image_dirs, pattern=paste(sitecode, pathrow_re, date_re, 
-                                                 sensor_re, sep='_'), 
+    image_files <- dir(image_dirs, pattern=paste(sitecode, pathrow_re, date_re,
+                                                 sensor_re, sep='_'),
                        recursive=TRUE, full.name=TRUE)
 
-    mask_files <- paste0(file_path_sans_ext(image_files), '_masks', 
+    mask_files <- paste0(file_path_sans_ext(image_files), '_masks',
                          extension(image_files))
-    browse_files <- file.path(base_dir, 
-                           paste0('browse_', file_path_sans_ext(basename(image_files)), 
+    browse_files <- file.path(base_dir,
+                           paste0('browse_', file_path_sans_ext(basename(image_files)),
                                   '.png'))
 
     image_file <- image_files[1]
     mask_file <- mask_files[1]
     browse_file <- browse_files[1]
 
-    ret <- foreach (image_file=iter(image_files), mask_file=iter(mask_files), 
+    ret <- foreach (image_file=iter(image_files), mask_file=iter(mask_files),
                     browse_file=iter(browse_files),
                     .packages=c('teamlucc')) %do% {
         rasterOptions(tmpdir=temp)
@@ -2972,7 +2972,7 @@ for (sitecode in sitecodes) {
         image_stack <- stack(image_file, bands=as.integer(c(2:4)))
         mask_stack <- stack(mask_file, bands=as.integer(2))
 
-        browse_image(image_stack, browse_file, mask_stack, DN_min=0, 
+        browse_image(image_stack, browse_file, mask_stack, DN_min=0,
                      DN_max=7000, m_fun=function(vals) {vals == 2 | vals == 4})
 
     }
@@ -2983,21 +2983,21 @@ library(stringr)
 
 input_dir <- file.path(prefix, 'Landsat', 'Cloud_Filled')
 
-image_files <- dir(input_dir, 
+image_files <- dir(input_dir,
                    pattern=paste0('^[a-zA-Z]*_[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_cf.tif$'))
 
 # First figure out path/rows and dates
-wrspathrows <- gsub('[_]', '', str_extract(basename(image_files), 
+wrspathrows <- gsub('[_]', '', str_extract(basename(image_files),
                                             '_[0-9]{3}-[0-9]{3}_'))
 wrspath <- substr(wrspathrows, 1, 3)
 wrsrow <- substr(wrspathrows, 5, 7)
 
-image_dates <- as.Date(str_extract(basename(image_files), 
+image_dates <- as.Date(str_extract(basename(image_files),
                                    '_[0-9]{4}-[0-9]{3}_'), '_%Y-%j_')
 site <- str_extract(image_files, '^[a-zA-Z]*')
 
-cf_file_list <- data.frame(site=site, path=wrspath, row=wrsrow, 
-                           date=image_dates, rating='', notes='', 
+cf_file_list <- data.frame(site=site, path=wrspath, row=wrsrow,
+                           date=image_dates, rating='', notes='',
                            file=image_files)
 
 cf_file_list <- cf_file_list[order(cf_file_list$site,
@@ -3023,14 +3023,14 @@ registerDoParallel(n_cpus)
 
 input_dir <- file.path(prefix, 'Landsat', 'Cloud_Filled')
 
-image_files <- dir(input_dir, 
-                   pattern=paste0('^[a-zA-Z]*_[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_cf.tif$'), 
+image_files <- dir(input_dir,
+                   pattern=paste0('^[a-zA-Z]*_[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_cf.tif$'),
                    full.names=TRUE)
 
 retvals <- foreach(image_file=iter(image_files),
                    .packages=c('teamlucc'), .inorder=FALSE) %dopar% {
     rasterOptions(tmpdir=paste0(tempdir(), '_raster'))
-    jpeg(filename=paste0(file_path_sans_ext(image_file), '_browse.jpg'), 
+    jpeg(filename=paste0(file_path_sans_ext(image_file), '_browse.jpg'),
          height=1000, width=1000, quality=75)
     browse_image(stack(image_file), DN_min=0, DN_max=1000)
     dev.off()
@@ -3072,9 +3072,9 @@ algorithm <- 'CLOUD_REMOVE_FAST'
 
 options(error=recover)
 
-auto_cloud_fill(data_dir, wrspath, wrsrow, start_date, end_date, 
+auto_cloud_fill(data_dir, wrspath, wrsrow, start_date, end_date,
                 out_name=out_name, tc=tc, sensors=sensors,
-                overwrite=TRUE, verbose=2, DN_min=-100, 
+                overwrite=TRUE, verbose=2, DN_min=-100,
                 DN_max=16000, algorithm='CLOUD_REMOVE_FAST', byblock=FALSE)
 source('0_settings.R')
 
@@ -3102,7 +3102,7 @@ start_dates <- as.Date(c('1988/1/1',
 end_dates <- as.Date(c('1992/12/31',
                        '1997/12/31',
                        '2002/12/31',
-                       '2007/12/31', 
+                       '2007/12/31',
                        '2012/12/31'))
 sensors_bydate <- list(c('L4T', 'L5T', 'L7E', 'L8E'),
                        c('L4T', 'L5T', 'L7E', 'L8E'),
@@ -3159,10 +3159,10 @@ stopifnot(length(sitecodes_rep) == length(wrspaths))
 stopifnot(length(sitecodes_rep) == length(wrsrows))
 stopifnot(length(sitecodes_rep) == length(tcs))
 
-foreach (sitecode=iter(sitecodes_rep), base_dir=iter(base_dirs), 
+foreach (sitecode=iter(sitecodes_rep), base_dir=iter(base_dirs),
          wrspath=iter(wrspaths), wrsrow=iter(wrsrows), tc=iter(tcs),
-         .inorder=FALSE)  %:% 
-    foreach (start_date=iter(start_dates), end_date=(end_dates), 
+         .inorder=FALSE)  %:%
+    foreach (start_date=iter(start_dates), end_date=(end_dates),
              sensors=iter(sensors_bydate),
              .packages=c('teamlucc', 'raster', 'sp'),
              .inorder=FALSE) %dopar% {
@@ -3172,8 +3172,8 @@ foreach (sitecode=iter(sitecodes_rep), base_dir=iter(base_dirs),
                                      sprintf('_%03i-%03i_', wrspath, wrsrow),
                                      format(mid_date, '%Y-%j'), '_cf'))
 
-        status_line <- paste0(sitecode, ' ', wrspath, '/', wrsrow, ' (', 
-                              format(start_date, '%Y/%d/%m'), ' - ', 
+        status_line <- paste0(sitecode, ' ', wrspath, '/', wrsrow, ' (',
+                              format(start_date, '%Y/%d/%m'), ' - ',
                               format(end_date, '%Y/%d/%m'), ')')
 
         output_file <- paste0(out_base, ext)
@@ -3182,15 +3182,15 @@ foreach (sitecode=iter(sitecodes_rep), base_dir=iter(base_dirs),
             if (!overwrite) stop(paste(output_file, 'already exists'))
         }
 
-        # Set a separate raster temp dir for each worker, so that temp 
+        # Set a separate raster temp dir for each worker, so that temp
         # files can be cleared after each iteration
         rasterOptions(tmpdir=paste0(tempdir(), '_raster'))
 
-        tryCatch(cf <- auto_cloud_fill(base_dir, wrspath, wrsrow, start_date, 
-                                       end_date, out_name=out_base, tc=tc, 
-                                       sensors=sensors, n_cpus=1, 
-                                       overwrite=overwrite, verbose=verbose, 
-                                       DN_min=-100, DN_max=16000, 
+        tryCatch(cf <- auto_cloud_fill(base_dir, wrspath, wrsrow, start_date,
+                                       end_date, out_name=out_base, tc=tc,
+                                       sensors=sensors, n_cpus=1,
+                                       overwrite=overwrite, verbose=verbose,
+                                       DN_min=-100, DN_max=16000,
                                        algorithm=algorithm, byblock=FALSE),
                  error=function(e) {
                      print(paste(status_line, 'FAILED'))
@@ -3235,9 +3235,9 @@ algorithm <- 'CLOUD_REMOVE_FAST'
 
 options(error=recover)
 
-auto_cloud_fill(data_dir, wrspath, wrsrow, start_date, end_date, 
+auto_cloud_fill(data_dir, wrspath, wrsrow, start_date, end_date,
                 out_name=out_name, tc=tc, sensors=sensors,
-                overwrite=TRUE, verbose=2, DN_min=-100, 
+                overwrite=TRUE, verbose=2, DN_min=-100,
                 DN_max=16000, algorithm='CLOUD_REMOVE_FAST', byblock=FALSE)
 library(raster)
 library(tools)
@@ -3255,9 +3255,9 @@ inDataSet2_file <- file.path(data_dir, sitecode, 'PSH_mosaic_2010.tif')
 inDataSet1 <- stack(inDataSet1_file)
 inDataSet2 <- stack(inDataSet2_file)
 
-mask1 <- stack(paste0(file_path_sans_ext(inDataSet1_file), '_masks', 
+mask1 <- stack(paste0(file_path_sans_ext(inDataSet1_file), '_masks',
                       extension(inDataSet1_file)))
-mask2 <- stack(paste0(file_path_sans_ext(inDataSet2_file), '_masks', 
+mask2 <- stack(paste0(file_path_sans_ext(inDataSet2_file), '_masks',
                       extension(inDataSet2_file)))
 
 mask1 <- mask1 != 0
@@ -3265,7 +3265,7 @@ mask2 <- mask1 != 0
 
 output_basename <- paste0(file_path_sans_ext(inDataSet1_file), '_imad')
 
-imad_res <- iMad(inDataSet1, inDataSet2, pos=as.integer(c(1:6)), mask1=mask1, 
+imad_res <- iMad(inDataSet1, inDataSet2, pos=as.integer(c(1:6)), mask1=mask1,
                  mask2=mask2, output_basename=output_basename)
 
 RADCAL(inDataSet1, inDataSet2, chisqr_raster)
@@ -3288,29 +3288,29 @@ overwrite <- TRUE
 input_dir <- file.path(prefix, 'Landsat', 'Cloud_Filled')
 output_dir <- file.path(prefix, 'Landsat', 'Cloud_Filled_Normalized')
 
-# Function to auto-normalize an image list, or, if there is only one image in 
+# Function to auto-normalize an image list, or, if there is only one image in
 # the image list, to copy the image with the base image extension.
 auto_normalize_or_copy <- function(image_files) {
     if (length(image_files) > 1) {
         auto_normalize(image_files, overwrite=overwrite)
     } else {
         base_img <- stack(image_files)
-        mask_file <- paste0(file_path_sans_ext(image_files), '_masks', 
+        mask_file <- paste0(file_path_sans_ext(image_files), '_masks',
                             extension(image_files))
         base_mask <- stack(mask_file)
 
         # Copy the base image to a new file with the _base.tif extension
-        base_copy_filename <- file.path(output_dir, 
-                                        paste0(file_path_sans_ext(basename(image_files)), 
+        base_copy_filename <- file.path(output_dir,
+                                        paste0(file_path_sans_ext(basename(image_files)),
                                                '_normbase.tif'))
-        base_img <- writeRaster(base_img, filename=base_copy_filename, 
+        base_img <- writeRaster(base_img, filename=base_copy_filename,
                                 datatype='INT2S',
                                 overwrite=overwrite)
         base_img <- stack(image_files)
         base_mask_copy_filename <- file.path(output_dir,
-                                             paste0(file_path_sans_ext(basename(image_files)), 
+                                             paste0(file_path_sans_ext(basename(image_files)),
                                                     '_normbase_masks.tif'))
-        base_mask <- writeRaster(base_mask, filename=base_mask_copy_filename, 
+        base_mask <- writeRaster(base_mask, filename=base_mask_copy_filename,
                                  datatype='INT2S',
                                  overwrite=overwrite)
     }
@@ -3320,7 +3320,7 @@ notify("Starting normalization.")
 for (sitecode in sitecodes) {
     message(paste0('Normalizing images for ', sitecode, '...'))
 
-    image_files <- dir(input_dir, 
+    image_files <- dir(input_dir,
                        pattern=paste0('^', sitecode, '_[0-9]{3}-[0-9]{3}_[0-9]{4}-[0-9]{3}_cf.tif$'),
                        full.names=TRUE)
     image_stacks <- lapply(image_files, stack)
@@ -3343,10 +3343,10 @@ for (sitecode in sitecodes) {
     }
 
     # First figure out path/rows and dates
-    wrspathrows <- gsub('[_]', '', str_extract(basename(image_files), 
+    wrspathrows <- gsub('[_]', '', str_extract(basename(image_files),
                                                 '_[0-9]{3}-[0-9]{3}_'))
 
-    image_dates <- as.Date(str_extract(basename(image_files), 
+    image_dates <- as.Date(str_extract(basename(image_files),
                                        '_[0-9]{4}-[0-9]{3}_'), '_%Y-%j_')
 
     if (length(unique(wrspathrows)) == 1) {
@@ -3356,7 +3356,7 @@ for (sitecode in sitecodes) {
     } else {
         message(paste(length(unique(wrspathrows)), 'path/rows for', sitecode))
         # Handle more complicated case - multiple path/rows per site
-        
+
         ######################################################################
         # First normalize largest path/row
         # Figure out largest path row
@@ -3368,31 +3368,31 @@ for (sitecode in sitecodes) {
 
         auto_normalize_or_copy(lg_pathrow_imagefiles)
 
-        # Determine the base image for lg_pathrow (it was automatically selected by 
+        # Determine the base image for lg_pathrow (it was automatically selected by
         # auto_normalize)
-        lg_base_file <- dir(input_dir, pattern=paste0('^', sitecode, '_', lg_pathrow, 
+        lg_base_file <- dir(input_dir, pattern=paste0('^', sitecode, '_', lg_pathrow,
                                                       '_[0-9]{4}-[0-9]{3}_cf_normbase.tif$'),
                             full.names=TRUE)
-        lg_mask_file <- paste0(file_path_sans_ext(lg_base_file), '_masks', 
+        lg_mask_file <- paste0(file_path_sans_ext(lg_base_file), '_masks',
                                extension(lg_base_file))
 
         remaining_wrspathrows <- wrspathrows[!grepl(lg_pathrow, wrspathrows)]
         remaining_wrspathrows <- unique(remaining_wrspathrows)
 
         ######################################################################
-        # Normalize the remaining pathrows to this base image, using the area 
+        # Normalize the remaining pathrows to this base image, using the area
         # of overlap of each other path/row with this base image
         foreach(wrspathrow=iter(remaining_wrspathrows),
                 .packages=c('stringr', 'teamlucc', 'lmodel2')) %do% {
-                    
+
             raster_tmpdir <- file.path(temp, paste0('raster_',
                                                     paste(sample(c(letters, 0:9), 15), collapse='')))
             dir.create(raster_tmpdir)
             rasterOptions(tmpdir=raster_tmpdir)
-                    
+
             these_image_files <- dir(input_dir,
-                                     pattern=paste0('^', sitecode, '_', wrspathrow, 
-                                                    '_[0-9]{4}-[0-9]{3}_cf.tif$'), 
+                                     pattern=paste0('^', sitecode, '_', wrspathrow,
+                                                    '_[0-9]{4}-[0-9]{3}_cf.tif$'),
                                      full.names=TRUE)
 
             base_extent <- as(extent(raster(lg_base_file)), 'SpatialPolygons')
@@ -3407,7 +3407,7 @@ for (sitecode in sitecodes) {
             # Normalize each image file within this path/row
             foreach(image_file=iter(these_image_files),
                     .packages=c('teamlucc', 'lmodel2')) %do% {
-                mask_file <- paste0(file_path_sans_ext(image_file), '_masks', 
+                mask_file <- paste0(file_path_sans_ext(image_file), '_masks',
                                     extension(image_file))
                 match_crop <- crop(stack(image_file), overlap_area)
                 match_mask_crop <- crop(stack(mask_file), overlap_area)
@@ -3424,7 +3424,7 @@ for (sitecode in sitecodes) {
 
                 # Calculate normalization from extent overlapping base image
                 if (500000 < ncell(x)) {
-                    # Note that sampleRegular with cells=TRUE returns cell numbers in the 
+                    # Note that sampleRegular with cells=TRUE returns cell numbers in the
                     # first column
                     x_vals <- sampleRegular(x, size=500000, cells=TRUE)
                     x_vals <- x_vals[!(crop_msk[x_vals[, 1]]), ]
@@ -3439,12 +3439,12 @@ for (sitecode in sitecodes) {
 
                 names(y_vals) <- names(x_vals)
 
-                # Develop model II regression from overlapping extent and normalize 
+                # Develop model II regression from overlapping extent and normalize
                 # match image using this model
                 normed_image <- foreach(unnormed_layer=unstack(stack(image_file)),
                                     x_sample=iter(x_vals, by='column'),
                                     y_sample=iter(y_vals, by='column'),
-                                    .combine='addLayer', .multicombine=TRUE, 
+                                    .combine='addLayer', .multicombine=TRUE,
                                     .init=raster(),
                                     .packages=c('raster', 'lmodel2', 'rgdal')) %dopar% {
                     model <- suppressMessages(lmodel2(x_sample ~ y_sample, nperm=0))
@@ -3453,9 +3453,9 @@ for (sitecode in sitecodes) {
                     normed_layer <- model$Slope * unnormed_layer + model$Intercept
                 }
 
-                # Copy masked values back into the output raster. "match_mask" 
-                # refers to missing values in the FULL match image, while 
-                # crop_msk refers to missing values only in the area of the 
+                # Copy masked values back into the output raster. "match_mask"
+                # refers to missing values in the FULL match image, while
+                # crop_msk refers to missing values only in the area of the
                 # match image that overlaps the base image.
                 #
                 # Remember that fmask layer is 2nd layer in stack
@@ -3463,24 +3463,24 @@ for (sitecode in sitecodes) {
                 match_mask <- stack(mask_file)
                 normed_image[match_mask[[2]] != 0] <- unnormed_image[match_mask[[2]] != 0]
 
-                output_normed_file <- file.path(output_dir, 
-                                                paste0(file_path_sans_ext(basename(image_file)), 
+                output_normed_file <- file.path(output_dir,
+                                                paste0(file_path_sans_ext(basename(image_file)),
                                                        '_normalized.tif'))
-                output_normed_masks_file <- file.path(output_dir, 
-                                                      paste0(file_path_sans_ext(basename(image_file)), 
+                output_normed_masks_file <- file.path(output_dir,
+                                                      paste0(file_path_sans_ext(basename(image_file)),
                                                              '_normalized_masks.tif'))
-                writeRaster(normed_image, filename=output_normed_file, 
-                            datatype='INT2S', 
+                writeRaster(normed_image, filename=output_normed_file,
+                            datatype='INT2S',
                             overwrite=overwrite)
-                writeRaster(match_mask, filename=output_normed_masks_file, 
+                writeRaster(match_mask, filename=output_normed_masks_file,
                             datatype='INT2S', overwrite=overwrite)
             }
-            
+
             removeTmpFiles(h=0)
             unlink(raster_tmpdir)
-            
+
             # # Normalize remainder of this path/row layerstack to this base image
-            # base_image <- dir(input_dir, pattern=paste0('^[a-zA-Z]*_', wrspathrow, 
+            # base_image <- dir(input_dir, pattern=paste0('^[a-zA-Z]*_', wrspathrow,
             #                                            '_[0-9]{4}-[0-9]{3}_cf_normbase.tif$'),
             #                   full.names=TRUE)
             # base_image_datestring <- str_extract(basename(base_image), '_[0-9]{4}-[0-9]{3}_')
@@ -3561,7 +3561,7 @@ for (sitecode in sitecodes) {
     }
     mask_stacks <- lapply(mask_files, stack)
 
-    image_date_strings <- unique(str_extract(basename(image_files), 
+    image_date_strings <- unique(str_extract(basename(image_files),
                                              '_[0-9]{4}-[0-9]{3}_'))
 
     # Function to get maximal extent from a list of extents
@@ -3574,11 +3574,11 @@ for (sitecode in sitecodes) {
         }
         return(full_ext)
     }
-    # First calculate maximal extent of each stack of images, considering all 
-    # the dates to ensure that the mosaic extents match for each epoch even if 
+    # First calculate maximal extent of each stack of images, considering all
+    # the dates to ensure that the mosaic extents match for each epoch even if
     # some epochs are missing path/rows
     mos_exts <- foreach(image_date_string=iter(image_date_strings),
-                        .packages=c('raster', 'rgdal', 'lubridate', 'tools', 
+                        .packages=c('raster', 'rgdal', 'lubridate', 'tools',
                                     'foreach', 'iterators')) %dopar% {
         epoch_image_files <- image_files[grepl(image_date_string, image_files)]
         # Calculate full extent of mosaic
@@ -3606,9 +3606,9 @@ for (sitecode in sitecodes) {
     ###########################################################################
     # Iterate over the images to mosaick
     mosaic_stacks <- foreach(image_date_string=iter(image_date_strings),
-                             .packages=c('raster', 'rgdal', 'lubridate', 
+                             .packages=c('raster', 'rgdal', 'lubridate',
                                          'tools', 'foreach', 'iterators',
-                                         'gdalUtils', 'RcppArmadillo', 
+                                         'gdalUtils', 'RcppArmadillo',
                                          'inline', 'abind'),
                              .combine=c) %dopar% {
         raster_tmpdir <- file.path(temp, paste0('raster_',
@@ -3625,25 +3625,25 @@ for (sitecode in sitecodes) {
 
         if (imgtype == 'normalized') {
             mosaic_out_file <- file.path(output_dir,
-                                         paste0(sitecode, '_mosaic_normalized_', 
-                                                year(image_date_object),  
+                                         paste0(sitecode, '_mosaic_normalized_',
+                                                year(image_date_object),
                                             extension(epoch_image_files[1])))
         } else {
             mosaic_out_file <- file.path(output_dir,
-                                         paste0(sitecode, '_mosaic_', 
-                                                year(image_date_object),  
+                                         paste0(sitecode, '_mosaic_',
+                                                year(image_date_object),
                                             extension(epoch_image_files[1])))
         }
         if (file_test('-f', mosaic_out_file) & !reprocess) {
             return()
         }
 
-        mask_out_file <- paste0(file_path_sans_ext(mosaic_out_file), '_masks', 
+        mask_out_file <- paste0(file_path_sans_ext(mosaic_out_file), '_masks',
                                 extension(mosaic_out_file))
 
         #######################################################################
         # Need to align images prior to mosaicking if origins are not identical
-        image_origins <- lapply(epoch_mask_files, function(x) 
+        image_origins <- lapply(epoch_mask_files, function(x)
                                 origin(raster(x)))
         image_origins_eq  <- lapply(image_origins, function(x) {
             identical(x, c(0, 0))
@@ -3657,22 +3657,22 @@ for (sitecode in sitecodes) {
                                       epoch_mask_file=iter(epoch_mask_files),
                                       .combine=rbind) %do% {
                 mask_vrtfile <- extension(rasterTmpFile(), '.vrt')
-                # The hidenodata and vrtnodata lines below ensure that no data 
-                # areas are coded 255 in the output mosaic (consistent with the 
+                # The hidenodata and vrtnodata lines below ensure that no data
+                # areas are coded 255 in the output mosaic (consistent with the
                 # Landsat CDR mask coding for fill area).
-                gdalbuildvrt(epoch_mask_file, mask_vrtfile, vrtnodata=255, 
+                gdalbuildvrt(epoch_mask_file, mask_vrtfile, vrtnodata=255,
                              hidenodata=FALSE, te=mosaic_te, tr=c(30, 30))
                 mask_tiffile <- extension(rasterTmpFile(), '.tif')
-                gdalwarp(mask_vrtfile, dstfile=mask_tiffile, r='near', 
-                         of='GTiff', overwrite=overwrite, ot='Byte', 
+                gdalwarp(mask_vrtfile, dstfile=mask_tiffile, r='near',
+                         of='GTiff', overwrite=overwrite, ot='Byte',
                          co="COMPRESS=LZW")
 
                 image_tiffile <- extension(rasterTmpFile(), '.tif')
-                gdalwarp(epoch_image_file, dstfile=image_tiffile, 
-                         r='cubicspline', of='GTiff', overwrite=overwrite, 
-                         te=mosaic_te, tr=c(30, 30), ot='Int16', 
+                gdalwarp(epoch_image_file, dstfile=image_tiffile,
+                         r='cubicspline', of='GTiff', overwrite=overwrite,
+                         te=mosaic_te, tr=c(30, 30), ot='Int16',
                          co="COMPRESS=LZW BIGTIFF=IF_SAFER")
-                return(data.frame(msk=mask_tiffile, img=image_tiffile, 
+                return(data.frame(msk=mask_tiffile, img=image_tiffile,
                                   stringsAsFactors=FALSE))
             }
             epoch_mask_files_aligned <- aligned_files$msk
@@ -3682,8 +3682,8 @@ for (sitecode in sitecodes) {
         #######################################################################
         # Mosaick the images
 
-        # Define a function to determine the output value for a block of 
-        # pixels, based on a stack of masks and reflectance from multiple 
+        # Define a function to determine the output value for a block of
+        # pixels, based on a stack of masks and reflectance from multiple
         # overlapping images. Use RcppArmadillo for speed.
         src <- '
             using namespace arma;
@@ -3691,12 +3691,12 @@ for (sitecode in sitecodes) {
             // Read input data into arrays
             Rcpp::NumericVector img_vecArray(img);
             Rcpp::IntegerVector img_arrayDims = img_vecArray.attr("dim");
-            cube img_cube(img_vecArray.begin(), img_arrayDims[0], 
+            cube img_cube(img_vecArray.begin(), img_arrayDims[0],
                           img_arrayDims[1], img_arrayDims[2], false);
 
             Rcpp::NumericVector msk_vecArray(msk);
             Rcpp::IntegerVector msk_arrayDims = msk_vecArray.attr("dim");
-            cube msk_cube(msk_vecArray.begin(), msk_arrayDims[0], 
+            cube msk_cube(msk_vecArray.begin(), msk_arrayDims[0],
                           msk_arrayDims[1], msk_arrayDims[2], false);
 
             mat fillnofill_mat = msk_cube.tube(0, 0, msk_cube.n_rows - 1, 0);
@@ -3752,7 +3752,7 @@ for (sitecode in sitecodes) {
                     } else {
                         img_out.row(pixelnum) = trans(mean(img_pixel.cols(gooddata_indices), 1));
                     }
-                    // Take a conservative approach to merging masks - highest code 
+                    // Take a conservative approach to merging masks - highest code
                     // takes precedence (snow (3) over water (1) over clear (0)).
                     msk_out(pixelnum, 0) = 0;
                     msk_out(pixelnum, 1) = max(fmask_pixel(gooddata_indices));
@@ -3766,7 +3766,7 @@ for (sitecode in sitecodes) {
                     msk_out(pixelnum, 1) = min(fmask_pixel);
                 }
             }
-             
+
             return Rcpp::List::create(Rcpp::Named("img") = img_out,
                                       Rcpp::Named("msk") = msk_out);
         '
@@ -3775,22 +3775,22 @@ for (sitecode in sitecodes) {
 
         # results <- mosaic_block(image_array, mask_array)
         #
-        # plot(raster(matrix(results$img[, 1], nrow=bs$nrows[block_num], 
+        # plot(raster(matrix(results$img[, 1], nrow=bs$nrows[block_num],
         #                    byrow=TRUE)))
         #
-        # plot(raster(matrix(results$msk[, 1], nrow=bs$nrows[block_num], 
+        # plot(raster(matrix(results$msk[, 1], nrow=bs$nrows[block_num],
         #                    byrow=TRUE)))
         #
-        # plot(raster(matrix(results$msk[, 2], nrow=bs$nrows[block_num], 
+        # plot(raster(matrix(results$msk[, 2], nrow=bs$nrows[block_num],
         #                    byrow=TRUE)))
         #
-        # plot(raster(matrix(image_array[, 1, 1], nrow=bs$nrows[block_num], 
+        # plot(raster(matrix(image_array[, 1, 1], nrow=bs$nrows[block_num],
         #                    byrow=TRUE)))
         #
-        # plot(raster(matrix(mask_array[, 1, 1], nrow=bs$nrows[block_num], 
+        # plot(raster(matrix(mask_array[, 1, 1], nrow=bs$nrows[block_num],
         #                    byrow=TRUE)))
         #
-        # plot(raster(matrix(mask_array[, 2, 1], nrow=bs$nrows[block_num], 
+        # plot(raster(matrix(mask_array[, 2, 1], nrow=bs$nrows[block_num],
         #                    byrow=TRUE)))
 
         if (length(epoch_image_files_aligned) > 1) {
@@ -3804,30 +3804,30 @@ for (sitecode in sitecodes) {
         sample_image <- epoch_image_stacks[[1]]
 
         mask_out <- brick(sample_mask, values=FALSE)
-        # Set NAflag to 99 as a kludge - writeRaster doesn't allow omitting an 
+        # Set NAflag to 99 as a kludge - writeRaster doesn't allow omitting an
         # NAflag, and I don't want 255 to be flagged as nodata
-        mask_out <- writeStart(mask_out, filename=mask_out_file, 
-                               overwrite=overwrite, datatype='INT1U', 
+        mask_out <- writeStart(mask_out, filename=mask_out_file,
+                               overwrite=overwrite, datatype='INT1U',
                                NAflag=99)
         image_out <- brick(sample_image, values=FALSE)
-        image_out <- writeStart(image_out, filename=mosaic_out_file, 
+        image_out <- writeStart(image_out, filename=mosaic_out_file,
                                 overwrite=overwrite, datatype='INT2S')
         bs <- blockSize(sample_image)
         for (block_num in 1:bs$n) {
-            image_dims <- c(bs$nrows[block_num], ncol(sample_image), 
+            image_dims <- c(bs$nrows[block_num], ncol(sample_image),
                             nlayers(sample_image))
-            mask_dims <- c(bs$nrows[block_num], ncol(sample_mask), 
+            mask_dims <- c(bs$nrows[block_num], ncol(sample_mask),
                            nlayers(sample_mask))
-            # Make image and mask arrays. Image array has nrow*ncol rows, 
-            # n_layers columns, and n_images in z direction. Mask array has 
+            # Make image and mask arrays. Image array has nrow*ncol rows,
+            # n_layers columns, and n_images in z direction. Mask array has
             # nrow*ncol rows, and n_images columns
             for (image_num in 1:length(epoch_image_files_aligned)) {
-                image_bl <- array(getValuesBlock(epoch_image_stacks[[image_num]], 
-                                                 row=bs$row[block_num], 
+                image_bl <- array(getValuesBlock(epoch_image_stacks[[image_num]],
+                                                 row=bs$row[block_num],
                                                  nrows=bs$nrows[block_num]),
                                   dim=c(image_dims[1] * image_dims[2], image_dims[3], 1))
-                mask_bl <- array(getValuesBlock(epoch_mask_stacks[[image_num]], 
-                                                row=bs$row[block_num], 
+                mask_bl <- array(getValuesBlock(epoch_mask_stacks[[image_num]],
+                                                row=bs$row[block_num],
                                                 nrows=bs$nrows[block_num]),
                                  dim=c(mask_dims[1] * mask_dims[2], mask_dims[3], 1))
                 if (image_num == 1) {
@@ -3839,9 +3839,9 @@ for (sitecode in sitecodes) {
                 }
             }
             mosaicked_block <- mosaic_block(image_array, mask_array)
-            mask_out <- writeValues(mask_out, mosaicked_block$msk, 
+            mask_out <- writeValues(mask_out, mosaicked_block$msk,
                                     bs$row[block_num])
-            image_out <- writeValues(image_out, mosaicked_block$img, 
+            image_out <- writeValues(image_out, mosaicked_block$img,
                                      bs$row[block_num])
         }
         mask_out <- writeStop(mask_out)
@@ -3850,43 +3850,43 @@ for (sitecode in sitecodes) {
 #         epoch_images <- lapply(epoch_image_files, brick)
 #         epoch_masks <- lapply(epoch_mask_files, brick)
 #
-#         masked_epoch_image_files <- foreach(epoch_image=iter(epoch_images), 
-#                                             epoch_mask=iter(epoch_masks), 
-#                                             .packages=c('raster', 'rgdal', 
+#         masked_epoch_image_files <- foreach(epoch_image=iter(epoch_images),
+#                                             epoch_mask=iter(epoch_masks),
+#                                             .packages=c('raster', 'rgdal',
 #                                                         'gdalUtils'),
 #                                             .combine=c) %do% {
-#             # Make sure clouds are masked out (NA) and make sure missing values 
+#             # Make sure clouds are masked out (NA) and make sure missing values
 #             # and SLC-off is masked out.
 #             #
 #             # Remember layer 2 is fmask
 #             out_file <- extension(rasterTmpFile(), '.tif')
-#             epoch_image <- overlay(epoch_image, epoch_mask[[2]], 
+#             epoch_image <- overlay(epoch_image, epoch_mask[[2]],
 #                                    fun=function(img, msk) {
-#                 img[(msk == 2) | (msk == 4) | (msk == 255)] <- NA 
-#                 img[is.na(msk)] <- NA 
+#                 img[(msk == 2) | (msk == 4) | (msk == 255)] <- NA
+#                 img[is.na(msk)] <- NA
 #                 return(img)
 #             }, datatype=dataType(epoch_image)[1], filename=out_file)
 #             return(out_file)
 #         }
 #
 #         mask_vrtfile <- tempfile(fileext='.vrt')
-#         # The hidenodata and vrtnodata lines below ensure that no data areas 
-#         # are coded 255 in the output mosaic (consistent with the Landsat CDR 
+#         # The hidenodata and vrtnodata lines below ensure that no data areas
+#         # are coded 255 in the output mosaic (consistent with the Landsat CDR
 #         # mask coding for fill area).
-#         gdalbuildvrt(epoch_mask_files, mask_vrtfile, vrtnodata=255, 
+#         gdalbuildvrt(epoch_mask_files, mask_vrtfile, vrtnodata=255,
 #                      hidenodata=FALSE, te=mosaic_te, tr=c(30, 30))
-#         mask_stack <- gdalwarp(mask_vrtfile, dstfile=mask_out_file, 
-#                                r='near', output_Raster=TRUE, of='GTiff', 
-#                                overwrite=overwrite, multi=TRUE, 
-#                                wo=paste0("NUM_THREADS=", n_cpus), 
+#         mask_stack <- gdalwarp(mask_vrtfile, dstfile=mask_out_file,
+#                                r='near', output_Raster=TRUE, of='GTiff',
+#                                overwrite=overwrite, multi=TRUE,
+#                                wo=paste0("NUM_THREADS=", n_cpus),
 #                                ot='Byte', co="COMPRESS=LZW")
 #
 #         image_stack <- gdalwarp(masked_epoch_image_files,
 #                                 dstfile=mosaic_out_file,
-#                                 r='cubicspline', output_Raster=TRUE, 
+#                                 r='cubicspline', output_Raster=TRUE,
 #                                 of='GTiff',
-#                                 overwrite=overwrite, multi=TRUE, 
-#                                 wo=paste0("NUM_THREADS=", n_cpus), 
+#                                 overwrite=overwrite, multi=TRUE,
+#                                 wo=paste0("NUM_THREADS=", n_cpus),
 #                                 te=mosaic_te, tr=c(30, 30),
 #                                 ot='Int16', co="COMPRESS=LZW")
         removeTmpFiles(h=0)
@@ -3910,14 +3910,14 @@ for (sitecode in sitecodes) {
                                      paste0(sitecode, '_mosaic_dem.tif'))
     if (builddem & (!file_test('-f', dem_mosaic_filename) | reprocess)) {
         message(paste0('Mosaicking DEMs for ', sitecode, '...'))
-        
+
         mos_ext <- as(mos_exts[[1]], 'SpatialPolygons')
 
         proj4string(mos_ext) <- proj4string(mosaic_stacks[[1]])
 
         mos_ext_dem_proj <- spTransform(mos_ext, CRS(proj4string(dem_extents)))
 
-        intersecting <- as.logical(gIntersects(dem_extents, 
+        intersecting <- as.logical(gIntersects(dem_extents,
                                                gUnaryUnion(mos_ext_dem_proj), byid=TRUE))
         if (sum(intersecting) == 0) {
             stop('no intersecting dem extents found')
@@ -3932,9 +3932,9 @@ for (sitecode in sitecodes) {
         dem_te <- as.numeric(bbox(mos_ext))
         to_res <- c(30, 30)
         dem_mosaic <- gdalwarp(dem_list, dstfile=dem_mosaic_filename,
-                               te=dem_te, t_srs=to_srs, tr=to_res, 
-                               r='cubicspline', output_Raster=TRUE, multi=TRUE, 
-                               of='GTiff', wo=paste0("NUM_THREADS=", n_cpus), 
+                               te=dem_te, t_srs=to_srs, tr=to_res,
+                               r='cubicspline', output_Raster=TRUE, multi=TRUE,
+                               of='GTiff', wo=paste0("NUM_THREADS=", n_cpus),
                                overwrite=overwrite)
 
         # Note that the default output of 'terrain' is in radians
@@ -3943,14 +3943,14 @@ for (sitecode in sitecodes) {
             vals[vals >= 2*pi] <- 0
             vals
             })
-        # Note that slopeaspect is scaled - slope by 10000, and aspect by 1000 so 
+        # Note that slopeaspect is scaled - slope by 10000, and aspect by 1000 so
         # that the layers can be saved as INT2S
         slopeaspect <- stack(round(raster(slopeaspect, layer=1) * 10000),
                              round(raster(slopeaspect, layer=2) * 1000))
 
         slopeaspect_mosaic_filename <- file.path(output_dir,
                                          paste0(sitecode, '_mosaic_slopeaspect.tif'))
-        slopeaspect <- writeRaster(slopeaspect, filename=slopeaspect_mosaic_filename, 
+        slopeaspect <- writeRaster(slopeaspect, filename=slopeaspect_mosaic_filename,
                                  overwrite=overwrite, datatype='INT2S')
     }
 
@@ -3962,14 +3962,14 @@ notify('Finished mosaicking.')
 #' @exportClass accuracy
 #' @rdname accuracy-class
 #' @slot ct a simple sample contingency table
-#' @slot pop_ct a population contingency table (if \code{pop} was provided - 
+#' @slot pop_ct a population contingency table (if \code{pop} was provided -
 #' see \code{\link{accuracy}})
 #' @slot Q quantity disagreement
 #' @slot A allocation disagreement
 #' @slot n_test the number of samples
 #' @slot pop the population of each class as a numeric
 #' @import methods
-setClass('accuracy', slots=c(ct='table', pop_ct='table', Q='numeric', 
+setClass('accuracy', slots=c(ct='table', pop_ct='table', Q='numeric',
                              A='numeric', n_test='numeric',
                              pop='numeric')
 )
@@ -4027,20 +4027,20 @@ setClass('error_adj_area', slots=c(adj_area_mat='matrix'))
 
 #' Calculated adjusted class areas for an image classification
 #'
-#' Calculates the adjusted areas of each class in an image after taking account 
-#' of omission and commission errors. For unbiased adjustments, error rates 
-#' should be calculated using a population sample matrix (see 
+#' Calculates the adjusted areas of each class in an image after taking account
+#' of omission and commission errors. For unbiased adjustments, error rates
+#' should be calculated using a population sample matrix (see
 #' \code{\link{accuracy}}.
 #'
-#' Standard errors for the adjusted areas are calculated as in Olofsson et al.  
+#' Standard errors for the adjusted areas are calculated as in Olofsson et al.
 #' (2013).
 #' @export adj_areas
-#' @param x an \code{accuracy} object or a list of populations as a 
+#' @param x an \code{accuracy} object or a list of populations as a
 #' \code{numeric}
 #' @param y missing, or a contingency table
-#' @references Olofsson, P., G. M. Foody, S. V. Stehman, and C. E. Woodcock.  
-#' 2013. Making better use of accuracy data in land change studies: Estimating 
-#' accuracy and area and quantifying uncertainty using stratified estimation.  
+#' @references Olofsson, P., G. M. Foody, S. V. Stehman, and C. E. Woodcock.
+#' 2013. Making better use of accuracy data in land change studies: Estimating
+#' accuracy and area and quantifying uncertainty using stratified estimation.
 #' Remote Sensing of Environment 129:122-131.
 setGeneric("adj_areas", function(x, y) standardGeneric("adj_areas"))
 
@@ -4061,7 +4061,7 @@ function(x, y) {
     adj_area_mat <- cbind(pop, adj_area_est, std_err_area, 1.96 * std_err_area)
     adj_area_mat <- round(adj_area_mat, 0)
     dimnames(adj_area_mat)[[1]] <- dimnames(ct)[[1]]
-    dimnames(adj_area_mat)[[2]] <- c('Mapped area', 'Adj. area', 'S.E.', 
+    dimnames(adj_area_mat)[[2]] <- c('Mapped area', 'Adj. area', 'S.E.',
                                      '1.96 * S.E.')
     return(new('error_adj_area', adj_area_mat=adj_area_mat))
 })
@@ -4097,7 +4097,7 @@ plot.error_adj_area <- function(x, ...) {
     se <- x@adj_area_mat[, 3]
     plt_data <- data.frame(x=classes, y=areas, se=se)
     y <- NULL # Fix for R CMD check
-    ggplot(plt_data, aes(x, y)) + geom_bar(stat="identity") + 
+    ggplot(plt_data, aes(x, y)) + geom_bar(stat="identity") +
         geom_errorbar(aes(ymin=y - 1.96 * se, ymax=y + 1.96 * se), width=.25) +
         xlab("Class") + ylab("Area")
 }
@@ -4130,9 +4130,9 @@ plot.error_adj_area <- function(x, ...) {
 
 # Adds margins to contingency table
 .add_ct_margins <- function(ct, digits=4) {
-    # For user's, producer's, and overall accuracy formulas, see Table 
-    # 21.3 in Foody, G.M., Stehman, S.V., 2009. Accuracy Assessment, in: 
-    # Warner, T.A., Nellis, M.D., Foody, G.M. (Eds.), The SAGE Handbook of 
+    # For user's, producer's, and overall accuracy formulas, see Table
+    # 21.3 in Foody, G.M., Stehman, S.V., 2009. Accuracy Assessment, in:
+    # Warner, T.A., Nellis, M.D., Foody, G.M. (Eds.), The SAGE Handbook of
     # Remote Sensing. SAGE.
     diag_indices <- which(diag(nrow(ct)) == TRUE)
     users_acc <- ct[diag_indices] / colSums(ct)
@@ -4152,27 +4152,27 @@ plot.error_adj_area <- function(x, ...) {
 
 #' Calculate statistics summarizing classification accuracy
 #'
-#' Calculates a contingency table and various statistics for use in image 
-#' classification accuracy assessment and map comparison. Contingency table 
-#' includes user's, producer's, and overall accuracies for an image 
-#' classification, and quantity disagreement \code{Q} and allocation 
-#' disagreement \code{A}. \code{Q} and \code{A} are calculated based on Pontius 
-#' and Millones (2011). Standard errors for 95 percent confidence intervals for 
-#' the user's, producer's and overall accuracies are calculated as in Foody and 
-#' Stehman (2009) Table 21.3. To avoid bias due to the use of a sample 
-#' contingency table, the contingency table will be converted to a population 
-#' contingency table if the variable 'pop' is provided. For an accuracy 
-#' assessment using testing data from a simple random sample, 'pop' does not 
+#' Calculates a contingency table and various statistics for use in image
+#' classification accuracy assessment and map comparison. Contingency table
+#' includes user's, producer's, and overall accuracies for an image
+#' classification, and quantity disagreement \code{Q} and allocation
+#' disagreement \code{A}. \code{Q} and \code{A} are calculated based on Pontius
+#' and Millones (2011). Standard errors for 95 percent confidence intervals for
+#' the user's, producer's and overall accuracies are calculated as in Foody and
+#' Stehman (2009) Table 21.3. To avoid bias due to the use of a sample
+#' contingency table, the contingency table will be converted to a population
+#' contingency table if the variable 'pop' is provided. For an accuracy
+#' assessment using testing data from a simple random sample, 'pop' does not
 #' need to be provided (see Details).
 #'
 #' \code{x} can be one of:
 #' \enumerate{
 #'
-#'   \item A prediction model as output from one of the \code{teamlucc} 
-#'   \code{classify} functions. If \code{x} is a model, and testing data 
-#'   is included in the model, \code{pop} and \code{test_data} can both be 
-#'   missing, and accuracy will still run (though the output will in this case 
-#'   be biased unless the testing data is from a simple random sample). If 
+#'   \item A prediction model as output from one of the \code{teamlucc}
+#'   \code{classify} functions. If \code{x} is a model, and testing data
+#'   is included in the model, \code{pop} and \code{test_data} can both be
+#'   missing, and accuracy will still run (though the output will in this case
+#'   be biased unless the testing data is from a simple random sample). If
 #'   \code{x} is a \code{RasterLayer}, then \code{test_data} must be supplied.
 #'
 #'   \item A \code{RasterLayer} with a predicted map.
@@ -4180,65 +4180,65 @@ plot.error_adj_area <- function(x, ...) {
 #'
 #' \code{test_data} can be one of:
 #' \enumerate{
-#'   \item \code{NULL}. If test_data is \code{NULL}, \code{accuracy} will try to use 
+#'   \item \code{NULL}. If test_data is \code{NULL}, \code{accuracy} will try to use
 #'         testing data included in \code{x}. This will only work if \code{x}
-#'         is a model of class \code{train} from the \code{caret} package, and 
-#'         if the model was run using the one of the \code{teamlucc} 
+#'         is a model of class \code{train} from the \code{caret} package, and
+#'         if the model was run using the one of the \code{teamlucc}
 #'         \code{classify} functions.
 #'
-#'   \item A \code{SpatialPolygonsDataFrame} object, in which case \code{accuracy} 
-#'         will extract the predicted classes within each polygon from \code{x}.  
+#'   \item A \code{SpatialPolygonsDataFrame} object, in which case \code{accuracy}
+#'         will extract the predicted classes within each polygon from \code{x}.
 #'         This will only work if \code{x} is a \code{RasterLayer}.
 #'
-#'   \item A \code{pixel_data} object, in which case \code{accuracy} will use the 
-#'         included \code{training_flag} indicator to separate testing and 
+#'   \item A \code{pixel_data} object, in which case \code{accuracy} will use the
+#'         included \code{training_flag} indicator to separate testing and
 #'         training data.
 #' }
 #'
 #' \code{pop} can be one of:
 #' \enumerate{
-#'   \item NULL, in which case the sample frequencies will be used as estimates 
+#'   \item NULL, in which case the sample frequencies will be used as estimates
 #'         of the population frequencies of each class.
 #'
-#'   \item A list of length equal to the number of classes in the map giving 
+#'   \item A list of length equal to the number of classes in the map giving
 #'         the total number of pixels in the population for each class.
 #'
-#'   \item A predicted cover map from as a \code{RasterLayer}, from which the 
-#'         class frequencies will be tabulated and used as the population 
+#'   \item A predicted cover map from as a \code{RasterLayer}, from which the
+#'         class frequencies will be tabulated and used as the population
 #'         frequencies.
 #' }
 #' @export accuracy
-#' @param x either a classification model with a \code{predict} method or a 
+#' @param x either a classification model with a \code{predict} method or a
 #' \code{RasterLayer} (see Details)
-#' @param test_data a \code{link{pixel_data}} object, 
+#' @param test_data a \code{link{pixel_data}} object,
 #' \code{SpatialPolygonsDataFrame}, or NULL (see Details).
-#' @param pop A \code{RasterLayer}, \code{numeric} of length equal to the 
+#' @param pop A \code{RasterLayer}, \code{numeric} of length equal to the
 #' number of clasess, or NULL (see Details).
-#' @param class_col required if \code{test_data} is a 
-#' \code{SpatialPolygonsDataFrame}. Defines the name of the column containing 
+#' @param class_col required if \code{test_data} is a
+#' \code{SpatialPolygonsDataFrame}. Defines the name of the column containing
 #' the observed cover class IDs
-#' @param reclass_mat a reclassification matrix to be used in the case of a 
+#' @param reclass_mat a reclassification matrix to be used in the case of a
 #' model fit by \code{classify} with the \code{do_split} option selected
 #' @return \code{\link{accuracy-class}} instance
-#' @references Pontius, R. G., and M. Millones. 2011. Death to Kappa: birth of 
-#' quantity disagreement and allocation disagreement for accuracy assessment.  
+#' @references Pontius, R. G., and M. Millones. 2011. Death to Kappa: birth of
+#' quantity disagreement and allocation disagreement for accuracy assessment.
 #' International Journal of Remote Sensing 32:4407-4429.
 #'
-#' Olofsson, P., G. M. Foody, S. V. Stehman, and C. E. Woodcock.  2013. Making 
-#' better use of accuracy data in land change studies: Estimating accuracy and 
-#' area and quantifying uncertainty using stratified estimation.  Remote 
+#' Olofsson, P., G. M. Foody, S. V. Stehman, and C. E. Woodcock.  2013. Making
+#' better use of accuracy data in land change studies: Estimating accuracy and
+#' area and quantifying uncertainty using stratified estimation.  Remote
 #' Sensing of Environment 129:122-131.
 #'
-#' Foody, G.M., Stehman, S.V., 2009. Accuracy Assessment, in: Warner, T.A., 
+#' Foody, G.M., Stehman, S.V., 2009. Accuracy Assessment, in: Warner, T.A.,
 #' Nellis, M.D., Foody, G.M. (Eds.), The SAGE Handbook of Remote Sensing. SAGE.
 #' @examples
 #' \dontrun{
-#' train_data <- get_pixels(L5TSR_1986, L5TSR_1986_2001_training, "class_1986", 
+#' train_data <- get_pixels(L5TSR_1986, L5TSR_1986_2001_training, "class_1986",
 #'                          training=.6)
 #' model <- train_classifier(train_data)
 #' accuracy(L5TSR_1986_rfmodel)
 #' }
-setGeneric("accuracy", function(x, test_data, pop, class_col, reclass_mat) 
+setGeneric("accuracy", function(x, test_data, pop, class_col, reclass_mat)
            standardGeneric("accuracy"))
 
 #' @rdname accuracy
@@ -4249,7 +4249,7 @@ setMethod("accuracy", signature(x="train", test_data="ANY", pop="ANY", class_col
             test_data <- x$trainingData
             names(test_data)[names(test_data) == '.outcome'] <- 'y'
         } else {
-            test_data <- cbind(y=test_data@y, 
+            test_data <- cbind(y=test_data@y,
                                test_data@x,
                                training_flag=test_data@training_flag)
         }
@@ -4261,7 +4261,7 @@ setMethod("accuracy", signature(x="train", test_data="ANY", pop="ANY", class_col
         test_data <- test_data[!test_data$training_flag, ]
         complete_rows <- complete.cases(test_data)
         if (sum(complete_rows) != nrow(test_data)) {
-            warning(paste('ignored', nrow(test_data) - sum(complete_rows), 
+            warning(paste('ignored', nrow(test_data) - sum(complete_rows),
                           'rows because of missing data'))
             test_data <- test_data[complete.cases(test_data), ]
         }
@@ -4284,7 +4284,7 @@ setMethod("accuracy", signature(x="RasterLayer", test_data="pixel_data", pop="AN
             observed <- test_data@y
         } else {
             # Mix of testing and validation data
-            predicted <- extract(x, test_data@polys[!test_data@training_flag], 
+            predicted <- extract(x, test_data@polys[!test_data@training_flag],
                                  small=TRUE, df=TRUE)[, 2]
             observed <- test_data@y[!test_data@training_flag]
         }
@@ -4298,9 +4298,9 @@ setMethod("accuracy", signature(x="RasterLayer", test_data="pixel_data", pop="AN
 setMethod("accuracy", signature(x="RasterLayer", test_data="SpatialPolygonsDataFrame", pop="ANY", class_col="character", reclass_mat="ANY"),
     function(x, test_data, pop, class_col, reclass_mat) {
         ext <- get_pixels(x, test_data, class_col=class_col)
-        # Since x is the predicted image, the output of get_pixels gives 
-        # the predicted value in slot x, and the observed value in slot y.  
-        # However x is converted to a numeric from a factor, so it needs to be 
+        # Since x is the predicted image, the output of get_pixels gives
+        # the predicted value in slot x, and the observed value in slot y.
+        # However x is converted to a numeric from a factor, so it needs to be
         # converted back to a factor with the same levels as y.
         observed <- ext@y
         predicted <- factor(ext@x[, ], labels=levels(ext@y))
@@ -4328,7 +4328,7 @@ calc_accuracy <- function(predicted, observed, pop, reclass_mat) {
         if (length(pop) != nrow(ct)) {
             stop('length(pop) must be equal to number of classes in the predicted data')
         }
-    } else { 
+    } else {
         stop('pop must be a numeric vector or integer vector of length equal to the number of classes in x, or a RasterLayer, or NULL')
     }
 
@@ -4336,26 +4336,26 @@ calc_accuracy <- function(predicted, observed, pop, reclass_mat) {
     Q <- .calc_Q(pop_ct)
     A <- .calc_A(pop_ct)
 
-    return(new("accuracy", ct=ct, pop_ct=pop_ct, Q=Q, A=A, 
+    return(new("accuracy", ct=ct, pop_ct=pop_ct, Q=Q, A=A,
                n_test=length(observed), pop=pop))
 }
 #' Apply a raster function with edge effects over a series of blocks
 #'
-#' This function can be useful when applying windowed functions over a raster, 
-#' as with \code{glcm}. This function allows windows functions that have edge 
-#' effects to be applied over a raster in block-by-block fashion.  
-#' \code{apply_windowed} avoids the striping that would result if the edge 
+#' This function can be useful when applying windowed functions over a raster,
+#' as with \code{glcm}. This function allows windows functions that have edge
+#' effects to be applied over a raster in block-by-block fashion.
+#' \code{apply_windowed} avoids the striping that would result if the edge
 #' effects were ignored.
 #'
 #' @export
 #' @param x a \code{Raster*}
 #' @param fun the function to apply
-#' @param edge length 2 numberic with number of rows on top and bottom with 
+#' @param edge length 2 numberic with number of rows on top and bottom with
 #' edge effects, defined as c(top, bottom)
-#' @param chunksize the number of rows to read per block (passed to 
+#' @param chunksize the number of rows to read per block (passed to
 #' \code{raster} \code{blockSize} function.
 #' @param filename file on disk to save \code{Raster*} to (optional)
-#' @param overwrite whether to overwrite any existing files (otherwise an error 
+#' @param overwrite whether to overwrite any existing files (otherwise an error
 #' will be raised)
 #' @param datatype the \code{raster} datatype to use
 #' @param ... additional arguments to pass to \code{fun}
@@ -4366,7 +4366,7 @@ calc_accuracy <- function(predicted, observed, pop, reclass_mat) {
 #' max_x <- cellStats(L5TSR_1986_b1, 'max')
 #' apply_windowed(L5TSR_1986_b1, glcm, edge=c(1, 3), min_x=min_x, max_x=max_x)
 #' }
-apply_windowed <- function(x, fun, edge=c(0, 0), chunksize=NULL, filename='', 
+apply_windowed <- function(x, fun, edge=c(0, 0), chunksize=NULL, filename='',
                           overwrite=FALSE, datatype='FLT4S', ...) {
     if ((length(edge) != 2) || (class(edge) != 'numeric') || any(edge < 0)) {
         stop('edge must be a length 2 positive numeric')
@@ -4379,7 +4379,7 @@ apply_windowed <- function(x, fun, edge=c(0, 0), chunksize=NULL, filename='',
     }
     n_blocks <- bs$n
 
-    # bs_mod is the blocksize that will contain blocks that have been expanded 
+    # bs_mod is the blocksize that will contain blocks that have been expanded
     # to avoid edge effects
     bs_mod <- bs
     # Expand blocks to account for edge effects on the top:
@@ -4395,37 +4395,37 @@ apply_windowed <- function(x, fun, edge=c(0, 0), chunksize=NULL, filename='',
     } else if (any((bs_mod$nrows + bs_mod$row - 1) > nrow(x))) {
         stop('too many blocks to read without edge effects - try increasing chunksize')
     }
-    
+
     started_writes <- FALSE
     for (block_num in 1:bs$n) {
-        this_block <- getValues(x, row=bs_mod$row[block_num], 
+        this_block <- getValues(x, row=bs_mod$row[block_num],
                                 nrows=bs_mod$nrows[block_num],
                                 format='matrix')
         out_block <- fun(this_block, ...)
         layer_names <- dimnames(out_block)[[3]]
-        # Drop the padding added to top to avoid edge effects, unless we are 
-        # really on the top of the image, where top edge effects cannot be 
+        # Drop the padding added to top to avoid edge effects, unless we are
+        # really on the top of the image, where top edge effects cannot be
         # avoided
         if ((block_num != 1) && (edge[1] > 0)) {
             out_block <- out_block[-(1:edge[1]), , ]
-            # The below line is needed to maintain a 3 dimensional array, 
-            # even when an n x m x 1 array is returned from 
-            # calc_texture_full_image because a single statistic was chosen. 
-            # Without the below line, removing a row will coerce the 3d array 
-            # to a 2d matrix, and the bottom padding removal will fail as it 
+            # The below line is needed to maintain a 3 dimensional array,
+            # even when an n x m x 1 array is returned from
+            # calc_texture_full_image because a single statistic was chosen.
+            # Without the below line, removing a row will coerce the 3d array
+            # to a 2d matrix, and the bottom padding removal will fail as it
             # references a 3d matrix).
             if (length(dim(out_block)) < 3) dim(out_block) <- c(dim(out_block), 1)
         }
-        # Drop the padding added to bottom to avoid edge effects, unless we are 
-        # really on the bottom of the image, where bottom edge effects cannot 
+        # Drop the padding added to bottom to avoid edge effects, unless we are
+        # really on the bottom of the image, where bottom edge effects cannot
         # be avoided
         if ((block_num != n_blocks) && (edge[2] > 0)) {
             out_block <- out_block[-((nrow(out_block)-edge[2]+1):nrow(out_block)), , ]
             if (length(dim(out_block)) < 3) dim(out_block) <- c(dim(out_block), 1)
         }
         if (!started_writes) {
-            # Setup an output raster with number of layers equal to the number 
-            # of layers in out_block, and extent/resolution equal to extent and 
+            # Setup an output raster with number of layers equal to the number
+            # of layers in out_block, and extent/resolution equal to extent and
             # resolution of x
             if (dim(out_block)[3] == 1) {
                 out <- raster(x)
@@ -4433,12 +4433,12 @@ apply_windowed <- function(x, fun, edge=c(0, 0), chunksize=NULL, filename='',
                 out <- brick(stack(rep(c(x), dim(out_block)[3])), values=FALSE)
             }
             if (filename == '') filename <- rasterTmpFile()
-            out <- writeStart(out, filename=filename, overwrite=overwrite, 
+            out <- writeStart(out, filename=filename, overwrite=overwrite,
                               datatype=datatype)
             names(out) <- layer_names
             started_writes <- TRUE
         }
-        # To write to a RasterBrick the out_block needs to be structured as 
+        # To write to a RasterBrick the out_block needs to be structured as
         # a 2-d matrix with bands in columns and columns as row-major vectors
         if (dim(out_block)[3] == 1) {
             out_block <- aperm(out_block, c(3, 2, 1))
@@ -4473,12 +4473,12 @@ calc_glcm_edge <- function(shift, window) {
 }
 #' Calculate predictor layers for a classification
 #'
-#' This function automates the calculation of a layer stack of predictor layers 
-#' to use in a land use and/or land cover classification. See Details for the 
+#' This function automates the calculation of a layer stack of predictor layers
+#' to use in a land use and/or land cover classification. See Details for the
 #' output layers.
-#' 
-#' The layers in the output layer stack are listed below. Note that all the 
-#' layers are rescaled so that they range between -32,767 and 32,767 (allowing 
+#'
+#' The layers in the output layer stack are listed below. Note that all the
+#' layers are rescaled so that they range between -32,767 and 32,767 (allowing
 #' them to be stored as 16 bit unsigned integers).
 #'
 #' \bold{Predictor layer stack:}
@@ -4510,22 +4510,22 @@ calc_glcm_edge <- function(shift, window) {
 #' @export
 #' @importFrom glcm glcm
 #' @importFrom stringr str_extract
-#' @param x path to a preprocessed image as output by 
+#' @param x path to a preprocessed image as output by
 #' \code{auto_preprocess_landsat} or \code{auto_cloud_fill}.
 #' @param dem DEM \code{RasterLayer} as output by \code{auto_setup_dem}
 #' @param slopeaspect \code{RasterStack} as output by \code{auto_setup_dem}
-#' @param output_path the path to use for the output (optional - if NULL then 
+#' @param output_path the path to use for the output (optional - if NULL then
 #' output images will be saved alongside the input images in the same folder).
-#' @param ext file extension to use when saving output rasters (determines 
+#' @param ext file extension to use when saving output rasters (determines
 #' output file format).
-#' @param overwrite whether to overwrite existing files (otherwise an error 
+#' @param overwrite whether to overwrite existing files (otherwise an error
 #' will be raised)
 #' @param ...  additional arguments passed to \code{\link{glcm}}, such as
 #' \code{n_grey}, \code{window}, or \code{shift}
-#' @param notify notifier to use (defaults to \code{print} function). See the 
-#' \code{notifyR} package for one way of sending notifications from R. The 
+#' @param notify notifier to use (defaults to \code{print} function). See the
+#' \code{notifyR} package for one way of sending notifications from R. The
 #' \code{notify} function should accept a string as the only argument.
-auto_calc_predictors <- function(x, dem, slopeaspect, output_path=NULL, 
+auto_calc_predictors <- function(x, dem, slopeaspect, output_path=NULL,
                                  ext='tif', overwrite=FALSE, notify=print,
                                  ...) {
     if (!file_test("-f", x)) {
@@ -4574,7 +4574,7 @@ auto_calc_predictors <- function(x, dem, slopeaspect, output_path=NULL,
                                  paste0(image_basename, '_MSAVI2.', ext))
     MSAVI2_layer <- MSAVI2(red=raster(image_stack, layer=3),
                            nir=raster(image_stack, layer=4))
-    # Truncate MSAVI2 to range between 0 and 1, and scale by 10,000 so it 
+    # Truncate MSAVI2 to range between 0 and 1, and scale by 10,000 so it
     # can be saved as a INT2S
     MSAVI2_layer <- calc(MSAVI2_layer, fun=function(vals) {
             vals[vals > 1] <- 1
@@ -4585,14 +4585,14 @@ auto_calc_predictors <- function(x, dem, slopeaspect, output_path=NULL,
 
     timer <- start_timer(timer, label='Calculating GLCM textures')
     MSAVI2_glcm_filename <- file.path(output_path,
-                                      paste0(image_basename, 
+                                      paste0(image_basename,
                                             '_MSAVI2_glcm.', ext))
-    glcm_statistics <- c('mean', 'variance', 'homogeneity', 'contrast', 
-                         'dissimilarity', 'entropy', 'second_moment', 
+    glcm_statistics <- c('mean', 'variance', 'homogeneity', 'contrast',
+                         'dissimilarity', 'entropy', 'second_moment',
                          'correlation')
     MSAVI2_layer[image_mask] <- NA
-    # Need to know window and shift to calculate edge for apply_windowed. So if 
-    # they are not in the dotted args, assume the defaults (since glcm will use 
+    # Need to know window and shift to calculate edge for apply_windowed. So if
+    # they are not in the dotted args, assume the defaults (since glcm will use
     # the defaults if these parameters are not supplied).
     dots <- list(...)
     if (!("window" %in% names(dots))) {
@@ -4602,11 +4602,11 @@ auto_calc_predictors <- function(x, dem, slopeaspect, output_path=NULL,
         dots$shift <- c(1, 1)
     }
     edge <- calc_glcm_edge(dots$shift, dots$window)
-    # Note the min_x and max_x are given for MSAVI2 that has been scaled by 
+    # Note the min_x and max_x are given for MSAVI2 that has been scaled by
     # 10,000
-    apply_windowed_args <- list(x=MSAVI2_layer, fun=glcm, edge=edge, min_x=0, 
-                             max_x=10000, filename=MSAVI2_glcm_filename, 
-                             overwrite=overwrite, statistics=glcm_statistics, 
+    apply_windowed_args <- list(x=MSAVI2_layer, fun=glcm, edge=edge, min_x=0,
+                             max_x=10000, filename=MSAVI2_glcm_filename,
+                             overwrite=overwrite, statistics=glcm_statistics,
                              na_opt='center')
     apply_windowed_args <- c(apply_windowed_args, dots)
     MSAVI2_glcm <- do.call(apply_windowed, apply_windowed_args)
@@ -4616,7 +4616,7 @@ auto_calc_predictors <- function(x, dem, slopeaspect, output_path=NULL,
     if (!missing(slopeaspect)) {
         timer <- start_timer(timer, label='Processing slopeaspect')
         names(slopeaspect) <- c('slope', 'aspect')
-        # Classify aspect into north facing, east facing, etc., recalling 
+        # Classify aspect into north facing, east facing, etc., recalling
         # that the aspect is stored in radians scaled by 1000.
         #     1: north facing (0-45, 315-360)
         #     2: east facing (45-135)
@@ -4643,8 +4643,8 @@ auto_calc_predictors <- function(x, dem, slopeaspect, output_path=NULL,
                         scale_raster(MSAVI2_glcm$glcm_mean),
                         scale_raster(MSAVI2_glcm$glcm_variance),
                         scale_raster(MSAVI2_glcm$glcm_dissimilarity))
-    predictor_names <- c('b1', 'b2', 'b3', 'b4', 'b5', 'b7', 'msavi', 
-                         'msavi_glcm_mean', 'msavi_glcm_variance', 
+    predictor_names <- c('b1', 'b2', 'b3', 'b4', 'b5', 'b7', 'msavi',
+                         'msavi_glcm_mean', 'msavi_glcm_variance',
                          'msavi_glcm_dissimilarity')
 
     if (!missing(dem)) {
@@ -4657,22 +4657,22 @@ auto_calc_predictors <- function(x, dem, slopeaspect, output_path=NULL,
     }
 
     predictors_filename <- file.path(output_path,
-                                     paste0(image_basename, '_predictors.', 
+                                     paste0(image_basename, '_predictors.',
                                             ext))
 
     names(predictors) <- predictor_names
-    predictors <- mask(predictors, image_mask, maskvalue=1, 
-                       filename=predictors_filename, 
+    predictors <- mask(predictors, image_mask, maskvalue=1,
+                       filename=predictors_filename,
                        overwrite=overwrite, datatype='INT2S')
     names(predictors) <- predictor_names
 
-    # Save a copy of the original masks file along with the predictors file, so 
+    # Save a copy of the original masks file along with the predictors file, so
     # the masks can be easily located later.
     predictors_mask_filename <- file.path(output_path,
-                                          paste0(image_basename, 
+                                          paste0(image_basename,
                                                  '_predictors_masks.', ext))
-    mask_stack <- writeRaster(mask_stack, filename=predictors_mask_filename, 
-                              overwrite=overwrite, 
+    mask_stack <- writeRaster(mask_stack, filename=predictors_mask_filename,
+                              overwrite=overwrite,
                               datatype=dataType(mask_stack)[1])
 
     timer <- stop_timer(timer, label='Writing predictors')
@@ -4683,42 +4683,42 @@ auto_calc_predictors <- function(x, dem, slopeaspect, output_path=NULL,
 }
 #' Perform change detection for two Landsat CDR surface reflectance images
 #'
-#' This image automates the change detection process using the Change Vector 
-#' Analysis in Posterior Probability Space (CVAPS) algorithm. The threshold for 
-#' change/no-change mapping is determined using Huang's algorithm (see 
-#' \code{\link{threshold}} or can be specified manually. First the images 
-#' should be classified using the \code{auto_classify} function (or any other 
-#' classification approach that yields per-pixel probabilities of class 
+#' This image automates the change detection process using the Change Vector
+#' Analysis in Posterior Probability Space (CVAPS) algorithm. The threshold for
+#' change/no-change mapping is determined using Huang's algorithm (see
+#' \code{\link{threshold}} or can be specified manually. First the images
+#' should be classified using the \code{auto_classify} function (or any other
+#' classification approach that yields per-pixel probabilities of class
 #' membership).
 #'
 #' @export
-#' @param t1_classes cover classes as output from \code{auto_classify_image} 
+#' @param t1_classes cover classes as output from \code{auto_classify_image}
 #' for time 1 image
-#' @param t1_probs per class probabilities as output from 
+#' @param t1_probs per class probabilities as output from
 #' \code{auto_classify_image} for time 1 image
-#' @param t2_probs per class probabilities as output from 
+#' @param t2_probs per class probabilities as output from
 #' \code{auto_classify_image} for time 2 image
 #' @param output_path the path to use for the output
-#' @param output_basename the base filename for output files from 
+#' @param output_basename the base filename for output files from
 #' \code{auto_chg_detect} (without an extension)
-#' @param ext file extension to use when saving output rasters (determines 
+#' @param ext file extension to use when saving output rasters (determines
 #' output file format).
 #' @param overwrite whether to overwrite existing files (otherwise an error
 #' will be raised)
-#' @param chg_threshold the threshold to use determining change and no-change 
-#' areas from the change magnitude image (see \code{\link{chg_mag}}. If 
-#' \code{NULL}, then \code{\link{threshold}} will be used to dermine this 
-#' threshold value automatically. A threshold in the range of .75-1 is 
+#' @param chg_threshold the threshold to use determining change and no-change
+#' areas from the change magnitude image (see \code{\link{chg_mag}}. If
+#' \code{NULL}, then \code{\link{threshold}} will be used to dermine this
+#' threshold value automatically. A threshold in the range of .75-1 is
 #' recommended as a starting point.
-#' @param notify notifier to use (defaults to \code{print} function).  See the 
-#' \code{notifyR} package for one way of sending notifications from R.  The 
+#' @param notify notifier to use (defaults to \code{print} function).  See the
+#' \code{notifyR} package for one way of sending notifications from R.  The
 #' \code{notify} function should accept a string as the only argument.
 #' @return nothing - used for the side effect of performing change detection
-#' @references Chen, J., X. Chen, X. Cui, and J. Chen. 2011. Change vector 
-#' analysis in posterior probability space: a new method for land cover change 
+#' @references Chen, J., X. Chen, X. Cui, and J. Chen. 2011. Change vector
+#' analysis in posterior probability space: a new method for land cover change
 #' detection.  IEEE Geoscience and Remote Sensing Letters 8:317-321.
-auto_chg_detect <- function(t1_classes, t1_probs, t2_probs, output_path, 
-                            output_basename, ext='tif', overwrite=FALSE, 
+auto_chg_detect <- function(t1_classes, t1_probs, t2_probs, output_path,
+                            output_basename, ext='tif', overwrite=FALSE,
                             chg_threshold=NULL, notify=print) {
     if (!file_test("-d", output_path)) {
         stop(paste(output_path, "does not exist"))
@@ -4734,14 +4734,14 @@ auto_chg_detect <- function(t1_classes, t1_probs, t2_probs, output_path,
     ###########################################################################
     timer <- start_timer(timer, label='Change magnitude and direction')
 
-    chg_dir_filename <- file.path(output_path, paste0(output_basename, 
+    chg_dir_filename <- file.path(output_path, paste0(output_basename,
                                                      '_chgdir.', ext))
-    chg_dir_image <- chg_dir(t1_probs, t2_probs, filename=chg_dir_filename, 
+    chg_dir_image <- chg_dir(t1_probs, t2_probs, filename=chg_dir_filename,
                              overwrite=overwrite)
 
-    chg_mag_filename <- file.path(output_path, paste0(output_basename, 
+    chg_mag_filename <- file.path(output_path, paste0(output_basename,
                                                      '_chgmag.', ext))
-    chg_mag_image <- chg_mag(t1_probs, t2_probs, filename=chg_mag_filename, 
+    chg_mag_image <- chg_mag(t1_probs, t2_probs, filename=chg_mag_filename,
                              overwrite=overwrite)
 
     timer <- stop_timer(timer, label='Change magnitude and direction')
@@ -4752,13 +4752,13 @@ auto_chg_detect <- function(t1_classes, t1_probs, t2_probs, output_path,
     timer <- start_timer(timer, label='Change trajectories')
 
     if (is.null(chg_threshold)) chg_threshold <- threshold(chg_mag_image)
-    
+
     notify(paste0('Using threshold=', chg_threshold))
 
     chg_traj_filename <- file.path(output_path,
                                    paste0(output_basename, '_chgtraj.', ext))
-    chg_traj_out <- chg_traj(chg_mag_image, chg_dir_image, 
-                             chg_threshold=chg_threshold, overwrite=overwrite, 
+    chg_traj_out <- chg_traj(chg_mag_image, chg_dir_image,
+                             chg_threshold=chg_threshold, overwrite=overwrite,
                              filename=chg_traj_filename)
     timer <- stop_timer(timer, label='Change trajectories')
 
@@ -4766,36 +4766,36 @@ auto_chg_detect <- function(t1_classes, t1_probs, t2_probs, output_path,
 }
 #' Classify a preprocessed surface reflectance image
 #'
-#' First the image should be preprocessed using the \code{auto_preprocess} 
-#' function. For Landsat CDR imagery, predictor layers can be generated using 
+#' First the image should be preprocessed using the \code{auto_preprocess}
+#' function. For Landsat CDR imagery, predictor layers can be generated using
 #' the \code{auto_generate_predictors} function.
 #'
 #' @export
 #' @importFrom rgdal readOGR
 #' @importFrom sp spTransform
 #' @importFrom tools file_path_sans_ext
-#' @param predictor_file a \code{Raster*} of predictor layers output by the 
-#' \code{auto_preprocess} function or path to an image stack in a format 
+#' @param predictor_file a \code{Raster*} of predictor layers output by the
+#' \code{auto_preprocess} function or path to an image stack in a format
 #' readable by the \code{raster} package.
 #' @param train_shp a file readable by readOGR with training polygons
 #' @param output_path the path to use for the output
-#' @param class_col the name of the column containing the response variable 
+#' @param class_col the name of the column containing the response variable
 #' (for example the land cover type of each pixel)
-#' @param training indicator of which polygons to use in training. Can be: 1) a 
-#' string giving the name of a column indicating whether each polygon is to be 
-#' used in training (column equal to TRUE) or in testing (column equal to 
-#' FALSE), or 2) a logical vector of length equal to length(polys), or 3) a 
-#' number between 0 and 1 indicating the fraction of the polygons to be 
+#' @param training indicator of which polygons to use in training. Can be: 1) a
+#' string giving the name of a column indicating whether each polygon is to be
+#' used in training (column equal to TRUE) or in testing (column equal to
+#' FALSE), or 2) a logical vector of length equal to length(polys), or 3) a
+#' number between 0 and 1 indicating the fraction of the polygons to be
 #' randomly selected for use in training.
-#' @param overwrite whether to overwrite existing files (otherwise an error 
+#' @param overwrite whether to overwrite existing files (otherwise an error
 #' will be raised)
-#' @param notify notifier to use (defaults to \code{print} function). See the 
-#' \code{notifyR} package for one way of sending notifications from R. The 
+#' @param notify notifier to use (defaults to \code{print} function). See the
+#' \code{notifyR} package for one way of sending notifications from R. The
 #' \code{notify} function should accept a string as the only argument.
 #' @examples
 #' #TODO: Add example
-auto_classify <- function(predictor_file, train_shp, output_path, 
-                          class_col="Poly_Type", training=.6, overwrite=FALSE, 
+auto_classify <- function(predictor_file, train_shp, output_path,
+                          class_col="Poly_Type", training=.6, overwrite=FALSE,
                           notify=print) {
     if (!file_test("-f", train_shp)) {
         stop(paste(train_shp, "does not exist"))
@@ -4815,35 +4815,35 @@ auto_classify <- function(predictor_file, train_shp, output_path,
 
     train_polys <- readOGR(dirname(train_shp), basename(file_path_sans_ext(train_shp)))
     train_polys <- spTransform(train_polys, crs(predictors))
-    train_data <- get_pixels(predictors, train_polys, class_col=class_col, 
+    train_data <- get_pixels(predictors, train_polys, class_col=class_col,
                              training=training)
 
     timer <- start_timer(timer, label='Running classification')
     classification <- classify(predictors, train_data)
     model <- classification$model
-    save(model, file=file.path(output_path, paste(pred_rast_basename, 
+    save(model, file=file.path(output_path, paste(pred_rast_basename,
                                                   'predmodel.RData', sep='_')))
     writeRaster(classification$pred_classes,
-                filename=file.path(output_path, paste(pred_rast_basename, 
-                                                      'predclasses.tif', 
+                filename=file.path(output_path, paste(pred_rast_basename,
+                                                      'predclasses.tif',
                                                       sep='_')),
                 datatype='INT2S', overwrite=overwrite)
     writeRaster(scale_raster(classification$pred_probs),
-                filename=file.path(output_path, paste(pred_rast_basename, 
-                                                      'predprobs.tif', 
+                filename=file.path(output_path, paste(pred_rast_basename,
+                                                      'predprobs.tif',
                                                       sep='_')),
                 datatype='INT2S', overwrite=overwrite)
     timer <- stop_timer(timer, label='Running classification')
 
-    # cls <- levels(train_data$y) 
+    # cls <- levels(train_data$y)
     # cls <- data.frame(code=seq(1:length(cls)), name=cls)
     # color_image(classification$predclasses, cls,
-    #             file.path(output_path, paste(pred_rast_basename, 
+    #             file.path(output_path, paste(pred_rast_basename,
     #             'predclasses_colored.tif', sep='_')))
 
     # Perform accuracy assessment using an independent dataset:
     timer <- start_timer(timer, label='Running accuracy assessment')
-    acc <- accuracy(classification$model, 
+    acc <- accuracy(classification$model,
                     pop=classification$pred_classes)
     capture.output(summary(acc),
                    file=file.path(output_path, paste(pred_rast_basename, 'predacc.txt', sep='_')))
@@ -4859,27 +4859,27 @@ pct_clouds <- function(cloud_mask) {
 
 #' Automated removal of clouds from Landsat CDR imagery
 #'
-#' Uses one of four cloud reomval algorithms (see \code{\link{cloud_remove}}) 
-#' to remove thick clouds from Landsat imagery. In hilly areas, topographic 
+#' Uses one of four cloud reomval algorithms (see \code{\link{cloud_remove}})
+#' to remove thick clouds from Landsat imagery. In hilly areas, topographic
 #' correction should be done before cloud fill.
 #'
-#' The \code{auto_cloud_fill} function allows an analyst to automatically 
-#' construct a cloud-filled image after specifying: \code{data_dir} (a folder 
-#' of Landsat images), \code{wrspath} and \code{wrsrow} (the WRS-2 path/row to 
-#' use), and \code{start_date} and \code{end_date} (a start and end date 
-#' limiting the images to use in the algorithm).  The analyst can also 
-#' optionally specify a \code{base_date}, and the \code{auto_cloud_fill} 
-#' function will automatically pick the image closest to that date to use as 
+#' The \code{auto_cloud_fill} function allows an analyst to automatically
+#' construct a cloud-filled image after specifying: \code{data_dir} (a folder
+#' of Landsat images), \code{wrspath} and \code{wrsrow} (the WRS-2 path/row to
+#' use), and \code{start_date} and \code{end_date} (a start and end date
+#' limiting the images to use in the algorithm).  The analyst can also
+#' optionally specify a \code{base_date}, and the \code{auto_cloud_fill}
+#' function will automatically pick the image closest to that date to use as
 #' the base image.
-#' 
-#' As the \code{auto_cloud_fill} function automatically chooses images for 
-#' inclusion in the cloud fill process, it relies on having images stored on 
-#' disk in a particular way, and currently only supports cloud fill for Landsat 
-#' CDR surface reflectance images. To ensure that images are correctly stored 
-#' on your hard disk, use the \code{\link{auto_preprocess_landsat}} function to 
-#' extract the original Landsat CDR hdf files from the USGS archive. The 
-#' \code{auto_preprocess_landsat} function will ensure that images are 
-#' extracted and renamed properly so that they can be used with the 
+#'
+#' As the \code{auto_cloud_fill} function automatically chooses images for
+#' inclusion in the cloud fill process, it relies on having images stored on
+#' disk in a particular way, and currently only supports cloud fill for Landsat
+#' CDR surface reflectance images. To ensure that images are correctly stored
+#' on your hard disk, use the \code{\link{auto_preprocess_landsat}} function to
+#' extract the original Landsat CDR hdf files from the USGS archive. The
+#' \code{auto_preprocess_landsat} function will ensure that images are
+#' extracted and renamed properly so that they can be used with the
 #' \code{auto_cloud_fill} script.
 #'
 #' @export
@@ -4887,64 +4887,64 @@ pct_clouds <- function(cloud_mask) {
 #' @importFrom lubridate as.duration new_interval
 #' @importFrom stringr str_extract
 #' @importFrom SDMTools ConnCompLabel
-#' @param data_dir folder where input images are located, with filenames as 
-#' output by the \code{\link{auto_preprocess_landsat}} function. This folder 
-#' will be searched recursively for images (taking the below path/row, date, 
+#' @param data_dir folder where input images are located, with filenames as
+#' output by the \code{\link{auto_preprocess_landsat}} function. This folder
+#' will be searched recursively for images (taking the below path/row, date,
 #' and topographic correction options into account).
 #' @param wrspath World Reference System (WRS) path
 #' @param wrsrow World Reference System (WRS) row
-#' @param start_date start date of period from which images will be chosen to 
+#' @param start_date start date of period from which images will be chosen to
 #' fill cloudy areas in the base image (as \code{Date} object)
-#' @param end_date end date of period from which images will be chosen to fill 
+#' @param end_date end date of period from which images will be chosen to fill
 #' cloudy areas in the the base image (as \code{Date} object)
-#' @param base_date ideal date for base image (base image will be chosen as the 
-#' image among the available images that is closest to this date). If NULL, 
+#' @param base_date ideal date for base image (base image will be chosen as the
+#' image among the available images that is closest to this date). If NULL,
 #' then the base image will be the image with the lowest cloud cover.
-#' @param out_name base filename (without an extension - see \code{ext} 
-#' argument) for cloud filled image.  The mask file for the cloud filled image 
+#' @param out_name base filename (without an extension - see \code{ext}
+#' argument) for cloud filled image.  The mask file for the cloud filled image
 #' will be saved with the same name, with the added suffix "_mask".
-#' @param tc if \code{TRUE}, use topographically corrected imagery as output by 
-#' \code{auto_preprocess_landsat}. IF \code{FALSE} use bands 1-5 and 7 surface 
-#' reflectance as output by \code{unstack_ledaps} or 
-#' \code{auto_preprocess_landsat} (if \code{auto_preprocess_landsat} was also 
+#' @param tc if \code{TRUE}, use topographically corrected imagery as output by
+#' \code{auto_preprocess_landsat}. IF \code{FALSE} use bands 1-5 and 7 surface
+#' reflectance as output by \code{unstack_ledaps} or
+#' \code{auto_preprocess_landsat} (if \code{auto_preprocess_landsat} was also
 #' run with tc=FALSE).
-#' @param ext file extension to use when searching for input rasters and when 
-#' saving output rasters (determines output file format). Should match file 
-#' extension of input rasters (and should most likely match the value chosen 
+#' @param ext file extension to use when searching for input rasters and when
+#' saving output rasters (determines output file format). Should match file
+#' extension of input rasters (and should most likely match the value chosen
 #' for \code{ext} when \code{auto_preprocess_landsat} was run).
-#' @param sensors choose the sensors to include when selecting images (useful 
-#' for excluding images from a particular satellite if desired). Can be any of 
+#' @param sensors choose the sensors to include when selecting images (useful
+#' for excluding images from a particular satellite if desired). Can be any of
 #' "L4T", "L5T", "L7E", and/or "L8C".
-#' @param img_type type of Landsat imagery to preprocess. Can be "CDR" for 
-#' Landsat Climate Data Record (CDR) imagery in HDR format, or "L1T" for 
-#' Standard Terrain Correction (Level 1T) imagery. Note that if L1T imagery is 
-#' used, fmask must be run locally (see https://code.google.com/p/fmask) prior 
+#' @param img_type type of Landsat imagery to preprocess. Can be "CDR" for
+#' Landsat Climate Data Record (CDR) imagery in HDR format, or "L1T" for
+#' Standard Terrain Correction (Level 1T) imagery. Note that if L1T imagery is
+#' used, fmask must be run locally (see https://code.google.com/p/fmask) prior
 #' to using \code{auto_preprocess_landsat}.
-#' @param threshold maximum percent cloud cover allowable in base image. Cloud 
-#' fill will iterate until percent cloud cover in base image is below this 
+#' @param threshold maximum percent cloud cover allowable in base image. Cloud
+#' fill will iterate until percent cloud cover in base image is below this
 #' value, or until \code{max_iter} iterations have been run
 #' @param max_iter maximum number of times to run cloud fill script
-#' @param notify notifier to use (defaults to \code{print} function).  See the 
-#' \code{notifyR} package for one way of sending notifications from R.  The 
+#' @param notify notifier to use (defaults to \code{print} function).  See the
+#' \code{notifyR} package for one way of sending notifications from R.  The
 #' \code{notify} function should accept a string as the only argument.
-#' @param verbose whether to print detailed status messages. Set to FALSE or 0 
-#' for no status messages. Set to 1 for basic status messages. Set to 2 for 
+#' @param verbose whether to print detailed status messages. Set to FALSE or 0
+#' for no status messages. Set to 1 for basic status messages. Set to 2 for
 #' detailed status messages.
 #' @param overwrite whether to overwrite \code{out_name} if it already exists
-#' @param ...  additional arguments passed to \code{\link{cloud_remove}}, such 
-#' as \code{DN_min}, \code{DN_max}, \code{algorithm}, \code{byblock}, 
+#' @param ...  additional arguments passed to \code{\link{cloud_remove}}, such
+#' as \code{DN_min}, \code{DN_max}, \code{algorithm}, \code{byblock},
 #' \code{verbose}, etc. See \code{\link{cloud_remove}} for details
-#' @return a list with two elements: "filled", a \code{Raster*} object with 
-#' cloud filled image, and "mask", a \code{RasterLayer} object with the cloud 
+#' @return a list with two elements: "filled", a \code{Raster*} object with
+#' cloud filled image, and "mask", a \code{RasterLayer} object with the cloud
 #' mask for the cloud filled image.
-#' @references Zhu, X., Gao, F., Liu, D., Chen, J., 2012. A modified 
-#' neighborhood similar pixel interpolator approach for removing thick clouds 
-#' in Landsat images.  Geoscience and Remote Sensing Letters, IEEE 9, 521--525.  
+#' @references Zhu, X., Gao, F., Liu, D., Chen, J., 2012. A modified
+#' neighborhood similar pixel interpolator approach for removing thick clouds
+#' in Landsat images.  Geoscience and Remote Sensing Letters, IEEE 9, 521--525.
 #' doi:10.1109/LGRS.2011.2173290
-auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date, 
+auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
                             out_name, base_date=NULL, tc=TRUE, ext='tif',
-                            sensors=c('L4T', 'L5T', 'L7E', 'L8C'), 
-                            img_type="CDR", threshold=1, max_iter=5, 
+                            sensors=c('L4T', 'L5T', 'L7E', 'L8C'),
+                            img_type="CDR", threshold=1, max_iter=5,
                             notify=print, verbose=1, overwrite=FALSE, ...) {
     if (!file_test('-d', data_dir)) {
         stop('data_dir does not exist')
@@ -4998,7 +4998,7 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
     } else {
         suffix_re <- paste0('.', ext, '$')
     }
-    file_re <- paste0(prefix_re, paste(pathrow_re, date_re, sensor_re, 
+    file_re <- paste0(prefix_re, paste(pathrow_re, date_re, sensor_re,
                                        sep='_'), suffix_re)
     img_files <- dir(data_dir, pattern=file_re, recursive=TRUE)
 
@@ -5042,7 +5042,7 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
         this_img <- stack(img_file)
         imgs <- c(imgs, stack(this_img))
     }
-    
+
     compareRaster(imgs, res=TRUE, orig=TRUE)
     compareRaster(fmasks, res=TRUE, orig=TRUE)
 
@@ -5056,25 +5056,25 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
         timer <- start_timer(timer, label='Calculating cloud masks')
     }
 
-    # Find image that is either closest to base date, or has the maximum 
+    # Find image that is either closest to base date, or has the maximum
     # percent clear
     if (is.null(base_date)) {
         clear_row <- which(freq_table$value == 0)
-        base_img_index <- which(freq_table[clear_row, -1] == 
+        base_img_index <- which(freq_table[clear_row, -1] ==
                                 max(freq_table[clear_row, -1]))
     } else {
-        base_date_diff <- lapply(img_dates, function(x) 
+        base_date_diff <- lapply(img_dates, function(x)
                                  as.duration(new_interval(x, base_date)))
         base_date_diff <- abs(unlist(base_date_diff))
         base_img_index <- which(base_date_diff == min(base_date_diff))
-        # Handle ties - two images that are the same distance from base date.  
+        # Handle ties - two images that are the same distance from base date.
         # Default to earlier image.
         if (length(base_img_index) > 1) {
             base_img_index <- base_img_index[1]
         }
     }
 
-    # Save the original base image fmask so it can be used to recode the final 
+    # Save the original base image fmask so it can be used to recode the final
     # cloud mask at the end of cloud filling
     base_fmask <- fmasks[[base_img_index]]
     base_fill_QA <- fill_QAs[[base_img_index]]
@@ -5093,17 +5093,17 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
         ret <- (fmask == 2) | (fmask == 4)
         # Code fill as 2
         ret[fmask == 255] <- 2
-        # Code other missing data that is not in fill areas as NA. The (ret != 
-        # 1) test is necessary to ensures that only NAs that are NOT in clouds 
-        # will be copied to the mask images (the assumption being that NAs in 
-        # clouds should be marked as cloud and fill should be attempted).  This 
-        # is necessary in case clouded areas in img are mistakenly coded NA 
+        # Code other missing data that is not in fill areas as NA. The (ret !=
+        # 1) test is necessary to ensures that only NAs that are NOT in clouds
+        # will be copied to the mask images (the assumption being that NAs in
+        # clouds should be marked as cloud and fill should be attempted).  This
+        # is necessary in case clouded areas in img are mistakenly coded NA
         # (they should not be).
         ret[(ret != 1) & (ret != 2) & is.na(img)] <- NA
         return(ret)
     }
     for (n in 1:length(fmasks)) {
-        fmasks[n] <- overlay(fmasks[[n]], imgs[[n]][[1]], fun=calc_cloud_mask, 
+        fmasks[n] <- overlay(fmasks[[n]], imgs[[n]][[1]], fun=calc_cloud_mask,
                              datatype=dataType(fmasks[[n]]))
     }
 
@@ -5126,8 +5126,8 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
     if (verbose > 0) {
         timer <- start_timer(timer, label='Masking base image')
     }
-    # Mask out clouds in base image. Save this image to disk so it is available 
-    # even if no cloud fill is done (if the pct_clouds in this image is below 
+    # Mask out clouds in base image. Save this image to disk so it is available
+    # even if no cloud fill is done (if the pct_clouds in this image is below
     # the threshold).
     base_img <- overlay(base_img, base_mask,
         fun=function(base_vals, mask_vals) {
@@ -5138,7 +5138,7 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
             # Set slc-off gaps and areas outside scene to NA
             base_vals[mask_vals == 2] <- NA
             return(base_vals)
-        }, datatype=dataType(base_img[[1]]), 
+        }, datatype=dataType(base_img[[1]]),
         filename=extension(rasterTmpFile(), ext), overwrite=overwrite)
 
     cur_pct_clouds <- pct_clouds(base_mask)
@@ -5157,10 +5157,10 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
             timer <- start_timer(timer, label=paste('Fill iteration', n + 1))
         }
 
-        # Calculate a raster indicating the pixels in each potential fill image 
-        # that are available for filling pixels of base_img that are missing 
-        # due to cloud contamination. Areas coded 1 are missing due to cloud or 
-        # shadow in the base image and are available in the merge image. This 
+        # Calculate a raster indicating the pixels in each potential fill image
+        # that are available for filling pixels of base_img that are missing
+        # due to cloud contamination. Areas coded 1 are missing due to cloud or
+        # shadow in the base image and are available in the merge image. This
         # will return a stack with number of layers equal to number of masks.
         fill_areas <- overlay(base_mask, stack(fmasks),
             fun=function(base_mask_vals, fill_mask_vals) {
@@ -5169,20 +5169,20 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
                 ret[(base_mask_vals == 1) & (fill_mask_vals == 0)] <- 1
                 # Code clear in base, clear in fill as 0
                 ret[(base_mask_vals == 0) & (fill_mask_vals == 0)] <- 0
-                # Code NA in base, clear in fill as clouded, so these NAs will 
+                # Code NA in base, clear in fill as clouded, so these NAs will
                 # be filled if possible.
                 ret[is.na(base_mask_vals) & (fill_mask_vals == 0)] <- 1
-                # Ensure SLC-off gaps and background areas in each image are 
+                # Ensure SLC-off gaps and background areas in each image are
                 # not filled:
                 ret[(base_mask_vals == 2) | (fill_mask_vals == 2)] <- NA
                 return(ret)
             }, datatype=dataType(base_mask))
         fill_areas_freq <- freq(fill_areas, useNA='no', merge=TRUE)
-        # Below is necessary as for some reason when fill_areas is of length 
+        # Below is necessary as for some reason when fill_areas is of length
         # one, freq returns a matrix rather than a data.frame
         fill_areas_freq <- as.data.frame(fill_areas_freq)
-        # Select the fill image with the maximum number of available pixels 
-        # (counting only pixels in the fill image that are not ALSO clouded in 
+        # Select the fill image with the maximum number of available pixels
+        # (counting only pixels in the fill image that are not ALSO clouded in
         # the fill image)
         avail_fill_row <- which(fill_areas_freq$value == 1)
         if (length(avail_fill_row) == 0) {
@@ -5191,7 +5191,7 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
         }
         # Remove the now unnecessary "value" column
         fill_areas_freq <- fill_areas_freq[!(names(fill_areas_freq) == 'value')]
-        fill_img_index <- which(fill_areas_freq[avail_fill_row, ] == 
+        fill_img_index <- which(fill_areas_freq[avail_fill_row, ] ==
                                 max(fill_areas_freq[avail_fill_row, ], na.rm=TRUE))
         if ((length(fill_img_index) == 0) ||
             (fill_areas_freq[avail_fill_row, fill_img_index] == 0)) {
@@ -5217,13 +5217,13 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
                           ' with image from ', fill_img_date, '.'))
             timer <- start_timer(timer, label="Performing fill")
         }
-        base_img <- cloud_remove(base_img, fill_img, base_img_mask, 
-                                 out_name=extension(rasterTmpFile(), ext), 
+        base_img <- cloud_remove(base_img, fill_img, base_img_mask,
+                                 out_name=extension(rasterTmpFile(), ext),
                                  verbose=verbose, overwrite=TRUE, ...)
-        # base_img <- cloud_remove(base_img, fill_img, base_img_mask, 
-        #                          out_name=extension(rasterTmpFile(), ext), 
-        #                          verbose=verbose, overwrite=TRUE, 
-        #                          DN_min=DN_min, DN_max=DN_max, 
+        # base_img <- cloud_remove(base_img, fill_img, base_img_mask,
+        #                          out_name=extension(rasterTmpFile(), ext),
+        #                          verbose=verbose, overwrite=TRUE,
+        #                          DN_min=DN_min, DN_max=DN_max,
         #                          algorithm=algorithm, byblock=byblock)
         if (verbose > 0) {
             timer <- stop_timer(timer, label="Performing fill")
@@ -5234,7 +5234,7 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
             fun=function(mask_vals, filled_vals) {
                 mask_vals[(mask_vals == 1) & (filled_vals != 0)] <- 0
                 return(mask_vals)
-            }, datatype=dataType(base_mask), 
+            }, datatype=dataType(base_mask),
             filename=extension(rasterTmpFile(), ext), overwrite=TRUE)
 
         cur_pct_clouds <- pct_clouds(base_mask)
@@ -5247,10 +5247,10 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
         n <- n + 1
     }
 
-    base_img <- writeRaster(base_img, filename=output_file, datatype="INT2S", 
+    base_img <- writeRaster(base_img, filename=output_file, datatype="INT2S",
                             overwrite=overwrite)
 
-    # Recode base mask so final coding matches that of fmask (though cloud and 
+    # Recode base mask so final coding matches that of fmask (though cloud and
     # cloud shadow are no longer differentiated)
     #   fmask_band key:
     #       0 = clear
@@ -5279,7 +5279,7 @@ auto_cloud_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
         }, datatype=dataType(base_mask))
     final_masks <- stack(base_fill_QA, filled_fmask)
     names(final_masks) <- c("fill_QA", "fmask")
-    final_masks <- writeRaster(final_masks, datatype=dataType(base_mask), 
+    final_masks <- writeRaster(final_masks, datatype=dataType(base_mask),
                                filename=mask_output_file, overwrite=TRUE)
 
     timer <- stop_timer(timer, label='Cloud fill')
@@ -5296,26 +5296,26 @@ pct_gap <- function(gap_mask) {
 
 #' Automated removal of gaps in SLC-off images using GNSPI
 #'
-#' Uses the GNSPI algorithm from Zhu et al. See \code{\link{fill_gaps}} for 
-#' details.  In hilly areas, gap fill should be done after topographic 
+#' Uses the GNSPI algorithm from Zhu et al. See \code{\link{fill_gaps}} for
+#' details.  In hilly areas, gap fill should be done after topographic
 #' correction.
 #'
-#' The \code{auto_gap_fill} function allows an analyst to automatically 
-#' construct a gap-filled image after specifying: \code{data_dir} (a folder of 
-#' Landsat images), \code{wrspath} and \code{wrsrow} (the WRS-2 path/row to 
-#' use), and \code{start_date} and \code{end_date} (a start and end date 
-#' limiting the images to use in the algorithm).  The analyst can also 
-#' optionally specify a \code{base_date}, and the \code{auto_gap_fill} function 
-#' will automatically pick the image closest to that date to use as the base 
+#' The \code{auto_gap_fill} function allows an analyst to automatically
+#' construct a gap-filled image after specifying: \code{data_dir} (a folder of
+#' Landsat images), \code{wrspath} and \code{wrsrow} (the WRS-2 path/row to
+#' use), and \code{start_date} and \code{end_date} (a start and end date
+#' limiting the images to use in the algorithm).  The analyst can also
+#' optionally specify a \code{base_date}, and the \code{auto_gap_fill} function
+#' will automatically pick the image closest to that date to use as the base
 #' image.
-#' 
-#' As the \code{auto_gap_fill} function automatically chooses images for 
-#' inclusion in the gap fill process, it relies on having images stored on disk 
-#' in a particular way. To ensure that images are correctly stored on your hard 
-#' disk, use the \code{\link{auto_preprocess_landsat}} function to extract the 
-#' original Landsat CDR hdf files from the USGS archive. The 
-#' \code{auto_preprocess_landsat} function will ensure that images are 
-#' extracted and renamed properly so that they can be used with the 
+#'
+#' As the \code{auto_gap_fill} function automatically chooses images for
+#' inclusion in the gap fill process, it relies on having images stored on disk
+#' in a particular way. To ensure that images are correctly stored on your hard
+#' disk, use the \code{\link{auto_preprocess_landsat}} function to extract the
+#' original Landsat CDR hdf files from the USGS archive. The
+#' \code{auto_preprocess_landsat} function will ensure that images are
+#' extracted and renamed properly so that they can be used with the
 #' \code{auto_gap_fill} script.
 #'
 #' @export
@@ -5323,41 +5323,41 @@ pct_gap <- function(gap_mask) {
 #' @importFrom lubridate as.duration new_interval
 #' @importFrom stringr str_extract
 #' @importFrom SDMTools ConnCompLabel
-#' @param data_dir folder where input images are located, with filenames as 
-#' output by the \code{\link{auto_preprocess_landsat}} function. This folder 
-#' will be searched recursively for images (taking the below path/row, date, 
+#' @param data_dir folder where input images are located, with filenames as
+#' output by the \code{\link{auto_preprocess_landsat}} function. This folder
+#' will be searched recursively for images (taking the below path/row, date,
 #' and topographic correction options into account).
 #' @param wrspath World Reference System (WRS) path
 #' @param wrsrow World Reference System (WRS) row
-#' @param start_date start date of period from which images will be chosen to 
+#' @param start_date start date of period from which images will be chosen to
 #' fill cloudy areas in the base image (as \code{Date} object)
-#' @param end_date end date of period from which images will be chosen to fill 
+#' @param end_date end date of period from which images will be chosen to fill
 #' cloudy areas in the the base image (as \code{Date} object)
-#' @param base_date ideal date for base image (base image will be chosen as the 
-#' image among the available images that is closest to this date). If NULL, 
+#' @param base_date ideal date for base image (base image will be chosen as the
+#' image among the available images that is closest to this date). If NULL,
 #' then the base image will be the image with the lowest cloud cover.
-#' @param tc if \code{TRUE}, use topographically corrected imagery as output by 
-#' \code{auto_preprocess_landsat}. IF \code{FALSE} use bands 1-5 and 7 surface 
-#' reflectance as output by \code{unstack_ledaps} or 
-#' \code{auto_preprocess_landsat} (if \code{auto_preprocess_landsat} was also 
+#' @param tc if \code{TRUE}, use topographically corrected imagery as output by
+#' \code{auto_preprocess_landsat}. IF \code{FALSE} use bands 1-5 and 7 surface
+#' reflectance as output by \code{unstack_ledaps} or
+#' \code{auto_preprocess_landsat} (if \code{auto_preprocess_landsat} was also
 #' run with tc=FALSE).
-#' @param threshold maximum percent gap allowable in base image. Gap fill will 
+#' @param threshold maximum percent gap allowable in base image. Gap fill will
 #' not occur unless percent gap in base image is greater than this value.
-#' @param n_cpus the number of CPUs to use for processes that can run in 
+#' @param n_cpus the number of CPUs to use for processes that can run in
 #' parallel
-#' @param notify notifier to use (defaults to \code{print} function).  See the 
-#' \code{notifyR} package for one way of sending notifications from R.  The 
+#' @param notify notifier to use (defaults to \code{print} function).  See the
+#' \code{notifyR} package for one way of sending notifications from R.  The
 #' \code{notify} function should accept a string as the only argument.
 #' @param verbose whether to print detailed status messages
-#' @param ... additional arguments passed to \code{\link{fill_gaps}}, such as 
-#' \code{DN_min}, \code{DN_max}, \code{use_IDL}, \code{verbose}, etc. See 
+#' @param ... additional arguments passed to \code{\link{fill_gaps}}, such as
+#' \code{DN_min}, \code{DN_max}, \code{use_IDL}, \code{verbose}, etc. See
 #' \code{\link{fill_gaps}}.
 #' @return \code{Raster*} object with gap filled image.
-#' @references Zhu, X., Liu, D., Chen, J., 2012. A new geostatistical approach 
-#' for filling gaps in Landsat ETM+ SLC-off images. Remote Sensing of 
+#' @references Zhu, X., Liu, D., Chen, J., 2012. A new geostatistical approach
+#' for filling gaps in Landsat ETM+ SLC-off images. Remote Sensing of
 #' Environment 124, 49--60.
-auto_gap_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date, 
-                          base_date=NULL, tc=TRUE, threshold=1, n_cpus=1, 
+auto_gap_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
+                          base_date=NULL, tc=TRUE, threshold=1, n_cpus=1,
                           notify=print, verbose=TRUE, ...) {
 
     stop('auto_gap_fill not yet supported')
@@ -5384,7 +5384,7 @@ auto_gap_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
     } else {
         suffix_re <- '.tif$'
     }
-    file_re <- paste0(prefix_re, paste(pathrow_re, date_re, sensor_re, 
+    file_re <- paste0(prefix_re, paste(pathrow_re, date_re, sensor_re,
                                        sep='_'), suffix_re)
     img_files <- dir(data_dir, pattern=file_re, recursive=TRUE)
 
@@ -5424,20 +5424,20 @@ auto_gap_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
         timer <- stop_timer(timer, label='Analyzing cloud cover and gaps in input images')
     }
 
-    # Find image that is either closest to base date, or has the maximum 
+    # Find image that is either closest to base date, or has the maximum
     # percent not in cloud or gap
     if (is.null(base_date)) {
         clear_row <- which(is.na(freq_table$value))
-        base_img_index <- which(freq_table[clear_row, -1] == 
+        base_img_index <- which(freq_table[clear_row, -1] ==
                                 max(freq_table[clear_row, -1]))
     } else {
-        base_date_diff <- lapply(img_dates, function(x) 
+        base_date_diff <- lapply(img_dates, function(x)
                                  as.duration(new_interval(x, base_date)))
         base_date_diff <- abs(unlist(base_date_diff))
         base_img_index <- which(base_date_diff == min(base_date_diff))
     }
 
-    # Convert masks to binary indicating: 0=other; 1=gap, shadow, or cloud.  
+    # Convert masks to binary indicating: 0=other; 1=gap, shadow, or cloud.
     # Note that gaps are coded as NAs in the fmask band.
     #
     #   band1: fmask_band
@@ -5466,7 +5466,7 @@ auto_gap_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
     base_img_date <- img_dates[base_img_index]
     img_dates <- img_dates[-base_img_index]
 
-    # Save base_img in filled so it will be returned if base_img already has 
+    # Save base_img in filled so it will be returned if base_img already has
     # pct_gap below threshold
     start_pct_gap <- pct_gap(base_mask)
     if (verbose) {
@@ -5478,10 +5478,10 @@ auto_gap_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
             timer <- start_timer(timer, label='Performing gap fill')
         }
 
-        # Calculate a raster indicating the pixels in each potential fill image 
-        # that are available for filling pixels of base_img that are missing 
-        # due to SLC-off gaps. Areas coded 1 are missing due to gaps in the 
-        # base image and are available (i.e. are not gaps or clouds) in the 
+        # Calculate a raster indicating the pixels in each potential fill image
+        # that are available for filling pixels of base_img that are missing
+        # due to SLC-off gaps. Areas coded 1 are missing due to gaps in the
+        # base image and are available (i.e. are not gaps or clouds) in the
         # merge image.
         fill_areas <- list()
         for (mask_img in masks) {
@@ -5489,11 +5489,11 @@ auto_gap_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
         }
         fill_areas_freq <- freq(stack(fill_areas), useNA='no', merge=TRUE)
 
-        # Select the fill image with the maximum number of available pixels 
-        # (counting only pixels in the fill image that are not ALSO in gaps or 
+        # Select the fill image with the maximum number of available pixels
+        # (counting only pixels in the fill image that are not ALSO in gaps or
         # clouded in the fill image)
         avail_fill_row <- which(fill_areas_freq$value == 1)
-        fill_img_index <- which(fill_areas_freq[avail_fill_row, -1] == 
+        fill_img_index <- which(fill_areas_freq[avail_fill_row, -1] ==
                                 max(fill_areas_freq[avail_fill_row, -1]))
         fill_img <- imgs[[fill_img_index]]
         imgs <- imgs[-fill_img_index]
@@ -5504,7 +5504,7 @@ auto_gap_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
         fill_img_date <- img_dates[fill_img_index]
         img_dates <- img_dates[-fill_img_index]
 
-        # Mark areas of the cloud_mask where fill_img is blank (clouded) with 
+        # Mark areas of the cloud_mask where fill_img is blank (clouded) with
         # -1
         coded_cloud_mask[fill_img_mask] <- -1
         NAvalue(coded_cloud_mask) <- -2
@@ -5541,24 +5541,24 @@ auto_gap_fill <- function(data_dir, wrspath, wrsrow, start_date, end_date,
 }
 #' Normalize a set of preprocessed CDR images to a base image
 #'
-#' This function uses model II regression to perform relative normalization to 
-#' match a set of Landsat CDR surface reflectance images. The function assumes 
-#' the images were preprocessed using the \code{auto_preprocess_landsat} 
-#' function. A base image can be optionally supplied. If a base image is not 
-#' supplied, then the function will calculate the percent cloud cover of each 
-#' input image, and automatically choose the image with the least cloud cover 
-#' as the base image. This function assumes that the images (and image masks) 
+#' This function uses model II regression to perform relative normalization to
+#' match a set of Landsat CDR surface reflectance images. The function assumes
+#' the images were preprocessed using the \code{auto_preprocess_landsat}
+#' function. A base image can be optionally supplied. If a base image is not
+#' supplied, then the function will calculate the percent cloud cover of each
+#' input image, and automatically choose the image with the least cloud cover
+#' as the base image. This function assumes that the images (and image masks)
 #' were preprocessed using the \code{auto_preprocess_landsat} function.
 #'
-#' This function will run in parallel if a parallel backend is registered with 
+#' This function will run in parallel if a parallel backend is registered with
 #' \code{\link{foreach}}.
 #'
 #' @export
 #' @import foreach
 #' @importFrom tools file_path_sans_ext
 #' @param image_files list of filenames for images to normalize
-#' @param base (optional) filename of base image. If not supplied, the base 
-#' image will be automatically chosen from the images in \code{image_files}, as 
+#' @param base (optional) filename of base image. If not supplied, the base
+#' image will be automatically chosen from the images in \code{image_files}, as
 #' the image with the lowest percent cloud cover.
 #' @param overwrite whether to overwrite existing files
 #' @return nothing - used for side effect of normalizing imagery
@@ -5567,7 +5567,7 @@ auto_normalize <- function(image_files, base, overwrite=FALSE) {
 
     image_stacks <- lapply(image_files, stack)
 
-    mask_files <- paste0(file_path_sans_ext(image_files), '_masks', 
+    mask_files <- paste0(file_path_sans_ext(image_files), '_masks',
                          extension(image_files))
     mask_stacks <- lapply(mask_files, stack)
 
@@ -5576,7 +5576,7 @@ auto_normalize <- function(image_files, base, overwrite=FALSE) {
     } else if (missing(base) & (length(image_files) == 1)) {
         stop('length of image_files is 1 but no base image was supplied')
     } else {
-        # Figure out which image has lowest percent cloud cover - use that 
+        # Figure out which image has lowest percent cloud cover - use that
         # image as the base image
         pct_clouds <- function(cloud_mask) {
             clouded_pixels <- calc(cloud_mask, fun=function(vals) {
@@ -5596,7 +5596,7 @@ auto_normalize <- function(image_files, base, overwrite=FALSE) {
             pct_clouds(mask_stack[[2]])
         }
         base_index <- which(cloud_cover == min(cloud_cover))
-        
+
         base_img <- image_stacks[[base_index]]
         image_stacks <- image_stacks[-base_index]
 
@@ -5608,15 +5608,15 @@ auto_normalize <- function(image_files, base, overwrite=FALSE) {
     }
 
     # Copy the base image to a new file with the _base.tif extension
-    base_copy_filename <- paste0(file_path_sans_ext(base_img_file), 
+    base_copy_filename <- paste0(file_path_sans_ext(base_img_file),
                                  '_normbase.tif')
-    base_img <- writeRaster(base_img, filename=base_copy_filename, 
-                            datatype=dataType(base_img)[1], 
+    base_img <- writeRaster(base_img, filename=base_copy_filename,
+                            datatype=dataType(base_img)[1],
                             overwrite=overwrite)
-    base_mask_copy_filename <- paste0(file_path_sans_ext(base_img_file), 
+    base_mask_copy_filename <- paste0(file_path_sans_ext(base_img_file),
                                       '_normbase_masks.tif')
-    base_mask <- writeRaster(base_mask, filename=base_mask_copy_filename, 
-                             datatype=dataType(base_mask)[1], 
+    base_mask <- writeRaster(base_mask, filename=base_mask_copy_filename,
+                             datatype=dataType(base_mask)[1],
                              overwrite=overwrite)
 
     stopifnot(length(image_files) == length(image_stacks))
@@ -5624,13 +5624,13 @@ auto_normalize <- function(image_files, base, overwrite=FALSE) {
 
     image_file=image_stack=NULL
     # Now normalize each remaining image to the _base.tif file
-    foreach (image_file=iter(image_files), image_stack=iter(image_stacks), 
+    foreach (image_file=iter(image_files), image_stack=iter(image_stacks),
              mask_stack=iter(mask_stacks),
              .packages=c('teamlucc', 'stringr', 'tools')) %dopar% {
         message(paste('Preprocessing ', image_file))
-        output_normed_file <- paste0(file_path_sans_ext(image_file), 
+        output_normed_file <- paste0(file_path_sans_ext(image_file),
                                      '_normalized.tif')
-        output_normed_masks_file <- paste0(file_path_sans_ext(image_file), 
+        output_normed_masks_file <- paste0(file_path_sans_ext(image_file),
                                            '_normalized_masks.tif')
 
         # Note that fmask layer is 2nd layer in stack
@@ -5647,12 +5647,12 @@ auto_normalize <- function(image_files, base, overwrite=FALSE) {
         }
         normed_image <- normalize(base_img, image_stack, missing_vals, size=size)
 
-        normed_image <- writeRaster(normed_image, filename=output_normed_file, 
-                                    datatype=dataType(base_img)[1], 
+        normed_image <- writeRaster(normed_image, filename=output_normed_file,
+                                    datatype=dataType(base_img)[1],
                                     overwrite=overwrite)
-        mask_stack <- writeRaster(mask_stack, 
-                                  filename=output_normed_masks_file, 
-                                  datatype=dataType(mask_stack)[1], 
+        mask_stack <- writeRaster(mask_stack,
+                                  filename=output_normed_masks_file,
+                                  datatype=dataType(mask_stack)[1],
                                   overwrite=overwrite)
     }
 }
@@ -5698,7 +5698,7 @@ get_metadata <- function(ls_file, img_type) {
         meta$WRS_Row <- sprintf('%03i', as.numeric(get_mtl_item('WRS_ROW', mtl_txt)))
         meta$sunelev <- as.numeric(get_mtl_item('SUN_ELEVATION', mtl_txt))
         meta$sunazimuth <- as.numeric(get_mtl_item('SUN_AZIMUTH', mtl_txt))
-        # Build a shortname based on satellite and img_type that is consistent 
+        # Build a shortname based on satellite and img_type that is consistent
         # with the format of the CDR image shortnames
         satellite <- str_extract(get_mtl_item('SPACECRAFT_ID', mtl_txt), '[4578]')
         sensor_string <- str_extract(basename(ls_file), '^((LT[45])|(LE7)|(LC8))')
@@ -5726,25 +5726,25 @@ calc_cloud_mask <- function(mask_stack, mask_type, ...) {
                 return((fmask == 2) | (fmask == 4) | (fmask == 255))
             }, datatype='INT2S', ...)
     } else if (mask_type == '6S') {
-        # This cloud mask includes the cloud_QA, cloud_shadow_QA, and 
-        # adjacent_cloud_QA layers. Pixels in cloud, cloud shadow, or 
+        # This cloud mask includes the cloud_QA, cloud_shadow_QA, and
+        # adjacent_cloud_QA layers. Pixels in cloud, cloud shadow, or
         # adjacent cloud are coded as 1.
         cloud_mask <- overlay(mask_stack$fill_QA,
-                              mask_stack$cloud_QA, 
-                              mask_stack$cloud_shadow_QA, 
+                              mask_stack$cloud_QA,
+                              mask_stack$cloud_shadow_QA,
                               mask_stack$adjacent_cloud_QA,
             fun=function(fill, clo, sha, adj) {
-                return((fill == 255) | (clo == 255) | (sha == 255) | 
+                return((fill == 255) | (clo == 255) | (sha == 255) |
                        (adj == 255))
             }, datatype='INT2S', ...)
 
     } else if (mask_type == 'both') {
-        cloud_mask <- overlay(mask_stack$fmask_band, 
-                              mask_stack$cloud_QA, 
-                              mask_stack$cloud_shadow_QA, 
+        cloud_mask <- overlay(mask_stack$fmask_band,
+                              mask_stack$cloud_QA,
+                              mask_stack$cloud_shadow_QA,
                               mask_stack$adjacent_cloud_QA,
             fun=function(fmask, clo, sha, adj) {
-                return((fmask == 2) | (fmask == 4) | (fmask == 255) | 
+                return((fmask == 2) | (fmask == 4) | (fmask == 255) |
                        (clo == 255) | (sha == 255) | (adj == 255))
             }, datatype='INT2S', ...)
     } else {
@@ -5779,7 +5779,7 @@ build_band_vrt <- function(ls_file, band_vrt_file, img_type) {
 #' @importFrom gdalUtils get_subdatasets gdalbuildvrt
 build_mask_vrt <- function(ls_file, mask_vrt_file, img_type) {
     if (img_type == "CDR") {
-        mask_bands <- c('fill_QA', 'cfmask_band', 'cloud_QA', 'cloud_shadow_QA', 
+        mask_bands <- c('fill_QA', 'cfmask_band', 'cloud_QA', 'cloud_shadow_QA',
                         'adjacent_cloud_QA')
         sds <- get_subdatasets(ls_file)
         # Below is to support CDR imagery downloaded prior to late August 2014
@@ -5801,7 +5801,7 @@ build_mask_vrt <- function(ls_file, mask_vrt_file, img_type) {
                           pattern=paste0(basename(ls_file_base), '_MTLFmask$'),
                           full.names=TRUE)
 
-        # Calculate a QA mask file from the fmask file, since teamlucc expects 
+        # Calculate a QA mask file from the fmask file, since teamlucc expects
         # this file as part of the mask stack.
         qa_mask_file <- extension(rasterTmpFile(), '.tif')
         # TODO: Check if this is proper coding - should it be reversed?
@@ -5812,10 +5812,10 @@ build_mask_vrt <- function(ls_file, mask_vrt_file, img_type) {
                             return(out)
                         }, datatype="INT2S", filename=qa_mask_file)
 
-        # Note that allow_projection_difference is used below as GDAL thinks 
-        # the two images have different projection systems, even though they 
+        # Note that allow_projection_difference is used below as GDAL thinks
+        # the two images have different projection systems, even though they
         # are in identical projection systems.
-        gdalbuildvrt(c(qa_mask_file, fmask_file), mask_vrt_file, 
+        gdalbuildvrt(c(qa_mask_file, fmask_file), mask_vrt_file,
                      separate=TRUE, allow_projection_difference=TRUE,
                      srcnodata='None')
     } else {
@@ -5826,32 +5826,32 @@ build_mask_vrt <- function(ls_file, mask_vrt_file, img_type) {
 
 #' Preprocess surface reflectance imagery from the Landsat CDR archive
 #'
-#' This function preprocesses surface reflectance imagery from the Landsat 
-#' Climate Data Record (CDR) archive. \code{auto_preprocess_landsat} can 
-#' reproject CDR tiles to match the projection of a given \code{aoi}, crop the 
-#' tiles to match the \code{aoi} or a common WRS-2 path/row polygon, mask 
-#' missing data and clouds out of the CDR tiles, and perform topographic 
+#' This function preprocesses surface reflectance imagery from the Landsat
+#' Climate Data Record (CDR) archive. \code{auto_preprocess_landsat} can
+#' reproject CDR tiles to match the projection of a given \code{aoi}, crop the
+#' tiles to match the \code{aoi} or a common WRS-2 path/row polygon, mask
+#' missing data and clouds out of the CDR tiles, and perform topographic
 #' correction.
 #'
-#' \code{mask_type} chooses the cloud mask to use if topographic correction is 
-#' performed (\code{tc=TRUE}). The mask can be one of three different options: 
-#' "6S", "fmask", or "combined". Each option uses a different combination of 
-#' cloud mask layers from the CDR product. The "6S" masks out any areas coded 
+#' \code{mask_type} chooses the cloud mask to use if topographic correction is
+#' performed (\code{tc=TRUE}). The mask can be one of three different options:
+#' "6S", "fmask", or "combined". Each option uses a different combination of
+#' cloud mask layers from the CDR product. The "6S" masks out any areas coded
 #' as fill (fill_QA=255), cloud (cloud_QA=255), cloud shadow
-#' (cloud_shadow_QA=255) or adjacent to cloud (adjacent_cloud_QA=255). The 
-#' "fmask" option masks out any areas coded as fill (fmask=255), cloud 
-#' (fmask=4) or cloud shadow (fmask=2).  The combined option combines the "6S" 
-#' and "fmask" approaches to masks out areas coded as fill, cloud, cloud 
-#' shadow, or adjacent to cloud using either method. Note that "fmask" is the 
+#' (cloud_shadow_QA=255) or adjacent to cloud (adjacent_cloud_QA=255). The
+#' "fmask" option masks out any areas coded as fill (fmask=255), cloud
+#' (fmask=4) or cloud shadow (fmask=2).  The combined option combines the "6S"
+#' and "fmask" approaches to masks out areas coded as fill, cloud, cloud
+#' shadow, or adjacent to cloud using either method. Note that "fmask" is the
 #' only supported option when \code{img_type} is L1T.
 #'
-#' Prior to running \code{auto_preprocess_landsat}, \code{\link{espa_extract}} 
-#' should be used to extract the original zipfiles supplied by USGS. To perform 
-#' topographic correction with \code{auto_preprocess_landsat}, first run 
-#' \code{\link{auto_setup_dem}} to preprocess a set of DEM tiles. Then run 
+#' Prior to running \code{auto_preprocess_landsat}, \code{\link{espa_extract}}
+#' should be used to extract the original zipfiles supplied by USGS. To perform
+#' topographic correction with \code{auto_preprocess_landsat}, first run
+#' \code{\link{auto_setup_dem}} to preprocess a set of DEM tiles. Then run
 #' \code{auto_preprocess_landsat} with the \code{tc=TRUE} option.
 #'
-#' If topographic correction is being performed, it will be run in parallel if 
+#' If topographic correction is being performed, it will be run in parallel if
 #' a parallel backend is registered with \code{\link{foreach}}.
 #'
 #' @export
@@ -5860,55 +5860,55 @@ build_mask_vrt <- function(ls_file, mask_vrt_file, img_type) {
 #' @importFrom tools file_path_sans_ext
 #' @importFrom gdalUtils gdalwarp
 #' @importFrom sp is.projected
-#' @param image_dirs list of paths to a set of Landsat CDR image files in HDF 
+#' @param image_dirs list of paths to a set of Landsat CDR image files in HDF
 #' format
 #' @param prefix string to use as a prefix for all filenames
-#' @param img_type type of Landsat imagery to preprocess. Can be "CDR" for 
-#' Landsat Climate Data Record (CDR) imagery in HDR format, or "L1T" for 
-#' Standard Terrain Correction (Level 1T) imagery. Note that if L1T imagery is 
-#' used, fmask must be run locally (see https://code.google.com/p/fmask) prior 
+#' @param img_type type of Landsat imagery to preprocess. Can be "CDR" for
+#' Landsat Climate Data Record (CDR) imagery in HDR format, or "L1T" for
+#' Standard Terrain Correction (Level 1T) imagery. Note that if L1T imagery is
+#' used, fmask must be run locally (see https://code.google.com/p/fmask) prior
 #' to using \code{auto_preprocess_landsat}.
-#' @param tc whether to topographically correct imagery (if \code{TRUE}, then 
+#' @param tc whether to topographically correct imagery (if \code{TRUE}, then
 #' \code{dem_path} must be specified)
-#' @param dem_path path to a set of DEMs as output by \code{auto_setup_dem} 
+#' @param dem_path path to a set of DEMs as output by \code{auto_setup_dem}
 #' (only required if tc=TRUE)
-#' @param aoi area of interest (AOI), as a \code{SpatialPolygonsDataFrame}.  If 
-#' supplied, this aoi is used to crop and set the projection system of the 
+#' @param aoi area of interest (AOI), as a \code{SpatialPolygonsDataFrame}.  If
+#' supplied, this aoi is used to crop and set the projection system of the
 #' output. Must be in a projected coordinate system.
-#' @param output_path the path to use for the output (optional - if NULL then 
+#' @param output_path the path to use for the output (optional - if NULL then
 #' output images will be saved alongside the input images in the same folder).
-#' @param mask_type which cloud mask to use to mask clouds when performing 
-#' topographic correction. Can be one of "fmask", "6S", or "both".  See 
+#' @param mask_type which cloud mask to use to mask clouds when performing
+#' topographic correction. Can be one of "fmask", "6S", or "both".  See
 #' Details.  (Ignored if \code{tc=FALSE)}.
-#' @param mask_output if \code{TRUE}, cloud, cloud shadow, and fill areas 
-#' (SLC-off gaps and areas with no data) will be set to \code{NA} in the 
-#' output. Note this setting affects the final output file only - cloud, cloud 
-#' shadow, and gap areas are masked out of the image during topographic 
+#' @param mask_output if \code{TRUE}, cloud, cloud shadow, and fill areas
+#' (SLC-off gaps and areas with no data) will be set to \code{NA} in the
+#' output. Note this setting affects the final output file only - cloud, cloud
+#' shadow, and gap areas are masked out of the image during topographic
 #' correction regardless of the value of \code{mask_output}.
-#' @param n_cpus the number of CPUs to use for processes that can run in 
+#' @param n_cpus the number of CPUs to use for processes that can run in
 #' parallel
 #' @param cleartmp whether to clear temp files on each run through the loop
-#' @param overwrite whether to overwrite existing files (otherwise an error 
+#' @param overwrite whether to overwrite existing files (otherwise an error
 #' will be raised)
-#' @param of output format to use when saving output rasters. See description 
+#' @param of output format to use when saving output rasters. See description
 #' of \code{of} in \code{\link{gdalwarp}}.
-#' @param ext file extension to use when saving output rasters (determines 
-#' output file format). Should match file extension for output format chosen by 
+#' @param ext file extension to use when saving output rasters (determines
+#' output file format). Should match file extension for output format chosen by
 #' \code{of}.
-#' @param notify notifier to use (defaults to \code{print} function). See the 
-#' \code{notifyR} package for one way of sending notifications from R. The 
+#' @param notify notifier to use (defaults to \code{print} function). See the
+#' \code{notifyR} package for one way of sending notifications from R. The
 #' \code{notify} function should accept a string as the only argument.
-#' @param verbose whether to print detailed status messages and timing 
+#' @param verbose whether to print detailed status messages and timing
 #' information
 #' @return nothing - used for the side effect of preprocessing imagery
-#' @seealso \code{\link{espa_extract}}, \code{\link{unstack_ledapscdr}}, 
+#' @seealso \code{\link{espa_extract}}, \code{\link{unstack_ledapscdr}},
 #' \code{\link{auto_setup_dem}}
-auto_preprocess_landsat <- function(image_dirs, prefix, img_type="CDR", 
-                                    tc=FALSE, dem_path=NULL, aoi=NULL, 
-                                    output_path=NULL, mask_type='fmask', 
-                                    mask_output=FALSE, n_cpus=1, 
-                                    cleartmp=FALSE,  overwrite=FALSE, 
-                                    of="GTiff", ext='tif', notify=print, 
+auto_preprocess_landsat <- function(image_dirs, prefix, img_type="CDR",
+                                    tc=FALSE, dem_path=NULL, aoi=NULL,
+                                    output_path=NULL, mask_type='fmask',
+                                    mask_output=FALSE, n_cpus=1,
+                                    cleartmp=FALSE,  overwrite=FALSE,
+                                    of="GTiff", ext='tif', notify=print,
                                     verbose=FALSE) {
     if (grepl('_', prefix)) {
         stop('prefix cannot contain underscores (_)')
@@ -5974,12 +5974,12 @@ auto_preprocess_landsat <- function(image_dirs, prefix, img_type="CDR",
 
         if (tc) {
             output_filename <- file.path(this_output_path,
-                                         paste0(prefix, '_', image_basename, 
+                                         paste0(prefix, '_', image_basename,
                                                 '_tc.', ext))
         } else {
             # Skip topographic correction, so don't append _tc to filename
             output_filename <- file.path(this_output_path,
-                                         paste0(prefix, '_', image_basename, 
+                                         paste0(prefix, '_', image_basename,
                                                 '.', ext))
         }
 
@@ -5993,8 +5993,8 @@ auto_preprocess_landsat <- function(image_dirs, prefix, img_type="CDR",
         timer <- start_timer(timer, label=paste('Preprocessing', image_basename))
 
         #######################################################################
-        # Crop and reproject images to match the projection being used for this 
-        # image.  This is either the projection of the aoi (if aoi is 
+        # Crop and reproject images to match the projection being used for this
+        # image.  This is either the projection of the aoi (if aoi is
         # supplied), or the UTM zone of the centroid of this path and row.
         if (verbose) timer <- start_timer(timer, label='cropping and reprojecting')
 
@@ -6003,7 +6003,7 @@ auto_preprocess_landsat <- function(image_dirs, prefix, img_type="CDR",
         mask_vrt_file <- extension(rasterTmpFile(), '.vrt')
         mask_band_names <- build_mask_vrt(ls_file, mask_vrt_file, img_type)
 
-        this_pathrow_poly <- pathrow_poly(as.numeric(meta$WRS_Path), 
+        this_pathrow_poly <- pathrow_poly(as.numeric(meta$WRS_Path),
                                           as.numeric(meta$WRS_Row))
         if (!is.null(aoi)) {
             to_srs <- proj4string(aoi)
@@ -6014,11 +6014,11 @@ auto_preprocess_landsat <- function(image_dirs, prefix, img_type="CDR",
         # Calculate minimum bounding box coordinates:
         this_pathrow_poly <- spTransform(this_pathrow_poly, CRS(to_srs))
         if (!is.null(aoi)) {
-            # If an aoi IS supplied, match the image extent to that of the AOI 
+            # If an aoi IS supplied, match the image extent to that of the AOI
             # cropped to the appropriate Landsat path/row polygon.
             crop_area <- gIntersection(this_pathrow_poly, aoi, byid=TRUE)
         } else {
-            # If an aoi IS NOT supplied, match the image extent to the 
+            # If an aoi IS NOT supplied, match the image extent to the
             # appropriate Landsat path/row polygon.
             crop_area <- this_pathrow_poly
         }
@@ -6031,20 +6031,20 @@ auto_preprocess_landsat <- function(image_dirs, prefix, img_type="CDR",
         image_stack_reproj_file <- extension(rasterTmpFile(), ext)
         image_stack <- gdalwarp(band_vrt_file,
                                 dstfile=image_stack_reproj_file,
-                                te=out_te, t_srs=to_srs, tr=to_res, 
-                                r='cubicspline', output_Raster=TRUE, of=of, 
-                                multi=TRUE, wo=paste0("NUM_THREADS=", n_cpus), 
+                                te=out_te, t_srs=to_srs, tr=to_res,
+                                r='cubicspline', output_Raster=TRUE, of=of,
+                                multi=TRUE, wo=paste0("NUM_THREADS=", n_cpus),
                                 overwrite=overwrite, ot='Int16')
         names(image_stack) <- band_names
 
         mask_stack_reproj_file <- extension(rasterTmpFile(), paste0('.', ext))
         mask_stack <- gdalwarp(mask_vrt_file,
                                dstfile=mask_stack_reproj_file,
-                               te=out_te, t_srs=to_srs, tr=to_res, 
-                               r='near', output_Raster=TRUE, of=of, 
-                               multi=TRUE, wo=paste0("NUM_THREADS=", n_cpus), 
+                               te=out_te, t_srs=to_srs, tr=to_res,
+                               r='near', output_Raster=TRUE, of=of,
+                               multi=TRUE, wo=paste0("NUM_THREADS=", n_cpus),
                                overwrite=overwrite, ot='Int16')
-        # Can't just directly assign mask_bands as the names since the bands 
+        # Can't just directly assign mask_bands as the names since the bands
         # may have been read in different order from the HDF file
         names(mask_stack) <- mask_band_names
 
@@ -6058,16 +6058,16 @@ auto_preprocess_landsat <- function(image_dirs, prefix, img_type="CDR",
             ######################################################################
             # Load dem, slope, and aspect
             slopeaspect_filename <- file.path(dem_path,
-                                              paste0('slopeaspect_', 
+                                              paste0('slopeaspect_',
                                                      meta$WRS_Path, '-', meta$WRS_Row, '.', ext))
             slopeaspect <- brick(slopeaspect_filename)
 
             if (!proj4comp(proj4string(image_stack), proj4string(slopeaspect))) {
-                stop(paste0('slopeaspect and image_stack projections do not match.\nslopeaspect proj4string: ', 
+                stop(paste0('slopeaspect and image_stack projections do not match.\nslopeaspect proj4string: ',
                             proj4string(slopeaspect), '\nimage_stack proj4string: ',
                             proj4string(image_stack)))
             } else {
-                # Projection strings are functionally identical - so make sure 
+                # Projection strings are functionally identical - so make sure
                 # their textual representations are the same.
                 proj4string(slopeaspect) <- proj4string(image_stack)
             }
@@ -6079,33 +6079,33 @@ auto_preprocess_landsat <- function(image_dirs, prefix, img_type="CDR",
             image_stack_masked <- image_stack
             image_stack_masked[image_stack_mask] <- NA
             if (ncell(image_stack_masked) > 500000) {
-                # Draw a sample for the Minnaert k regression. Note that 
-                # sampleRegular with cells=TRUE returns cell numbers in the 
+                # Draw a sample for the Minnaert k regression. Note that
+                # sampleRegular with cells=TRUE returns cell numbers in the
                 # first column
-                sampleindices <- sampleRegular(image_stack_masked, size=500000, 
+                sampleindices <- sampleRegular(image_stack_masked, size=500000,
                                                cells=TRUE)
                 sampleindices <- as.vector(sampleindices[, 1])
             } else {
                 sampleindices <- NULL
             }
-            # Remember that slopeaspect layers are scaled to INT2S, but 
-            # topographic_corr expects them as floats, so apply the scale factors 
+            # Remember that slopeaspect layers are scaled to INT2S, but
+            # topographic_corr expects them as floats, so apply the scale factors
             # used in auto_setup_dem
             slopeaspect_flt <- stack(raster(slopeaspect, layer=1) / 10000,
                                      raster(slopeaspect, layer=2) / 1000)
-            image_stack_tc <- topographic_corr(image_stack_masked, 
-                                               slopeaspect_flt, meta$sunelev, 
-                                               meta$sunazimuth, 
-                                               method='minnaert_full', 
-                                               asinteger=TRUE, 
+            image_stack_tc <- topographic_corr(image_stack_masked,
+                                               slopeaspect_flt, meta$sunelev,
+                                               meta$sunazimuth,
+                                               method='minnaert_full',
+                                               asinteger=TRUE,
                                                sampleindices=sampleindices)
             if (!mask_output) {
-                # Add back in the original values of areas that were masked out 
+                # Add back in the original values of areas that were masked out
                 # from the topographic correction:
                 image_stack_tc[image_stack_mask] <- image_stack[image_stack_mask]
             }
             image_stack <- image_stack_tc
-            
+
             if (verbose) timer <- stop_timer(timer, label='topocorr')
         }
 
@@ -6113,15 +6113,15 @@ auto_preprocess_landsat <- function(image_dirs, prefix, img_type="CDR",
         # Write final data
         if (verbose) timer <- start_timer(timer, label='writing data')
 
-        mask_stack_path <- paste0(file_path_sans_ext(output_filename), 
+        mask_stack_path <- paste0(file_path_sans_ext(output_filename),
                                   '_masks.', ext)
         mask_stack <- writeRaster(stack(mask_stack$fill_QA,
                                         mask_stack$fmask_band),
-                                  filename=mask_stack_path, 
+                                  filename=mask_stack_path,
                                   overwrite=overwrite, datatype='INT2S')
         names(mask_stack) <- c('fill_QA', 'fmask_band')
 
-        image_stack <- writeRaster(image_stack, filename=output_filename, 
+        image_stack <- writeRaster(image_stack, filename=output_filename,
                                    overwrite=overwrite, datatype='INT2S')
         if (verbose) timer <- stop_timer(timer, label='writing data')
 
@@ -6132,9 +6132,9 @@ auto_preprocess_landsat <- function(image_dirs, prefix, img_type="CDR",
         if (cleartmp) removeTmpFiles(h=1)
     }
 }
-# Function for retrieving frequencies from a raster frequency table, given a 
-# band name and value. Handles the case of a given code not occurring in a 
-# particular raster, in which case it will not show up as a row in the 
+# Function for retrieving frequencies from a raster frequency table, given a
+# band name and value. Handles the case of a given code not occurring in a
+# particular raster, in which case it will not show up as a row in the
 # frequency table.
 get_freq <- function(band, value, freq_table) {
     band_col <- grep(band, names(freq_table))
@@ -6154,7 +6154,7 @@ get_freq <- function(band, value, freq_table) {
 #'
 #' @export
 #' @importFrom stringr str_extract
-#' @param image_dirs list of paths to a set of Landsat CDR image files in 
+#' @param image_dirs list of paths to a set of Landsat CDR image files in
 #' GeoTIFF format as output by the \code{unstack_ledapscdr} function.
 #' @param aoi an area of interest (AOI) to crop from each image
 #' @return a \code{data.frame}
@@ -6173,7 +6173,7 @@ auto_QA_stats <- function(image_dirs, aoi) {
 
         for (image_basename in image_basenames) {
             message(paste0('Processing ', image_basename, '...'))
-            metadata_string <- str_extract(image_basename, 
+            metadata_string <- str_extract(image_basename,
                                            '((LT4)|(LT5)|(LE7)|(LC8))[0-9]{13}')
             sensor <- str_extract(metadata_string, '^((LT[45])|(LE7)|(LC8))')
             year <- substr(metadata_string, 10, 13)
@@ -6184,8 +6184,8 @@ auto_QA_stats <- function(image_dirs, aoi) {
             mask_band_files <- c()
             for (mask_band in mask_bands) {
                 mask_band_files <- c(mask_band_files,
-                                     paste(file.path(image_dir, 
-                                                     image_basename), 
+                                     paste(file.path(image_dir,
+                                                     image_basename),
                                            mask_band, sep='_'))
             }
             mask_band_files <- paste0(mask_band_files, '.tif')
@@ -6225,8 +6225,8 @@ auto_QA_stats <- function(image_dirs, aoi) {
 
     out <- data.frame(matrix(unlist(out), nrow=length(out), byrow=T))
     names(out) <- c('path', 'row', 'year', 'julian', 'sensor',
-                    'fill_QA_notfill', 'fill_QA_fill', 'fmask_clear', 
-                    'fmask_water', 'fmask_cloud_shadow', 'fmask_snow', 
+                    'fill_QA_notfill', 'fill_QA_fill', 'fmask_clear',
+                    'fmask_water', 'fmask_cloud_shadow', 'fmask_snow',
                     'fmask_cloud', 'fmask_fill')
     return(out)
 }
@@ -6248,14 +6248,14 @@ normalize_extent <- function(te, res=c(30, 30)) {
 
 #' Setup the DEM mosaic for a given AOI
 #'
-#' This function will setup a set of DEM tiles for each the Landsat path/row 
-#' needed to cover a given AOI. The tiles can optionally be cropped to cover 
-#' only the portion of each path/row that is included in the AOI, or can cover 
+#' This function will setup a set of DEM tiles for each the Landsat path/row
+#' needed to cover a given AOI. The tiles can optionally be cropped to cover
+#' only the portion of each path/row that is included in the AOI, or can cover
 #' the full scene for each path/row needed to cover the AOI.
 #'
-#' This function uses \code{gdalUtils}, which requires a local GDAL 
-#' installation.  See http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries 
-#' or http://trac.osgeo.org/osgeo4w/ to download the appropriate installer for 
+#' This function uses \code{gdalUtils}, which requires a local GDAL
+#' installation.  See http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries
+#' or http://trac.osgeo.org/osgeo4w/ to download the appropriate installer for
 #' your operating system.
 #'
 #' @export
@@ -6265,34 +6265,34 @@ normalize_extent <- function(te, res=c(30, 30)) {
 #' @importFrom rgeos gBuffer gIntersects gUnaryUnion gIntersection
 #' @importFrom tools file_path_sans_ext
 #' @importFrom gdalUtils mosaic_rasters gdalwarp
-#' @param aoi area of interest (AOI), as a \code{SpatialPolygonsDataFrame}, to 
-#' use as as bounding box when selecting DEMs. Also used to crop and set 
-#' projection of the output DEM(s) if \code{crop_to_aoi=TRUE}. Must be in a 
+#' @param aoi area of interest (AOI), as a \code{SpatialPolygonsDataFrame}, to
+#' use as as bounding box when selecting DEMs. Also used to crop and set
+#' projection of the output DEM(s) if \code{crop_to_aoi=TRUE}. Must be in a
 #' projected coordinate system.
 #' @param output_path the path to use for the output
-#' @param dem_extents a \code{SpatialPolygonsDataFrame} of the extents and 
-#' filenames for a set of locally available DEM raster(s) that cover the 
-#' \code{aoi}. See the \code{\link{get_extent_polys}} function for one means of 
+#' @param dem_extents a \code{SpatialPolygonsDataFrame} of the extents and
+#' filenames for a set of locally available DEM raster(s) that cover the
+#' \code{aoi}. See the \code{\link{get_extent_polys}} function for one means of
 #' generating this list. \code{dem_extents} must have a "filename" column.
-#' @param of output format to use when saving output rasters. See description 
+#' @param of output format to use when saving output rasters. See description
 #' of \code{of} in \code{\link{gdalwarp}}.
-#' @param ext file extension to use when saving output rasters (determines 
-#' output file format). Should match file extension for output format chosen by 
+#' @param ext file extension to use when saving output rasters (determines
+#' output file format). Should match file extension for output format chosen by
 #' \code{of}.
-#' @param n_cpus the number of CPUs to use for processes that can run in 
+#' @param n_cpus the number of CPUs to use for processes that can run in
 #' parallel
-#' @param overwrite whether to overwrite existing files (otherwise an error 
+#' @param overwrite whether to overwrite existing files (otherwise an error
 #' will be raised)
 #' @param crop_to_aoi whether to crop the dem to the supplied AOI, or to the
 #' Landsat path/row polygon for that particular path/row
-#' @param notify notifier to use (defaults to \code{print} function). See the 
-#' \code{notifyR} package for one way of sending notifications from R. The 
+#' @param notify notifier to use (defaults to \code{print} function). See the
+#' \code{notifyR} package for one way of sending notifications from R. The
 #' \code{notify} function should accept a string as the only argument.
-#' @param verbose whether to print detailed status messages and timing 
+#' @param verbose whether to print detailed status messages and timing
 #' information
 #' @return nothing - used for the side effect of setting up DEMs
-auto_setup_dem <- function(aoi, output_path, dem_extents, of="GTiff", 
-                           ext='tif', n_cpus=1, overwrite=FALSE, 
+auto_setup_dem <- function(aoi, output_path, dem_extents, of="GTiff",
+                           ext='tif', n_cpus=1, overwrite=FALSE,
                            crop_to_aoi=FALSE, notify=print, verbose=FALSE) {
     if (!file_test("-d", output_path)) {
         stop(paste(output_path, "does not exist"))
@@ -6310,29 +6310,29 @@ auto_setup_dem <- function(aoi, output_path, dem_extents, of="GTiff",
     pathrows <- pathrow_num(aoi, wrs_type=2, wrs_mode='D', as_polys=TRUE)
     aoi_prproj <- spTransform(aoi, CRS(proj4string(pathrows)))
 
-    timer <- start_timer(timer, label=paste('Processing DEMS for', nrow(pathrows), 
+    timer <- start_timer(timer, label=paste('Processing DEMS for', nrow(pathrows),
                                             'path/rows'))
     if (crop_to_aoi) {
-        # Do a rough crop of the pathrows to the AOI in the pathrow CRS 
+        # Do a rough crop of the pathrows to the AOI in the pathrow CRS
         # (pathrow will later be cropped in the AOI CRS).
         pathrows_cropped <- gIntersection(pathrows, aoi_prproj, byid=TRUE)
         row.names(pathrows_cropped) <- row.names(pathrows)
-        pathrows_cropped <- SpatialPolygonsDataFrame(pathrows_cropped, 
+        pathrows_cropped <- SpatialPolygonsDataFrame(pathrows_cropped,
                                                      data=pathrows@data)
     } else {
         pathrows_cropped <- pathrows
     }
 
-    # Add a 500 m buffer in UTM coordinate system, as 1) slope calculation 
-    # requires a window of pixels, and 2) this buffer also helps avoid missing 
-    # pixels on the sides of the DEM due to slight misalignments from the 
-    # reprojection that will occur later. After buffering transform back to 
-    # WGS84 to use for preliminary cropping of the dem mosaic. 
+    # Add a 500 m buffer in UTM coordinate system, as 1) slope calculation
+    # requires a window of pixels, and 2) this buffer also helps avoid missing
+    # pixels on the sides of the DEM due to slight misalignments from the
+    # reprojection that will occur later. After buffering transform back to
+    # WGS84 to use for preliminary cropping of the dem mosaic.
     pathrows_utm <- spTransform(pathrows_cropped,
                                 CRS(utm_zone(pathrows_cropped, proj4string=TRUE)))
-    pathrows_buffered <- spTransform(gBuffer(pathrows_utm, width=500, byid=TRUE), 
+    pathrows_buffered <- spTransform(gBuffer(pathrows_utm, width=500, byid=TRUE),
                                  CRS(proj4string(dem_extents)))
-    intersecting <- as.logical(gIntersects(dem_extents, 
+    intersecting <- as.logical(gIntersects(dem_extents,
                                            gUnaryUnion(pathrows_buffered), byid=TRUE))
     if (sum(intersecting) == 0) {
         stop('no intersecting dem extents found')
@@ -6358,7 +6358,7 @@ auto_setup_dem <- function(aoi, output_path, dem_extents, of="GTiff",
         # Calculate minimum bounding box coordinates:
         mosaic_te <- as.numeric(bbox(pathrows_buffered))
         # Use mosaic_rasters from gdalUtils for speed:
-        mosaic_rasters(dem_list, mosaic_file, te=mosaic_te, of=of, 
+        mosaic_rasters(dem_list, mosaic_file, te=mosaic_te, of=of,
                        overwrite=overwrite, ot='Int16')
         dem_mosaic <- raster(mosaic_file)
         if (verbose) timer <- stop_timer(timer, label='Mosaicking DEMs')
@@ -6369,14 +6369,14 @@ auto_setup_dem <- function(aoi, output_path, dem_extents, of="GTiff",
 
     for (n in 1:length(pathrows)) {
         pathrow <- pathrows[n, ]
-        pathrow_label <- paste(sprintf('%03i', pathrow@data$PATH), 
+        pathrow_label <- paste(sprintf('%03i', pathrow@data$PATH),
                                sprintf('%03i', pathrow@data$ROW), sep='-')
-        timer <- start_timer(timer, label=paste0('Processing ', n, ' of ', 
-                                                 nrow(pathrows), ': ', 
+        timer <- start_timer(timer, label=paste0('Processing ', n, ' of ',
+                                                 nrow(pathrows), ': ',
                                                  pathrow_label))
 
         if (verbose) timer <- start_timer(timer,
-                                          label=paste('Cropping/reprojecting DEM mosaic crop for', 
+                                          label=paste('Cropping/reprojecting DEM mosaic crop for',
                                           pathrow_label))
         if (crop_to_aoi) {
             to_srs <- proj4string(aoi)
@@ -6394,20 +6394,20 @@ auto_setup_dem <- function(aoi, output_path, dem_extents, of="GTiff",
 
         # Calculate minimum bounding box coordinates:
         dem_mosaic_crop_filename <- file.path(output_path,
-                                         paste0('dem_', pathrow_label, 
+                                         paste0('dem_', pathrow_label,
                                                 '.', ext))
-        dem_mosaic_crop <- gdalwarp(mosaic_file, 
+        dem_mosaic_crop <- gdalwarp(mosaic_file,
                                     dstfile=dem_mosaic_crop_filename,
-                                    te=dem_te, t_srs=to_srs, tr=to_res, 
-                                    r='cubicspline', output_Raster=TRUE, 
+                                    te=dem_te, t_srs=to_srs, tr=to_res,
+                                    r='cubicspline', output_Raster=TRUE,
                                     multi=TRUE, of=of,
-                                    wo=paste0("NUM_THREADS=", n_cpus), 
+                                    wo=paste0("NUM_THREADS=", n_cpus),
                                     overwrite=overwrite, ot='Int16')
         if (verbose) timer <- stop_timer(timer,
-                                         label=paste('Cropping/reprojecting DEM mosaic crop for', 
+                                         label=paste('Cropping/reprojecting DEM mosaic crop for',
                                          pathrow_label))
 
-        if (verbose) timer <- start_timer(timer, label=paste('Calculating slope/aspect for', 
+        if (verbose) timer <- start_timer(timer, label=paste('Calculating slope/aspect for',
                                                 pathrow_label))
         slopeaspect_filename <- file.path(output_path,
                                           paste0('slopeaspect_',
@@ -6418,20 +6418,20 @@ auto_setup_dem <- function(aoi, output_path, dem_extents, of="GTiff",
             vals[vals >= 2*pi] <- 0
             vals
             })
-        # Note that slopeaspect is scaled - slope by 10000, and aspect by 1000 so 
+        # Note that slopeaspect is scaled - slope by 10000, and aspect by 1000 so
         # that the layers can be saved as INT2S
         slopeaspect <- stack(round(raster(slopeaspect, layer=1) * 10000),
                              round(raster(slopeaspect, layer=2) * 1000))
-        slopeaspect <- writeRaster(slopeaspect, filename=slopeaspect_filename, 
+        slopeaspect <- writeRaster(slopeaspect, filename=slopeaspect_filename,
                                    overwrite=overwrite, datatype='INT2S')
-        if (verbose) timer <- stop_timer(timer, label=paste('Calculating slope/aspect for', 
+        if (verbose) timer <- stop_timer(timer, label=paste('Calculating slope/aspect for',
                                                 pathrow_label))
-        timer <- stop_timer(timer, label=paste0('Processing ', n, ' of ', 
-                                                nrow(pathrows), ': ', 
+        timer <- stop_timer(timer, label=paste0('Processing ', n, ' of ',
+                                                nrow(pathrows), ': ',
                                                 pathrow_label))
     }
 
-    timer <- stop_timer(timer, label=paste('Processing DEMS for', nrow(pathrows), 
+    timer <- stop_timer(timer, label=paste('Processing DEMS for', nrow(pathrows),
                                             'path/rows'))
 }
 plotprep <- function(x, maxpixels=500000, DN_min=0, DN_max=255, x_fun=NULL) {
@@ -6453,9 +6453,9 @@ plotprep <- function(x, maxpixels=500000, DN_min=0, DN_max=255, x_fun=NULL) {
 #' Simple function to make small preview plot from large raster image
 #'
 #' @export
-#' @param x input \code{RasterBrick} or \code{RasterStack} with at least three 
+#' @param x input \code{RasterBrick} or \code{RasterStack} with at least three
 #' bands
-#' @param m an optional mask \code{RasterLayer} to output below the browse 
+#' @param m an optional mask \code{RasterLayer} to output below the browse
 #' image
 #' @param maxpixels maximum number of pixels to use in plotting
 #' @param DN_min minimum DN value
@@ -6463,16 +6463,16 @@ plotprep <- function(x, maxpixels=500000, DN_min=0, DN_max=255, x_fun=NULL) {
 #' @param r index in \code{x} of the band to use as the red band
 #' @param g index in \code{x} of the band to use as the green band
 #' @param b index in \code{x} of the band to use as the blue band
-#' @param x_fun an optional function to apply to \code{x} after x is resampled 
+#' @param x_fun an optional function to apply to \code{x} after x is resampled
 #' according to \code{maxpixels}
-#' @param m_fun an optional function to apply to \code{m} after m is resampled 
+#' @param m_fun an optional function to apply to \code{m} after m is resampled
 #' according to \code{maxpixels}
 #' @return nothing - used for side-effect of saving browse image
-browse_image <- function(x, m=NULL, maxpixels=500000, DN_min=0, DN_max=255, 
+browse_image <- function(x, m=NULL, maxpixels=500000, DN_min=0, DN_max=255,
                          r=3, g=2, b=1, x_fun=NULL, m_fun=NULL) {
     if (!is.null(m)) stopifnot(nlayers(m) == 1)
 
-    x <- plotprep(x, maxpixels=500000, DN_min=DN_min, DN_max=DN_max, 
+    x <- plotprep(x, maxpixels=500000, DN_min=DN_min, DN_max=DN_max,
                   x_fun=x_fun)
 
     if (!is.null(m) && !is.null(m_fun)) {
@@ -6503,8 +6503,8 @@ function(band3, band4, method = "quantile", ulimit = .99, llimit = .005)
         } else {
             band3 <- as.vector(as.matrix(band3))
         }
-    } 
-    
+    }
+
     if(is.character(band4)) {
         band4 <- read.asciigrid(band4)
         band4 <- band4@data[,1]
@@ -6514,7 +6514,7 @@ function(band3, band4, method = "quantile", ulimit = .99, llimit = .005)
         } else {
             band4 <- as.vector(as.matrix(band4))
         }
-    } 
+    }
 
 
     # find joint minimum and maximum
@@ -6580,9 +6580,9 @@ f.readin.fix.data<-function(){
 f.matrix.creator2<-function(data,year){
   #results object
   res<-list()
-  
+
   #get the dimensions of the matrix
-  
+
   #list if sanpling units
   cams<-unique(data$Sampling.Unit.Name)
   cams<-sort(cams)
@@ -6593,11 +6593,11 @@ f.matrix.creator2<-function(data,year){
   min<-min(data$Start.Date)
   max<-max(data$End.Date)
   cols<-max-min+1
-  
+
   #sampling period
   date.header<-seq(from=min,to=max, by="days")
   mat<-matrix(NA,rows,cols,dimnames=list(cams,as.character(date.header)))
-  
+
   #for all cameras, determine the open and close date and mark in the matrix
   start.dates<-tapply(as.character(data$Start.Date),data$Sampling.Unit.Name,unique)
   nms<-names(start.dates)
@@ -6606,7 +6606,7 @@ f.matrix.creator2<-function(data,year){
   end.dates<-tapply(as.character(data$End.Date),data$Sampling.Unit.Name,unique)
   end.dates<-ymd(end.dates)
   names(end.dates)<-nms
-  
+
   #outline the sampling periods for each camera j
   for(j in 1:length(start.dates)){
     #for each camera beginning and end of sampling
@@ -6627,7 +6627,7 @@ f.matrix.creator2<-function(data,year){
     dates<-data$Photo.Date[indx]
     cameras<-data$Sampling.Unit.Name[indx]
     dates.cameras<-data.frame(dates,cameras)
-    #unique combination of dates and cameras 
+    #unique combination of dates and cameras
     dates.cameras<-unique(dates.cameras)
     #fill in the matrix
     for(j in 1:length(dates.cameras[,1])){
@@ -6641,16 +6641,16 @@ f.matrix.creator2<-function(data,year){
     if(length(indx.nas)>0){
       mat<-mat[,-indx.nas]
     }
-    
+
     res<-c(res,list(mat))
     #return the matrix to its original form
     mat<-mat.template
   }
-  
+
   names(res)<-species
   #res<-lapply(res,f.dum)
   res
-  
+
 }
 
 f.check.NA.breaks<-function(vector){
@@ -6658,7 +6658,7 @@ f.check.NA.breaks<-function(vector){
 	if(min(notna)+length(notna)-1==max(notna)) print("ok")
 	else print("aggh")
 	}
-	
+
 f.start.minus.end<-function(data){
 	data$End.Date-data$Start.Date
 	}
@@ -6681,22 +6681,22 @@ f.picture.min<-function(data){
 f.picture.max<-function(data){
 	max(data)
 	}
-#function to fix the start/stop time of a camera if it is incorrectly entered	
+#function to fix the start/stop time of a camera if it is incorrectly entered
 f.start.stop.date.fixer<-function(data){
-	
+
 	cam.start.date<-by(data,data$Sampling.Unit.Name,f.start)
 	cam.start.date<-lapply(cam.start.date,unique)
 	cam.end.date<-by(data,data$Sampling.Unit.Name,f.end)
 	cam.end.date<-lapply(cam.end.date,unique)
-	
+
 	#cam.span<-(by(data,data$Sampling.Unit.Name,f.start.minus.end))
 	#cam.span<-lapply(cam.span,unique)
-	
+
 	pic.span<-by(data,data$Sampling.Unit.Name,f.picture.dates)
 	min.pic<-lapply(pic.span,f.picture.min)
 	max.pic<-lapply(pic.span,f.picture.max)
 	#pic.span<-lapply(pic.span,f.picture.span)
-	
+
 	indx<-which(as.numeric(cam.start.date)-as.numeric(min.pic)>0 |as.numeric(cam.end.date)-as.numeric(max.pic)<0)
 	#figure out which camera has the problem
 	#indx<-which(as.numeric(cam.span)-as.numeric(pic.span)<=0)
@@ -6708,14 +6708,14 @@ f.start.stop.date.fixer<-function(data){
 	#	index<-which(data$Sampling.Unit.Name==cam.id[i])
 	#	data$Start.Date[index]<-min.pic[[indx[i]]]
 	#	data$End.Date[index]<-max.pic[[indx[i]]]
-	#	
+	#
 	#	}
 		}
 		else
 			print("No problems detected..")
 	#data
-	}	
-#function to convert a list of sampling matrices generated by f.matrix.creator2 into a data frame that can be used by the unmarked package	
+	}
+#function to convert a list of sampling matrices generated by f.matrix.creator2 into a data frame that can be used by the unmarked package
 f.convert.to.unmarked<-function(list){
 require(unmarked)
 nspecies<-length(list)
@@ -6726,15 +6726,15 @@ oldmat<-list()
 for(i in 1:nspecies){
 	mat<-rbind(oldmat,list[[i]])
 	oldmat<-mat
-	}	
+	}
 y<-as.matrix(mat[,-ncols])
 rownames(y)<-NULL
 colnames(y)<-NULL
 species<-gl(n=nspecies,k=nrows,labels=names(list))
 siteCovs<-as.data.frame(species)
-unmarkedFrameOccu(y=y,siteCovs=siteCovs)	
+unmarkedFrameOccu(y=y,siteCovs=siteCovs)
 	}
-	
+
 	f.correct.DF<-function(DF){
 ind <- sapply(DF, is.factor)
 DF[ind] <- lapply(DF[ind], "[", drop=TRUE)
@@ -6754,7 +6754,7 @@ f.fix.data <- function(data){
   qwe<-data$Camera.Start.Date.and.Time
   qwe2<-ymd(paste(year(qwe),"-",month(qwe),"-",day(qwe),sep=""))
   data<-data.frame(data,Start.Date=qwe2)
-	
+
 	#Now do the same but for the End date and time of each camera trap
   #qwe<-strsplit(as.character(data$Camera.End.Date.and.Time)," ",fixed=T)
   data$Camera.End.Date.and.Time<-ymd_hms(as.character(data$Camera.End.Date.and.Time))
@@ -6780,7 +6780,7 @@ f.fix.data2 <- function(data){
   qwe<-data$Camera.Start.Date.and.Time
   qwe2<-ymd(paste(year(qwe),"-",month(qwe),"-",day(qwe),sep=""))
   data<-data.frame(data,Start.Date=qwe2)
-  
+
   #Now do the same but for the End date and time of each camera trap
   #qwe<-strsplit(as.character(data$Camera.End.Date.and.Time)," ",fixed=T)
   data$Camera.End.Date.and.Time<-ymd_hms(as.character(data$Camera.End.Date.and.Time))
@@ -6802,7 +6802,7 @@ f.extract.rare.sp<-function(raredata,alldata){
 	spnum<-length(raredata[,1])
 	oldindx<-numeric()
 	for(i in 1:spnum){
-		
+
 		indx<-c(oldindx,which(alldata@siteCovs$species==as.character(raredata[i,1])))
 		oldindx<-indx
 		}
@@ -6815,7 +6815,7 @@ f.extract.rare.sp<-function(raredata,alldata){
 #Separate independent photographic events for a species in a given camera trap and date. thresh gives the threshold for considering events separate
 #thresh is in minutes
 f.separate<-function(data,thresh){
-	
+
 	#diff(data$td.photo)
 	l<-length(data)
 	interval<-diff(data)#abs(c(data[2:l],NA)-data)
@@ -6827,11 +6827,11 @@ f.separate<-function(data,thresh){
 		if(!cond[i]) ev<-ev
 		else ev<-ev+1
 		res<-c(res,ev)
-		
+
 		}
 	c(1,res)
 	}
-#test function; not usually used	
+#test function; not usually used
 f.test.sep<-function(cond){
 	l<-length(cond)
 	#interval<-c(data$Photo.Time[2:l],NA)-data$Photo.Time
@@ -6841,13 +6841,13 @@ f.test.sep<-function(cond){
 		if(!cond[i]) ev<-ev
 		else ev<-ev+1
 		res<-c(res,ev)
-		
+
 		}
 	c(1,res)
 
-	
+
 	}
-	
+
 #Order the data by Sampling unit name and photo raw name. This will order images chronologically
 f.order.data<-function(data){
 	indx<-order(data$Sampling.Period,data$Sampling.Unit.Name,data$Photo.Taken.Time)
@@ -6857,7 +6857,7 @@ f.order.data<-function(data){
 #function to separate independent events, extract from the list and paste together with the data set.
 #This function removes records that are NOT images.. e.g. Sampling Date records
 f.separate.events<-function(data,thresh){
-	
+
 	#e.data<-by(data$td.photo,data$Sampling.Unit.Name,f.separate,thresh)
   indx<-which(is.na(data$Photo.Taken.Time))
   if(length(indx)>0)
@@ -6881,7 +6881,7 @@ f.sim.thres<-function(data,threshRange){
   plot(res[,1],res[,2],xlab="Threshold (min)",ylab="Number of events",type='b')
   res
   }
-  
+
 #convert Farenheit to Celsius
 
 f.FtoC<-function(temp) {
@@ -6932,8 +6932,8 @@ f.events.dataframe<-function(data){
   qwe$Longitude<-as.numeric(as.character(qwe$Longitude))
   qwe$Moon.Phase<-as.numeric(as.character(qwe$Moon.Phase))
   qwe
-}  
-  
+}
+
 #Code to create temperature event dataframes for a list of species.
 #puts them all in a list
 
@@ -6951,7 +6951,7 @@ f.create.events.splist<-function(splist,fulldata){
     #Order the data in chronological order
     sp<-f.order.data(sp)
     #Create independent observation events list with a threshold of 5 min
-    sp<-f.separate.events(sp,5) 
+    sp<-f.separate.events(sp,5)
    #Create a simplified data frame with just the events
     sp<-f.events.dataframe(sp)
     results<-c(results,list(sp))
@@ -6959,7 +6959,7 @@ f.create.events.splist<-function(splist,fulldata){
   }
   names(results)<-splist
   results
-  
+
 }
 f.print.graphs<-function(data){
   path="/Users/jorge/Analyses/TempTV/graphs2/"
@@ -6968,15 +6968,15 @@ for(i in 1:length(data)) {
   pdf(newp)
   qplot(Temperature,data=data[[i]],geom="histogram",binwidth=1,main=names(data)[i])
   ggsave(newp)
-}  
-  
+}
+
 }
 # funcion para asignar camaras faltantes que no tomaron fotos de animales.
 # SuName,startDate y endDate deben estar entre comillas. Los demas argumentos no.
 # startDate y endDate estan en format yyyy-mm-dd
 f.assign.missing<-function(SuName,SuPeriod,startDate,endDate,data){
   rows<-dim(data)[1]
-  
+
   #agregar Sampling Unit Name
   data[rows+1,3]<-SuName
   #agregar StartDate
@@ -6986,7 +6986,7 @@ f.assign.missing<-function(SuName,SuPeriod,startDate,endDate,data){
   #agregar sampling unit period
   data[rows+1,6]<-SuPeriod
   data
-  
+
 }
 
 f.minusBirds<-function(data){
@@ -7000,7 +7000,7 @@ f.minusBirds<-function(data){
 #   #if number of columns in the matrix is even
 #   if(!ncol(matrix)%%2){
 #     #figure out how many columns
-#     nc<-ncol(matrix)/2  
+#     nc<-ncol(matrix)/2
 #     #disagregate into individual matrices
 #     new.matrix<-matrix(NA,nr=nrow(matrix),nc=nc)
 #     old.cols<-seq(1,ncol(matrix),2)
@@ -7009,16 +7009,16 @@ f.minusBirds<-function(data){
 #       sum.rows<-apply(matrix[,old.cols[i]:(old.cols[i]+1)],1,sum,na.rm=T)
 #       #convert to 0s and 1s
 #       new.matrix[,i]<-ifelse(sum.rows>=1,1,0)
-#     }  
+#     }
 #     new.matrix
 #   }
 #   #if the number of columns is not even
 #   else{
-#     #store the first column in col1  
+#     #store the first column in col1
 #     col1<-matrix[,1]
 #     #convert the matrix to an even matrix
 #     matrix<-matrix[,-1]
-#     nc<-ncol(matrix)/2  
+#     nc<-ncol(matrix)/2
 #     #disagregate into individual matrices
 #     new.matrix<-matrix(NA,nr=nrow(matrix),nc=nc)
 #     old.cols<-seq(1,ncol(matrix),2)
@@ -7026,7 +7026,7 @@ f.minusBirds<-function(data){
 #       sum.rows<-apply(matrix[,old.cols[i]:(old.cols[i]+1)],1,sum,na.rm=T)
 #       new.matrix[,i]<-ifelse(sum.rows>=1,1,0)
 #     }
-#     cbind(col1,new.matrix)  
+#     cbind(col1,new.matrix)
 #   }
 # }
 
@@ -7057,7 +7057,7 @@ f.shrink.matrix.to15<-function(matrix){
     new.matrix<-matrix(NA,nr=nrow(matrix),nc=15)
     for(i in 1:14)
       new.matrix[,i]<-apply(matrix[,old.cols[i]:(old.cols[i]+newc-1)],1,max,na.rm=T)
-    new.matrix[,15]<-apply(matrix[,old.cols[15]:nc],1,max,na.rm=T) 
+    new.matrix[,15]<-apply(matrix[,old.cols[15]:nc],1,max,na.rm=T)
   }
   new.matrix[new.matrix=="-Inf"]<-NA
   rownames(new.matrix)<-rownames(matrix)
@@ -7067,18 +7067,18 @@ f.shrink.matrix.to15<-function(matrix){
 
 #does not work
 #f.shrink.matrix<-function(matrix){
-  
+
   #disagregate into individual matrices
-  #nc<-length(seq(1,ncol(matrix),9))  
+  #nc<-length(seq(1,ncol(matrix),9))
   #new.matrix<-matrix(NA,nr=nrow(matrix),nc=nc)
-  #rownames(new.matrix)<-rownames(matrix)  
+  #rownames(new.matrix)<-rownames(matrix)
   #old.cols<-seq(1,ncol(matrix),9)
   #for(i in 1:nc){
     #sum the rows for the column sections
   #  sum.rows<-apply(matrix[,old.cols[i]:(old.cols[i]+1)],1,sum)
     #convert to 0s and 1s
    # new.matrix[,i]<-ifelse(sum.rows>=1,1,0)
-  #}  
+  #}
   #new.matrix
 #}
 
@@ -7102,11 +7102,11 @@ f.plot.jag.res<-function(jags,species.name,model.name){
   lines(2009:2012,naive.occ,col='red')
   #lines(2007:2011,med.occ,lwd=3)
   title(paste(species.name,"\n",model.name))
-  
+
   #graph lambda
   lambdaCol<-which(rownames(mat)=="lambda[1]")
   m.lambda<-mat[lambdaCol:(lambdaCol+2),1]
-  
+
   lo95ci<-mat[lambdaCol:(lambdaCol+2),3]
   hi95ci<-mat[lambdaCol:(lambdaCol+2),7]
   plot(1:3,m.lambda,ylim=range(lo95ci,hi95ci),type='b',xlab="year interval",ylab="lambda")
@@ -7118,19 +7118,19 @@ f.plot.jag.res<-function(jags,species.name,model.name){
 
 # the function returns a reduced matrix collapsed using nday; if necessary, an X number of columns filled with NA are added
 # to adjust the size of the shrinked matrix; be careful that nday makes sense for the size of the matrix, so that
-# not many columns of NA are added 
+# not many columns of NA are added
 
 shrink<-function(matrice,nday){
   dy<-nday
-  while (dy < ncol(matrice)) {dy <- dy + nday}  
+  while (dy < ncol(matrice)) {dy <- dy + nday}
   addcol<-dy-ncol(matrice)
-  if (addcol!=0) { 
+  if (addcol!=0) {
     matNA<-matrix(NA,nrow=nrow(matrice),ncol=addcol)
-    matrice<-data.frame(matrice,matNA)}    
-  
+    matrice<-data.frame(matrice,matNA)}
+
   period<-ncol(matrice)/nday
   newday<-rep(1:period, each = nday)
-  
+
   shr<-function (vec) {
     nav<-is.na(vec)
     dom<-all(nav==T)
@@ -7141,11 +7141,11 @@ shrink<-function(matrice,nday){
     }
     return(y)
   }
-  
+
   matday<-data.frame(newday,t(matrice))
   shrmat<-t(aggregate(matday[,-1],list(matday$newday),shr))
-  
-  return (shrmat[-1,]) 
+
+  return (shrmat[-1,])
 }
 
 #put together the pres/absence matrices for multiple years for a particular species
@@ -7166,7 +7166,7 @@ f.multyear.sp<-function(LIST,spn){
 f.mode<-function(data,na.rm=T){
   qwe<-density(data,na.rm=T)
   qwe$x[which(qwe$y==max(qwe$y))]
-  
+
 }
 
 #function to generate the WPI from the output simulations in JAGS
@@ -7187,7 +7187,7 @@ f.WPI <-function(psi){
   }
   colnames(wpi)<-dimnames(psi)[[2]]
   wpi
-  
+
 }
 #function to generate the WPI from the output simulations in JAGS
 # psi is a three dimensional matrix with the psi of each species in each year
@@ -7208,7 +7208,7 @@ f.WPI2 <-function(psi){
   }
   colnames(wpi)<-dimnames(psi)[[2]]
   wpi
-  
+
 }
 #graph the WPI through time with 95% confidence limits
 #WPI is a matrix of n x t values (n = number of runs, t=number of years)
@@ -7225,17 +7225,17 @@ graph.WPI <- function(wpi,fun=mean,title){
   conf75<-apply(wpi,2,quantile,c(0.125,1-0.125),na.rm=T)
   res<-data.frame(year=year,ct=ct,lo50=lo50,hi50=hi50,lo75=conf75[1,],hi75=conf75[2,])
   #res<-melt(res,id.vars=c('year'))
-  
+
   p<-ggplot(data=res, aes(x=year))
   p<-p+geom_line(aes(y=ct),size=2)
   p<-p+geom_ribbon(aes(ymin=lo50,ymax=hi50),alpha=0.2)+geom_ribbon(aes(ymin=lo75,ymax=hi75),alpha=0.1)+xlab("Year")+ylab("Wildlife Picture Index")+labs(title="")+geom_hline(yintercept=1,size=0.5,linetype=2) +labs(title=title)+ylim(0,10)
   p
-  
+
   #ggsave("SpeciesRichness.pdf",p,width=15,height=8,units="cm")
 }
 
 graph.psi <- function(psi,initial,fun=mean,title="",low=0.025,high=0.975,path=""){
-  
+
   require(ggplot2)
   year<-as.numeric(colnames(psi))
   FUN<-match.fun(fun)
@@ -7246,17 +7246,17 @@ graph.psi <- function(psi,initial,fun=mean,title="",low=0.025,high=0.975,path=""
   #naive<-apply(initial,2,function(x) sum(x,na.rm=T)/sum(!is.na(x)))
   res<-data.frame(year=year,ct=ct,lo=lo,hi=hi,naive=naive)
   #res<-melt(res,id.vars=c('year'))
-  
+
   p<-ggplot(data=res, aes(x=year))
   p<-p+geom_line(aes(y=ct),size=2)+geom_point(aes(y=naive),size=3)
   p<-p+geom_ribbon(aes(ymin=lo,ymax=hi),alpha=0.2)+xlab("Year")+ylab("Occupancy")+ labs(title="")+ ylim(0,1)+labs(title=title)
   #p
-  
+
   ggsave(paste(path,"/Occ_",title,".pdf",sep=""),p,width=15,height=8,units="cm")
 }
 
 graph.psi2 <- function(psifit,title){
-  
+
   require(ggplot2)
   #year<-as.numeric(colnames(psi))
   #FUN<-match.fun(fun)
@@ -7266,12 +7266,12 @@ graph.psi2 <- function(psifit,title){
   #naive<-apply(initial,2,function(x) sum(x,na.rm=T)/sum(!is.na(x)))
   #res<-data.frame(year=year,ct=ct,lo=lo,hi=hi,naive=naive)
   #res<-melt(res,id.vars=c('year'))
-  
+
   p<-ggplot(data=psifit, aes(x=year))
   p<-p+geom_line(aes(y=ct),size=2)+geom_point(aes(y=naive),size=3)
   p<-p+geom_ribbon(aes(ymin=lo,ymax=hi),alpha=0.2)+xlab("Year")+ylab("Occupancy")+ labs(title="")+ ylim(0,1)+labs(title=title)
   p
-  
+
   #ggsave(paste("Occ_",title,".pdf",sep=""),p,width=15,height=8,units="cm")
 }
 #function to check for posterior predictive checks
@@ -7282,7 +7282,7 @@ f.ppc<-function(model){
   plot(fit,fit.new)
   abline(0,1)
   return(mean(fit.new>fit))
-  
+
 }
 f.calc.psi<-function(psi,initial,fun=mean){
   year<-as.numeric(colnames(psi))
@@ -7292,7 +7292,7 @@ f.calc.psi<-function(psi,initial,fun=mean){
   hi<-apply(psi,2,quantile,0.975)
   naive<-apply(initial,2,function(x) sum(x,na.rm=T)/sum(!is.na(x)))
   data.frame(year=year,ct=ct,lo=lo,hi=hi,naive=naive)
-  
+
 }
 
 f.load.fitted<-function(path){
@@ -7310,21 +7310,21 @@ f.calc.lambda<-function(wpi){
   mean<-apply(lambda,2,mean)
   conf<-apply(lambda,2,quantile,c(0.025,0.975))
   data.frame(year=dimnames(wpi)[[2]][2:years],mean.lambda=mean,lo95=conf[1,],hi95=conf[2,])
-  
+
 }
 
 extractSpeciesObsOcc <-function(list){
 #Extract species observed occupancy from a list that has nyear elements
-  #each element is contanins nsp matrices (ncameras x 15) with presence/absence data at different #camera traps 
+  #each element is contanins nsp matrices (ncameras x 15) with presence/absence data at different #camera traps
 years<-names(list)
-sp.names<-names(list[[1]])  
-n.years<-length(years)  
+sp.names<-names(list[[1]])
+n.years<-length(years)
 n.sp<-length(sp.names)
 
 results.matrix<-matrix(NA,nr=n.sp,nc=n.years)
 for (i in 1:n.years){
   results.matrix[ ,i] <- as.numeric(lapply(list[[i]], calculateObsOcc))
-  
+
 }
 colnames(results.matrix) <- years
 rownames(results.matrix) <- sp.names
@@ -7337,49 +7337,49 @@ calculateObsOcc<-function(matrix){
   pres.abs[is.infinite(pres.abs)] <- NA
   n.cam<-sum(!is.na(pres.abs))
   sum(pres.abs, na.rm=T)/n.cam
-  
+
 }
 extractSpeciesDetections <-function(list){
   #Extract species detections from a list that has nyear elements
-  #each element is contanins nsp matrices (ncameras x 15) with presence/absence data at different #camera traps 
+  #each element is contanins nsp matrices (ncameras x 15) with presence/absence data at different #camera traps
   years<-names(list)
-  sp.names<-names(list[[1]])  
-  n.years<-length(years)  
+  sp.names<-names(list[[1]])
+  n.years<-length(years)
   n.sp<-length(sp.names)
-  
+
   results.matrix<-matrix(NA,nr=n.sp,nc=n.years)
   for (i in 1:n.years){
     results.matrix[ ,i] <- as.numeric(lapply(list[[i]], calculateObsDet))
-    
+
   }
   colnames(results.matrix) <- years
   rownames(results.matrix) <- sp.names
   results.matrix
-  
+
 }
 calculateObsDet<-function(matrix){
   pres.abs<-apply(matrix,1,max,na.rm=T)
   pres.abs[is.infinite(pres.abs)] <- NA
   sum(pres.abs, na.rm=T)
-  
+
 }
 extractNumCameraTraps <-function(list){
   #Extract number of camera traps used from a list that has nyear elements
-  #each element is contanins nsp matrices (ncameras x 15) with presence/absence data at different #camera traps 
+  #each element is contanins nsp matrices (ncameras x 15) with presence/absence data at different #camera traps
   years<-names(list)
-  sp.names<-names(list[[1]])  
-  n.years<-length(years)  
+  sp.names<-names(list[[1]])
+  n.years<-length(years)
   n.sp<-length(sp.names)
-  
+
   results.matrix<-matrix(NA,nr=n.sp,nc=n.years)
   for (i in 1:n.years){
     results.matrix[ ,i] <- as.numeric(lapply(list[[i]], calculateNumCameraTraps))
-    
+
   }
   colnames(results.matrix) <- years
   rownames(results.matrix) <- sp.names
   results.matrix
-  
+
 }
 calculateNumCameraTraps<-function(matrix){
   pres.abs<-apply(matrix,1,max,na.rm=T)
@@ -7399,7 +7399,7 @@ calculateWPIDiagnostics <- function(site.name){
     overall.occ=numeric(),
     diff.obs.mode=numeric(),
     diff.obs.median=numeric(),
-    stringsAsFactors=F)     
+    stringsAsFactors=F)
 #for(j in 1:length(site.names)){
   path<-as.character(site.name)
   dir.create(path)
@@ -7411,7 +7411,7 @@ calculateWPIDiagnostics <- function(site.name){
   #create raw occupancy matrices
   mat<-list()
   for(i in 1:nyears)
-    mat[[i]]<-f.matrix.creator2(s.data,year[i])  
+    mat[[i]]<-f.matrix.creator2(s.data,year[i])
   names(mat)<-year
   #Compress the matrices
   shmat<-list()
@@ -7422,21 +7422,21 @@ calculateWPIDiagnostics <- function(site.name){
   obs.occ.matrix<-extractSpeciesObsOcc(shmat)
   obs.det.matrix<-extractSpeciesDetections(shmat)
   obs.cams.matrix<-extractNumCameraTraps(shmat)
-  
+
   #Extract a site and species and graph the results
   s.wpi<-subset(wpi,site_name==site.name,drop=T)
   #do it for one species
-  
+
   s.sp.list<-unique(s.wpi$bin)
 
 indx <- which(s.sp.list %in% rownames(obs.occ.matrix))
-s.sp.list <- s.sp.list[indx] 
-  
-  
+s.sp.list <- s.sp.list[indx]
+
+
   for(i in 1:length(s.sp.list)){
     #i <- 1
     #j <- 5
-    
+
     sp<-subset(x=s.wpi,bin==s.sp.list[i],drop=T)
     #turn into a matrix so I can graph it
     sp <- acast(sp, iteration~year, value.var="psi")
@@ -7469,19 +7469,19 @@ s.sp.list <- s.sp.list[indx]
               obs.all.occ,
               mean.diff.obs.mode,
               mean.diff.obs.median)
-    results[nrow(results)+1, ] <- temp                      
-    
+    results[nrow(results)+1, ] <- temp
+
     graph.psi(title=paste(s.sp.list[i],"_",site.name),psi=sp,initial=obs.occ.matrix[s.sp.list[i],],fun=median,low=0.1,hi=0.9,path=path)
     print(paste("Done with species ",s.sp.list[i]))
   }
 results
 }#' Change Direction Image for CVAPS
 #'
-#' This code calculate the change direction image for the Change Vector 
-#' Analysis in Posterior Probability Space (CVAPS) method of Chen et al. 2011.  
-#' Use the change direction image in conjunction with the change magnitude 
-#' image from \code{chg_dir}, and \code{DFPS} to use the Double Window Flexible 
-#' Pace Search method (Chen et al. 2003) to determine the threshold to use to 
+#' This code calculate the change direction image for the Change Vector
+#' Analysis in Posterior Probability Space (CVAPS) method of Chen et al. 2011.
+#' Use the change direction image in conjunction with the change magnitude
+#' image from \code{chg_dir}, and \code{DFPS} to use the Double Window Flexible
+#' Pace Search method (Chen et al. 2003) to determine the threshold to use to
 #' map areas of change and no-change.
 #'
 #' @export
@@ -7491,7 +7491,7 @@ results
 #' @param t2p time 1 posterior probability \code{Raster*}
 #' @param filename (optional) filename for output change direction
 #' \code{RasterLayer}
-#' @param overwrite whether to overwrite existing files (otherwise an error 
+#' @param overwrite whether to overwrite existing files (otherwise an error
 #' will be raised)
 #' @param verbose whether to print detailed status messages
 #' @param ... additional parameters to pass to rasterEngine
@@ -7499,9 +7499,9 @@ results
 #' @references Chen, J., P. Gong, C. He, R. Pu, and P. Shi. 2003.
 #' Land-use/land-cover change detection using improved change-vector analysis.
 #' Photogrammetric Engineering and Remote Sensing 69:369-380.
-#' 
-#' Chen, J., X. Chen, X. Cui, and J. Chen. 2011. Change vector analysis in 
-#' posterior probability space: a new method for land cover change detection.  
+#'
+#' Chen, J., X. Chen, X. Cui, and J. Chen. 2011. Change vector analysis in
+#' posterior probability space: a new method for land cover change detection.
 #' IEEE Geoscience and Remote Sensing Letters 8:317-321.
 #' @examples
 #' \dontrun{
@@ -7542,23 +7542,23 @@ chg_dir <- function(t1p, t2p, filename, overwrite=FALSE, verbose=FALSE, ...) {
     #     chgdir <- array(chgdir, dim=c(dim(t1p)[1], dim(t1p)[2], 1))
     #     return(chgdir)
     # }
-    # out <- rasterEngine(t1p=t1p, t2p=t2p, fun=calc_chg_dir_st, 
-    #                     args=list(n_classes=n_classes), 
+    # out <- rasterEngine(t1p=t1p, t2p=t2p, fun=calc_chg_dir_st,
+    #                     args=list(n_classes=n_classes),
     #                     outbands=1, datatype='INT2S', ...)
     #
-    # # spatial.tools can only output the raster package grid format - so output 
-    # # to a tempfile in that format then copy over to the requested final output 
+    # # spatial.tools can only output the raster package grid format - so output
+    # # to a tempfile in that format then copy over to the requested final output
     # # format if a filename was supplied
     # if (!missing(filename)) {
-    #     out <- writeRaster(out, filename=filename, dataType='INT2S', 
+    #     out <- writeRaster(out, filename=filename, dataType='INT2S',
     #                        overwrite=overwrite)
     # }
-    
+
     if (missing(filename)) {
         filename <- rasterTmpFile()
         overwrite <- TRUE
     }
-   
+
     bs <- blockSize(t1p)
     out <- raster(t1p)
     out <- writeStart(out, filename=filename, overwrite=overwrite)
@@ -7567,10 +7567,10 @@ chg_dir <- function(t1p, t2p, filename, overwrite=FALSE, verbose=FALSE, ...) {
             message("Processing block ", block_num, " of ", bs$n, "...")
         }
         dims <- c(bs$nrows[block_num], ncol(t1p), nlayers(t1p))
-        t1p_bl <- array(getValuesBlock(t1p, row=bs$row[block_num], 
+        t1p_bl <- array(getValuesBlock(t1p, row=bs$row[block_num],
                                  nrows=bs$nrows[block_num]),
                         dim=c(dims[1] * dims[2], dims[3]))
-        t2p_bl <- array(getValuesBlock(t2p, row=bs$row[block_num], 
+        t2p_bl <- array(getValuesBlock(t2p, row=bs$row[block_num],
                                        nrows=bs$nrows[block_num]),
                         dim=c(dims[1] * dims[2], dims[3]))
         chg_dirs <- calc_chg_dir(t1p_bl, t2p_bl)
@@ -7582,15 +7582,15 @@ chg_dir <- function(t1p, t2p, filename, overwrite=FALSE, verbose=FALSE, ...) {
 }
 #' Change Magnitude Image for CVAPS
 #'
-#' This code calculate the change magnitude image for the Change Vector 
-#' Analysis in Posterior Probability Space (CVAPS) method of Chen et al. 2011.  
-#' Use the change magnitude image and use it in conjunction with the change 
-#' direction image from \code{chg_dir} to map areas of change and no-change.  
-#' The threshold can be determined using \code{\link{DFPS}} (to use the Double 
-#' Window Flexible Pace Search method, from Chen et al. 2003) or 
+#' This code calculate the change magnitude image for the Change Vector
+#' Analysis in Posterior Probability Space (CVAPS) method of Chen et al. 2011.
+#' Use the change magnitude image and use it in conjunction with the change
+#' direction image from \code{chg_dir} to map areas of change and no-change.
+#' The threshold can be determined using \code{\link{DFPS}} (to use the Double
+#' Window Flexible Pace Search method, from Chen et al. 2003) or
 #' \code{\link{threshold}} (which uses an unsupervised method).
 #'
-#' This function will run in parallel if a parallel backend is registered with 
+#' This function will run in parallel if a parallel backend is registered with
 #' \code{\link{foreach}}.
 #'
 #' @export
@@ -7599,16 +7599,16 @@ chg_dir <- function(t1p, t2p, filename, overwrite=FALSE, verbose=FALSE, ...) {
 #' @param t2p time 1 posterior probability \code{Raster*}
 #' @param filename (optional) filename for output change magnitude
 #' \code{RasterLayer}
-#' @param overwrite whether to overwrite existing files (otherwise an error 
+#' @param overwrite whether to overwrite existing files (otherwise an error
 #' will be raised)
 #' @param ... additional parameters to pass to rasterEngine
 #' @return \code{Raster*} object with change magnitude image
 #' @references Chen, J., P. Gong, C. He, R. Pu, and P. Shi. 2003.
 #' Land-use/land-cover change detection using improved change-vector analysis.
 #' Photogrammetric Engineering and Remote Sensing 69:369-380.
-#' 
-#' Chen, J., X. Chen, X. Cui, and J. Chen. 2011. Change vector analysis in 
-#' posterior probability space: a new method for land cover change detection.  
+#'
+#' Chen, J., X. Chen, X. Cui, and J. Chen. 2011. Change vector analysis in
+#' posterior probability space: a new method for land cover change detection.
 #' IEEE Geoscience and Remote Sensing Letters 8:317-321.
 #' @examples
 #' \dontrun{
@@ -7647,12 +7647,12 @@ chg_mag <- function(t1p, t2p, filename, overwrite=FALSE, ...) {
         chgmag <- array(chgmag, dim=c(dim(t1p)[1], dim(t1p)[2], 1))
         return(chgmag)
     }
-    out <- rasterEngine(t1p=t1p, t2p=t2p, fun=calc_chg_mag, 
-                        args=list(n_classes=n_classes), 
+    out <- rasterEngine(t1p=t1p, t2p=t2p, fun=calc_chg_mag,
+                        args=list(n_classes=n_classes),
                         outbands=1, outfiles=1, ...)
-    
-    # spatial.tools can only output the raster package grid format - so output 
-    # to a tempfile in that format then copy over to the requested final output 
+
+    # spatial.tools can only output the raster package grid format - so output
+    # to a tempfile in that format then copy over to the requested final output
     # format if a filename was supplied
     if (!missing(filename)) {
         out <- writeRaster(out, filename=filename, overwrite=overwrite)
@@ -7662,11 +7662,11 @@ chg_mag <- function(t1p, t2p, filename, overwrite=FALSE, ...) {
 }
 #' Calculate change-trajectory lookup table
 #'
-#' This function will format a lookup table (lut) to allow coding change 
+#' This function will format a lookup table (lut) to allow coding change
 #' trajectories. Useful for use in conjunction with \code{\link{chg_traj}}.
 #'
 #' @export
-#' @param class_codes a list of integer codes used to code land use/cover 
+#' @param class_codes a list of integer codes used to code land use/cover
 #' classes
 #' @param class_names an (optional) list of class names as character vectors
 #' @examples
@@ -7680,10 +7680,10 @@ traj_lut <- function(class_codes, class_names=NULL) {
         lut$t0_name <- class_names[match(lut$t0_code, class_codes)]
         lut$t1_name <- class_names[match(lut$t1_code, class_codes)]
     }
-    # Code trajectories by summing t0 and t1 after multiplying t1 by the number 
+    # Code trajectories by summing t0 and t1 after multiplying t1 by the number
     # of classes.
     lut$Code <- lut$t0_code + lut$t1_code * length(class_codes)
-    # Exclude classes that are persistence - CVAPS doesn't directly code the 
+    # Exclude classes that are persistence - CVAPS doesn't directly code the
     # class for classes that persist
     lut <- lut[!(lut$t0_code == lut$t1_code), ]
     return(lut)
@@ -7691,32 +7691,32 @@ traj_lut <- function(class_codes, class_names=NULL) {
 
 #' Calculate change-trajectory image
 #'
-#' This function will calculate trajectories of land cover change using the 
-#' Change Vector Analysis in Posterior Probability Space (CVAPS) approach of 
-#' comparing posterior probabilities of class membership with an automatically 
-#' determined threshold. Areas of no change are coded as -1. A lookup table for 
+#' This function will calculate trajectories of land cover change using the
+#' Change Vector Analysis in Posterior Probability Space (CVAPS) approach of
+#' comparing posterior probabilities of class membership with an automatically
+#' determined threshold. Areas of no change are coded as -1. A lookup table for
 #' the codes output by \code{chg_traj} can be calculated with \code{traj_lut}.
 #'
-#' This function will run in parallel if a parallel backend is registered with 
+#' This function will run in parallel if a parallel backend is registered with
 #' \code{\link{foreach}}.
 #'
 #' @export
 #' @importFrom spatial.tools rasterEngine
 #' @param chg_mag change magnitude \code{RasterLayer} from \code{CVAPS}
 #' @param chg_dir change direction \code{RasterLayer} from \code{CVAPS}
-#' @param chg_threshold the threshold to use as a minimum when determining change 
+#' @param chg_threshold the threshold to use as a minimum when determining change
 #' areas (can use \code{DFPS} to determine this value).
-#' @param filename filename to save the output \code{RasterLayer} to disk 
+#' @param filename filename to save the output \code{RasterLayer} to disk
 #' (optional)
-#' @param overwrite whether to overwrite existing files (otherwise an error 
+#' @param overwrite whether to overwrite existing files (otherwise an error
 #' will be raised)
 #' @param ... additional parameters to pass to rasterEngine
-#' @return a {RasterLayer} of change trajectories, with change trajectories 
+#' @return a {RasterLayer} of change trajectories, with change trajectories
 #' coded as in the \code{lut} output by \code{traj_lut}
 #' @references Chen, J., P. Gong, C.  He, R.  Pu, and P.  Shi.  2003.
 #' Land-use/land-cover change detection using improved change-vector analysis.
 #' Photogrammetric Engineering and Remote Sensing 69:369-380.
-#' 
+#'
 #' Chen, J., X. Chen, X. Cui, and J. Chen. 2011. Change vector analysis in
 #' posterior probability space: a new method for land cover change detection.
 #' IEEE Geoscience and Remote Sensing Letters 8:317-321.
@@ -7730,17 +7730,17 @@ traj_lut <- function(class_codes, class_names=NULL) {
 #' t1_preds <- classify(L5TSR_2001, t1_model)
 #' t0_t1_chgmag <- chg_mag(t0_preds$probs, t1_preds$probs)
 #' t0_t1_chgdir <- chg_dir(t0_preds$probs, t1_preds$probs)
-#' 
+#'
 #' lut <- traj_lut(t0_preds$codes$code, t0_preds$codes$class)
 #' t0_t1_chgtraj <- chg_traj(lut, t0_t1_chgmag, t0_t1_chgdir, .5)
-#' 
+#'
 #' # Change areas are coded following the above lookup-table (lut):
 #' plot(t0_t1_chgtraj)
-#' 
+#'
 #' # No change areas are -1:
 #' plot(t0_t1_chgtraj == -1)
 #' }
-chg_traj <- function(chg_mag, chg_dir, chg_threshold, filename, 
+chg_traj <- function(chg_mag, chg_dir, chg_threshold, filename,
                      overwrite=FALSE, ...) {
     if (nlayers(chg_mag) > 1) stop('chg_mag has more than 1 layer')
     if (nlayers(chg_dir) > 1) stop('chg_dir has more than 1 layer')
@@ -7750,7 +7750,7 @@ chg_traj <- function(chg_mag, chg_dir, chg_threshold, filename,
     }
 
     calc_chg_traj <- function(chg_mag, chg_dir, chg_threshold, ...) {
-        # Trajectories in chg_dir were coded by summing t0 and t1 classes after 
+        # Trajectories in chg_dir were coded by summing t0 and t1 classes after
         # multiplying t1 class by the number of classes
         chg_dir[chg_mag < chg_threshold] <- -1
         chg_dir[is.na(chg_dir)] <- -2
@@ -7761,15 +7761,15 @@ chg_traj <- function(chg_mag, chg_dir, chg_threshold, filename,
                         args=list(chg_threshold=chg_threshold),
                         datatype='INT2S', ...)
 
-    # spatial.tools doesn't properly handle NA values for integer layers, so 
+    # spatial.tools doesn't properly handle NA values for integer layers, so
     # they were coded as -2 above - now recode them as NA
     out[out == -2] <- NA
 
-    # spatial.tools can only output the raster package grid format - so output 
-    # to a tempfile in that format then copy over to the requested final output 
+    # spatial.tools can only output the raster package grid format - so output
+    # to a tempfile in that format then copy over to the requested final output
     # format if a filename was supplied
     if (!missing(filename)) {
-        out <- writeRaster(out, filename=filename, overwrite=overwrite, 
+        out <- writeRaster(out, filename=filename, overwrite=overwrite,
                            datatype='INT2S')
     }
 
@@ -7778,8 +7778,8 @@ chg_traj <- function(chg_mag, chg_dir, chg_threshold, filename,
 #' Calculate change-trajectory statistics
 #'
 #' @export
-#' @param traj a list (as output by \code{chg_traj} with two elements: traj_lut 
-#' (a lookup table of change trajectory codes) and chg_traj (a 
+#' @param traj a list (as output by \code{chg_traj} with two elements: traj_lut
+#' (a lookup table of change trajectory codes) and chg_traj (a
 #' \code{RasterLayer} of change trajectory codes.
 #' @return a \code{data.frame} object with change trajectory statistics
 #' @examples
@@ -7787,7 +7787,7 @@ chg_traj <- function(chg_mag, chg_dir, chg_threshold, filename,
 chg_traj_stats <- function(traj) {
     chg_table <- table(getValues(traj$chg_traj))
     summ_table <- data.frame(Traj_Code=traj$traj_lut$Code,
-                             Trajectory=paste(traj$traj_lut$t0_name, traj$traj_lut$t1_name, 
+                             Trajectory=paste(traj$traj_lut$t0_name, traj$traj_lut$t1_name,
                                               sep='-'))
     summ_table <- cbind(summ_table, n_pixels=chg_table[match(row.names(chg_table), summ_table$Traj_Code)])
     row.names(summ_table) <- NULL
@@ -7797,40 +7797,40 @@ chg_traj_stats <- function(traj) {
 }
 #' Classify an image using a trained classifier
 #'
-#' This function will produce two outputs - a prediction image and a 
-#' probability image. The prediction image contains the predicted classes, the 
-#' and the probability image contains the per-pixel predicted probabilities of 
+#' This function will produce two outputs - a prediction image and a
+#' probability image. The prediction image contains the predicted classes, the
+#' and the probability image contains the per-pixel predicted probabilities of
 #' occurrence of each class.
 #'
-#' This function will run in parallel if a parallel backend is registered with 
+#' This function will run in parallel if a parallel backend is registered with
 #' \code{\link{foreach}} - TEMPORARILY DISABLED.
 #'
 #' @export
 #' @import caret
 #' @importFrom spatial.tools rasterEngine
-#' @param x a \code{Raster*} image with the predictor layer(s) for the 
+#' @param x a \code{Raster*} image with the predictor layer(s) for the
 #' classification
-#' @param model a trained classifier as output by 
+#' @param model a trained classifier as output by
 #' \code{\link{train_classifier}}
 #' @param classes_file filename for predicted classes (or missing)
 #' @param prob_file filename for predicted probabilities (or missing)
-#' @param factors a list of character vector giving the names of predictors 
-#' (layer names from the images used to build \code{train_data}) that should be 
-#' treated as factors, and specifying the levels of each factor. For example, 
+#' @param factors a list of character vector giving the names of predictors
+#' (layer names from the images used to build \code{train_data}) that should be
+#' treated as factors, and specifying the levels of each factor. For example,
 #' \code{factors=list(year=c(1990, 1995, 2000, 2005, 2010))}.
 #' @param overwrite whether to overwrite \code{out_name} if it already exists
-#' @return a list with 2 elements: the predicted classes as a 
+#' @return a list with 2 elements: the predicted classes as a
 #' \code{RasterLayer} and the class probabilities as a \code{RasterBrick}
 #' @examples
 #' \dontrun{
-#' train_data <- get_pixels(L5TSR_1986, L5TSR_1986_2001_training, "class_1986", 
+#' train_data <- get_pixels(L5TSR_1986, L5TSR_1986_2001_training, "class_1986",
 #'                          training=.6)
 #' model <- train_classifier(train_data)
 #' preds <- classify(L5TSR_1986, model)
 #' plot(preds$classes)
 #' plot(preds$probs)
 #' }
-classify <- function(x, model, classes_file, prob_file, factors=list(), 
+classify <- function(x, model, classes_file, prob_file, factors=list(),
                      overwrite=FALSE) {
     # TODO: Check with Jonathan why below fix is needed
     if (!("RasterBrick" %in% class(x))) x <- brick(x)
@@ -7852,13 +7852,13 @@ classify <- function(x, model, classes_file, prob_file, factors=list(),
         inrast_df <- as.data.frame(inrast_mat)
         names(inrast_df) <- band_names
 
-        # Make sure any factor variables are converted to factors and that the 
+        # Make sure any factor variables are converted to factors and that the
         # proper levels are assigned
         if (length(factors) > 0) {
             for (n in 1:length(factors)) {
                 factor_var <- names(factors)[n]
                 factor_col <- which(names(inrast_df) == factor_var)
-                inrast_df[, factor_col] <- factor(inrast_df[, factor_col], 
+                inrast_df[, factor_col] <- factor(inrast_df[, factor_col],
                                                   levels=factors[[n]])
             }
         }
@@ -7870,20 +7870,20 @@ classify <- function(x, model, classes_file, prob_file, factors=list(),
             preds[which(good_obs), ] <- as.matrix(good_preds)
         }
 
-        preds_array <- array(preds, dim=c(dim(inrast)[1], dim(inrast)[2], 
+        preds_array <- array(preds, dim=c(dim(inrast)[1], dim(inrast)[2],
                                           nlevels(model)))
         return(preds_array)
     }
     probs <- rasterEngine(inrast=x, fun=make_preds,
                           args=list(model=model, factors=factors),
-                          filename=rasterTmpFile(), overwrite=overwrite, 
+                          filename=rasterTmpFile(), overwrite=overwrite,
                           datatype="FLT4S", .packages=c("randomForest"),
                           setMinMax=TRUE)
-    # spatial.tools can only output the raster package grid format - so output 
-    # to a tempfile in that format then copy over to the requested final output 
+    # spatial.tools can only output the raster package grid format - so output
+    # to a tempfile in that format then copy over to the requested final output
     # format if a filename was supplied
     if (!missing(prob_file)) {
-        probs <- writeRaster(probs, filename=prob_file, overwrite=overwrite, 
+        probs <- writeRaster(probs, filename=prob_file, overwrite=overwrite,
                              datatype='FLT4S')
     }
     names(probs) <- levels(model)
@@ -7908,11 +7908,11 @@ classify <- function(x, model, classes_file, prob_file, factors=list(),
 #' @export
 #' @importFrom dplyr group_by summarize
 #' @importFrom reshape2 melt
-#' @param x A \code{RasterLayer} from which class statistics will be 
+#' @param x A \code{RasterLayer} from which class statistics will be
 #' calculated.
-#' @param y A \code{SpatialPolygonsDataFrame} with cover class 
+#' @param y A \code{SpatialPolygonsDataFrame} with cover class
 #' polygons
-#' @param class_col the name of the column containing the response variable 
+#' @param class_col the name of the column containing the response variable
 #' (for example the land cover type of each pixel)
 #' @return A data.frame of class statistics.
 #' @examples
@@ -7923,21 +7923,21 @@ class_statistics <- function(x, y, class_col) {
     }
     if (class(y) == "SpatialPolygonsDataFrame") {
         pixels <- get_pixels(x, y, class_col)
-    } else if (class(y) %in% c("RasterLayer", "RasterBrick", 
+    } else if (class(y) %in% c("RasterLayer", "RasterBrick",
                                          "RasterStack")) {
         stop('class_statistics cannot yet handle Raster* objects')
     }
     pixels <- melt(data.frame(pixels@x, y=pixels@y), idvar='y')
     # Set y and variable to NULL to pass R CMD CHECK without notes
     value=variable=NULL
-    class_stats <- summarize(group_by(pixels, y, variable), mean=mean(value), 
-                             sd=sd(value), min=min(value), max=max(value), 
+    class_stats <- summarize(group_by(pixels, y, variable), mean=mean(value),
+                             sd=sd(value), min=min(value), max=max(value),
                              n_pixels=length(value))
     class_stats <- class_stats[order(class_stats$variable, class_stats$y), ]
     return(class_stats)
 }
 ###############################################################################
-# This code is used to clean the TEAM trees dataset for processing. This 
+# This code is used to clean the TEAM trees dataset for processing. This
 # combines the QA/QC checks from both Lydia Beaudrot and Alex Zvoleff.
 #
 # Use this script on a recent download from the team vegetation database.
@@ -7949,7 +7949,7 @@ library(dplyr)
 library(stringr)
 library(lubridate)
 
-# Uncomment below to 
+# Uncomment below to
 #veg_data <- f.teamdb.query('vegetation')
 
 dir(".", pattern="veg_data")
@@ -7957,22 +7957,22 @@ load('H:/Data/TEAM_Database_Downloads/veg_data2014-09-11.gzip')
 
 trees <- result$tree
 sitecode_key <- read.csv("sitecode_key.csv")
-trees$sitecode <- sitecode_key$sitecode[match(trees$SiteName, 
+trees$sitecode <- sitecode_key$sitecode[match(trees$SiteName,
                                               sitecode_key$sitename_database)]
 trees$ObservationDate <- as.Date(trees$ObservationDate)
 
 trees <- tbl_df(trees)
 
 ###############################################################################
-# Some sites (mainly BCI) incorrectly use zeros instead of NAs when NewDiameter 
-# does not apply.  
+# Some sites (mainly BCI) incorrectly use zeros instead of NAs when NewDiameter
+# does not apply.
 trees$Diameter[trees$Diameter == 0] <- NA
 trees$POMHeight[trees$POMHeight == 0] <- NA
 trees$NewDiameter[trees$NewDiameter == 0] <- NA
 trees$NewPOMHeight[trees$NewPOMHeight == 0] <- NA
 
 ###############################################################################
-# Add an identifier to stems to code the sampling period number on a per site 
+# Add an identifier to stems to code the sampling period number on a per site
 # basis, with 1 assigned to the first sampling period in each site
 SamplingPeriods <- summarize(group_by(trees, sitecode, SamplingPeriod))
 SamplingPeriods <- SamplingPeriods[order(SamplingPeriods$sitecode, SamplingPeriods$SamplingPeriod), ]
@@ -7996,7 +7996,7 @@ table(grepl('[.,]$', trees$ConditionCodes))
 table(grepl('^[.,]', trees$ConditionCodes))
 
 # Add condition code columns, one column per code
-ConditionCodes <- c('B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
+ConditionCodes <- c('B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                     'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W')
 for (ConditionCode in ConditionCodes) {
     this_code <- unlist(lapply(trees$ConditionCodes, function(x) ConditionCode %in% x))
@@ -8005,8 +8005,8 @@ for (ConditionCode in ConditionCodes) {
 }
 
 ###############################################################################
-# There are multiple observations per sampling period for the same tree. This 
-# should not occur except in case of remeasurement or multiple stems. Multiple 
+# There are multiple observations per sampling period for the same tree. This
+# should not occur except in case of remeasurement or multiple stems. Multiple
 # stems however should have unique SamplingUnitName values.
 trees <- mutate(group_by(trees, sitecode, SamplingUnitName, SamplingPeriod),
                          n_obs=rep(length(Diameter), length(Diameter)),
@@ -8021,9 +8021,9 @@ table(trees$n_obs)
 table(trees[trees$n_obs > 1,]$sitecode, trees[trees$n_obs > 1,]$SamplingPeriod)
 
 ###############################################################################
-# Correct 999 used to code missing or dead trees in CSN per Jul 10 email from 
-# Jimmy. This value codes missing or dead trees. Code as NA so these are 
-# dropped from growth calculations. TODO: Need to recode these in the condition 
+# Correct 999 used to code missing or dead trees in CSN per Jul 10 email from
+# Jimmy. This value codes missing or dead trees. Code as NA so these are
+# dropped from growth calculations. TODO: Need to recode these in the condition
 # code column.
 trees[which((trees$sitecode == 'CSN') & (trees$Diameter == 999)), ]$Diameter <- NA
 
@@ -8046,7 +8046,7 @@ summ_stats <- summarize(group_by(trees, sitecode, SamplingPeriod),
                         newPOM_sd=sd(NewPOMHeight, na.rm=TRUE))
 
 ###############################################################################
-# Correct for NewDiameter issue. For now always take NewDiameter and/or 
+# Correct for NewDiameter issue. For now always take NewDiameter and/or
 # NewPOMHeight when available
 trees$Diameter <- ifelse(is.na(trees$NewDiameter), trees$Diameter, trees$NewDiameter)
 trees$POMHeight <- ifelse(is.na(trees$NewPOMHeight), trees$POMHeight, trees$NewPOMHeight)
@@ -8223,10 +8223,10 @@ trees <- filter(trees, Diameter >= 10)
 
 save(trees, file='trees_clean.RData')
 #' Very simple cloud detection for imagery with blue and thermal bands
-#' 
-#' @param x RasterBrick or RasterStack with reflectance and brightness temperature OR the mask of a previous run of \code{cloudMask} with \code{returnDiffLayer=TRUE}. 
+#'
+#' @param x RasterBrick or RasterStack with reflectance and brightness temperature OR the mask of a previous run of \code{cloudMask} with \code{returnDiffLayer=TRUE}.
 #' @param threshold cloud detection threshold. If not provided it will be guessed. Everything *above* this threshold will be considered a cloud pixel (unless it is removed by filtering afterwards).
-#' @param minCloudSize minimum number of cloud pixels in window1 
+#' @param minCloudSize minimum number of cloud pixels in window1
 #' @param windowSize1 odd number, rectangular moving window to remove clouds which arre too small (likely artefacts)
 #' @param windowSize2 odd number, rectangular buffer around cluster centers
 #' @param sanitize logical. Should small clouds (possibly false positives) be removed by filtering? If \code{TRUE} windowSize1 must be specified.
@@ -8238,23 +8238,23 @@ save(trees, file='trees_clean.RData')
 #' @param returnDiffLayer logical. If \code{TRUE}, the difference layer will be returned along with the cloudmask. This option allows to re-use the difference layer in cloudMask.
 #' @note Typically clouds are cold in the thermal region and have high reflectance in short wavelengths (blue). By differencing the two bands and thresholding a rough cloud mask can be obtained.
 #' More sophisticated approaches can be found elsewhere, e.g. \link[https://code.google.com/p/fmask/]{fmask}.
-#' 
+#'
 #' It can make sense to find a suitable threshold on a cropped version of the scene. Also make sure you make use of the \code{returnDiffLayer} argument to save yourself one processing step.
 #' Sanitizing and region growing can be seen as final polishing, i.e. as long as the pure cloud centers are not detected properly, you can turn those two arguments off if they take too long to calculate.
 #' Once your mask detects obvious cloud pixels properly re-enable sanitizing and regionGrowing for fine tuning if desired. Finally, once a suitable threshold is established re-run cloudMask on the whole scene with this threshold and go get a coffee.
 #' @export
-#' @examples 
+#' @examples
 #' \dontrun{
 #' ls <- stackMeta("path/to/MTL.txt")
-#' ls_cor <- radCor(ls, "path/to/MTL.txt") 
+#' ls_cor <- radCor(ls, "path/to/MTL.txt")
 #' ls_cmask <-cloudMask(ls_cor, returnDiffLayer = TRUE)
 #' }
 cloudMask <- function(x, threshold, minCloudSize, windowSize1 = 5, windowSize2 = 11, maskGrowing = TRUE, sanitize = TRUE, lowBand = "B1", tirBand = "B6", plot = TRUE, verbose = TRUE, returnDiffLayer = FALSE){
-	
+
 	## Set-up graphics device
 	op <- par(mfrow = c(2, 1 + sum(sanitize, maskGrowing)))
-	
-	## Calculate or re-reuse cloud difference layer	
+
+	## Calculate or re-reuse cloud difference layer
 	if("CDIFF" %in% names(x)) {
 		if(verbose) message("Re-using CDIFF layer from previous run.")
 		cdiff <- x[["CDIFF"]]
@@ -8262,7 +8262,7 @@ cloudMask <- function(x, threshold, minCloudSize, windowSize1 = 5, windowSize2 =
 		cdiff <- x[[lowBand]] - x[[tirBand]]
 		names(cdiff) <- "CDIFF"
 	}
-	
+
 	## Guess threshold
 	if(missing(threshold)) {
 		threshold <- quantile(cdiff@data@max:cdiff@data@min, 0.45)
@@ -8271,17 +8271,17 @@ cloudMask <- function(x, threshold, minCloudSize, windowSize1 = 5, windowSize2 =
 		}
 	}
 	if(threshold < cdiff@data@min | threshold > cdiff@data@max) warning("Threshold is not within the estimated data range", call. = FALSE)
-	
+
 	if(plot) plot(cdiff, main = "Cloud layer: blue - tir difference")
-	
+
 	## Thresholding
 	if(verbose) message("Begin thresholding")
 	cmask <- cdiff > threshold
 	cmask <- mask(cmask, cmask, maskvalue = 0)
-	
+
 	if(plot) plot(cmask, main = paste0("Cloud mask\nThreshold: ", threshold))
-	
-	
+
+
 	## Remove "clouds" smaller than minCloudSize
 	if(sanitize) {
 		if(verbose) message("Begin sanitzing")
@@ -8290,15 +8290,15 @@ cloudMask <- function(x, threshold, minCloudSize, windowSize1 = 5, windowSize2 =
 		if(minCloudSize >= windowSize^2) {
 			cmod <- focal(cmask, w, na.rm = FALSE)
 		} else {
-			cmod <- focal(cmask, w, na.rm = TRUE)	
-			cmod[cmod < minCloudSize] <- NA		
+			cmod <- focal(cmask, w, na.rm = TRUE)
+			cmod[cmod < minCloudSize] <- NA
 		}
 		cmod[cmod < minCloudSize] <- NA
 		cmod[!is.na(cmod)] <- 1L
 		if(plot) plot(cmod, main = "Sanitized cloud mask")
-		
+
 	}
-	
+
 	## Buffer cloud centers (we could also do a circular buffer, but for now this should suffice)
 	if(maskGrowing){
 		if(verbose) message("Begin region-growing")
@@ -8306,24 +8306,24 @@ cloudMask <- function(x, threshold, minCloudSize, windowSize1 = 5, windowSize2 =
 		cmod <- focal(cmod, w, na.rm = TRUE )
 		cmod[!is.na(cmod)] <- 1L
 		if(plot) plot(cmod, main = "Region-grown cloud mask")
-		
+
 	}
-	
+
 	if(plot){
 		plotRGB(x, 1, 2, 3, title = "Final mask", stretch = "lin")
 		plot(cmod,  legend = FALSE, add = T, col = "yellow")
 	}
-	
+
 	## Reset par
 	par(op)
-	
+
 	## Return
 	names(cmod) <- "CMASK"
 	if(returnDiffLayer) cmod <- stack(cmod, cdiff)
-	return(cmod)	
+	return(cmod)
 }# Function to test if ENVI will load in IDL
 check_ENVI_IDL <- function(idl) {
-    idl_out <- system(paste(shQuote(idl), '-e "e=ENVI(/HEADLESS)"'), 
+    idl_out <- system(paste(shQuote(idl), '-e "e=ENVI(/HEADLESS)"'),
                       intern=TRUE)
     if (sum(grepl("Restored file: ENVI", idl_out)) > 0) {
         return(TRUE)
@@ -8359,25 +8359,25 @@ format_IDL_param <- function(varname, varvalue) {
 
 #' @importFrom tools file_path_sans_ext
 cloud_remove_IDL <- function(cloudy, clear, cloud_mask, out_name,
-                             algorithm, num_class, min_pixel, max_pixel, 
-                             cloud_nbh, DN_min, DN_max, 
+                             algorithm, num_class, min_pixel, max_pixel,
+                             cloud_nbh, DN_min, DN_max,
                              verbose, idl, byblock, overwrite,
                              patch_long=1000) {
     if (verbose > 0) {
         warning("verbose not supported with CLOUD_REMOVE and CLOUD_REMOVE_FAST algorithms")
     }
     if (algorithm == 'CLOUD_REMOVE_FAST') {
-        script_path <- system.file("idl", "CLOUD_REMOVE_FAST.pro", 
+        script_path <- system.file("idl", "CLOUD_REMOVE_FAST.pro",
                                    package="teamlucc")
         function_name <- 'CLOUD_REMOVE_FAST'
     } else if (algorithm == 'CLOUD_REMOVE') {
-        script_path <- system.file("idl", "CLOUD_REMOVE.pro", 
+        script_path <- system.file("idl", "CLOUD_REMOVE.pro",
                                    package="teamlucc")
         function_name <- 'CLOUD_REMOVE'
     } else {
         stop(paste0('unrecognized cloud fill algorithm "', algorithm, '"'))
     }
-    
+
     if (!(file_test('-x', idl) || file_test('-f', idl))) {
         stop('IDL not found - check "idl" parameter')
     }
@@ -8390,38 +8390,38 @@ cloud_remove_IDL <- function(cloudy, clear, cloud_mask, out_name,
         patch_long <- max(dim(cloudy)) + 1
     }
 
-    # Save proj4string and extent to ensure the same proj4string and extent is 
+    # Save proj4string and extent to ensure the same proj4string and extent is
     # returned even if they are changed by IDL
     orig_proj <- proj4string(cloudy)
     orig_ext <- extent(cloudy)
 
-    # Write in-memory rasters to files for hand off to IDL. The capture.output 
-    # line is used to avoid printing the rasterOptions to screen as they are 
+    # Write in-memory rasters to files for hand off to IDL. The capture.output
+    # line is used to avoid printing the rasterOptions to screen as they are
     # temporarily reset.
     dummy <- capture.output(def_format <- rasterOptions()$format)
     rasterOptions(format='ENVI')
-    cloudy <- writeRaster(cloudy, rasterTmpFile(), 
+    cloudy <- writeRaster(cloudy, rasterTmpFile(),
                           datatype=dataType(cloudy)[1])
     clear <- writeRaster(clear, rasterTmpFile(), datatype=dataType(clear)[1])
-    cloud_mask <- writeRaster(cloud_mask, rasterTmpFile(), 
+    cloud_mask <- writeRaster(cloud_mask, rasterTmpFile(),
                               datatype=dataType(cloud_mask)[1])
     cloudy_file <- filename(cloudy)
     clear_file <- filename(clear)
     cloud_mask_file <- filename(cloud_mask)
     dummy <- capture.output(rasterOptions(format=def_format))
 
-    param_names <- c("cloudy_file", "clear_file", "mask_file", "out_name", 
-                     "num_class", "min_pixel", "extent1", "DN_min", "DN_max", 
+    param_names <- c("cloudy_file", "clear_file", "mask_file", "out_name",
+                     "num_class", "min_pixel", "extent1", "DN_min", "DN_max",
                      "patch_long")
-    param_vals <- list(cloudy_file, clear_file, cloud_mask_file, out_name, 
-                       num_class, min_pixel, cloud_nbh, DN_min, DN_max, 
+    param_vals <- list(cloudy_file, clear_file, cloud_mask_file, out_name,
+                       num_class, min_pixel, cloud_nbh, DN_min, DN_max,
                        patch_long)
     idl_params <- mapply(format_IDL_param, param_names, param_vals)
     idl_params <- paste(idl_params, collapse='')
 
     script_dir <- dirname(script_path)
     idl_script <- tempfile(fileext='.pro')
-    idl_cmd <- paste0('CD, "', script_dir, '"\n', idl_params, function_name, ',', 
+    idl_cmd <- paste0('CD, "', script_dir, '"\n', idl_params, function_name, ',',
                       paste(param_names, collapse=','), '\nexit')
 
     f <- file(idl_script, 'wt')
@@ -8433,7 +8433,7 @@ cloud_remove_IDL <- function(cloudy, clear, cloud_mask, out_name,
     log_file <- paste0(file_path_sans_ext(out_name), '_idllog.txt')
     idl_out <- gsub('\r', '', idl_out)
     f <- file(log_file, 'wt')
-    writeLines(idl_out, f) 
+    writeLines(idl_out, f)
     close(f)
 
     filled <- brick(out_name)
@@ -8443,43 +8443,43 @@ cloud_remove_IDL <- function(cloudy, clear, cloud_mask, out_name,
     # Ensure original proj4string and extent are saved and returned
     proj4string(filled) <- orig_proj
     extent(filled) <- orig_ext
-    filled <- writeRaster(filled, filename=out_name, overwrite=TRUE, 
+    filled <- writeRaster(filled, filename=out_name, overwrite=TRUE,
                           datatype=dataType(filled)[1])
     return(filled)
 }
 
-# Wrapper around C++ cloud fill function, to enable calling the function with 
+# Wrapper around C++ cloud fill function, to enable calling the function with
 # rasterEngine
 #' @import Rcpp
-cloud_fill_rasterengine <- function(cloudy, clear, cloud_mask, algorithm, 
-                                    num_class, min_pixel, max_pixel, cloud_nbh, 
+cloud_fill_rasterengine <- function(cloudy, clear, cloud_mask, algorithm,
+                                    num_class, min_pixel, max_pixel, cloud_nbh,
                                     DN_min, DN_max, verbose, ...) {
     dims=dim(cloudy)
-    # RcppArmadillo crashes when you pass it a cube, so resize and pass 
+    # RcppArmadillo crashes when you pass it a cube, so resize and pass
     # mats
     cloudy <- array(cloudy, dim=c(dims[1] * dims[2], dims[3]))
     clear <- array(clear, dim=c(dims[1] * dims[2], dims[3]))
     cloud_mask <- array(cloud_mask, dim=c(dims[1] * dims[2]))
-    filled <- call_cpp_cloud_fill(cloudy, clear, cloud_mask, algorithm, dims, 
-                                  num_class,  min_pixel, max_pixel, cloud_nbh, 
+    filled <- call_cpp_cloud_fill(cloudy, clear, cloud_mask, algorithm, dims,
+                                  num_class,  min_pixel, max_pixel, cloud_nbh,
                                   DN_min, DN_max, verbose)
-    # RcppArmadillo crashes when you return a cube, so resize the returned 
+    # RcppArmadillo crashes when you return a cube, so resize the returned
     # mat
     filled <- array(filled, dim=c(dims[1], dims[2], dims[3]))
     return(filled)
 }
 
-# This function decides which RcppArmadillo exported function to call: 
+# This function decides which RcppArmadillo exported function to call:
 # cloud_fill, or cloud_fill_simple
-call_cpp_cloud_fill <- function(cloudy, clear, cloud_mask, algorithm, dims, 
-                                num_class, min_pixel, max_pixel, cloud_nbh, 
+call_cpp_cloud_fill <- function(cloudy, clear, cloud_mask, algorithm, dims,
+                                num_class, min_pixel, max_pixel, cloud_nbh,
                                 DN_min, DN_max, verbose, ...) {
     if (algorithm == "teamlucc") {
-        filled <- cloud_fill(cloudy, clear, cloud_mask, dims, num_class, 
-                             min_pixel, max_pixel, cloud_nbh, DN_min, DN_max, 
+        filled <- cloud_fill(cloudy, clear, cloud_mask, dims, num_class,
+                             min_pixel, max_pixel, cloud_nbh, DN_min, DN_max,
                              verbose)
     } else if (algorithm == "simple") {
-        filled <- cloud_fill_simple(cloudy, clear, cloud_mask, dims, num_class, 
+        filled <- cloud_fill_simple(cloudy, clear, cloud_mask, dims, num_class,
                                     cloud_nbh, DN_min, DN_max, verbose)
     } else {
         stop(paste0('unrecognized cloud fill algorithm "', algorithm, '"'))
@@ -8488,11 +8488,11 @@ call_cpp_cloud_fill <- function(cloudy, clear, cloud_mask, algorithm, dims,
 }
 
 #' @importFrom spatial.tools rasterEngine
-cloud_remove_R <- function(cloudy, clear, cloud_mask, out_name, algorithm, 
-                           num_class, min_pixel, max_pixel, cloud_nbh, DN_min, 
+cloud_remove_R <- function(cloudy, clear, cloud_mask, out_name, algorithm,
+                           num_class, min_pixel, max_pixel, cloud_nbh, DN_min,
                            DN_max, verbose, byblock, overwrite) {
-    # Note that call_cpp_cloud_fill uses the algorithm to decide whether to 
-    # call cloud_fill or cloud_fill_simple (and call_cpp_cloud_fill is called 
+    # Note that call_cpp_cloud_fill uses the algorithm to decide whether to
+    # call cloud_fill or cloud_fill_simple (and call_cpp_cloud_fill is called
     # by cloud_fill_rasterengine)
     if (byblock) {
         bs <- blockSize(cloudy)
@@ -8509,23 +8509,23 @@ cloud_remove_R <- function(cloudy, clear, cloud_mask, out_name, algorithm,
             clear_bl <- array(getValuesBlock(clear, row=bs$row[block_num],
                                             nrows=bs$nrows[block_num]),
                             dim=c(dims[1] * dims[2], dims[3]))
-            cloud_mask_bl <- array(getValuesBlock(cloud_mask, 
-                                                  row=bs$row[block_num], 
-                                                  nrows=bs$nrows[block_num]), 
+            cloud_mask_bl <- array(getValuesBlock(cloud_mask,
+                                                  row=bs$row[block_num],
+                                                  nrows=bs$nrows[block_num]),
                                    dim=c(dims[1] * dims[2]))
-            filled <- call_cpp_cloud_fill(cloudy_bl, clear_bl, cloud_mask_bl, 
-                                          algorithm, dims, num_class, 
-                                          min_pixel, max_pixel, cloud_nbh, 
+            filled <- call_cpp_cloud_fill(cloudy_bl, clear_bl, cloud_mask_bl,
+                                          algorithm, dims, num_class,
+                                          min_pixel, max_pixel, cloud_nbh,
                                           DN_min, DN_max, verbose>1)
             out <- writeValues(out, filled, bs$row[block_num])
         }
         out <- writeStop(out)
-        # out <- rasterEngine(cloudy=cloudy, clear=clear, 
+        # out <- rasterEngine(cloudy=cloudy, clear=clear,
         # cloud_mask=cloud_mask,
         #                     fun=cloud_fill_rasterengine,
-        #                     args=list(algorithm=algorithm, num_class=num_class, 
-        #                               min_pixel=min_pixel, max_pixel=max_pixel, 
-        #                               cloud_nbh=cloud_nbh, DN_min=DN_min, 
+        #                     args=list(algorithm=algorithm, num_class=num_class,
+        #                               min_pixel=min_pixel, max_pixel=max_pixel,
+        #                               cloud_nbh=cloud_nbh, DN_min=DN_min,
         #                               DN_max=DN_max, verbose=verbose),
         #                     processing_unit='chunk',
         #                     outbands=nlayers(cloudy), outfiles=1,
@@ -8535,16 +8535,16 @@ cloud_remove_R <- function(cloudy, clear, cloud_mask, out_name, algorithm,
         dims <- dim(cloudy)
         out_datatype <- dataType(cloudy)[1]
         out <- brick(cloudy, values=FALSE, filename=out_name)
-        # RcppArmadillo crashes when you pass it a cube, so resize and pass 
+        # RcppArmadillo crashes when you pass it a cube, so resize and pass
         # mats
         cloudy <- array(getValues(cloudy), dim=c(dims[1] * dims[2], dims[3]))
         clear <- array(getValues(clear), dim=c(dims[1] * dims[2], dims[3]))
         cloud_mask <- array(getValues(cloud_mask), dim=c(dims[1] * dims[2]))
-        filled <- call_cpp_cloud_fill(cloudy, clear, cloud_mask, algorithm, 
-                                      dims, num_class, min_pixel, max_pixel, 
+        filled <- call_cpp_cloud_fill(cloudy, clear, cloud_mask, algorithm,
+                                      dims, num_class, min_pixel, max_pixel,
                                       cloud_nbh, DN_min, DN_max, verbose>1)
         out <- setValues(out, filled)
-        out <- writeRaster(out, out_name, datatype=out_datatype, 
+        out <- writeRaster(out, out_name, datatype=out_datatype,
                            overwrite=overwrite)
     }
 
@@ -8553,75 +8553,75 @@ cloud_remove_R <- function(cloudy, clear, cloud_mask, out_name, algorithm,
 
 #' Remove clouds From Landsat imagery
 #'
-#' This code uses one of several different algorithms (depending on the 
+#' This code uses one of several different algorithms (depending on the
 #' settings, see Details) to fill heavy clouds in a Landsat image.
 #'
-#' The \code{algorithm} parameter determines what algorithm is used for the 
-#' cloud fill. \code{algorithm} must be one of: "CLOUD_REMOVE", 
-#' "CLOUD_REMOVE_FAST", "teamlucc", or "simple" (the default). If set to 
-#' "CLOUD_REMOVE" the script uses a (slightly modified to be called from R) 
-#' version of  Xiaolin Zhu's NSPI IDL code. If set to "CLOUD_REMOVE_FAST", the 
-#' algorithm uses the "fast" version of Xiaolin's code. Both of these two 
-#' algorithms require an IDL license to run (and therefore \code{idl_path} must 
-#' be set).  The "teamlucc" algorithm uses a version of the NSPI algorithm 
-#' (based on the CLOUD_REMOVE code) that is coded in C++ and  can be run from R 
-#' without an IDL license. The "simple" algorithm uses a cloud fill model that 
-#' is based on fitting a linear model to the surface reflectance from the clear 
-#' image in a window around each cloud, and using this linear model to predict 
+#' The \code{algorithm} parameter determines what algorithm is used for the
+#' cloud fill. \code{algorithm} must be one of: "CLOUD_REMOVE",
+#' "CLOUD_REMOVE_FAST", "teamlucc", or "simple" (the default). If set to
+#' "CLOUD_REMOVE" the script uses a (slightly modified to be called from R)
+#' version of  Xiaolin Zhu's NSPI IDL code. If set to "CLOUD_REMOVE_FAST", the
+#' algorithm uses the "fast" version of Xiaolin's code. Both of these two
+#' algorithms require an IDL license to run (and therefore \code{idl_path} must
+#' be set).  The "teamlucc" algorithm uses a version of the NSPI algorithm
+#' (based on the CLOUD_REMOVE code) that is coded in C++ and  can be run from R
+#' without an IDL license. The "simple" algorithm uses a cloud fill model that
+#' is based on fitting a linear model to the surface reflectance from the clear
+#' image in a window around each cloud, and using this linear model to predict
 #' reflectance in unobserved (cloudy) areas.
 #'
 #' @export
 #' @param cloudy the cloudy image (base image) as a \code{Raster*}
-#' @param clear the clear image as a \code{Raster*} to use for filling 
+#' @param clear the clear image as a \code{Raster*} to use for filling
 #' \code{img_cloudy}
-#' @param cloud_mask the cloud mask as a \code{RasterLayer}, with each cloud 
-#' patch assigned a unique integer code. Areas that are clear in both 
-#' \code{cloudy_rast} and \code{clear_rast} should be coded 0, while areas that 
+#' @param cloud_mask the cloud mask as a \code{RasterLayer}, with each cloud
+#' patch assigned a unique integer code. Areas that are clear in both
+#' \code{cloudy_rast} and \code{clear_rast} should be coded 0, while areas that
 #' are clouded in \code{clear_rast} should be coded -1.
 #' @param out_name filename for cloud filled image
-#' @param algorithm must be one of: "CLOUD_REMOVE", "CLOUD_REMOVE_FAST", 
+#' @param algorithm must be one of: "CLOUD_REMOVE", "CLOUD_REMOVE_FAST",
 #' "teamlucc", or "simple". Default is "simple". See Details.
 #' @param num_class set the estimated number of classes in image
-#' @param min_pixel the sample size of similar pixels (ignored when 
+#' @param min_pixel the sample size of similar pixels (ignored when
 #' \code{algorithm==TRUE})
-#' @param max_pixel the maximum sample size to search for similar pixels 
+#' @param max_pixel the maximum sample size to search for similar pixels
 #' (ignored when \code{algorithm==TRUE})
 #' @param cloud_nbh the range of cloud neighborhood (in pixels)
 #' @param DN_min the minimum valid DN value (default of 0)
-#' @param DN_max the maximum valid DN value (default of 10000 assumes 2 byte 
+#' @param DN_max the maximum valid DN value (default of 10000 assumes 2 byte
 #' integer imagery)
-#' @param idl path to the IDL binary on your machine (on Windows, the path to 
+#' @param idl path to the IDL binary on your machine (on Windows, the path to
 #' idl.exe)
-#' @param verbose whether to print detailed status messages. Set to FALSE or 0 
-#' for no status messages. Set to 1 for basic status messages. Set to 2 for 
+#' @param verbose whether to print detailed status messages. Set to FALSE or 0
+#' for no status messages. Set to 1 for basic status messages. Set to 2 for
 #' detailed status messages.
-#' @param byblock whether to process images block by block 
-#' (\code{byblock=TRUE}) or all at once (\code{byblock=FALSE}). Use 
-#' \code{byblock=FALSE} with caution, as this option will cause the cloud fill 
+#' @param byblock whether to process images block by block
+#' (\code{byblock=TRUE}) or all at once (\code{byblock=FALSE}). Use
+#' \code{byblock=FALSE} with caution, as this option will cause the cloud fill
 #' routine to consume a large amount of memory.
 #' @param overwrite whether to overwrite \code{out_name} if it already exists
 #' @param ... additional arguments passed to the chosen cloud fill routine
 #' @return \code{Raster*} with cloud-filled image
 #' @references Zhu, X., Gao, F., Liu, D., Chen, J., 2012. A modified
-#' neighborhood similar pixel interpolator approach for removing thick clouds 
+#' neighborhood similar pixel interpolator approach for removing thick clouds
 #' in Landsat images. Geoscience and Remote Sensing Letters, IEEE 9, 521--525.
 #' @examples
 #' \dontrun{
-#' cloudy <- raster(system.file('tests', 'testthat_idl', 'cloud_remove', 
+#' cloudy <- raster(system.file('tests', 'testthat_idl', 'cloud_remove',
 #' 'L20080724_cloudy', package='teamlucc'))
-#' clear <- raster(system.file('tests', 'testthat_idl', 'cloud_remove', 
+#' clear <- raster(system.file('tests', 'testthat_idl', 'cloud_remove',
 #' 'L20080606', package='teamlucc'))
-#' cloud_mask <- raster(system.file('tests', 'testthat_idl', 'cloud_remove', 
+#' cloud_mask <- raster(system.file('tests', 'testthat_idl', 'cloud_remove',
 #' 'cloud_mask', package='teamlucc'))
 #' filled <- cloud_remove(cloudy, clear, cloud_mask, fast=TRUE)
 #' }
-cloud_remove <- function(cloudy, clear, cloud_mask, out_name=NULL, 
+cloud_remove <- function(cloudy, clear, cloud_mask, out_name=NULL,
                          algorithm='simple',
-                         num_class=4, min_pixel=20, max_pixel=1000, 
-                         cloud_nbh=10, DN_min=0, DN_max=10000, 
+                         num_class=4, min_pixel=20, max_pixel=1000,
+                         cloud_nbh=10, DN_min=0, DN_max=10000,
                          idl="C:/Program Files/Exelis/IDL83/bin/bin.x86_64/idl.exe",
                          verbose=FALSE, byblock=TRUE, overwrite=FALSE, ...) {
-    if (!(algorithm %in% c('CLOUD_REMOVE', 'CLOUD_REMOVE_FAST', 'teamlucc', 
+    if (!(algorithm %in% c('CLOUD_REMOVE', 'CLOUD_REMOVE_FAST', 'teamlucc',
                            'simple'))) {
         stop('algorithm must be one of "CLOUD_REMOVE", "CLOUD_REMOVE_FAST", "teamlucc", or "simple"')
     }
@@ -8629,7 +8629,7 @@ cloud_remove <- function(cloudy, clear, cloud_mask, out_name=NULL,
     if (verbose > 0) {
         message('Using "', algorithm, '" algorithm.')
     }
-    
+
     if (!(class(cloudy) %in% c("RasterLayer", "RasterStack", "RasterBrick"))) {
         stop('cloudy must be a Raster* object')
     }
@@ -8658,16 +8658,16 @@ cloud_remove <- function(cloudy, clear, cloud_mask, out_name=NULL,
             stop('output file already exists - use a different "out_name"')
         }
     }
-    
+
     if (algorithm %in% c('CLOUD_REMOVE', 'CLOUD_REMOVE_FAST')) {
         filled <- cloud_remove_IDL(cloudy, clear, cloud_mask, out_name,
-                                   algorithm, num_class, min_pixel, max_pixel, 
-                                   cloud_nbh, DN_min, DN_max, verbose, idl, 
+                                   algorithm, num_class, min_pixel, max_pixel,
+                                   cloud_nbh, DN_min, DN_max, verbose, idl,
                                    byblock, overwrite, ...)
     } else if (algorithm %in% c('teamlucc', 'simple')) {
-        filled <- cloud_remove_R(cloudy, clear, cloud_mask, out_name, 
-                                 algorithm, num_class, min_pixel, max_pixel, 
-                                 cloud_nbh, DN_min, DN_max, verbose, byblock, 
+        filled <- cloud_remove_R(cloudy, clear, cloud_mask, out_name,
+                                 algorithm, num_class, min_pixel, max_pixel,
+                                 cloud_nbh, DN_min, DN_max, verbose, byblock,
                                  overwrite, ...)
     } else {
         stop(paste0('unrecognized cloud fill algorithm "', algorithm, '"'))
@@ -8681,7 +8681,7 @@ clouds <- function(band1, band6, level = 0.0014, buffer=5) {
     # simple function to create a cloud mask
     # uses bands 6 and 1 as specified in the arguments
     # cloud target: band6 is low; band1 is high
-   
+
     # clouds have high reflectance in band1 and
     # low temperature (band 6)
     # thus ratio band1/band6 is high for clouds
@@ -8701,8 +8701,8 @@ clouds <- function(band1, band6, level = 0.0014, buffer=5) {
             dims <- dim(as.matrix(band1))
             band1 <- as.vector(as.matrix(band1))
         }
-    } 
-    
+    }
+
     if(is.character(band6)) {
         band6 <- read.asciigrid(band6)
         band6 <- band6@data[,1]
@@ -8712,9 +8712,9 @@ clouds <- function(band1, band6, level = 0.0014, buffer=5) {
         } else {
             band6 <- as.vector(as.matrix(band6))
         }
-    } 
+    }
 
-           
+
     cloudmask <- ifelse(band1/band6 > level, 1, 0) # 6 low AND 1 high
     ## want to add a buffer around identified areas
     cloudmask <- movingwindow(matrix(cloudmask,  nrow=dims[1], ncol=dims[2]), matrix(rep(1, buffer*buffer), buffer, buffer))
@@ -8727,9 +8727,9 @@ clouds <- function(band1, band6, level = 0.0014, buffer=5) {
         results <- data.frame(matrix(cloudmask, nrow=nrow(results), ncol=ncol(results)))
     else if(is.matrix(results))
         results <- matrix(cloudmask, nrow=nrow(results), ncol=ncol(results))
-    else # return a vector 
+    else # return a vector
         results <- cloudmask
-    
+
     results
 }
 
@@ -8739,19 +8739,19 @@ clouds <- function(band1, band6, level = 0.0014, buffer=5) {
 #' @importFrom rgdal writeGDAL
 #' @importFrom sp SpatialPixelsDataFrame
 #' @param x classified image as \code{RasterLayer}
-#' @param cls two column matrix, where the first column is the class codes 
+#' @param cls two column matrix, where the first column is the class codes
 #' (integers) and the second column is the class names
 #' @param outfile the filename to use for the output
 #' @examples
 #' #TODO: Add examples
 color_image <- function(x, cls, outfile) {
-    # Reclassify image so it is coded from 0 - length(cls[1]). ENVI and 
-    # other classification file formats rely on the codes being sequential, 
+    # Reclassify image so it is coded from 0 - length(cls[1]). ENVI and
+    # other classification file formats rely on the codes being sequential,
     # starting at zero.
     x <- reclassify(x, cbind(cls[, 1], seq(0, length(cls[, 1]) - 1)))
     x.sp <- as(x, "SpatialPixelsDataFrame")
     cls_colors <- t(col2rgb(cls[, 1]))
-    # Select appropriate data type and missing value tag depending on data 
+    # Select appropriate data type and missing value tag depending on data
     # attributes.
     if (max(x.sp$layer) > 254) {
         gdaltype <- 'Int16'
@@ -8766,14 +8766,14 @@ color_image <- function(x, cls, outfile) {
 }
 #' Calculate a contingency table using the composite operator
 #'
-#' This function calculates a cross tabulation for a map comparison using the 
+#' This function calculates a cross tabulation for a map comparison using the
 #' composite operator recommended by Pontius and Cheuk (2006).
 #'
 #' @export
 #' @return matrix with contingency table
-#' @references Pontius, R. G., and M. L. Cheuk. 2006.  A generalized 
-#' cross-tabulation matrix to compare soft-classified maps at multiple 
-#' resolutions. International Journal of Geographical Information Science 
+#' @references Pontius, R. G., and M. L. Cheuk. 2006.  A generalized
+#' cross-tabulation matrix to compare soft-classified maps at multiple
+#' resolutions. International Journal of Geographical Information Science
 #' 20:1-30.
 compcont <- function() {
     stop('compcont is not yet finished')
@@ -8827,7 +8827,7 @@ load(file.path(dir.work, dir.fun, paste0(dir.fun,'.RData'))
 #'## Metadata file contains scene acquisition details and correction parameters
 #'## Unzip the MTL file from landsat L8 zipped .tar file
 #'## MTL must be with Landsat TIF files, at the exact same folder
-mtl <- read.delim(file.path(dir.work, dir.fun,  
+mtl <- read.delim(file.path(dir.work, dir.fun,
                             grep('_MTL.txt',
                                  list.files(file.path(dir.work, dir.fun),
                                             all.files = F),
@@ -8850,7 +8850,7 @@ ae <- readOGR(dsn = file.path(dir.shp), layer = 'layername')
 proj4string(ae) <- p.utm33s # Asign projection WGS84
 if(!is.projected(ae)) ae <- spTransform(ae, p.utm33n)
 ae <- spTransform(ae, p.utm33n) # if UTM projection is South
-#'## Create Extent from ae or provide another Shape for a different extent 
+#'## Create Extent from ae or provide another Shape for a different extent
 roi <- extent(ae) # a rectangular area covering ae polygon extent
 
 #'---------------TEST ONLY ---------------------------
@@ -8874,7 +8874,7 @@ mocoutm <- spTransform(moco, p.utm33n)
 #'## Change function arguments for the ROI and polygon to apply mask
 f.CreateRoiMask <- function(x = x, roi = roi2, maskpoly = ae2){
   x <- grep(".tif$", list.files(file.path(dir.work, dir.fun), all.files = F),
-            ignore.case = TRUE, value = TRUE)[1] 
+            ignore.case = TRUE, value = TRUE)[1]
   i.band <- raster(file.path(dir.work, dir.fun, x),
                    package = "raster")
   #dataType(band) # Must be INT2U for Landsat 8. Range of Values: 0 to 65534
@@ -8891,9 +8891,9 @@ f.CreateRoiMask <- function(x = x, roi = roi2, maskpoly = ae2){
   ## Overlay AE poly to AE Extent raster
   ### Mask will have 1 and NA values
   msk.ae <- mask(ae.r, maskpoly, updatevalue=NA)
-  #dataType(mask_ae) <- "INT1U" 
+  #dataType(mask_ae) <- "INT1U"
   ## Evaluate rasters
-  stopifnot(compareRaster(msk.ae, i.bandae)) 
+  stopifnot(compareRaster(msk.ae, i.bandae))
   msk.ae
 }
 
@@ -8913,9 +8913,9 @@ writeRaster(mask.ae, filename = file.path(dir.work, dir.landsat, dir.tif,
 f.ReadDEM <- function(elev = 'srtm', unit = 'radians', roi = mask.ae, lon = lon, lat = lat){
   i.dem <- c('aster', 'srtm', 'SRTM', 'user')
   vdem <- pmatch(elev, i.dem)
-  if (is.na(vdem)) 
+  if (is.na(vdem))
     stop("invalid dem")
-  if (vdem == -1) 
+  if (vdem == -1)
     stop("unnavailable or typo error")
   if(vdem == 1){
     i.dfile <- 'ASTGTM2_S12E014_dem.tif' # For Angola (Kumbira)
@@ -8926,7 +8926,7 @@ f.ReadDEM <- function(elev = 'srtm', unit = 'radians', roi = mask.ae, lon = lon,
     i.dtm <- raster(file.path(dir.srtm, i.dfile),
                     package = "raster")
   } else if(vdem == 3){
-    
+
     i.dtm <- getData('SRTM', lon = lon, lat = lat)
   }
   stopifnot(is.na(projection(i.dtm)) != TRUE)
@@ -8938,7 +8938,7 @@ f.ReadDEM <- function(elev = 'srtm', unit = 'radians', roi = mask.ae, lon = lon,
     proj4string(i.aepol) <- CRS(proj4string(mask.ae)) # Assign projection
   } else if(class(roi)[1] == 'RasterLayer'){
     i.aepol <- as(extent(roi), 'SpatialPolygons')
-    proj4string(i.aepol) <- CRS(proj4string(mask.ae)) # Assign projection   
+    proj4string(i.aepol) <- CRS(proj4string(mask.ae)) # Assign projection
   } else i.aepol <- roi
   # Extent for WGS84 with a buffer
   i.ae2 <- extent(spTransform(i.aepol, CRS(proj4string(i.dtm)))) + 0.005
@@ -8954,7 +8954,7 @@ f.ReadDEM <- function(elev = 'srtm', unit = 'radians', roi = mask.ae, lon = lon,
   i.dem_p <- crop(i.dem_p, mask.ae)
   i.dem_pr <- resample(i.dem_p, mask.ae, method = "ngb")
   ### Resample to match Study Site extent (and Landsat crop images)
-  stopifnot(compareRaster(i.dem_pr, mask.ae)) # Evaluate rasters 
+  stopifnot(compareRaster(i.dem_pr, mask.ae)) # Evaluate rasters
   i.dem_pr # Return DEM for the AE extent as defined by v.ae
 }
 #'## Run it to create the DEM for the AE --
@@ -8981,11 +8981,11 @@ f.ToarL8 <- function(x=x, i=i){
   i.toar <- (x * as.numeric(mtl[grep(paste0("REFLECTANCE_MULT_BAND_", i),
                                      mtl$GROUP), 2]) +
                as.numeric(mtl[grep(paste0("REFLECTANCE_ADD_BAND_", i),
-                                   mtl$GROUP), 2])) 
+                                   mtl$GROUP), 2]))
   # Correct for Sun Elevation sin(Theta_SE)
   i.tse <- as.numeric(mtl[grep("SUN_ELEVATION", mtl$GROUP), 2])*pi/180 # radians
   i.sune <- sin(i.tse)
-  i.toa <- i.toar / i.sune  
+  i.toa <- i.toar / i.sune
   i.toa
 }
 
@@ -9022,16 +9022,16 @@ f.TopoCor <- function(x = x, i = i, method = 'minnaert',
     if (all(itoa[slope >= targetslope] < 0, na.rm = TRUE)) {
       K <- 1
     } else {
-      K <- data.frame(y = as.vector(itoa[slope >= targetslope]), 
+      K <- data.frame(y = as.vector(itoa[slope >= targetslope]),
                       x = as.vector(il.ae[slope >= targetslope])/cos(sun.z))
       K <- K[!apply(K, 1, function(x) any(is.na(x))), ]
       K <- K[K$x > 0, ]
       K <- K[K$y > 0, ]
       K <- lm(log10(K$y) ~ log10(K$x))
       K <- coefficients(K)[[2]]
-      if (K > 1) 
+      if (K > 1)
         K <- 1
-      if (K < 0) 
+      if (K < 0)
         K <- 0
     }
     xout <-(itoa * cos(sun.z))/((il.ae * cos(sun.z))^K)
@@ -9047,7 +9047,7 @@ ltest <- f.TopoCor(x = i.crop, i = 1, method = 'minnaert') # Test only
 # For original Landsat Product only
 # Function arguments:
 ## write: (TRUE/FALSE): Export RST raster file
-## demcorr: ('none', cosine, ccorrection, minnaert). Topographic correction algorithm 
+## demcorr: ('none', cosine, ccorrection, minnaert). Topographic correction algorithm
 ## mask: (TRUE/FALSE) Aply a mask to the ROI extent. Mask will be a polygon.
 ### Resulting in a 1/NA rasterLayer.
 ## dem: rasterStack with DEM, slope and aspect layers.
@@ -9056,7 +9056,7 @@ f.idrisidata <- function(write = F, demcorr = 'none', mask = T,
                          dem = dem.ae, wrformat = 'RST') {
   i.allfiles <- list.files(file.path(dir.work, dir.fun), all.files = F)
   # List of TIF files at dir.fun folder
-  i.listtif <- grep(".tif$", i.allfiles, ignore.case = TRUE, value = TRUE) 
+  i.listtif <- grep(".tif$", i.allfiles, ignore.case = TRUE, value = TRUE)
   bands <- as.numeric(substr(i.listtif, (nchar(i.listtif) - 4),
                              (nchar(i.listtif) - 4)))
   i.stk.toar <- stack()
@@ -9064,7 +9064,7 @@ f.idrisidata <- function(write = F, demcorr = 'none', mask = T,
   i.lstk <- list()
   # SUN Parameters ---
   ## Sun elev in radians
-  sun.e <- as.numeric(mtl[grep("SUN_ELEVATION", mtl$GROUP), 2]) * (pi/180) 
+  sun.e <- as.numeric(mtl[grep("SUN_ELEVATION", mtl$GROUP), 2]) * (pi/180)
   ## Sun Zenit in radians
   sun.z <- (90 - as.numeric(mtl[grep("SUN_ELEVATION", mtl$GROUP), 2])) * (pi/180)
   ## Sun Azimuth
@@ -9095,7 +9095,7 @@ f.idrisidata <- function(write = F, demcorr = 'none', mask = T,
     if(mask == T) {
       i.toar <- i.toar * mask.ae
     } else i.toar <- i.toar
-    i.toar@data@names <- i.fname  # Add band name  
+    i.toar@data@names <- i.fname  # Add band name
     # Create Stack
     if(i < 8) {
       i.stk.toar <- addLayer(i.stk.toar, i.toar)
@@ -9107,7 +9107,7 @@ f.idrisidata <- function(write = F, demcorr = 'none', mask = T,
       stopifnot(file_test("-d", dire))
       ## gdal
       ##writeGDAL(as(i.l8, "SpatialGridDataFrame"),
-      ##fname = "D:\\idri.rst", drivername = "RST") 
+      ##fname = "D:\\idri.rst", drivername = "RST")
       message(wrformat, 'raster will be created for ', i.fname, ' at: ',
               file.path(dir.work, dir.fun, dir.tif))
       writeRaster(i.toar, filename = file.path(dir.work, dir.fun, dir.tif,
@@ -9143,168 +9143,254 @@ function(year, month, day)
 	year <- year[1]
     }
     year + julian(as.Date(paste(year, month, day, sep="-")), origin=as.Date(paste(year-1, "12", "31", sep="-")))[[1]]/365
-    
+
 }
 
-‹      Õ	œd×uÖëŞ’ã%qâ€°Ì2qê½ªêîÊàNÛ‘å(İi+;ÏvkFš‘¢DÒI!6k³ï`ö°‹}‡°ïPì;„}‡aß!ì[ˆ8İõN»ßío¨søéè}·ó»¹VÍ”êèû÷yïİïœ{ë±‡>Ò¾í#o›L&y2Mòÿ§ò?ÈòÿÒäÉ[eşÌÛwâÎ'^¹óÂ+/OÒô;üÀ“OŞı„¼ï³Oÿ÷úé“ÉéÏúølšôÿ|ĞÿsñŞéígŸ—éígŸ~>å-òW^¸õü—åÛşï¼ãlŞüyú„şO2}şÙÎÿç-	qò­åÙ‹/İıšÅË¯¼ôìÏ€ÿ²·œşñ­—y¹ÿëë_ôîÓ?xÏsw_xæ¹[¯<øîÛ·^ùºçßÓ}àÆŞâÁw¿p÷‰Ûw~ùÁwßyî¹_ÖW_¹ûõÏ¼¼·xÏìäÿŠyÓSÏİzY>#_üŒé?v£ø{o~ñÖS_{ë™;E4ùå7ÿi—şóŞòâİç>ùÌİzé¦_şüyıòßyÓs·|ñù§ˆóÁ=Ú+é·^ºs«ÿ»é`…ÿÎWß}îô?ãmg¯]şó7ŸyèÙ—ú_´ƒ¿òOİ½ûÒí—ûß»·MŠŸƒwçK¯¿«˜/ııÓO›¾6ùô/ç›ú¹WùÍ¯ÄŞÜ+¹ùã·¼fÆôÖŸ»ûÊ_º}ü÷~ækFÙó#˜šÍ_ù,ıW4.ı\øUØú_pşKò¶Ó¿Uüâ€ ¯^üäûEôöÓ×‹ß‰ÏVDùœ×ÜØóµb.~Ş ìï ÿAÛûÜòßšZ"¶ÍÉ…O­²\sÁš‡í@°ËlçDlw.†:[e¹*æ‚5Û`—Ù.ˆØ^¿êl•å~1¬yØ»ÌvIÄöààÂ'ÀVY¾÷d8¬yØ»Ìv‡ˆíûÖ>y¶Êò¡Ép.Xó°v™í.Û÷\øäØ*Ë‡O†sÁš‡í@°Ël÷ˆØ~`}á“G`«,™ç‚5Û`—Ù®ˆØ~éÁ…O­²<<Îk¶Á.±ÍÍŒîÑúÂ' Waª§z\¼ŞÏ<p‚¸DÎÔzäÌ]÷ğÖ}†Ïú:Üõ¶Ìm	àöéú‹ŸüúÁ-aŞÏM^°õg}éÏÇ†p¼©>Öƒ‘áêÏı2ûÓ?$p¶Áe0§4Ö+?ù‡KT'2Âà2¸SëÕ‘áVS‚‚¸ö”ÆT2ÃU˜ôå (€ËàOi¬Aõ 3ÜjêAP0 —Á ÒX¯Waîs›î@0 —Á¡ÒXƒ*Bf¸
-“¾"»·Á*	™áVS‚‚¸•ÆT2Ã­¦&p["¸AE!3ÜjŠBP0 —É¡
-ò–Ípfï!óV… ` .“Cu´®Â<ç6Ü` .ƒCÕ-a…ƒfaJèëõ ` .ƒCÕÇV80ÂÕşÂÀep¨4Ö+?ù‡[Oá 
-à28TëÕ‘áVS8€‚¸•ÆU8°ÂÓ¦/@Á.ÃÏˆàF¬p«)@Á \‡Jc½>2\…¹_Ìl¸Á Ü–nTáÀ
-WaÒ ` .ƒC¥±F¬p«)@Á \‡Jc*XáVS8€‚¸DUXáÀ
-·šÂÀer¨¢
-V¸
-óğd8°yàn)Ì™ª£õ¸pæñd8°yàp‰ªõ•‹Ÿ<Bá ( œÏÅŸÓÀ
-à9Të«#Ã½†a¿~î@°Ëp3"¸#Ûë†yş:›CµŞb?.ˆªõÈöãz…a¿ÎæPp["¸×G†»a¿¾Ïw €ËàPõW—°NŒæ}ª>õtb@Á \‡ª5¬ÃWø;1 ` .ƒC¥±F-…ŒpëéÄ€‚¸•Æµ²Â­¦
-à28TkÔRÈ
-×øç<p·-…*5j)d…WM'Àep¨4Ö¨¥®ÂÜ/æ6Ü-K¡åŒnT'†®Â¤ïÄ€‚¸•ÆÕ‰a…[M'Àm‰àFubXáVÓ‰p‰ª°N+Üj:1 ` .“CÕ‰a…«0O†s›î–NŒ%“Cu´®Â<ç6Ü` .‘CÖ‰a„[O'À%r¨Â:1¬pKÈ´P0 —È¡
-ëÄ°Â­¦
-à9TaV¸+“¯
-vîÎŒîÈöc=P0 —È¡Zl?®{ª„yş:›C5Àm	àöW—°6›æª˜õò[M›Àep¨úXÃÚlŒpõ‡¿Í
-à28TkÔ:×·6(€ËàPi¬Që\+ÜjÚl ` .ƒC¥±F­s­p·<pñ´Ù@Á \‡JcZçZáVÓfp*5jk…§ÿ¼_ÌÅßç»mËàPi¬Që\+\…Ißf»wwF7ªÍÆ
-·š6(€ËàPi¬Qm6V¸Õ´Ù@Á Ü–nT›n5m6P0 —É¡Šj³±ÂU˜‡'Ã¹€ÍwK›Í.“Cu´®Â<ç6Ü` .‘CÖfc-hçEQ(àk³‚¸DUX›î5“¯Í
-à9Tam6V¸%äkÅëlÕ¶6›]"‡*¬ÍÆ
-w…aòµÙ@Á \"‡*¬ÍÆ
-wÃäk³‚]†»7#‚;²ıXO›Àep¨ú_À°6›æ~1k†ã‡?|m6P0 ·åÖfc„«?üm6P0 —Á¡ÒX£Ö¹F¸õ´Ù@Á \‡JcZçZá*ÌkÅ\Àæ»e»ÇàPi¬Që\+\…Ißfp*5jk…[M›Àep¨4Ö¨u®®ñÏyàn[ç28TkÔ:×
-Oÿ™¾Í
-à®ˆàFµÙXáVÓf»w5#‚Õfc…[M›À%r¨ÂÚl¬p«i³‚¸-Ü¨6+\…yx2œØ<p·´Ù¬˜ª£õ¸pæñd8°yàp‰ª°6#ÜzÚl ` .‘CÖfc…{Ãäk³‚¸DUX›n5m6P0 —È¡
-k³±Â-!Ó¶Ù@Á \"‡j}}d¸û&_›À]ÁÙ~¬§Í
-v	î´™ÍèöA†õÙ”4ïc×ÓgCt<ª>Ø°F#]ıáo´‚!º-İ¨¥®‘n=6P0D—Á¥Ò`£ÖºVºÕ´Ú@Á]›JƒZìZé*Mú^(¢ËàSi°Q«]+İjšm `ˆ.ƒQ¥ÁF-w­t·¬˜xºm `ˆ.ƒS¥ÁF­w­tÎCwëz—ÁªÒ`£úm¬ôªé·‚!º^•Õpc¥[MÃĞmfDt£:n¬t«é¸‚!ºL^UTË•®Ò<<Îmºÿï–¡ÛÑ=ZKWiO†sA›‡î@0D—È«
-kº1Ò­§é
-†èyUa]7Vº×0M¾®(¢KäU…µİXéVÓvCt‰¼ª°¾+İ¦É×wCt‰¼ª°Æ+İ’òªx}Ÿî6'²!òªÂ:o¬t«é¼‚!º^Uo¨…uŞ”4ïã4ÖÓytÛİ°Î#]ıáï¼‚!º^•µŞ5Ò­§ó
-†è¶Dt£Ö»VºÕtŞ@Á]¯JƒZïZé*MúÎ(¢ËàUi°Që]+İj:o `ˆ.ƒW¥ÁF­w­t•f¹‚*hóĞİ¶Şm¼*6j½k¥»e=ÌÓyCt¼*¶ŸG£[MçÑeğª4Ø¨Î+½j:o `ˆ.‘WÖyc¥[MçĞÏˆèFuŞXé*ÍÃ“á\Ğæ¡»­ófÎäU­Ç¥«4'Ã¹ ÍCw ¢ÛòĞë¼±Vªé¼‚!ºD^UXç•î5L“¯ó
-†èyUa7VºÕtŞ@Á]"¯*¬óÆJw…iòuŞ@Á]"¯j=òŠhİ?¯û•Ïù¬¯³=3Ct¼ª~QÖ›QÒ¼[QOoÑeğªú`Ãz3Œtõ‡¿7
-†è2xUlÔŠÈH·Ş( »˜ÑZYéVÓ›Ct¼*6jEd¥«4é{3 `ˆnKD7jEd¥[MoÑeğª4Øë#ÓUšûÅ\Ğæ¡;Ñeğª4Ø¨Ş+]¥Iß›Ct¼*6ª7ÃJ·šŞ(¢ËàUi°ı<]ãŸóĞ†èyUa½VzúÏ½ãÈÛ›Ct™¼ª¨Ş+]¥yx2œÚ<t·õf,˜¼ª£õ¸t•æñd8´yèt—3ºaÕ{#İzª÷P0D—È«
-«Ş[é.0M¾ê=Ñm‰èìUÕS½‡‚!ºD^UØ¹Vºû˜&ß¹P0D—Á«êìÃê»%Íû¬xô‡¿¾Ct¼*öÊÅO~ãéÖSß…‚!º^•õÌl¥«4¯sA›‡îÖgf¯Jƒzf¶ÒUš‹b.hóĞİúÌÌàUi°QÏÌVºJsUÌmº[Ÿ™¼*6ê™ÙJWiîsA›‡î¶gæİ¨ú®•®Ò¤¯ïBÁ]¯JƒªïZéVSß…‚!º-İA¹rºÛª]Œƒî@0D—Á«Ò`åÊèÿœ‡î@0D—É«ŠªïZéé?çâïóĞİVßİaòªÖãÒUšÇ“á\Ğæ¡;Ñ%òªÂöŞéÖ³÷
-†èyUaÕ{+İk˜&_õ
-†èyUaÕ{+]­ç4ùª÷P0D—È«
-«Ş[é®0M¾ê=ĞİÑ½~1Øèîcš|Õ{(¢ËàUõöëA1úu¤[Ò¼ÏŠ§½÷P0D·å¡V½7Ò­§zCt¼*6ê™ÙJ·šê=Ñeğª4Ø¨gf+]¥I_½‡‚!º^•õÌl¥[Mõ
-†è2xUlÔ3³•®ÒÜ/æ‚6İ­ÏÌ^•U½·ÒUšôÕ{(¢ËàUi°QÕ{+İjª÷P0DwED7ªzo¥[Mõ
-èîÍˆèFUï­t«©ŞCÁ]"¯*¬zo¥küsºÛª÷{-İ£õ¸tõŸ'Ã¹øû<t‚!ºD^UXõŞH·ê=Ñ%òªÂª÷Vº×0M¾ê=Ñ%òªÂª÷VºÕTï¡`ˆ.‘Wµù™y­³Ö{u.şœ‡îÖgf¯ª8«ï–4ïóÔTO}
-†è2xU}°a5"#İzjDP0DwED7ªFd¥[M
-è®fDt¯_vºJs¿˜Ú<t‚!º^•U#²ÒUšô5"(¢ÛÑªYéVS#‚‚!º^•U#²Ò­¦FCt¼*6j½k¥[M
-†è2xUlTÈJw‹ÛÁS#‚‚!º^•ÛÏ£Ñ5ş9İ`ˆ.“Wuåâ'àUUS#‚‚!ºD^UXÈJ÷¦ÉW#‚‚!º+"º#;‘õÔˆ `—é¶³İ‘ÈzvxBÁ]¯êƒ•¯Ñ-i>z0œõõşsøH(¢ÛÑr"­t•&½	Ct¼*6Ê‰´Ò­Æ‰„‚!º^•åDZéVãDBÁ]¯Jƒr"­t«q"¡`ˆ.ƒW¥ÁF9‘VºJ³|Æ.hóĞİâD¶3¯JƒíôG£»eÅÄãDBÁ]¯ª6ÌÍ0Ò­ÇÍ€‚!º^Õ£÷6*G¹%Í/?Îúz5}UP0@·™Ñr3¬t«q3 `ˆ.ƒW¥ÁF¹VºJ“ŞÍ€‚!º-İ(7ÃJ·7
-†è2xUl”›a¥[›Ct¼*6ÊÍ°Ò­ÆÍ€‚!º^•åfXéVãf@Á]¯Jƒ,ÎG [›Ct¼ª>Ø°Fºõìğ„‚!º^•;ò•y}ˆi¿Î–»ë­Wf¯ê±7ÁFíß-i>¶Îıëõìß…‚ºíŒ‡îÁÈtõ‡ÿ»³¡`ˆ.ƒW¥Á^¹øÉo<İzNß†‚!º-İ«#ÓUš×Š¹ ÍCw ¢ËàUi°Q@+]¥I²Ñeğª4Ø¨
- •n5@(¢ËàUi°×G¦«4÷‹¹ ÍCw ¢ËàUi°Q@+]¥I_„‚!º^•U´Ò­¦Ct¼*6ªh¥[M
-†èyUa@+İj*€P0@w>#¢å3[é*ÍŞOæ­ BÁ]&¯êh=.]¥y<ÎmºÁİ–‡nØÉ
-Ö*B5'+@Á]"¯*¬¾k¥Û_yùë»P0D—È«
-«ïZébš|õ](¢ËàUİ¸¹Q9êÊ\ÒüĞd8ëëÕÔˆ `ˆ.ƒW¥Á^™n55"(¢ËàUi°Q5"+]¥I_#‚‚!º^•U#²Ò­¦FCt¼*öúÈt•æ~1´yèt3"ºQ5"+]¥I_#‚‚!º^•U#²Ò­¦FCt["ºQ5"+İjjDP0D—Á«Ò`£¼*+İjjDP0D—Á«Ò`£¼*+]¥Ù{R¼5"(¢ËäU­Ç¥«4'Ã¹ ÍCw ¢KäU­G~ªZ÷÷Õuÿôt>ëël÷İ¡`ˆ.ƒWõ¡W7*lÓ×‘nIóÃÃY_¯Æg†‚!º^•å3[éVã3CÁ]¯Jƒò™­t•&½Ït—3"ºQ>³•n5>3Ñeğª4Ø(ŸÙJ·Ÿ
-†è¶Dt£|f+]¥Iï3CÁ]¯JƒZYéVã3CÁ]¯Jƒò™­t«ñ™¡`ˆ.ƒW¥ÁFùÌVºÕøÌP0D—Á«Ò`£|f+İj|f(¢ËäU­Ç¥[ÏCt¼ªßÛåf”4¿âd8ëëÕ¸P0D—Á«Ò`£Ü+İjÜ( »3#¢åfXéVãf@Á]¯Jƒr3¬t«q3 `ˆnKD7ÊÍ°Ò­ÆÍ€‚!º^•åfXéVãf@Á]¯Jƒr3¬t«q3 `ˆ.ƒW¥ÁF¹VºÕ¸P0D—Á«Ò`‹óèVãf@Á]¯ª{pì•‹Ÿü:Ò-ivëá¬¯¿³§ù®b~çpŸ.Ñeğª4Ø«#ÓUš…7Å×WCt¼*6Ê‰´Ò­Æ‰„‚º»3"ºQN¤•n5N$Ñeğª4Ø('ÒJ·'
-†è¶Dt£œH+İjœH(¢ËàUi°QN¤•n5N$Ñeğª4Ø('ÒJ·'
-†è2xUl”i¥[	Ct¼*6Ê‰´Ò­Æ‰„‚!ºL^ÕÑz\ºÕ8‘P0D—Á«úÈÍ³Ï[?pñ“_Gº%ÍN†sÿz=ßCt¼ª>Øƒ‘éêÿ7ÅAÁ İ½İ+?ù§[O
-†è2xUìÕ‘éVSE€‚!º-İ¨*‚•®Ò¤¯"@Á]¯Jƒª"XéVSE€‚!º^•{}dºJs¿˜Ú<t‚!º^•UE°ÒUšôU(¢ËàUi°QU+İjªP0D—Á«Ò`£ªVºÕT `ˆ.‘WVE°Ò­¦Š Ct™¼ª¨*‚•®Ò<<ÎmºÛª«İ£õ…O®Ò<ç‚6İ`ˆ.‘WµX/#Tz·¢üf¸ó×ÙÜŒ¡`ˆnK@÷£¯n‚ª"”4?v0œû×ë©AÁ]¯ª6¬Fd¤«?ü5"(¢ËàUi°W.~òO·Ñeğª4Ø¨û®•n55"(¢ËàUi°Q5"+]¥I_#‚‚!º^•U#²Ò­¦FCt¼*öúÈt•æ~1´yèCtWDt£jDVºJ“¾F»Lw>›ÑªYéVS#‚‚!º^•U#²Ò­¦FCt["ºQ5"+İjjDP0D—É«ŠªYé*ÍÃ“á\Ğæ¡»¥F4Ÿ1yUGëqé*ÍãÉp.hóĞ†èyUë‘ÈóšPQ5(kF4t‡‚!º^ÕÇîm‚ª"”4¿òd8÷¯×S#‚‚!º^UlXÈHWøkDP0D—Á«Ò`£®ÌFºõÔˆ `ˆ.ƒW¥Á^™n55"( ÛÌˆèFÕˆ¬t•&}
-†è2xUlTÈJ·šÑm‰è^™®ÒÜ/æ‚6İ`ˆ.ƒW¥ÁFÕˆ¬t•&}
-†è2xUlTÈJ·šÑeğª4Ø¨‘•n55"(¢KäU…Õˆ¬t«©AÁ]&¯*ªFd¥«4O†sA›‡î¶QÃäU­Ç¥«4'Ã¹ ÍCw ¢»â¡V#²Vª©AÁ İvFD÷êÅOî5L“o—ÑeğªplT¨¤ùøz8÷¯×S„‚!º-İ°
- ‘®şğW ¡`ˆ.ƒW¥ÁFİwtë© BÁ]¯JƒºïZéVS„‚!º^•U´ÒUšô@(¢ËàUi°Q@+İj*€P0D—Á«Ò`¯LWiîsA›‡î@0D—Á«Ò`£*€VºJ“¾CtWDt£*€VºÕT ¡`€î|FD7ªh¥[M
-†èyUa@+İj*€P0D·%¢U´ÒUš‡'Ã¹ ÍCw[pÎäU­Ç¥«4'Ã¹ ÍCw ¢KäU…U të© BÁ]"¯j=²›±î?g½(æÕpæ¡»ÍÍ˜yUë‘İŒõ>¦yş:Ûzw(¢KäU­Gv3Öız¶¤yş:Ûzw(¢ËàU}ÕÍM°Qõİ’æÇ'Ã¹½ê=Ñ]ñĞ«Şéêõ
-è.fDt£™të©ŞCÁ]¯Jƒ½:2İjª÷P0D·%¢U½·ÒUšôÕ{(¢ËàUi°Që]+İjª÷P0D—Á«Ò`£Ö»VºJs¿˜Ú<t·­w^•µŞµÒUšôÕ{(¢ËàUi°QÕ{+İjª÷P0D—Á«Ò`£ª÷VºÕTï¡`ˆ.‘WV½·Ò­¦zCt™¼ª¨ê½•®Ò<<ÎmºÛª÷Ëİ£õ…O®Ò<ç‚6İ`ˆ.‘WV½7Ò­§zCt["º#;‘õìß…‚!ºD^Õzd'ò¼£ YöjğĞİæD.‰¼ª°Î+İ¦É×yCt‰¼ª°Î+İ}L“¯ó
-†èyUa7VºÕtŞ@Á]"¯j=²¹~Ó<Í«
-†è2xUulTçMIó‰ƒáÜ¿^O_Ñeğªú`ÃúªŒtõ‡¿¯
+?      Õ	?d?u??Ş’?%qâ€ƒ?
+?2qê½ª????NÛ‘?(?i+;?vkF???D?I!6k??`???}???P?;?}?a?!?[?8??N???o?s???}????VÍ”????y????{ë±‡>Ò¾?#o?L&y2M????????????[e???w???'^???+/O??;?ï¿½ï¿½O??????O??????????l???|??s????g????g?~>?-?W^???????????l??y????O2}?????-	q???Ù‹/????Ë¯???Ï€?????ñ­—y????_????x?sw_x??[?<??Û·^?????}?????w?p???w?~??w?y??_?W_???Ï¼??x??????y?S??zY>#_????v??{o~??S_{??;E4??7?i????????>???z??_???y???y?s??|??????=?+??^?s????`???W?}????mg?]??7?y?Ù—?_?????Oİ½?????ß»?M???w?K????/???O??6??/????W?Í¯???+??ã·¼f???????_?}??~?kF??#???_?,?W4.?\?U??_p?K??Ó¿U?â€ ?^???E???×‹ß‰?VD???????b.~
+? ?? ?A????ßšZ"??É…O???\sï¿½ï¿½??@??l?Dlw.?:[e?*??5Û`??.??^??l??~1?y???vI?????'??VY??d8?y???v?????>y?????p.X??v??.??\???*Ë‡O?sï¿½ï¿½??@??l???~`}??G`?,???5Û`?Ù®??~?ï¿½ï¿½O???<<?k??.??ÍŒ????'? Wa??z\???<p??D??z??]???}????:????m	??????????-a??M^??g}??Ç†p??>Öƒ?????2???$p??e0?4?+????KT'2??2?S?Õ‘?VS
+??????T2?U??? (???Oi?A? 3?j?AP0 ?ï¿½ï¿½?X??Wa?s??@0 ?ï¿½ï¿½?X?*Bf?
+??"????
+*	??VS?????T2Ã­?&p["?AE!3?j?BP0 ?É¡
+???pf?!?V??` .?Cu???<??6Ü` .?C?-a??faJ????` .?C??V80?????ep?4?+????[O? 
+?28T?Õ‘?VS8?????U8????/@?.ÃÏˆ?F?p?)@? \?Jc?>2\??_?l?? Ü–nT??
+Wa??` .?C??F?p?)@? \?Jc?*X?VS8???DUX??
+????er??
+V?
+??d8?y?n)Ì™????p??d8?y?p??????<B??( ??ÅŸ??
+?9T??#Ã½?a??~?
+?@??p3"?#Û??y?:?C??b?.??????z?a????P
+p["??G???a????w ???P?W??N??}?>?tb@? \???5??W?;1?` .?C??F-??p??Ä€??????­?
+?28Tk?R?
+???<p?-?*?5j)d?WM'?ep?4Ö¨?????/?6?-K???nT'??Â¤?Ä€????Õ‰a?[M'?m??FubX?VÓ‰p???N+?j:1?` .?CÕ‰a??0O?s???N?%?Cu???<??6Ü` .?CÖ‰a?[O'?%r??:1?pKÈ´?P0 ?È¡
+?Ä°­?
+?9Ta?V?+??
+v?ÎŒ???c=?P0 ?È¡Z?l??{??y?:?C5?m	??W??6?æª˜??[M?
+?ep??X??l?p????
+?28Tk?:???6(???Pi?Q?\+?j?l?` .?C??F?s?p?<p???@? \?Jc?Z?Z?V?fp*?5j?k????_???ç»m???Pi?Q?\+\?I?f?wwF7???
+??6(???Pi?Qm6V?Õ´?@? Ü–nT??n5m6P0 ?É¡?j???U??'Ã¹??wK??.?Cu???<??6Ü` .?C?fc-h?EQ(?k????DUX???5???
+?9Tam6V?%?k??lÕ¶6?]"?*???
+w?a???@? \"?*???
+w??k???]??7#?;??XO?
+?ep??_ï¿½ï¿½6??~1k?????|m6P0 ????fc????m6P0 ?ï¿½ï¿½?X?Ö¹F????@? \?Jc?Z?Z?*?k?\?æ»e????Pi?Q?\+\?I?fp*?5j?k?[M?
+?ep?4Ö¨u????y?n[?28Tk?:?
+O????
+à®ˆ?F??X?V?f?w5#??fc?[M?
+?%r???l?p?i????-Ü¨6+\?yx2??<p??Ù¬?????p??d8?y?p???6#?z?l?` .?C?fc?{
+??k????DUX??n5m6P0 ?È¡
+k???-!Ó¶?@? \"?j}}d??&_?
+?]??~???
+v	î´™???A??Ù”4?c??gCt<?>Ø°F#]??o???!?-İ¨???n=?6P0D?ï¿½ï¿½?`?ÖºV?Õ´?@?]?J??Z?Z?*M?^(???Si?Q?]+?j?m?`?.?Q??F-w?t???x?m?`?.?S??F?w?t??Cw?z?ï¿½ï¿½?`??m???é·?!?^??pc?[M?
+?mfDt?:n?t?é¸?!?L^UTË???<<?m???????=Z?KWiO?sA???@0D?È«
+k?1Ò­??
+??yUa]7V??0M??(?K?U???X?V?vCt?????+????wCt?????+İ’??x}???6'?!???:o?t?é¼?!?^Uo??uŞ”4??4??yt?İ°?#]??ï¼?!?^???5Ò­??
+???Dt?Ö»V??t?@?]?J??Z?Z?*M??(???Ui?Q?]+?j:o?`?.?W??F?w?t?f??*h??İ¶?m?*
+6j?k??e=??yCt?*
+??G?[M?
+?e??4Ø¨?+?j:o?`?.?W?yc?[M?
+ĞÏˆ?Fu?X?*?Ã“?\?æ¡»??f??U?Ç¥?4?'Ã¹??Cw ????
+ë¼±V?é¼?!?D^UXç•?5L???
+??yUa?7V??t?@?]"?*???Jw?i?u?@?]"?j=??h??????????=3Ct??~QÖ›QÒ¼?[QOo?e???`?z3?t???7
+??2xUlÔŠ?H???(???ÑZY?VÓ›Ct?*
+6jEd??4?{3?`?nKD7jEd?[Mo?e??4??#?U???\???;?e??4Ø¨?+]?Iß›Ct?*
+6?7?J???(???Ui??<]??????yUa?Vz?Ï½??Û›Ct?????+]?yx2??<t??f,??????t???d8?y?t?3?a?{#?z??P0D?È«
+??[?.0M??=?m????U?S???!?D^UØ¹V???&ß¹P0D?ï¿½ï¿½?????%???xô‡¿¾Ct?*
+???O~???Sß…?!?^???l??4?sA????gf?J??zf??U??b.h???????Ui?Q??V?JsU?m?[???*
+6???JWi?sA????g??İ¨????Ò¤??B?]?J????Z?VSß…?!?-?A?r?Ûª]????@0D?ï¿½ï¿½?`???????@0D?É«???Z??????????V??a??????U?Ç“?\???;?%??????Ö³?
+??yUa?{+?k?&_?
+??yUa?{+]??4???P0D?È«
+??[??0M??=?İÑ½~1???c?|?{(???U???A1?u?[Ò¼ÏŠ????P0D???V?7Ò­?zCt?*
+6???J???=?e??4Ø¨gf+]?I_???!?^???l?[M?
+??2xUl?3?????/??6İ­??^?U???U???{(???Ui?Q?{+?j??P0DwED7?zo?[M?
+??Íˆ?FU??t???C?]"?*?zo?k?s?Ûª?{-İ£??t???'Ã¹??<t?!?D^UX??H???=?%??Âª?V??0M??=?%??Âª?V??T??`?.?W???y???{u.?????gf??8???4???TO}
+??2xU}?a5"#?zjDP0DwED7?Fd?[M?
+??fDt?_v?Js???<t?!?^?U#??U??5"(??Ñ?Y?VS#??!?^?U#?Ò­?FCt?*
+6j?k?[M?
+??2xUlT??Jw???S#??!?^??Ï£?5?9İ`?.?Wu??'??UUS#??!?D^UX??J???W#??!?+"?#;??Ôˆ?`?é¶³İ‘??zvxB?]??????-i>z0????s??H(??Ñr"?t?&?	Ct?*
+6Ê‰?Ò­Æ‰??!?^??DZ?V?DB?]?J??r"?t?q"?`?.?W??F9?V?J?|?.h????D?3?J???G??e???DB?]??6??0Ò­?Ì€?!?^Õ£?6*G?%?/???z5}UP0@??Ñr3?t?q3?`?.?W??F?V?J??Ì€?!?-?(7?J?7
+??2xUl??a?[??Ct?*
+6?Í°Ò­?Ì€?!?^??fX?V?f@?]?J?,?G?[??Ct??>Ø°?F??????!?^?;??y}?i??Î–???Wf???7?F??-i>??????ß…??íŒ‡???t??????`?.?W??^???o<?zNß†?!?-İ«#?U?×Š???Cw ???Ui?Q@+]?I??e??4Ø¨
+??n5@(???Ui??G??4?????Cw ???Ui?Q@+]?I_??!?^?U?Ò­?Ct?*
+6?h?[M
+??yUa@+?j*?P0@w>#??3[?*??O?? B?]&??h=.]?y<?m??İ–?n??
+?*B5'+@?]"?*??k??_y???P0D?È«
+??Z?b?|?](???Uİ¸?Q9??\???d8???Ôˆ?`?.?W??^?n55"(???Ui?Q5"+]?I_#??!?^?U#?Ò­?FCt?*
+???t??~1?y?t3"?Q5"+]?I_#??!?^?U#?Ò­?FCt["?Q5"+?jjDP0D?ï¿½ï¿½?`??*+?jjDP0D?ï¿½ï¿½?`??*+]??{R?5"(???U?Ç¥?4?'Ã¹??Cw ?K?U?G~?Z???u??t>??l?İ¡`?.?W??W7*l?×‘nI???Y_??g??!?^??3[?V?3C?]?J?????t?&??t?3"?Q>??n5>3?e??4?(??J??
+???Dt?|f+]?I?3C?]?J??ZY?V?3C?]?J?????t????`?.?W??F??V????P0D?ï¿½ï¿½?`?|f+?j|f(???U?Ç¥[??Ct?????f?4??d8??Õ¸P0D?ï¿½ï¿½?`??+?j?(??3#??fX?V?f@?]?J??r3?t?q3?`?nKD7?Í°Ò­?Ì€?!?^??fX?V?f@?]?J??r3?t?q3?`?.?W??F?V?Õ¸P0D?ï¿½ï¿½?`???V?f@?]??{pì•‹??:?-iv?á¬¯?????b~?p?.?e??4Ø«#?U??7??WCt?*
+6Ê‰?Ò­Æ‰????3"?QN??n5N$?e??4?('?J?'
+???Dt??H+?j?H(???Ui?QN??n5N$?e??4?('?J?'
+??2xUl?i?[?	Ct?*
+6Ê‰?Ò­Æ‰??!?L^??z\??8?P0D?ï¿½ï¿½??Í³?[?p??_G?%ÍN?s?z=?Ct??>????7?A? İ½?+????[O
+??2xU?Õ‘?VSE??!?-İ¨*???Ò¤?"@?]?J???"X?VSE??!?^?{}d?Js???<t?!?^?UE??U??U(???Ui?QU+?j?P0D?ï¿½ï¿½?`??V??T?`?.?WVE?Ò­?? Ct????*????<<?m?Ûª?İ£??O???<???6İ`?.?W?X/#Tz???f????ÜŒ?`?nK@???n???"?4?v0?????A?]??6?Fd????5"(???Ui?W.~?O???e??4Ø¨???n55"(???Ui?Q5"+]?I_#??!?^?U#?Ò­?FCt?*
+???t??~1?y?CtWDt?jDV?J??F?Lw>?Ñ?Y?VS#??!?^?U#?Ò­?FCt["?Q5"+?jjDP0D?É«??Y?*?Ã“?\?æ¡»?F4?1yUG?q?*???p.h????yUë‘???PQ5(kF4t??!?^???m???"?4??d8???S#??!?^UlX??HW?kDP0D?ï¿½ï¿½?`???F??Ôˆ?`?.?W??^?n55"(??Ìˆ?FÕˆ?t?&}?
+??2xUlT??J???m??^????/??6İ`?.?W??FÕˆ?t?&}?
+??2xUlT??J???e??4Ø¨??n55"(?K?U?Õˆ?t??A?]&?*?Fd??4O?sA????Q??U?Ç¥?4?'Ã¹??Cw ????V#?V??A? ?vFD???O??5L?o??e??plT?????z8???S??!?-İ°
+?????W ?`?.?W??F?w?t?? B?]?J????Z?VS??!?^?U??U??@(???Ui?Q@+?j*?P0D?ï¿½ï¿½?`??LWi?sA???@0D?ï¿½ï¿½?`?*?V?J??CtWDt?*?V??T ?`??|FD7?h?[M
+??yUa@+?j*?P0D?%?U??U??'Ã¹??Cw[p??U?Ç¥?4?'Ã¹??Cw ?K?U?U ?t?? B?]"?j=?????g?(??pæ¡»?Í˜yU??İŒ?>?y?:?zw(?K?U?Gv3??z??y?:?zw(???U}??M?Q?İ’??'Ã¹???=?]??
+?????
+?.fDt????t???C?]?J??:2?j??P0D?%?U???U???{(???Ui?Q?]+?j??P0D?ï¿½ï¿½?`?Ö»V?Js???<t??w^??Şµ?U???{(???Ui?Q?{+?j??P0D?ï¿½ï¿½?`???V??T??`?.?WV??Ò­?zCt????ê½•??<<?m?Ûª??İ£??O???<???6İ`?.?WV?7Ò­?zCt["?#;???ß…?!?D^?zd'????Y?j????D.?????+????yCt?????+?}L???
+??yUa?7V??t?@?]"?j=??~?<?Í«
+??2xUulT?MI????Ü¿^O_?e???`????t????
 
-èîÌˆèF¹FºõôUAÁ]¯Jƒr3¬t«é«‚‚!º-İ(7ÃJWiÒ÷UAÁ]¯Jƒr3¬t«é«‚‚!º^•åfXé*Íıb.hóĞİæfì0xUl”›a¥«4éûª `ˆ.ƒW¥ÁF¹VºÕôUAÁ]¯Jƒê«²Ò­¦¯
+??Ìˆ?F?F???UA?]?J??r3?t?é«‚?!?-?(7?JWi??UA?]?J??r3?t?é«‚?!?^??fX?*??b.h????f?0xUl??a??4????`?.?W??F?V???UA?]?J??ê«²Ò­??
 
-†èyUa}UVºÕôUAÁ]&¯*ª¯ÊJWiç‚6İm}U»3"ºGëŸ<]¥y<ÎmºÁ]"¯*¬¯ÊH·¾*(¢ÛÑÙ‰¬§¯
+??yUa}UV???UA?]&?*???JWi???6?m}U?3"?G??<]?y<?m??]"?*???H???*(???Ù‰???
 
-†èyUa}UVºÕôUAÁ]"¯*¬¯ÊJw…iòõUAÁ]"¯*¬¯ÊJwÓäë«‚‚!ºD^UX_••n5}UP0D—Á«zâŞ&Ø¨ŞŒ’æÍbî_¯§ó
-†è2xU}°a7FºúÃßyCt¼*6j½k¤[OçĞİ›ÑZïZéVÓyCt¼*6jEd¥[MoÑm‰èF­ˆ¬t•æ~1´yèn[í1xUlÔŠÈJWiÒ÷f@Á]¯JƒêÍ°Ò­¦7
-†è2xUlTo†•n5½P0D—Á«Ò`£z3¬t«éÍ€‚!ºD^UXo†•®Ò<<ÎmºÛz3ö˜¼ª£õ¸t•æñd8´yèCt‰¼ª°Ş#İzz3 `€îjFDwd¯ªŞ(¢KäU…õfXéVÓ›Ct["º#;‘õôf@Á]"¯*¬7ÃJwÓäëÍ€‚!ºD^UXo†•n5½P0D—Á«ºù©M°QÕû’æÍ{ÅÜÓ­¦7
-†è2xU}°a½FºúÃß›Ct¼*6j½k¤[OoÑeğª4Ø¨gf+İjª÷P0D—Á«Ò`£™­t•æ~1´yènyf^ÌfDt£™­t•&}õ
-†è2xUì =İjª÷P0D·%¢U½·Ò­¦zCt¼*6ªzo¥[Mõ
-†è2xUlTõŞJWiç‚6İ-ÕûÅŒÈ«
-«Ş[é*ÍãÉp.hóĞ†èyUaÕ{«YMõ
-†èyUaÕ{+İk˜&_õ
-†èyUaÕ{+İjª÷P0D—È«
-«Ş[é®0M¾ê=ĞmfDtGv"ë©ŞCÁ]"¯*¬zo¥[Mõ
-†è¶toÍ6Á†Õwš·N†sÿz=Õ{(¢ËàUõÁÆÕwï(Şn=õ](¢ËàUi°a+"#İjöŞCÁ]¯Jƒ{f6Ò­¦zCt¼*6ì©ÊH·Šâ¯ïBÁ]¯Jƒ«ïéVSß…‚!º^•Vß5Ò­¦¾Ct¼*6¬¾k¤[M}
-è¶3"ºaõİ{CŠ÷£«4O†sA›‡î¶únËàUi°Gëqé*ÍãÉp.hóĞ†è¶<tãê»6ºõÔw¡`ˆ.‘WWß5Ò½†iòÕw¡`ˆ.‘WWß5Ò­¦¾Ct‰¼ª¸ú®‘î
-Óä«ïBÁ]"¯*®¾k¤»iòÕw¡`ˆ.‘WWß5Ò­¦¾Ct‰¼ªõÈNäú!Lóüu6¯j(¢KáU}Ó&Ø¨ê}IóÉ‡sÿzEÕ{$ ;ŸñĞ«ŞéVT½G‚!º^UlÔz×J·ê=Ñm‰èF­ˆ¬të©Ş#Á]
-¯ª6jEd¥«4÷‹¹ ÍCwÛŠhNáUõÁF­ˆ¬t•&oÑ¥ğªú`£VDVºõôf Á]
-¯ª6ª7ÃJ·Ş$¢KáUõÁFõfXéÖÓ›Ct)¼ª>Ø¨Ş+]¥yx2œÚ<t·õfÌ‰¼ª°Ş+]¥y<ÎmºÁ İÅŒ‡nXo†Õ‰¬§7	†èyUa½Vº×0MÂŞ$¢ÛÑêÍ°Ò­§7	†èyUa½Vº+L“°7	†èyUa½Vºû˜&aoÑ%òªÂz3¬tëéÍ@‚!ºD^UXo†•n=½H0D—È«ZìD®Æ4Ï_góªÖÛœÈƒWõä‹›`£:oJšO®‹yóz=7P0D—Á«êƒë¼1Ò­§ó
-è.gDt£Ü+İj:o `ˆ.ƒW¥ÁF¹VºJ³è´)ióĞİæf,["ºQn†•n5}UP0D—Á«Ò`£™­t«©ŞCÁ]¯JƒªŞ[éVS½‡‚!º^•{42İÃâñd8ëë‡lt‚!º^•.ßF^ÕSß…‚!º^•;òŠ¨ú.ÑeòªF^ÕSß…‚!ºD^UX}×Jw…iòÕw¡`€îÎŒˆîõ‹Á@wÓä«ïBÁ]"¯*¬¾k¥[M}
-†è¶Dt£ê»VºÕÔw¡`ˆ.‘WVßµÒ­¦¾Ct¼ª§Ş±	6¬¾[Ğ|êæpî_¯§¾Ct¼ª>Øƒ‘éêÏåznùCB÷`+]¯JƒóªÖŠ÷£[Oõ
-†è2xUlØz×H·š
- Ñeğª4Ø°‘‘n55"(¢ËàUi°Q;<­t•æáÉp.hóĞİ¶ÃswFD÷h}á“G «4'Ã¹ ÍCw ¢ËàUéşÈOUõT ¡`ˆnKD÷êÈt¯aš|@(¢ËàUi°a@#İj*€P0D—É«yETO
-†èyUq@#İ}L“¯Ct‰¼ª¸
- ‘n5@(¢KäUÅU t«© BÁ]
-¯ê7ÁFUJš·'Ã¹½¢Ñ¥ğª6Á†UŒt+ª" Á İ½İ('ÒJ·'	†èRxU}°GëqéÖãD"Áİ–‡n˜i½ïÖãD"Á]
-¯ª6Ê‰´Ò­Ç‰D‚!º^Ul”i¥[‰Ct)¼ª>Ø('ÒJ·'	†èRxU}°Q^••n=^Ñ¥ğªú`G^­ûgâu¿ò9Ÿõu¶gæõÖ“W5òŠh}Œi¿~|1º[WD^ÕíG7*G­ˆJš·_-æşõj¼*( »šÑZYé*ÍkÅ\Ğæ¡»mE´bğª4Ø¨û®•n5N$Ñm‰èFİw­t«q"¡`ˆ.ƒWÕæDéÖãDBÁ]¯Jƒù¾[	Ct¼*6Ê‰´Ò­Æ‰„‚!º^•åDZéVãDBÁ]¯êö7o‚ê¼)iŞ9ÎıëõtŞ@Á]¯ªö`dºúÃ¿;
-†èRxU}°aÏÌ¯(ŞnE^ì2İålFD7ì™ùÕ!ÅûÑ­Ç«B‚!º^UlØ3³‘®Ò\sA›‡î–gæå¬%¢æDéÖãD"Á]
-¯ªöh=.İzœH$¢KáUm‚s"mt+r"‘`ˆ.…WÕ;òSUEN$Ñ¥ğªú`G~ªªÈ‰D‚!ºL^U˜i¤[‰Ct‰¼ª°İÙVºû˜&ßîl(¢KäU…ñj¥ûğF,ş3^¡`€n3#¢ûõ…Oî#˜fÙËCw ¢KäU…õ3[ébš|ıÌP0D·% {çS›`£jD%Í;÷Šyóz=@(¢ËàUõÁ†U tõ‡¿Ct¼*6Ê«2Ò­§Ct¼*6Ê«²Ò­¦Ct¼*6ê©ÊJ·Šâ¯AÁ]¯JFÎİz|f(¢ËàUi°Q>³•n5>3Ñeğª4Ø(ŸÙJWGzŸ
-è¶3"º>yºÕì½‡‚!º^•û¾õ¸tÕW¦?'
-†è¶Dt£ªVºÕT `ˆ.‘WVE°ÒU_™¾Š Ct¼ª§g›`ÃœÈ‚æÓ'Ã¹½Ÿ
-†è2xU}°qnÆ½ÅûÑ­ÇÍ€‚!º^•ş*lÓr·šH(¢ËàUi°a^•‘n5^Ñeğª4Ø0¯ÊH·¯
+??yUa}UV???UA?]"?*???Jw?i??UA?]"?*???Jw??ë«‚?!?D^UX_??n5}UP0D?ï¿½ï¿½z??&Ø¨ŞŒ???b?_???
+??2xU}?a?7F????yCt?*
+6j?k?[O?
+?İ›ÑZ?Z?V?yCt?*
+6jEd?[Mo?m??F???t??~1?y?n[?1xUlÔŠ?JWi??f@?]?J???Í°Ò­?7
+??2xUlTo??n5?P0D?ï¿½ï¿½?`?z3?t??Ì€?!?D^UXo????<<?m??z3???????t???d8?y?Ct?????#?zz3?`??jFDwd????(?K?U??fX?VÓ›Ct["?#;???f@?]"?*?7?Jw???Ì€?!?D^UXo??n5?P0D?ï¿½ï¿½???M?Q?????{??Ó­?7
+??2xU}?a?F???ß›Ct?*
+6j?k?[Oo?e??4Ø¨gf+?j??P0D?ï¿½ï¿½?`????t??~1?y?nyf^?fDt????t?&}?
+??2xU??=?j??P0D?%?U??Ò­?zCt?*
+6?zo?[M?
+??2xUlT??JWi???6?-??ÅŒÈ«
+??[?*???p.h????yUa?{?YM?
+??yUa?{+?k?&_?
+??yUa?{+?j??P0D?È«
+??[??0M??=?mfDtGv"???C?]"?*?zo?[M?
+???to?6ï¿½ï¿½?w??N?s?z=?{(???U????w?
+(Şn=?](???Ui?a+"#?j??C?]?J?
+{f6Ò­?zCt?*
+6???H?????B?]?J?
+???VSß…?!?^?V?5Ò­??Ct?*
+6??k?[M}
+??3"?a??{C????4O?sA?????n??Ui?G?q?*???p.h?????<t???6???w?`?.?WW?5Ò½?i??w?`?.?WW?5Ò­??Ct????????
+????B?]"?*??k???i??w?`?.?WW?5Ò­??Ct?????N??!L??u6?j(?K?U}?&Ø¨?}I???s?zE?{$?;???
+???VT?G?!?^Ul?z?J???=?m??F???t???#?]
+??6jEd??4?????CwÛŠhN?U??F???t?&oÑ¥???`?VDV???f ?]
+??6?7?J???$?K?U??F?fX??Ó›?Ct)??>Ø¨?+]?yx2??<t??fÌ‰????+]?y<?m?? ?ÅŒ?nXo?Õ‰??7	??yUa?V??0M??$??Ñ?Í°Ò­?7	??yUa?V?+L??7	??yUa?V???&ao?%???z3?t???@?!?D^UXo??n=?H0D?È«Z??D??4?_g???Ûœ??W?ä‹›`?:oJ?O??y?z=?7P0D?ï¿½ï¿½??
+??1Ò­??
+?.gDt??+?j:o?`?.?W??F?V?J???)i????f,["?Qn??n5}UP0D?ï¿½ï¿½?`????t???C?]?J????[?VS???!?^?{42?Ã??d8???lt?!?^?.?F^?Sß…?!?^?;òŠ¨?.?e??F^?Sß…?!?D^UX}?Jw?i??w?`??ÎŒ????ï¿½ï¿½@w????B?]"?*??k?[M}
+???Dt???V???w?`?.?WVßµÒ­??Ct???Ş±	6??[?|??p?_???Ct??>?????zn?CB?`+]?J?
+??????[O?
+??2xUl?z?H??
+ ?e??4Ø°??n55"(???Ui?Q;<?t????p.h??İ¶?swFD?h}??G??4?'Ã¹??Cw ???U???OU?T ?`?nKD???t?a?|@(???Ui?a@#?j*?P0D?É«yETO
+??yUq@#?}L??Ct????
+??n5@(?K?U?U ?t?? B?]
+??7?FUJ??'Ã¹??Ñ¥??6ï¿½ï¿½U?t+?" ? İ½?('?J?'	??RxU}?G?q???D"?İ–?n?i????D"?]
+??6Ê‰?Ò­Ç‰D?!?^Ul?i?[??Ct)??>?('?J?'	??RxU}?Q^??n=^Ñ¥???`G^??g?u??9??u?g????W5??h}?i??~|1?[WD^??G7*G??J??_-???j?*(???ÑZY?*?k?\?æ¡»mE?b??4Ø¨???n5N$?m??F?w?t?q"?`?.?W??D???DB?]?J???[?	Ct?*
+6Ê‰?Ò­Æ‰??!?^??DZ?V?DB?]???7o????)i?9????t?@?]???`d??Ã¿;
+??RxU}?a?Ì¯(ŞnE^?2??lFD7????!??Ñ­Ç«B?!?^Ul?3????\sA????g???%??D???D"?]
+???h=.?z?H$?K?Um??s"mt+r"?`?.?W?;?SUEN$Ñ¥???`G~??È‰D?!?L^U?i?[??Ct??????V???&??l(?K?U???j???F,?3^?`?n3#?????O??#?f??Cw ?K?U??3[?b?|??P0D?%?{?S?`?jD%?;??y?z=@(???U?ï¿½ï¿½U ?t???Ct?*
+6Ê«2Ò­?Ct?*
+6Ê«?Ò­?Ct?*
+6???J????A?]?JF??z|f(???Ui?Q>??n5>3?e??4?(??JW?Gz?
+??3"?>y??ì½‡?!?^?????t?W??'
+???Dt??V??T?`?.?WVE??U_??? Ct???g?`ÃœÈ‚??'Ã¹??
+??2xU}?qnÆ½??Ñ­?Ì€?!?^??*l?r???H(???Ui?a^??n5^?e??4?0??H??
 
-†è2xUlØz×H·šõ.ĞÏˆè†­wï(Ş—n5ë](¢ËàUi°aë]#İjÖ»P0D·Ÿ®.Û¢:o.¯W‡?åëô7X0D—À«:6hEd¥[MçÑ%ğªÎƒZ™éÖÒyƒCt	¼ªó`ƒVDfºJsQÌmºÛVDs¯ê<Ø ê½™®Ò\sA›‡î¶êıœÀ«:öúÅ`G «4÷‹¹ ÍCw ¢KàUÔ›a¦«4{ã|.hóĞİÖ›1'ğªÎƒòªÌt•fïbœÏmºÛ¼ªÅŒˆnWe¦«4{ã|.hóĞİæU-¼ªó`ƒ¼*3]¥Ù{RçsA›‡î6¯jÑÑªŞ›é*ÍÃ“á\Ğæ¡»­z¿`òªÖ>yºJóx2œÚ<t‚!º^Uo¨…ùÌe5¾ ıé‹>zŸ
-†è2xUì•‹ŸüÆÓ­Çg†‚!º^•å3[éVã3CÁ]¯Jƒò™­t•&½ÏCt¼*6Êg¶Ò­Æg†‚!º^•;°MG «4÷‹¹ ÍCw  »œÑò™­t•&½ÏCt¼*6Êg¶Ò­Æg†‚!º-İ(ŸÙJ·Ÿ
-†è2xUl”Ïl¥[ÏCt™¼ª(ŸÙJ·Ÿ
-†è2yUGëqéVã3CÁ]"¯*j‘•n5ûˆ°`ˆ.‘WµÓÄL·¿¯Òï4Á‚!º^Uo—†UÊ\,i÷¯×SE€‚!º^•{udºÕT `€îÎŒˆnÔ}×JWgú*Ñeğª4Ø¨*‚•n5U(¢ÛÑ½>2]¥¹_ÌmºÁ]¯Jƒr3¬t«q3 `ˆ.ƒW¥Áç#Ğ­ÆÍ€‚!º^UlÔ‰FVºÕœh„Ct¼*6ªh¥«îû©(X0D—Á«Ò`£¼*+İj¼*(¢ËàUõË¶07£ğ‰ïç#×ãf@Á]¯Jƒr3¬t«q3 `€îîŒˆn”›a¥[›Ct¼*6ÊÍ°Ò­ÆÍ€‚!º-İ¨H+]¥Iß	Ct¼ªşöTÕ¿ÿ|.iknVóTCt¼*6ê©ÊJ·š§*(¢ËàU]¦Û_Q·}óy=t¡`ˆ.ƒW¥ÁFyUVºÕt«CÁ]¯ª6ê»Ä¬t·]¹×ƒ8ènı.±]¯ªô[?pñ“_Gº¥o\ÒÖ×Ïû¦†?tßi‚Ct¼ª>Ø°+³‘n=Wf( »7ã¡V´æn5@(¢ËàUi°Gëqé÷ÿ|x2œõõc6ºÁİ–€n	»ï–½ûÕo«¹ïBÁ]¯Jƒº2[éVse†‚!º^•åDZé^Ã4é¾m
-†è2xUl”We¥»¥ÊÀ³K
-†è2xUlTÇ«•®>E=2ÎÅSİm¯{^UßöTUôEİ·oªš§*(¢ËàUõÁ†õ3éÖÓÏCt¼*ıUŒzf¶æn5ÏÌP0@w5#¢õÌl¥[Í33Ñeğª4Ø¨gf+İj™¡`ˆnKD7ªh¥»Â4ù*€P0D—Á«úÀzlÔ3s¹Â)iëëÕ<3CÁ]¯ªö`dºúÃ¶:Ñeğª4Ø¨‘‘n=+"(¢ËàUé…&jEd½2W³"‚‚!º^•µ"²Ò­fECt¼*6jEd¥[ÍŠ
-†è2xUlÔŠÈJ·šì2İÙŒˆîõ‹Á@wÓ,;uxèCt¼ª¾¶ŞíŸu·VøªYïBÁİ–‡nØz×HWø×»P0D—Á«Ò`£VDFºõœ
-Ct¼*¶¿ŒFWë¼ıë¼'çCÁ]¯Jo##çn=nÑeğª4ØÁâ|ºÕ¸P0D—Á«Ò`£Ü+İjÜ(¢ËàUi°Qn†•®®oéİ(¢»"¢;Xœ@·7
-è63"º>yºÛv‘Ñìğ„‚!º^ÕÑzl”›qÜSÒ¹¤­¯WãUAÁİ–‡n˜We¤«?ü^Ñeğª4Ø¨õ®‘n=^Ñeğª4Ø¨õ®•®Ò¼VÌmºÛÖ»ƒW¥Áöœ£Ñí;`ù¿¡
-†è2xUl”Ïl¥[ÏCt¼*6j‡§•®Òì_çıN(¢ËàUi°ı<]¥©ÿ\¾ŞÏ<t‚!º+ºa5"ëz·šĞmgDtG~f®§FCt™¼ª¨‘•n55"(¢ÛÑªYé®0M¾Ñ%òªÂjDVºû˜&_
-†èyUa5"+İjjDP0D—È«
-û¦8+İ‡0M¾oŠƒ‚!ºD^UØyUVºúÏ½kq©şË¶Şİv^ÕNËàU}pdX}÷Ñşß¯sI[_¯¦¾Ct¼ª>Ø°ú®‘®şğ×w¡`ˆ.ƒW¥Á^¹øÉo<İzê»P0@w>#¢åUYéVSß…‚!º^•åUYé*ÍE1´yènóªæ-İ¨õ®•n¿¾åÿ@(¢ËàUi°Q½VºÕôf@Á]¯JƒêÍ°Ò­¦7
-†è2xUl”›a¥«4{×‚·7
-†è2xUìÑz\ºJ³·7
-†è2yU#¯wëéÍ€‚!ºD^UXo†•î5L“¯7
-†èyUa½VºÕôf@Á İÅŒˆnTo†•î
-ÓäëÍ€‚!ºD^UXo†•î>¦É×›Ct["º#{Uõôf@Á]"¯*¬7ÃJ·šŞ(¢KäU­Gv"·~o›WµŞæD.ˆ¼ª°Î+İŞ­àï¼‚!º^Õ£÷6ÁFõf|yOGç’¶¾^MçÑeğªú`Ã:oŒtõ‡¿ó
-†è2xUì•‹ŸüÆÓ­§ó
-†è2xUl”i¥[MçĞ]ÎˆèF9‘VºJ“¾ó
-†è2xUlÔŠÈJ·šŞ(¢ÛÑêÍ°Ò­¦7
-†è2xUlÔz×JWiöëZŞŞ(¢ËàUi°Gëqé*ÍŞåàíÍ€‚!º^•.ÎG^ÕÓ›Ct™¼ª‘WDõôf@Á]"¯*¬7ÃJ·šŞ(¢KäU…õfXé®0M¾Ş(¢KäU…õfXéîcš|½P0@wgFDwĞj0İjz3 `ˆ.‘WÖ›a¥[MoÑm‰èìDÖÓ›Ct‰¼ªõÈNäÖopeóªÖÛœÈ"¯*¬óÆJ÷Óäë¼‚!ºL^ÕÑz\ºÇ˜fÙ‡ÅCw ¢ËàU=öà&Ø¨Î›Ç6"œÏ%m}½š¾*(¢ËàUõÁ†õUéê_Ñeğª4Ø+?ù§[O_Ñeğª4Ø«#Ó­¦¯
+??2xUl?z?H???.ĞÏˆè†­w?
+(Ş—n5?](???Ui?a?]#?jÖ»P0D???.Û¢:o.?W??????7X0D?ï¿½ï¿½:6hEd?[M?
+?%??Îƒ
+Z????y?Ct	???`?VDf?JsQ?m??VDs??<Ø ê½™??\sA???????ï¿½ï¿½:???`G??4?????Cw ?K?U?Ô›a??4{?|.h???Ö›1'??Îƒ
+???t?f?b??m?Û¼?ÅŒ?n?We??4{?|.h????U-???`??*3]??{R?sA???6?j??
+?Ş›?*?Ã“?\?æ¡»?z?`????>y?J?x2??<t?!?^Uo????e5???é‹>z?
+??2xUì•‹???Ó­?g??!?^??3[?V?3C?]?J?????t?&??Ct?*
+6?g?Ò­?g??!?^?;?MG??4?????Cw ???Ñ???t?&??Ct?*
+6?g?Ò­?g??!?-?(??J??
+??2xUl??l?[??Ct???(??J??
+??2yUG?q?V?3C?]"?*j??n5???`?.?W???L?????4ï¿½ï¿½!?^Uo??U?\,i???SE??!?^?{ud??T?`??ÎŒ?n?}?JWg?*?e??4Ø¨*??n5U(??Ñ½>2]??_?m??]?J??r3?t?q3?`?.?W???#Ğ­?Ì€?!?^UlÔ‰FV?Õœh?Ct?*
+6?h?????(X0D?ï¿½ï¿½?`??*+?j?*(???U?Ë¶07?????#??f@?]?J??r3?t?q3?`??îŒˆn??a?[??Ct?*
+6?Í°Ò­?Ì€?!?-İ¨?H+]?I?	Ct????TÕ¿?|.iknV?TCt?*
+6???J???*(???U]??_Q?}?y=t?`?.?W??FyUV??t?C?]??6??Ä¬t?]?×ƒ8?n?.?]???[?p??_G??o\????????t?i?Ct??>Ø°+??n=Wf(??7??V??n5@(???Ui?G?q???|x2???c6??İ–?n?	??????o???B?]?J???2[?Vse??!?^??DZ?^?4??m
+??2xUl?We????ï¿½ï¿½K
+??2xUlTÇ«??>E=2??S?m?{^U??TU?Eİ·o???*(???U?ï¿½ï¿½?3????Ct?*?U?zf??n5??P0@w5#???l?[?33?e??4Ø¨gf+?j???`?nKD7?h???4?*?P0D?ï¿½ï¿½??zl?3s??)i???<3C?]???`d????:?e??4Ø¨??n=+"(???U??&jEd?2W?"??!?^??"?Ò­fECt?*
+6jEd?[ÍŠ
+??2xUlÔŠ?J???2İÙŒ????ï¿½ï¿½@w?,;ux?Ct????????u?V??Y?B?İ–?n?z?HW?×»P0D?ï¿½ï¿½?`?VDF???
+Ct?*
+????FW?????'?C?]?Jo##?n=n?e??4???|?Õ¸P0D?ï¿½ï¿½?`??+?j?(???Ui?Qn????o??(??"?;X??@?7
+?63"?>y??v??????!?^??zl??q?SÒ¹???W?UA?İ–?n?We????^?e??4Ø¨???n=^?e??4Ø¨????Ò¼V?m??Ö»
+?W????????;`???
+??2xUl??l?[??Ct?*
+6j??????_??N(???Ui??<]???\???<t?!?+?a5"?z???mgDtG~f??FCt??????n55"(??Ñ?Y??0M??%???jDV???&_?
+??yUa5"+?jjDP0D?È«
+??8+İ‡0M?o???!?D^U?yUV??Ï½kq??Ë¶??v^?N??U}pdX}???ß¯sI[_???Ct??>Ø°???????w?`?.?W??^???o<?z??P0@w>#??UY?VSß…?!?^??UY?*?E1?y?n???-İ¨???n????@(???Ui?Q?V???f@?]?J???Í°Ò­?7
+??2xUl??a??4{×‚?7
+??2xU??z\?J???7
+??2yU#?w??Ì€?!?D^UXo???5L??7
+??yUa?V???f@? ?ÅŒ?nTo???
+???Ì€?!?D^UXo???>??×›Ct["?#{U??f@?]"?*?7?J???(?K?U?Gv"?~o?W???D.?????+?Ş­?ï¼?!?^Õ£?6?F?f|yOGç’¶?^M?
+?e???`?:o?t????
+??2xUì•‹???Ó­??
+??2xUl?i?[M?
+?]Îˆ?F9?V?J???
+??2xUlÔŠ?J???(??Ñ?Í°Ò­?7
+??2xUl?z?JWi??Z??(???Ui?G?q?*?????Ì€?!?^?.?G^?Ó›Ct????WD??f@?]"?*?7?J???(?K?U??fX??0M??(?K?U??fX??c?|?P0@wgFDw?j0?jz3?`?.?WÖ›a?[Mo?m????D?Ó›Ct?????N??ope???Ûœ?"?*???J???ë¼?!?L^??z\?Ç˜fÙ‡?Cw ???U=??&Ø¨Î›?6"??%m}???*(???U?ï¿½ï¿½?U??_?e??4?+????[O_?e??4Ø«#Ó­??
 
-èîÎˆèFU¬t•&}_Ñeğª4Ø¨*‚•®Ò\sA›‡î¶*ÂnKD7Ê‰´ÒíÇ²K®<¿Š‡î6'r—Á«Ò`£œH+İjz"¡`ˆ.ƒW¥ÁF9‘VºÕôDBÁ]¯Jƒr"­t•fïQñöDBÁ]"¯*¬'ÒJWiö#oO$Ñ%òªÂz"­Nd5=‘P0D—È«
-ë‰´Ò½†iòõDBÁ]"¯*¬'ÒJ·šH( »7#¢;²›QOO$Ñ%òªÂz"­t÷1M¾H(¢ÛÑ=8—n5=‘P0D—È«
-ë‰´Ò­¦'
-†èyUa=‘VºÕôDBÁ]"¯*¬'ÒJ÷L“¯'
-†èyUa=‘Vº‡˜&_O$ÑeòªÖãÒ=Æ4ùz"¡`ˆ.ƒWuãæ&Ø¨®¹õtt.iëëÕôDBÁ]¯ª6¬'ÒHWø{"¡`€îjFD÷ÊÅO~ãéÖÓ	Ct¼*öêÈt«é‰„‚!º-İ¨*‚•®Ò¤ï‰„‚!º^•UE°Ò­¦'
-†è2xUìõ‘é*Íıb.hóĞ†è2xUlTÁJWi®|ßĞ
-Ct¼*6ªŠ`¥[M?3Ñeğª4Ø¨*‚•n5ıÌP0D—È«
-ëg¶Ò­¦Ÿ
-†è2yUQU+]¥ÙûË¼ıÌP°Ëtwg3"ºGëŸ<]¥y<ÎmºÁ]"¯*¬ŸÙZE¨¦Ÿ
-†è¶DtGv"ëég†‚!ºD^UX?³•n5ıÌP0D—È«
-ëxµÒíİ
-şW(¢KäU…u¼ZéVÓñ
-Ct‰¼ª°H+İjz"¡`ˆ.‘WÖi¥û¦É×	Ct‰¼ª°H+İCL“¯'
-†è2xUzulT_Õ‡7"œÏ%m}½š®9( ÛÌxè†uÍéê×Ñeğª4Ø(¯ÊH·®9(¢ÛÑòª¬t•æµb.hóĞİæU5^•åUYé*Í¢Š¯k
-†è2xUì 	lºJsUÌmºÁ]¯Jƒr"­t•æ~1´yèns"¯Jƒr"­t•&}×Ñeğª4Ø÷­Ç¥[M×Ñeğª4Ø(ŸÙJWiö$o×Ñ%òªÂºæ¬t•fï@òvÍAÁ İvFD7Êg¶ÒUš½ŸÌÛ5Ct™¼ª£õ¸t•æñd8´yèCt[ºa]sÖ*BïEñwÍAÁ]"¯*¬óÆJ·_ñğwŞ@Á]"¯*¬óÆJ·šÎ(¢ËàU}øŞ&Ø¨
-àWôtt.iëëÕÔw¡`ˆ.ƒWÕVß5ÒÕşú.Ñeğª4Ø¨§*#İzê»P0D—Á«Ò`¯L·šú.Ñeğª4Ø¨ú®•®Ò¤¯ïBÁ İùŒˆnT}×J·šú.Ñeğª4Ø¨õ®•®ÒÜ/æ‚6İmëİyKD7j½k¥«4éë»P0D—Á«Ò`£ê»VºÕÔw¡`ˆ.ƒW¥ÁFÕw­t«©ïBÁ]"¯*¬¾k¥[M}
-†è2yUQõ]+]¥yx2œÚ<t·ÕwçL^ÕÑz\ºJóx2œÚ<t‚!º^U÷àFå(Ÿ¹Ûˆp>—´õõjªP0D—Á«êƒ«"éê
-è.fDt¶éO·Ÿ
-†è2xUl”Ïl¥«4é}f(¢ÛÑò™­t«ñ™¡`ˆ.ƒW¥ÁFùÌVºÕøÌP0D—Á«Ò`£|f+]¥Iï3CÁ]¯Jƒò™­t«ñ™¡`ˆ.ƒW¥ÁFùÌVºÕøÌP0D—Á«Ò`£|f+İj|f(¢KäU…ùÌVºÕøÌP0D—É«:ZKWiO†sA›‡î@0@w9# û‘››`£ÜŒnşæù\Òî_¯ÇÍ€‚!º^•åfXéVãf@Áİ–ˆn”›a¥[›Ct¼*6ÊÍ°Ò­ÆÍ€‚!º^•åfXéVãf@Á]¯Jƒr3¬t«q3 `ˆ.ƒW¥ÁF¹VºÕ¸P0D—Á«Ò`£Ü+İjÜ(¢ËàUi°ƒÅùt«q3 `ˆîŠ€îG_İåf|ì`CQç’vÿz=nĞİ™Ñr3¬t«q3 `ˆ.ƒW¥ÁF¹VºÕ¸P0D·%¢åfXéVãf@Á]¯Jƒr3¬t«q3 `ˆ.ƒW¥ÁF¹VºÕ¸P0D—Á«Ò`£Ü+İjÜ(¢ËàUi°Qn†•n5nÑeğª4ØÁâ|ºÕ¸P0D—Á«úØ½M°W/~òëH÷+7TÎç’vÿz=ûˆ `ˆîŠˆn”We¥[WtwgDt£¼*+İj¼*(¢ËàUi°ëeºJ“Ş«‚‚!º-İ(¯ÊJ·¯
+??Îˆ?FU?t?&}_?e??4Ø¨*????\sA????*?nKD7Ê‰????Ç²K?<????6'r?ï¿½ï¿½?`??H+?jz"?`?.?W??F9?V???DB?]?J??r"?t?f?Q??DB?]"?*?'?JWi??#oO$?%???z"?Nd5=?P0D?È«
+ë‰´Ò½?i??DB?]"?*?'?J???H(??7#?;??QOO$?%???z"?t?1M??H(???=8?n5=?P0D?È«
+ë‰´Ò­?'
+??yUa=?V???DB?]"?*?'?J?L??'
+??yUa=?V???&_O$?e??????=?4?z"?`?.?Wu??&Ø¨???tt.i????DB?]??6?'?HW?{"?`??jFD???O~????	Ct?*
+???t?é‰„?!?-İ¨*???Ò¤ï‰„?!?^?UE?Ò­?'
+??2xU????*??b.h????2xUlT?JWi?|??
+Ct?*
+6??`?[M?3?e??4Ø¨*??n5??P0D?È«
+?g?Ò­??
+??2yUQU+]???Ë¼??P??twg3"?G??<]?y<?m??]"?*???ZE???
+???DtGv"??g??!?D^UX???n5??P0D?È«
+?x????
+??W(?K?U?u?Z?V??
+Ct?????H+?jz"?`?.?W?i?????	Ct?????H+?CL??'
+??2xUzulT_Õ‡7"??%m}???9(???x??u?????e??4?(??H???9(??Ñ???t???b.h????U5^??UY?*Í¢???k
+??2xU??	l?JsU?m??]?J??r"?t??~1?y?ns"?J??r"?t?&}??e??4???Ç¥[M??e??4?(??JWi?$o??%??Âº??t?f?@?v?A? ?vFD7?g??U?????5Ct??????t???d8?y?Ct[?a]s?*B?E?w?A?]"?*???J?_??w?@?]"?*???J???(???U}??&Ø¨
+?W?tt.i????w?`?.?W?V?5????.?e??4Ø¨?*#?z??P0D?ï¿½ï¿½?`??L???.?e??4Ø¨????Ò¤??B? ????nT}?J???.?e??4Ø¨??????/??6?m??yKD7j?k??4???P0D?ï¿½ï¿½?`???V???w?`?.?W??F?w?t???B?]"?*??k?[M}
+??2yUQ?]+]?yx2??<t??w?L^??z\?J?x2??<t?!?^U??F?(??Ûˆp>????j?P0D?ï¿½ï¿½??
+?"??
+?.fDt??O??
+??2xUl??l??4?}f(??Ñ???t????`?.?W??F??V????P0D?ï¿½ï¿½?`?|f+]?I?3C?]?J?????t????`?.?W??F??V????P0D?ï¿½ï¿½?`?|f+?j|f(?K?U???V????P0D?É«:Z?KWiO?sA???@0@w9#?????`?ÜŒ?n???\??_??Ì€?!?^??fX?V?f@?İ–?n??a?[??Ct?*
+6?Í°Ò­?Ì€?!?^??fX?V?f@?]?J??r3?t?q3?`?.?W??F?V?Õ¸P0D?ï¿½ï¿½?`??+?j?(???Ui????t?q3?`?îŠ€?G_??f|?`CQ??v?z=n?İ™Ñr3?t?q3?`?.?W??F?V?Õ¸P0D?%??fX?V?f@?]?J??r3?t?q3?`?.?W??F?V?Õ¸P0D?ï¿½ï¿½?`??+?j?(???Ui?Qn??n5n?e??4???|?Õ¸P0D?ï¿½ï¿½?Ø½M?W/~??H?+7T???v?z=???`?îŠˆn?We?[?WtwgDt??*+?j?*(???Ui??e?J?Ş«??!?-?(??J??
 
-†è2xUl”We¥[WCt¼*6Ê«²Ò­Æ«‚‚!º^•åUYéVãUAÁ]¯Jƒòª¬t•fá^ğyUP0D—Á«Ò`ÖãÒUšô^Ñ%òªÖ#¯ˆêùÆ(¢»" ûøƒgŸæU=¾Şˆ¡sI»½¯
+??2xUl?We?[?WCt?*
+6Ê«?Ò­Æ«??!?^??UY?V?UA?]?J?????t?f?^?yUP0D?ï¿½ï¿½?`????U??^?%???#?????(??"????g??U=?Şˆ?sI???
 
-èîÍˆèFyUVºÕxUP0D—Á«Ò`£®ÌVºJ“Ş«‚‚!º-İ(¯ÊJ·¯
+??Íˆ?FyUV??xUP0D?ï¿½ï¿½?`???V?J?Ş«??!?-?(??J??
 
-†è2xUl”We¥[WCt¼*6Ê«²Ò­Æ«‚‚!º^•åUYéVãUAÁ]¯Jƒòª¬t•fá^ğyUP0D—Á«Ò`ÖãÒUšô^Ñeğª¾êæ&Ø¨õîÇ7ó|.i÷¯×³Ş…‚!º^•µŞµÒ­f½tW3"ºQë]+İjÖ»P0D—Á«Ò`£Ö»VºÕ¬w¡`ˆnKD7j½k¥[Íz
-†è2xUlÔz×J·šõ.Ñeğª4Ø¨õ®•n5ë](¢ËàUi°ƒåÛt«YïBÁ]¯êã¯n‚zf~bóï=ŸKÚıëõ<3CÁ]¯Jƒzf¶Ò­æ™
-†è2xUlÔ3³•n5ÏÌP0D—Á«Ò`£™­t«yf†‚]¦»7›Ñzf¶Ò­æ™
-†è2xUlÔ3³•n5ÏÌP0D·å¡»ªé÷//Šy5œièCt¼ª'î}^Ø}÷fOOç’vÿz=÷](¢ËàUi°Q÷]+İjî»P0D—Á«Ò`£î»VºÕÜw¡`ˆ.ƒWÕvß5Ò­ç¾Ct¼ª›Ÿ:û¼¸+s/Æù\Pí_¯çÊCt¼*6ìÊl¤[Í•
-†è2xU}°qWfİz®ÌP0@·™Ñ½~1Øèîcš|ûw¡`ˆ.ƒWukvöyaWæ[Îç’vÿz=Wf(¢ÛòĞ]_¹øÉo<İuäúÅü®áLCw(¢ËàUi°WG¦{Ó<ıİ`ˆ.ƒW¥ÁF¬`¥«OQÍò)‹‡î–“ö¯Jƒzf¶Ò­æ™
-†è2xU·¾éìóÂª|p#†Î%íşõŠª`ˆ.ƒWÕöTe¤[ÑSÑeğª4Ø¨§*+İzª`ˆ.ƒW¥ÁF=UYéÖóT…tÛİ¨§*+İzª`ˆ.…WÕåDZéîcš|N$Ñm	è>ùâÙçÅ=3¯{Š:?XÌ›×ëyf†‚!º^UlÜS•n=OUP0D—Á«Ò`ÃªŒt«yª‚‚!º^•öTe¤[ÍSÑeğªzÇ&Ø.~òëH÷©››¿Î%m}ıøSºãÓ…‚!º^UlØùÌFºõœÏCt¼*6ê™ÙJ·šgf(¢ËàUé…æÊÅOáÊ\Ïtç3"ºQ+"+İjVDP0D—Á«Ò`G¾ïÖ³"‚‚!º-İ¨‘•n5+"(¢ËàU=õgŸwµ"ºİÓÑ¹¤}{2ø9xçp¾ü3:]$¢ËàUi°QWf#İŠVDH0D—Á«Ò`£®ÌVºÕœàCt)¼ª>Ø¨]bVºôs±¾åÛ%Ct)¼ª>ØÁâ|ºõ¸H0D—Â«ÚæféVäf Á]
-¯ªvä§ªŠÖ»H0@w1#¢;òSUEë]$¢ËàUİ~ôìóâÖ»¯öuó«“‹?üë](¢ÛÑ»ï¾: x?ºçTßUÌ—h³Ğİvß]0xUlØ•ÙH·šõ.Ñeğª4Ø°õ®‘n5ë](¢ËàUi°aë]#İjÖ»P0D—Á«êƒ[ïÚèÖ³Ş…‚!º^•{udºº¾¥¯ŞCÁ]¯Jƒs3Œt«q3 `ˆ.ƒWuû›Ï>/¬xç`#†Î%íşõz*€P0@w9#¢µ"²Ò­gE„Ct)¼ª>Ø¨‘•n=+"$¢ÛÑZYéÖ³"B‚!º^Õ&Ø°gf#İŠ™‘`ˆ.…WÕ;òSUEÏÌH0D—Á«ºó©M°Q5¢;÷zŠ:sÿú}jB|»Ä `ˆ.ƒWÕ{pıäÂ'¿ñtÏŸ‘÷‹¹x†¦¡;Ñeğª4Ø°gf#İj™¡`ˆ.ƒW¥Á†=3éVóÌCt¼*½\¹øÉ#Üw«©"@Á İİ°‘RÕù ˜û×«YAÁ]¯Jƒ[éV³"‚‚!º-İ0ŸÙHw…iòõDBÁ]¯êéÙÙç…õD>½á|.i?­"m~ø{"¡`ˆ.ƒW¥ÁF­wtëYïBÁ]¯JƒZïZéV³Ş…‚!º^UlØ3³‘n=ÏÌP0D—Á«Ò`£™­t«yf†‚!º^•õÌl¥[Í33Ñeğª4Ø‘Ÿªê9Ÿ
-èîÎˆè\øäè¾÷Ò<ı½Åd ;Ñeğª4Ø÷L÷á~~h2œş9İ`ˆnHwèô«{¦§ÿê^‘Ï8ı/?ı·ÊxkOí3e|VÿwÑçôŸğ¹2¾Ídó[rê3|;ß^Æwñy2ä·fòd|gßEÆw•qEÆw“ñ Œï.ã{Èø2NŸ†¿—Œï-ãûÈø¾2N@?_Æ»e|Œï'ãô¹êûË8USò`"jMæ2NïÈ²–œÈŠc"Ï¥yz™œêö…2®Ëø2Ş#ã4û¿HÆ)…÷ÊxŸŒ/–qú{ó~Ëø€Œ/‘qºŞúR‡2d|™Œc”ñ¨Œ/—ñ˜Œ2>$ãÃ2¾BF'ã#2>*ãc2¾RÆã2¾JÆÇe<!ã¦Œ[2”ñ”ŒÓNî;2–ñŒŒS6ÏÊø_+ã9ÏË_ÇÉ]§L Œ—dùÉ+2¾NÆ’ñõ2>!ã“2~°Œ"ã‡Êøa2~¸Œ!ãDÆ”ñ£düh?FÆ•ñãdüx?AÆO”ñ“düd?EÆO•ñÓdütŸ’ñ3düL?KÆÏ–ñsdü\?OÆ7Èøù2~Œ_(ãÉøÅ2~‰Œ_*ãU¿LÆ/—ñ+düJ¿JÆ¯–ñkdüZ¿NÆ¯—ñdüF¿IÆo–ñ[d|£Œß*ã·Éøí2~‡Œß)ãwÉøİ2~Œß+ã÷Éøı2ş€Œ?(ãÉøÃ2Ö2şˆŒ?*ãÉøã2ş„Œ?)ãOÉøÓ2şŒŒ?+ãÏÉøó2ş‚Œ¿(ã/Éø&YÆ_‘ñWeü5]Æßñ7eü-[Æß‘ñweü=_Æ?ñeÜ“ñdücÿDÆ?•ñÏdüsÿBÆ¿”ñ¯dükÿFÆ¿•ñïdü{ÿAÆ7Ëø2ş“Œÿ,ã¿Èø¯2ş›Œÿ.ãÈøŸ2ş—Œÿ-ã[düŸÉæ:ğZ’ÿ—$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş§wÈüO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿÓƒ2$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ4“!ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?}ÑéEU†ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ•!ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş§›2$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿô¢Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?ÈüO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿÓ§dHş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO’ÿIò?Iş'Éÿ$ùŸ$ÿ“ä’üO¯mnûYò?ËÿÈ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?¿}ót–?gó’%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿóK§x2$ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ’ÿYò?KşgÉÿ,ùŸ%ÿ³ä–üÏ¯mù§’ÿÓÓU‘üÃTò*ù?•üŸJşO%ÿ§’ÿSÉÿ©äÿTòzºfüŸJşO%ÿ§’ÿSÉÿ©äÿTò*ù?•üŸJşO%ÿOWSÉÿ©äÿTò*ù?•üŸJşO%ÿ§’ÿSÉÿ©äÿTò*ù?•üŸJşO%ÿ§’ÿSÉÿ©äÿTò*ù?•üŸJşO%ÿ§’ÿSÉÿ©äÿTò*ù?•üŸî®£dHşO%ÿ§’ÿSÉÿ©äÿTò*ù?•üŸJşO%ÿ§’ÿSÉÿ©äÿTò*ù?•üŸJşO%ÿ§’ÿSÉÿ©äÿTò*ù?•üŸJşO%ÿ§’ÿSÉÿ©äÿTò*ù?•üŸJşO%ÿ§’ÿSÉÿ©äÿTò*ù?•üŸJşO%ÿ§’ÿSÉÿ©äÿTòúL¿6ë‘ç+¹nßzåÖFï³¸wœı½ÍŸ}ş—|áãÉ?şÅxä½=qã±}ÙãO=óì­—xù¥Wâı³Ùì‰ãfví•gŸv½cé}GëşŒÖıs÷gÌİŸ±pÆÂıK÷g,İŸ±ãıŒÎ¨–OÏüïğıw,İ¿»K÷ïîÒı»»tÿî.İ¿»K÷ïîÒı»»tÿî.İ¿»K÷ïîÒû»ÛÌ¼¿‰gïpEÕ¸¯¢û*Ú¸¯¢û*Ú¸¯¢û*Ú¸¯¢û*Ú¸¯¢û*Ú¸¯¢òîß«îß«îß«îß«Îß+÷İ qß÷İ qß÷İ qß÷İ qß÷İ qß÷İ qßÿİ`éÎÁ¥;—î\ºspùÿ‘ƒ7|¿W­ûÎÙºïœ­ûÎÙºïœ­ûÎÙºïœ­ûÎÙºïœ­ûÎÙºïœ­ûÎÙºïœ­ûÎÙºïœ­ûÎÙºïœ­ûÎÙºïœ§ïpş^¹ïµ­û^Ûºïµ­û^Ûºïµ­û^Ûºïµ­û^Ûºïµ­û^Ûºïµ­û^Ûºïµ­û^Ûºïµ­û^Ûºïµ­û^Ûºïµs÷½vî¾×Îİ÷Ú¹û^;wßkçî{íÜ}¯»ïµs÷½vî¾×Îİ÷Ú¹û^;wßkçî{íÜ}¯»ïµs÷½vî¾×Îİ÷Ú¹û^;wßkçî{íÜ}¯»ïµs÷½vî¾×Îİ÷Ú¹û^;wßkçî{íÜ}¯»ïµs÷½vî¾×Îİ÷Ú¹û^{ú…ûÎ¹pß9î;çÂ}ç\¸ïœ÷sá¾s.ÜwÎ…ûÎ¹pß9î;çÂ}ç\¸ïœ÷}pá¾.Ü÷Á…û>¸pß£î{ÔÂ}Z¸ïQ÷=já¾G-Ü÷¨…ûµpß£î{ÔÂ}Z¸ïQ÷=já¾G-Ü÷¨…ûµp¯—î{ÔÒ}ÇYºï8K÷gé¾ã,İwœ¥û³tßq–î;ÎÒ}ÇYºï8K÷gé^«-İ÷¨¥ûuú§ºîuÔÒ}7XºïK÷İ`é¾,İwƒ¥ûn°tß–î»ÁÒ}7XºïK÷İ`é¾,İwƒ÷nÇ}…Ûq_ávÜW¸÷nÇ}…Ûq_ávÜWŸwï¸ó|Çç;î<ßqçù;ÏwÜy¾ãÎó÷Šşô¾ÿ]÷óÕ®ÛØu?‘íºŸÈvİOd»î'²]÷õj×}½Úu_¯vİ×«]÷õj×}½Úu_¯vİOd»î§¥]w7î®{}¾ë^ŸïºŸÈvİWê]÷•z×}¥Şu_©wİWê]÷•z×}¥Şu_©wO«–®ÏØs_÷Ü×Ä=÷5qÏ}MÜs_÷Ü×Ä=÷5qÏ}MÜs_÷Ü×Ä=÷5qÏ}eØs_öÜW†=÷•aÏ}eØs_öÜW†=÷•aÏ}eX¹ó|åÎó•;ÏWî<_¹ó|åÎó•;ÏWî<_¹ó|åÎó•;ÏWngå®4¬ÜO2+÷“ÌÊ}½Z¹¯W+÷õjå¾^­Ü×«•ûzµr_¯VîëÕÊ½ò:EÍÌ»‚Ü¼ÃóßÑ¸÷Z6î½–{¯eãŞkÙ¸÷Z6î½–{¯eãŞkÙ¸÷Z6î½–{¯åé;|+ÈÆ½×²qïµlÜ{-÷^ËÆ½×²qïµlÜ{-÷^ËÆ½×²qïµlÜ{-÷^ËÆ½×òôşß]ç•Ú½Ÿ³qïçlÜû9÷~ÎÆ½Ÿ³qïçlÜû9÷~ÎÆ½Ÿ³qïçlÜû9÷~ÎÆ½Ÿ³qïçlÜ{-÷^Ë³w8™»ïîİ™{wfãŞÙ¸wg6îİ™{wfãŞÙ¸wg6îİ™{wfãŞÙ¸wg6îİ™{wfãŞÙ¸wg6îİ™{wææ®ÏpïçlÜû9÷~ÎÆ½Ÿ³qïçlÜû9÷~ÎÆ½Ÿ³qïçlÜû9÷~ÎÆ½Ÿ³qïçlÜû9÷~ÎÆ½Ÿ³qïçlÜû9÷~ÎÆ½Ÿ³qïçlÜû9÷~ÎÆ½;³qïÎlÜ»3÷îÌÆ½;³qïÎlÜ»3÷îÌÆ½;³qïÎlÜ»3÷îÌÆ½;³qïÎlÜ»3÷îÌÆ½;³qïœlÜ;'÷ÎÉÆ½s²qïœlÜ;'÷ÎÉÆ½s²qïœlÜ;'÷ÎÉÆ½s²qïœlÜ;'÷ÎÉÆ½²qïƒlÜ»÷ÅÆ½G±qïQlÜ{÷ÅÆ½G±qïQlÜ{÷ÅÆ½Gqó÷g¸óÃ¹ºsïƒlÜ»÷®ÆÆ½G±qïQlÜ{÷ÅÆ½G±qïQlÜ{÷ÅÓw8sĞ½«±qïjlÜ»÷®Æ³w¸¯ü9xÃù{å¾º÷Z6î½–{¯eãŞkÙ¸w56î]{bãŞ£Ø¸÷(6î=Š{bãŞ£xög~øïQKo~¸wNnŞáŠÊ½×²qïƒlÜû÷şÁÆ½°qïlÜû÷şÁ³wø~Û—î»ÁÒ}7Xºïî]gïpªë~nwïÔkÜ;õ÷N½Æ½S¯qïÔ;{‡“¹w'Òæ®ÿ÷ÕgÇıîŞ©×¸wê¾Ãù[²ã¾–¸w½Ã÷[²ãÎÚ·ß¾ãÎó÷3ÜûÎ½°qï<}‡÷·Ä}-Ùq_KvÜ×’÷óÕûÙÇ½s²qïœlÜ;'÷ÎÉÆ½s²qïœlÜ{ûNßáü½Úu_}vİWŸ]÷sÉ®û¹d×½JuïQlvİWQ÷·Ów8¯%»îkÉ®ûZâŞEwö'ç•¡s»Jçşv•Îıí*ûÛU:÷·«tîoWéÜß®Ò¹¿]¥s»Jçşv•Îıí*ûÛU:÷w¥tîïJéÜß•Ò¹¿+¥sWJçş®”Îı])û»R:÷w¥tîïJéÜß•Ò¹¿+¥sÉæN­ÜW8oOjçşÆÎı!ûC:÷7mtîoÚèÜß´±y‡3?œwÎÎıíûÛ#:÷·GtîoèÜßÑ¹OàïÜ'ğwîÓ¿;÷9Ûû$èÎ}Jsç>G¸sŸ¿»y‡/½Ş³w8£òVû:÷¦›wøî8Ş*Yç>²sŸNÙ¹O§ìÜ§SvîÓ);÷Y“ı;\Qy+û¤ÂÎ}Raç>©pó·º.ß§sŸmØ¿ÃıN­Ü«	o sŸ××¹ÏëëÜçõõïp†ïî¼ãÎÁwzëı;ÜŸá[MxOìÜ§vîSÏŞáüİõÖ&:÷I…›wø~wwÜWŸ§ŸØ¿ÃıNæîk¢·Æ²y‡“ û	Ù[céÜ'Gvîs ;÷9ûÈÎ}äÙ;¼9è¾x+?›w¸	zsĞÿp¯„½Õ¥Î}Êfç>e³sŸ²Ù¹OÙìÜ§lvîS6;÷é”ûtÊÎ}:eç>²sŸN¹y‡›‡3½U²şîÏğå ·®¶y‡/½uµÎ}ögÿßg¸ïÎ»î»³÷DÒÎ}"iç>‘´sŸHÚ¹OíÜ§…vîÓB;÷i¡û´Ğ³wx¯%îû¹·úºy‡›¹÷Zâ¾Ÿ{kÂ›w¸¯¼×ÿ€Û³Üs?3ì¹Ÿ¼§ĞvîSh;÷)´ûÚÎ}
-mç>…¶sŸBÛ¹O¡íÜ§ĞvîSh;÷)´gïp^¯öÜÏ>{îgŸ=÷“ÌûIfÏı\²ç~.Ùs?—ì¹Ÿ2öÜO{î§Œ=÷S†÷tãÎ}ºqç>İ¸sŸnÜ¹O7îÜ§wîÓ;÷éÆûtã³wx¯îg†=÷3ÃÊ}ç\¹ïœŞs;÷¹Îû\çÎ}®sç>×¹sŸëÜ¹ÏuîÜç:wîs;÷¹Îû\çÎ}®sç>×¹sŸÒÜ¹OiîÜ§4wîSš;÷)Íû”æÎ}Jsç>¥¹sŸÒÜ¹OiîÜgwî³Š;÷YÅû¬âÎ}Vqç>«¸sŸUÜ¹Ï*îÜgwî{;÷‰½ûÄŞÎ}boç>±·sŸØÛ¹OìíÜ'övî{;÷¹µûÜÚÎ}nmç>·¶sŸ[Û¹Ï­íÜçÖvîsk;÷¹µûÜÚÎ}¦lç>YµsŸ¬Ú¹OVíÜ'«vî“U;÷ÉªûdÕÎ}²jç>YµsŸ€Ù¹OÀìÜ'`vî0;÷	˜ûÌÎ}fç>³sŸTØ¹O*ìÜ'vî“
-;÷I…û¤ÂÎ}&`ç>®sŸ×¹Ï‡ëÜ'±uîS¹:÷©\ûü«Î}şUç>§¨sŸSÔ¹Ï)êÜçuîsŠ:÷	4ûšÎ}Mç>¦sŸ@Ó¹O éÜç—tîÓH:÷i$û4’Î}îÇæşÏpjåş½r÷ïºOñèÜ§xt»SöìşÏğıîº»Xİ'ltî6:÷yû¼ŒÎ}úEç>ıbó'÷ÓİÑè>Ë¢sŸeÑ¹Ï²èww[ãıéÎ}ÚÂæ>uİgîó:÷)›wøVEî^œÆİ‹ã>	¡sŸ„Ğ¹OBØ¼Ã÷›èîıhÜ=»× q÷4î>€³w¸µr>_¹;š“²¼#õï|Ó·¿ó²üw\xñ-O?ûÜÓ?(şò[_ºûõ×ôo—‘Oäÿ½öÚ·|Ãæ/¾ùµâ_ô¶ÛÔµ§_:ûWM¾õÓ+_ü[ŸwãÅ[¯<{ë¹Gï>÷Égî¾ğòéÉÃ/ü[Êk~ùÅOÿÛÎ_}óSwŸşÎ¯ùM¿÷èÆû7ò­ÿ”´r¢? #' Double-Window Flexible Pace Search (DFPS) threshold determination
+??2xUl?We?[?WCt?*
+6Ê«?Ò­Æ«??!?^??UY?V?UA?]?J?????t?f?^?yUP0D?ï¿½ï¿½?`????U??^?e?????&Ø¨???7?|.i??×³Ş…?!?^??ŞµÒ­f?tW3"?Q?]+?jÖ»P0D?ï¿½ï¿½?`?Ö»V?Õ¬w?`?nKD7j?k?[?z
+??2xUl?z?J???.?e??4Ø¨???n5?](???Ui????t?Y?B?]????n??zf~b??=?K????<3C?]?J??zf?Ò­??
+??2xUl?3??n5??P0D?ï¿½ï¿½?`????t?yf??]??7?Ñzf?Ò­??
+??2xUl?3??n5??P0D?å¡»?????//?y5?i?Ct??'??}^?}?fOO??v?z=?](???Ui?Q?]+?j??P0D?ï¿½ï¿½?`???V???w?`?.?W?v?5Ò­??Ct????:???+s/??\P?_???Ct?*
+6??l?[Í•
+??2xU}?qWf?z??P0@??Ñ½~1???c?|?w?`?.?Wukv?yaW?[???v?z=Wf(????]_???o<?u???????LCw(???Ui?WG?{
+?<?İ`?.?W??F??`??OQ??)??î–“??J??zf?Ò­??
+??2xU?????Â??|p#??%???????`?.?W??Te?[?S?e??4Ø¨?*+?z???`?.?W??F=UY???T?t?İ¨?*+?z???`?.?W??DZ??c?|N$?m	?>?????=3?{?:?XÌ›??yf??!?^Ul?S??n=OUP0D?ï¿½ï¿½?`Ã??t?y???!?^??Te?[?S?e???z?&?.~??H??????%m}???S??Ó…?!?^Ul???F????Ct?*
+6???J??gf(???U?????O??\??t?3"?Q+"+?jVDP0D?ï¿½ï¿½?`G??Ö³"??!?-İ¨??n5+"(???U=??g?w?"???Ñ¹?}{2?9x?p??3:]$???Ui?QWf#İŠVDH0D?ï¿½ï¿½?`???V?Õœ?Ct)??>Ø¨]bV???s????%Ct)??>???|???H0D?Â«??f?V?f ?]
+??vä§ª?Ö»H0@w1#?;?SUE?]$???U?~????Ö»??u?ó«“‹???](???
+???:?x???T?UÌ—h???v?]0xUlØ•?H???.?e??4Ø°???n5?](???Ui?a?]#?jÖ»P0D?ï¿½ï¿½êƒ[???Ö³Ş…?!?^?{ud??????C?]?J?
+s3?t?q3?`?.?Wu???>/?x?`#??%???z*?P0@w9#??"?Ò­gE?Ct)??>Ø¨??n=+"$??ÑZY?Ö³"B?!?^?&Ø°gf#İŠ???`?.?W?;?SUE??H0D?ï¿½ï¿½???M?Q5?;?z?:s??}jB|?Ä `?.?W?{p???'??tÏŸ????x???;?e??4Ø°gf#?j???`?.?W?ï¿½ï¿½=3?V??Ct?*??\???#?w??"@? İİ°?R?????×«YA?]?J?
+[?V?"??!?-?0??Hw?i??DB?]????????D>??|.i??"m~?{"?`?.?W??F?w?t?Y?B?]?J??Z?Z?V?Ş…?!?^Ul?3??n=??P0D?ï¿½ï¿½?`????t?yf??!?^???l?[?33?e??4Ø‘???9?
+??Îˆ?\??????<???d?;?e??4???L??~~h2??9İ`?nHw???{????^??8?/????xkO?3e|V?w??????2??d?[r?3|;?^?w??y2??f??d|g?E?w?qE?w?????.?{???2N??????-?????2N@?_Æ»e|???'??????8US?`"jM?2N?È²??ÈŠc"Ï¥yz?????2???2?#?4??H?)???x??/?q?{?~????/?q???R?2?d|??c????/????2>$??2?BF'?#2>*?c2?R??2?J??e<!ã¦Œ[2??????N?;2?????S6???_+?9?Ë_??]?L???d??+2?N????2>!??2~??"????a2~??!?DÆ???d?h?FÆ???d?x?A?O???d?d?E?O???d?t???3d?L?K?Ï–?sd?\?O?7???2~??_(????2~??_*?U?L?/??+d?J?JÆ¯??kd?Z?NÆ¯??d?F?I?o??[d|???*?????2~???)?w???2~???+?????2????(????2?2????*?????2????)?O???2????+?????2????(?/??&Y?_??We?5]?ß?7e?-[?ß‘?we?=_????eÜ“??d?c?D?????d?s?BÆ¿???d?k?FÆ¿???d?{?A?7???2????,?????2????.????2????-?[d????:?Z????$?????O??I??I?'??$??$?????O??I??I??wÈ?O??I??I?'??$??$?????O??I??I?'??$??$?Óƒ2$?????O??I??I?'??$??$?????O??I??I?'??4?!??$?????O??I??I?'??$??$?????O??I??}??EU????O??I??I?'??$??$?????O??I??I?'??$???!??$?????O??I??I?'??$??$?????O??I??I???2$?????O??I??I?'??$??$?????O??I??I?'??????$??$?????O??I??I?'??$??$?????O??I???È?O??I??I?'??$??$?????O??I??I?'??$??$?Ó§dH?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O??I??I?'??$??$?????O?mn?Y????È’?Y??K?g??,??%?????Ï’?Y???}?t??g??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%??K?x2$?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï’?Y??K?g??,??%?????Ï¯m??????U???T?*?????J?O%????S?????T?z?f???J?O%????S?????T?*?????J?O%?OW?S?????T?*?????J?O%????S?????T?*?????J?O%????S?????T?*?????J?O%????S?????T?*?????î®?dH?O%????S?????T?*?????J?O%????S?????T?*?????J?O%????S?????T?*?????J?O%????S?????T?*?????J?O%????S?????T?*?????J?O%????S?????T??L?6???+?n?z??F???w???ÍŸ}??|??????xä½=q??}??O=?ì­—?x??W????????fv??g?v?c?}G?????s?g?İŸ?p???K?g,İŸ????Î¨?O?????w,İ¿?K???????t??.İ¿?K???????t??.İ¿?K???????Ì¼??g?pEÕ¸????*Ú¸????*Ú¸????*Ú¸????*Ú¸????*Ú¸?????ß«?ß«?ß«?ß«??+?İ q?
+?İ q?
+?İ q?
+?İ q?
+?İ q?
+?İ q?
+??`??ï¿½ï¿½;??\?sp????7|?W???Ùºïœ­??Ùºïœ­??Ùºïœ­??Ùºïœ­??Ùºïœ­??Ùºïœ­??Ùºïœ­??Ùºïœ­??Ùºïœ§?p?^?ïµ­?^Ûºïµ­?^Ûºïµ­?^Ûºïµ­?^Ûºïµ­?^Ûºïµ­?^Ûºïµ­?^Ûºïµ­?^Ûºïµ­?^Ûº??s??v??????Ú¹?^;w?k??{??}?????s??v??????Ú¹?^;w?k??{??}?????s??v??????Ú¹?^;w?k??{??}?????s??v??????Ú¹?^;w?k??{??}?????s??v??????Ú¹?^{????Î¹p?9?;??}?\?????s??s.?wÎ…?Î¹p?9?;??}?\????}p??.??ï¿½ï¿½?>?pß£?{??}?Z??Q?=j??G-??????pß£?{??}?Z??Q?=j??G-??????p???{??}?Y??8K?g???,?w?????t?q??;??}?Y??8K?g?^?-?????u????u??}7X??K??`??,?w???n?t?
+?????}7X??K??`??,?w??n?}??q_?v?W??n?}??q_?v?W?w????|Ç?;?<?q???;?w?y???????????]??Õ®??u??ï¿½ï¿½ï¿½?v?Od??'?]??j?}??u_?v?×«]??j?}??u_?v?Od?î§¥]w7??{}??^?ïºŸ?v?W?]??z?}??u_?w?W?]??z?}??u_?wO?????s_????=?5q?}M?s_????=?5q?}M?s_????=?5q?}e?s_??W?=??a?}e?s_??W?=??a?}eX??|????;?W?<_??|????;?W?<_??|????;?Wng??4??O2+????}?Z??W+??j??^??×«??z?r_?V??????:E?Ì»?Ü¼???Ñ¸?Z6î½–?{?e??kÙ¸?Z6î½–?{?e??kÙ¸?Z6î½–?{???;|+?Æ½×²q??l?{-?^?Æ½×²q??l?{-?^?Æ½×²q??l?{-?^?Æ½?????]??Ú½??q??l??9?~?Æ½??q??l??9?~?Æ½??q??l??9?~?Æ½??q??l?{-?^Ë³w8????İ™?{wf?ŞÙ¸wg6?İ™?{wf?ŞÙ¸wg6?İ™?{wf?ŞÙ¸wg6?İ™?{wf?ŞÙ¸wg6?İ™?{w????p??l??9?~?Æ½??q??l??9?~?Æ½??q??l??9?~?Æ½??q??l??9?~?Æ½??q??l??9?~?Æ½??q??l??9?~?Æ½;?q??lÜ»3???Æ½;?q??lÜ»3???Æ½;?q??lÜ»3???Æ½;?q??lÜ»3???Æ½;?q??l?;'???Æ½s?q??l?;'???Æ½s?q??l?;'???Æ½s?q??l?;'???Æ½?q??lÜ»??Æ½G?q?Ql?{??Æ½G?q?Ql?{??Æ½Gq??g??Ã¹?s??lÜ»???Æ½G?q?Ql?{??Æ½G?q?Ql?{???w8sĞ½??q?jlÜ»??Æ³w???9x??{????Z6î½–?{?e??kÙ¸w56?]??{?b?Ş£Ø¸?(6?=??{?b?Ş£x?g~??QKo~?wNn???Ê½×²q??l?????Æ½?q?l????ï¿½ï¿½w?~Û—????}7X???]?g?p??~nw??k?;??N?Æ½S?q??;{???w'???????g???Ş©×¸wê¾??[?ã¾–?w????[?????ß¾????3Ü?Î½?q?<}????}-?q_Kv?×’??Õ??Ç½s?q??l?;'???Æ½s?q??l?{?N?????u_}v?W?]?sÉ®??d×½Ju?Qlv?WQ???w8?%??kÉ®?Z??Ew?'ç•¡s?J??v????*???U:???t?oW??ß®Ò¹?]?s?J??v????*???U:?w?t??J??ß•Ò¹?+?sWJ??????])???R:?w?t??J??ß•Ò¹?+?s???N??W8oOj??Æ???!??C:?7mt?o???ß´?y?3??w???????#:??Gt?o????Ñ¹O???'?w?Ó¿;?9İ?$??}Js?>G?s???y?/?Ş³w8??V?:???w??8?*Y?>??s?NÙ¹O??Ü§Sv??);?Y??;\Qy+
+?????}Ra?>?p???.ß§s?mØ¿??N?Ü«	o?s??×¹????????p???????wz??;ÜŸ?[MxO?Ü§v?S???????&:?I??w?~ww?W???Ø¿??N??k??Æ²y????	?[c??'Gv?s ;?9?????}??;?9??x+??w?	zs??p???Õ¥?}?f?>e?s??Ù¹O??Ü§lv?S6;?é”?t??}:e?>??s?N?y???3?U?????å ·??y?/?u??}?g??g??Î»î»³?D??}"i?>??s?HÚ¹O?Ü§?v??B;?i????Ğ³wx?%??????y????Zâ¾Ÿ{kÂ›w??????Û³?s?3ì¹Ÿ???v?Sh;?)?????}
+m?>??s?BÛ¹O??Ü§?v?Sh;?)?g?p^????>{?g?=??Ì?If??\??~.?s??ì¹Ÿ2??O{î§Œ=?S??t??}?q?>İ¸s?nÜ¹O7?Ü§w?Ó;??Æ?t??wx??g?=?3??}?\????s?;??Î?\??}?s?>×¹s??Ü¹?u???:w?s?;??Î?\??}?s?>×¹s??Ü¹Oi?Ü§4w?S?;?)Í????}Js?>??s??Ü¹Oi??gwî³Š;?YÅ????}Vq?>??s?UÜ¹?*??gw?{;????????}bo?>??s??Û¹O???'?v?{;????????}nm?>??s?[Û¹Ï­????v?sk;????????}?l?>Y?s??Ú¹OV??'?v??U;?Éª??d??}?j?>Y?s??Ù¹O???'`v?0;?	?????}f?>?s?TØ¹O*??'v??
+;?I??????}&`?>?s?×¹Ï‡??'?u?S?:??\?????}?U?>??s?SÔ¹?)???u?s?:?	4????}M?>??s?@Ó¹O?????t??H:?i$??4??}?????pj???r???O??Ü§xt??S??????îº»X?'lt?6:?y?????}?E?>?b?'??????>Ë¢s?eÑ¹Ï²?ww[????}???>uİg??:?)?w?VE?^??İ‹?>	?s??Ğ¹OBØ¼??????h?=??× q?4?>??w??r>_?;?????#??|????????w\x?-O??Ü??(??[_?????
+o??O????Ú·|??/????_???Ôµ?_:?WM???+_?[?w??[?<{??G?>??g???????/??[?k~??O???_}?Sw?????M?????7?????r?? #' Double-Window Flexible Pace Search (DFPS) threshold determination
 #'
 #' @export
 #' @importFrom rgeos gDifference gBuffer
-#' @param chg_polys \code{SpatialPolygonsDataFrame} with polygons of change 
+#' @param chg_polys \code{SpatialPolygonsDataFrame} with polygons of change
 #' areas surrounded by windows of no-change
 #' @param chg_mag change magnitude \code{RasterLayer} from \code{CVAPS}
 #' @param radius radius of no-change surrounding change area polygons
-#' @param delta the minimum difference between Lmax and Lmin that will allow 
+#' @param delta the minimum difference between Lmax and Lmin that will allow
 #' another pass through the search loop
-#' @param m number of potential thresholds per search iteration (see Chen et 
+#' @param m number of potential thresholds per search iteration (see Chen et
 #' al., 2003). Recommended to leave at default value.
 #' @param maxiter maximum number of iterations of the main search process
 #' @references Chen, J., P. Gong, C. He, R. Pu, and P. Shi. 2003.
 #' Land-use/land-cover change detection using improved change-vector analysis.
 #' Photogrammetric Engineering and Remote Sensing 69:369-380.
-#' 
+#'
 #' Chen, J., X. Chen, X. Cui, and J. Chen. 2011. Change vector analysis in
 #' posterior probability space: a new method for land cover change detection.
 #' IEEE Geoscience and Remote Sensing Letters 8:317-321.
@@ -9314,7 +9400,7 @@ DFPS <- function(chg_polys, chg_mag, radius=100, delta=.01, m=10, maxiter=20) {
     nochg_pixels <- unlist(extract(chg_mag, nochg_polys))
     # Calculate total number of pixels (used later)
     A <- length(chg_pixels) + length(nochg_pixels)
-    # Set initial values for Lmax and Lmin that ensure the below while loop 
+    # Set initial values for Lmax and Lmin that ensure the below while loop
     # will run.
     Lmax <- 1
     Lmin <- Lmax - 2 * delta
@@ -9341,7 +9427,7 @@ DFPS <- function(chg_polys, chg_mag, radius=100, delta=.01, m=10, maxiter=20) {
     return(kmax)
 }
 #' creates a raster with the difference of Normalized Burn Ratio (NBR) index
-#' @description Creates a raster with the difference of Normalized Burn Ratio (NBR) index 
+#' @description Creates a raster with the difference of Normalized Burn Ratio (NBR) index
 #'
 #' @param prefire name of the prefire product, e.g. LC80522102014165LGN00. It must be in the working directory.
 #' @param postfire name of the postfire product, e.g. LC80522102014165LGN00. It must be in the working directory.
@@ -9371,7 +9457,7 @@ function(sat=5, scattering.coef=c(-4, -2, -1, -.7, -.5), SHV, SHV.band, gain, of
 ### Implements the 1% adjustment (can be changed with blackadjust argument)
 
 ### Dark Object Subtraction method from Chavez 1988
-### with some modifications 
+### with some modifications
 ### calculates DN to subtract for each band for a range of
 ### scattering.coef: scattering coefficients. Default values:
 ###	-4.0: Very Clear	SHV <= 55
@@ -9429,7 +9515,7 @@ function(sat=5, scattering.coef=c(-4, -2, -1, -.7, -.5), SHV, SHV.band, gain, of
     scattering.approx.pct <- sweep(scattering.approx, 2, apply(scattering.approx, 2, sum), "/")
 
     ### Chavez 1988 Table 2
-    ### Multiplication factors to predict haze values in other spectral 
+    ### Multiplication factors to predict haze values in other spectral
     ### bands given a starting haze value and band
 
     corrband.mean <- scattering.mean[SHV.band, ]
@@ -9459,7 +9545,7 @@ function(sat=5, scattering.coef=c(-4, -2, -1, -.7, -.5), SHV, SHV.band, gain, of
 
     ### Calculate Eo from Esun and edist
     Eo <- Esun[SHV.band]/edist^2
-        
+
     # subtract 1% - assume that black in the image is not really black
     SHV <- SHV - gain[SHV.band] * blackadjust * Eo * suntheta / pi
 
@@ -9469,11 +9555,11 @@ function(sat=5, scattering.coef=c(-4, -2, -1, -.7, -.5), SHV, SHV.band, gain, of
 
     SHV <- SHV - offset[SHV.band]
 
-    DNfinal.mean <- SHV * corrband.mean 
+    DNfinal.mean <- SHV * corrband.mean
     DNfinal.mean <- sweep(DNfinal.mean, 1, NORM, "*")
     DNfinal.mean <- sweep(DNfinal.mean, 1, offset, "+")
 
-    DNfinal.approx <- SHV * corrband.approx 
+    DNfinal.approx <- SHV * corrband.approx
     DNfinal.approx <- sweep(DNfinal.approx, 1, NORM, "*")
     DNfinal.approx <- sweep(DNfinal.approx, 1, offset, "+")
 
@@ -9496,24 +9582,24 @@ function(sat=5, scattering.coef=c(-4, -2, -1, -.7, -.5), SHV, SHV.band, gain, of
 
 DownloadLandsat <- function(url, output.name) {
   # todo: use RCurl instead of the system call
-  
+
   command.args <- paste0("-c cookies.txt -d 'username=", usgs.username, "&password=", usgs.password,"' https://earthexplorer.usgs.gov/login")
-  
+
   # invoke the system call to curl.
   # I'd rather have done this with RCurl but couldn't get it working ;-(
   ret <- system2("curl", command.args, stdout=TRUE, stderr=TRUE)
-  
+
   command.args <- paste0("-b cookies.txt -L ", url," -o ", output.name)
   ret <- system2("curl", command.args, stdout=TRUE, stderr=TRUE)
-  
+
   file.remove(cookies.txt)
-  
+
   return(ret)
-  
+
 }
 #' Plot EarthExplorer scene list
 #'
-#' This function can produce two different types of plots from a USGS 
+#' This function can produce two different types of plots from a USGS
 #' EarthExplorer Landsat CDR Surface Reflectance scene list.
 #'
 #' @export
@@ -9524,16 +9610,16 @@ DownloadLandsat <- function(url, output.name) {
 #' \code{\link{ee_read}}
 #' @param start_date starting date as a \code{Date} object
 #' @param end_date end date as a \code{Date} object
-#' @param min_clear the minimum percent clear to plot (calculated as 1 - 
-#' percent cloud cover). Images with less than \code{min_clear} fraction of the 
+#' @param min_clear the minimum percent clear to plot (calculated as 1 -
+#' percent cloud cover). Images with less than \code{min_clear} fraction of the
 #' image area free of clouds will be ignored.
-#' @param exclude a list of sensors to exclude (for example, set 
-#' \code{exclude=c('LE7', 'LT4')} to exclude Landsat 7 ETM+ and Landsat 4 TM 
+#' @param exclude a list of sensors to exclude (for example, set
+#' \code{exclude=c('LE7', 'LT4')} to exclude Landsat 7 ETM+ and Landsat 4 TM
 #' images.
 #' @param normalize if \code{TRUE}, plot as a normalized line plot
 #' @param title title for plot (or \code{NULL} for no title)
 #' @return used for side effect of producing a plot
-ee_plot <- function(x, start_date, end_date, min_clear=.7, exclude=list(), 
+ee_plot <- function(x, start_date, end_date, min_clear=.7, exclude=list(),
                     normalize=FALSE, title=NULL) {
     if (!class(start_date) == 'Date') {
         stop('start_date must be a "Date" object')
@@ -9563,8 +9649,8 @@ ee_plot <- function(x, start_date, end_date, min_clear=.7, exclude=list(),
         x <- transform(group_by(x, YearMonth),
                        Cum_Month=cumsum(rep(1, length(Month))))
         p <- ggplot(x, aes(xmin=Month,
-                           xmax=Month + 1, 
-                           ymin=Cum_Month - 1, 
+                           xmax=Month + 1,
+                           ymin=Cum_Month - 1,
                            ymax=Cum_Month,
                            colour=Sensor,
                            fill=Path_Row,
@@ -9572,9 +9658,9 @@ ee_plot <- function(x, start_date, end_date, min_clear=.7, exclude=list(),
             geom_rect() + facet_grid(Year ~ ., scales='free_y', space='free_y') +
             xlab('Month') +
             scale_x_continuous(breaks=c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
-                               labels=c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                               labels=c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                                         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) +
-            theme(panel.grid.minor.y=element_blank(), 
+            theme(panel.grid.minor.y=element_blank(),
                   panel.grid.major.y=element_blank(),
                   panel.grid.major.x=element_blank()) +
             theme(axis.ticks.y=element_blank(),
@@ -9588,19 +9674,19 @@ ee_plot <- function(x, start_date, end_date, min_clear=.7, exclude=list(),
         Frac_Clear_Stats <- summarize(group_by(x, YearMonth, Path_Row),
                                       Year=Year[1], Month=Month[1],
                                       Max_Frac_Clear=max(Frac_Clear))
-        Frac_Clear_Stats <- summarize(group_by(Frac_Clear_Stats, YearMonth), 
+        Frac_Clear_Stats <- summarize(group_by(Frac_Clear_Stats, YearMonth),
                                       Year=Year[1], Month=Month[1],
                                       Sum_Max_Frac_Clear=sum(Max_Frac_Clear))
         p <- ggplot(Frac_Clear_Stats, aes(xmin=Month + .05,
-                                          xmax=Month + 1-.05, 
-                                          ymin=0, 
+                                          xmax=Month + 1-.05,
+                                          ymin=0,
                                           ymax=Sum_Max_Frac_Clear)) +
             geom_rect() + facet_grid(Year ~ .) +
             xlab('Month') + ylab('Total Fraction Clear') +
             scale_x_continuous(breaks=c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
-                               labels=c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                               labels=c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                                         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')) +
-            theme(panel.grid.minor.y=element_blank(), 
+            theme(panel.grid.minor.y=element_blank(),
                   panel.grid.major.y=element_blank(),
                   panel.grid.major.x=element_blank()) +
             theme(axis.ticks.y=element_blank(),
@@ -9616,17 +9702,17 @@ ee_plot <- function(x, start_date, end_date, min_clear=.7, exclude=list(),
 }
 #' Read EarthExplorer CSV format scene list
 #'
-#' This function reads in a CSV file of Landsat CDR Surface Reflectance images 
-#' as output from USGS EarthExplorer. param x a \code{data.frame} with a list 
-#' of Landsat scenes as output from the save metadata function on 
+#' This function reads in a CSV file of Landsat CDR Surface Reflectance images
+#' as output from USGS EarthExplorer. param x a \code{data.frame} with a list
+#' of Landsat scenes as output from the save metadata function on
 #'
 #' @export
-#' @param x path to a CSV file with a list of Landsat scenes as output from the 
+#' @param x path to a CSV file with a list of Landsat scenes as output from the
 #' save metadata function on http://earthexplorer.usgs.gov
-#' @return x a \code{data.frame} with a list of Landsat scenes and their 
+#' @return x a \code{data.frame} with a list of Landsat scenes and their
 #' associated metadata
 ee_read <- function(x) {
-    scenes <- read.csv(x, stringsAsFactors=FALSE, quote="", 
+    scenes <- read.csv(x, stringsAsFactors=FALSE, quote="",
                           na.strings=c('NA', ' '))
 
     scenes$Sensor <- substr(scenes$Landsat.Scene.Identifier, 1, 3)
@@ -9656,7 +9742,7 @@ ee_read <- function(x) {
                     ' - is scenes an EarthExplorer CSV export?'))
     }
 
-    # Drop ENGINEERING, TEST, EXCHANGE, and VALIDATION data. See the Landsat 
+    # Drop ENGINEERING, TEST, EXCHANGE, and VALIDATION data. See the Landsat
     # data dictionary at: https://lta.cr.usgs.gov/landsat_dictionary.html
     scenes <- scenes[scenes$Data.Category == 'NOMINAL', ]
 
@@ -9672,29 +9758,29 @@ function(adate)
 
     edist <- julian(as.Date(adate), origin=as.Date(paste(substring(adate, 1, 4), "12", "31", sep="-")))[[1]]
     edist <- 1 - 0.016729 * cos((2*pi) * (0.9856 * (edist - 4)/360))
-    
+
     edist
 }
 
 verify_download <- function(espa_url, local_path) {
     cksum_file <- tempfile()
-    ret_code <- download.file(gsub('\\.tar\\.gz$', '.cksum', espa_url), 
+    ret_code <- download.file(gsub('\\.tar\\.gz$', '.cksum', espa_url),
                               cksum_file, mode="w", quiet=TRUE)
     if (ret_code != 0) {
         message(paste('Warning: problem downloading cksum for', local_path))
         return(1)
     } else {
         # TODO: Check return code and handle accordingly
-        # The first element is the cksum, second is the expected file size in 
+        # The first element is the cksum, second is the expected file size in
         # bytes, and the third is the filename
-        espa_checksum <- scan(cksum_file, what=c('integer', 'integer', 
+        espa_checksum <- scan(cksum_file, what=c('integer', 'integer',
                                                  'character'), quiet=TRUE)
         unlink(cksum_file)
         local_size <- file.info(local_path)$size
-        # TODO: Figure out how to compute a checksum in R that matches the checksum 
-        # output ESPA gives. It appears the ESPA checksum is a CRC from 'cksum' 
-        # command run on Linux. This is not a CRC-32 checksum, so the R digest 
-        # package won't work for computing it. bitops has a function, 'cksum' that 
+        # TODO: Figure out how to compute a checksum in R that matches the checksum
+        # output ESPA gives. It appears the ESPA checksum is a CRC from 'cksum'
+        # command run on Linux. This is not a CRC-32 checksum, so the R digest
+        # package won't work for computing it. bitops has a function, 'cksum' that
         # might work.
         #local_crc <- strtoi(digest(, algo="crc32", file=TRUE), base=16L)
 
@@ -9728,9 +9814,9 @@ download_ESPA_file <- function(espa_url, output_path) {
 
 #' Download a completed ESPA order
 #'
-#' Function to download a set of Landsat images from ESPA given a valid order 
+#' Function to download a set of Landsat images from ESPA given a valid order
 #' ID and the email that placed the ESPA order.
-#' 
+#'
 #' @export
 #' @importFrom RCurl getURL getCurlHandle postForm
 #' @importFrom stringr str_extract
@@ -9763,7 +9849,7 @@ espa_download <- function(email, order_ID, output_folder, username,
     if (!grepl(order_id_re, order_ID)) {
         stop(paste(order_ID, 'does not appear to be a valid ESPA order ID'))
     }
-    
+
     if (!file_test('-d', output_folder)) {
         stop(paste(output_folder, 'does not appear to be a valid directory'))
     }
@@ -9771,13 +9857,13 @@ espa_download <- function(email, order_ID, output_folder, username,
     # Parse ESPA page for download links
     # TODO: Rewrite using httr - see http://bit.ly/1m8ZWXf
     email_noat <- gsub('@', '%40', email)
-    options(RCurlOptions=list(cainfo=system.file("CurlSSL", "cacert.pem", 
+    options(RCurlOptions=list(cainfo=system.file("CurlSSL", "cacert.pem",
                                                  package="RCurl")))
     curl=getCurlHandle()
     login_page <- unlist(strsplit(getURL('https://espa.cr.usgs.gov/login/', curl=curl), '\n'))
     csrfmiddlewaretoken <- login_page[grepl("csrfmiddlewaretoken", login_page)]
     csrfmiddlewaretoken <- gsub("(value=)|(')", '',
-                                str_extract(csrfmiddlewaretoken, 
+                                str_extract(csrfmiddlewaretoken,
                                             "value='[a-zA-Z0-9]*'"))
     params <- list('username'=username,
                    'password'=password,
@@ -9786,10 +9872,10 @@ espa_download <- function(email, order_ID, output_folder, username,
                    'csrfmiddlewaretoken'=csrfmiddlewaretoken)
     post_res <- postForm('https://espa.cr.usgs.gov/login',
                          .params=params, style="POST", curl=curl)
-    tryCatch(espa_page <- getURL(paste0("http://espa.cr.usgs.gov/ordering/status/", email_noat, 
+    tryCatch(espa_page <- getURL(paste0("http://espa.cr.usgs.gov/ordering/status/", email_noat,
                              "-", order_ID, curl=curl)),
              error=function(e) stop('error loading order - check order ID and email'))
-    url_re <- paste0('http://espa\\.cr\\.usgs\\.gov/orders/', email, '-', 
+    url_re <- paste0('http://espa\\.cr\\.usgs\\.gov/orders/', email, '-',
                      order_ID, '/L[ET][0-9]{14}-SC[0-9]{14}\\.tar\\.gz')
     espa_urls <- espa_page[grepl(url_re, espa_page)]
     espa_urls <- str_extract(espa_urls, url_re)
@@ -9821,36 +9907,36 @@ espa_download <- function(email, order_ID, output_folder, username,
         }
 
     }
-    message(paste(successes, "file(s) succeeded,", skips, "file(s) skipped,", 
+    message(paste(successes, "file(s) succeeded,", skips, "file(s) skipped,",
                 failures, "file(s) failed."))
 }
 #' Extract a set of Landsat tarballs into a folder tree organized by image date
 #'
-#' Each image .tar.gz file will be extracted into a subfolder within 
-#' \code{output_folder}. The subfolders will be named according to the year and 
-#' Julian date of capture, and the sensor type (LT4, LT5 or LE7 for Landsat 4 
-#' TM, Landsat 5 TM, and Landsat 7 ETM+ respectively). For example, 
-#' "LT50150531986037-SC20130816144215.tar.gz" would be extracted into a 
+#' Each image .tar.gz file will be extracted into a subfolder within
+#' \code{output_folder}. The subfolders will be named according to the year and
+#' Julian date of capture, and the sensor type (LT4, LT5 or LE7 for Landsat 4
+#' TM, Landsat 5 TM, and Landsat 7 ETM+ respectively). For example,
+#' "LT50150531986037-SC20130816144215.tar.gz" would be extracted into a
 #' subfolder named "1986_037_LT5', for 1986, Julian day 37, and Landsat 5 TM.
 #'
-#' Zip files for images from sensors not included in \code{sensors}, from 
+#' Zip files for images from sensors not included in \code{sensors}, from
 #' path/rows not included in \code{pathrows} or with acquisition dates
-#' outside of the period defined by \code{start_date} and \code{end_date} will 
+#' outside of the period defined by \code{start_date} and \code{end_date} will
 #' be ignored.
 #'
 #' @export
 #' @importFrom stringr str_extract
-#' @param in_folder Path to a folder of .tar.gz Landsat surface reflectance 
+#' @param in_folder Path to a folder of .tar.gz Landsat surface reflectance
 #' images
 #' @param out_folder output folder
-#' @param pathrows a list of paths/rows to include. Each path/row should be 
-#' specified as a six digit string. For example, path 231, row 62 would be 
+#' @param pathrows a list of paths/rows to include. Each path/row should be
+#' specified as a six digit string. For example, path 231, row 62 would be
 #' specified as "231062".
 #' @param start_date start date of period from which images will be extracted
 #' to (as \code{Date} object).
 #' @param end_date end date of period from which images will be extracted
 #' to (as \code{Date} object)
-#' @param sensors a list of the sensors to include (can be any of "LT4", "LT5", 
+#' @param sensors a list of the sensors to include (can be any of "LT4", "LT5",
 #' "LE7", or "LC8")
 #' @return nothing (used for side effect of unzipping Landsat CDR tarballs)
 #' @examples
@@ -9865,11 +9951,11 @@ espa_download <- function(email, order_ID, output_folder, username,
 #'              start_date=start_date, end_date=end_date)
 #'
 #' # Filter by start and end date, sensor, and pathrow:
-#' espa_extract('D:/Landsat_Originals', 'D:/Landsat_Out', 
+#' espa_extract('D:/Landsat_Originals', 'D:/Landsat_Out',
 #'              start_date=start_date, end_date=end_date, sensors='LE7',
 #'              pathrows='231062')
 #' }
-espa_extract <- function(in_folder, out_folder, pathrows=NULL, start_date=NULL, 
+espa_extract <- function(in_folder, out_folder, pathrows=NULL, start_date=NULL,
                          end_date=NULL, sensors=NULL) {
     if (!file_test('-d', in_folder)) {
         stop(paste(in_folder, 'does not exist'))
@@ -9929,19 +10015,19 @@ espa_extract <- function(in_folder, out_folder, pathrows=NULL, start_date=NULL,
         year <- format(img_dates[n], '%Y')
         julian_day <- format(img_dates[n], '%j')
         this_out_folder <- file.path(out_folder,
-                                     paste0(img_paths[n],'-', img_rows[n], '_', year, 
+                                     paste0(img_paths[n],'-', img_rows[n], '_', year,
                                             '-', julian_day, '_', img_sensors[n]))
         if (!file_test('-d', this_out_folder)) {
             dir.create(this_out_folder)
         } else {
-            message(paste('Skipping', zipfiles[n], '- output dir', 
+            message(paste('Skipping', zipfiles[n], '- output dir',
                           this_out_folder, 'already exists.'))
             next
         }
         message(paste0(n, ' of ', length(zipfiles), '. Extracting ', zipfiles[n], ' to ', this_out_folder))
         ret_code <- untar(zipfile_path, exdir=file.path(this_out_folder))
         if (ret_code != 0) {
-            message(paste('WARNING: error extracting', zipfiles[n], '- return 
+            message(paste('WARNING: error extracting', zipfiles[n], '- return
                           code', ret_code))
         }
     }
@@ -9950,19 +10036,19 @@ espa_extract <- function(in_folder, out_folder, pathrows=NULL, start_date=NULL,
 #'
 #' @export
 #' @importFrom lubridate new_interval %within%
-#' @param x a \code{data.frame} with a list of Landsat scenes as output from 
+#' @param x a \code{data.frame} with a list of Landsat scenes as output from
 #' the save metadata function on http://earthexplorer.usgs.gov
 #' @param start_date starting date as a \code{Date} object
 #' @param end_date end date as a \code{Date} object
 #' @param out_file filename for output text file for later upload to ESPA
-#' @param min_clear the minimum percent clear to plot (calculated as 1 - 
-#' percent cloud cover). Images with less than \code{min_clear} fraction of the 
+#' @param min_clear the minimum percent clear to plot (calculated as 1 -
+#' percent cloud cover). Images with less than \code{min_clear} fraction of the
 #' image area free of clouds will be ignored.
-#' @param exclude a list of sensors to exclude (for example, set 
-#' \code{exclude=c('LE7', 'LT4')} to exclude Landsat 7 ETM+ and Landsat 4 TM 
+#' @param exclude a list of sensors to exclude (for example, set
+#' \code{exclude=c('LE7', 'LT4')} to exclude Landsat 7 ETM+ and Landsat 4 TM
 #' images.
 #' @return used for side effect of producing ESPA scene list
-espa_scenelist <- function(x, start_date, end_date, out_file, min_clear=.7, 
+espa_scenelist <- function(x, start_date, end_date, out_file, min_clear=.7,
                          exclude=list()) {
     if (!class(start_date) == 'Date') {
         stop('start_date must be a "Date" object')
@@ -9982,59 +10068,59 @@ espa_scenelist <- function(x, start_date, end_date, out_file, min_clear=.7,
     }
     x <- x[!(x$Sensor %in% exclude), ]
     x <- x[x$Frac_Clear >= min_clear, ]
-    write.table(x$Landsat.Scene.Identifier, out_file, row.names=FALSE, 
+    write.table(x$Landsat.Scene.Identifier, out_file, row.names=FALSE,
                 col.names=FALSE, quote=FALSE, sep='\n')
 }
 #' Estimate image haze for dark object subtraction procedures
-#' 
+#'
 #' @param x raster object or a previous result from \code{estimateSHV(x , returnTables = TRUE} from which to estimate haze
 #' @param band character. Band or bandname from which to estimate SHV (optinal if x contains only one layer)
 #' @param darkProp proportion of pixels estimated to be dark
 #' @param plot display histograms and haze values
 #' @param returnTables return the frequency table per layer. Only takes effect if x is a Raster* object. If x is a result of estimateSHV tables will always be returned.
-#' @export 
+#' @export
 estimateSHV <- function(x, hazeBand, darkProp = 0.02, plot = FALSE, returnTables = TRUE) {
-	
+
 	## Initial or repeated run?
 	if(inherits(x, "Raster")) {
 		preCalc <- FALSE
 	} else {
 		if(is.list(x) & "table" %in% names(x)) {
-			preCalc <- TRUE 
+			preCalc <- TRUE
 		} else {
 			stop("x must be a Raster* object or the result of a previous run of estimateSHV(Raster*, ) with argument 'returnTables = TRUE'", call. = FALSE)
-		}	
+		}
 	}
-	
+
 	if(!preCalc){
-		if(missing(hazeBand)){ 
+		if(missing(hazeBand)){
 			if(nlayers(x) == 1) {
-				hazeBand <- names(x)        
+				hazeBand <- names(x)
 			} else {
 				stop("Please specify the band from which you want to estimate the haze dn")
-			}	
+			}
 			if(is.numeric(hazeBand)) hazeBand <- names(x)[hazeBand]
 		}
-		
+
 	} else {
-		
+
 		if(is.numeric(hazeBand)) hazeBand <- names(x$table)[hazeBand]
 		preCalcAvail <- hazeBand %in% names(x$table)
 		if(!any(preCalcAvail)) 	stop("Cannot estimate SHV because tables are missing for all specified bands", call. = FALSE)
-		
+
 		if(any(!preCalcAvail)) {
 			warning(paste0("Cannot estimate SHV for >> ", hazeBand[!preCalcAvail], " << because tables are missing."), call. = FALSE)
-			hazeBand <- hazeBand[preCalcAvail] 				
-		}	
+			hazeBand <- hazeBand[preCalcAvail]
+		}
 	}
-	
+
 	## Decide whether we open multiple devices
 	multiple <- if(length(hazeBand) > 1) TRUE else FALSE
-	
+
 	## Run estimation for each band separately
 	out   <- lapply(hazeBand, function(bi) {
 				if(inherits(x, "Raster")) {
-					tf <- freq(x[[bi]], useNA = "no") 
+					tf <- freq(x[[bi]], useNA = "no")
 				} else {
 					if(is.list(x) & "table" %in% names(x)) {
 						preCalc <- TRUE
@@ -10046,32 +10132,32 @@ estimateSHV <- function(x, hazeBand, darkProp = 0.02, plot = FALSE, returnTables
 				tf <- tf[tf[,1] > 0,]
 				tf[,2] <- tf[,2]/sum(tf[,2])
 				dtf <- c(diff(tf[,2]),0) / c(diff(tf[,1]),0)
-				
-				SHV <- tf[which(dtf > darkProp)[1], 1] 
+
+				SHV <- tf[which(dtf > darkProp)[1], 1]
 				if(is.na(SHV)) warning(paste("darkProp for band", bi, "was chosen too high. It exceeds the value range."), call. = FALSE)
-				
+
 				if(plot){
 					if(multiple) x11()
 					par(mfrow = c(1,2))
-					
+
 					plot(tf, xlab = "DN", ylab = "Frequency", type = "l", main = bi)
 					abline(v = tf[tf[,1]==SHV,1], col="red")
 					text(SHV, max(tf[,2]), pos=4, label = paste0("SHV_DN = ", SHV), col ="red")
-					
+
 					plot(dtf, type="l", xlab = "DN", ylab = "diff(Frequency)", main = bi)
 					abline(v = tf[tf[,1]==SHV,1], col="red")
 					abline(h = darkProp, col = "#00000070", lty = 2)
 					text(max(tf[,1]), darkProp, label = paste0("darkProp = ", darkProp), col = "#00000070")
 					text(SHV, max(dtf, na.rm = TRUE), pos=4, label = paste0("SHV_DN = ", SHV), col ="red")
-					
+
 				}
-				
+
 				return(list(table = tf, SHV = SHV))
 			})
-	
+
 	SHV <- unlist(sapply(out, "[", 2))
 	names(SHV) <- hazeBand
-	
+
 	if(!preCalc){
 		table <- sapply(out, "[", 1)
 		names(table) <- hazeBand
@@ -10103,30 +10189,30 @@ RNF,159,74,redundant
 RNF,159,75,slight
 #' Perform SLC-off gap fill of Landsat 7 ETM+ image
 #'
-#' Calls GNSPI.pro IDL script by Xiaolin Zhu to fill gaps in SLC-off Landsat 7 
-#' ETM+ image. The script requires \code{fill} to be a TM (Landsat 5) image.  
+#' Calls GNSPI.pro IDL script by Xiaolin Zhu to fill gaps in SLC-off Landsat 7
+#' ETM+ image. The script requires \code{fill} to be a TM (Landsat 5) image.
 #' \code{slc_off} must be a Landsat 7 SLC-off image.
 #'
-#' If supplied, \code{timeseries} should be a list of TM images.  Performing 
+#' If supplied, \code{timeseries} should be a list of TM images.  Performing
 #' gap fill using SLC-Off ETM+ images as the input is not yet supported.
-#' 
-#' Pixels in gaps, background, and/or clouds in \code{slc_off}, 
-#' \code{input_image}, and the images in \code{timeseries} should be coded as 
+#'
+#' Pixels in gaps, background, and/or clouds in \code{slc_off},
+#' \code{input_image}, and the images in \code{timeseries} should be coded as
 #' 0.
 #'
 #' @importFrom tools file_path_sans_ext
 #' @param slc_off the SLC-off Landsat 7 file to gap fill, as a \code{Raster*}
-#' @param fill the first TM image to use to fill in the gaps, as a 
+#' @param fill the first TM image to use to fill in the gaps, as a
 #' \code{Raster*}
-#' @param timeseries a timeseries of TM images as \code{Raster*} objects to use 
+#' @param timeseries a timeseries of TM images as \code{Raster*} objects to use
 #' as additional inputs to the gap fill algorithm (optional)
-#' @param out_base path and base filename for the output file. The script will 
-#' save the output files by appending "_GNSPI.envi" and 
+#' @param out_base path and base filename for the output file. The script will
+#' save the output files by appending "_GNSPI.envi" and
 #' "_GNSPI_uncertainty.envi" to this base filename.
-#' @param ext file extension to use when and when saving output rasters 
-#' (determines output file format). Must be supported by 
+#' @param ext file extension to use when and when saving output rasters
+#' (determines output file format). Must be supported by
 #' \code{\link{writeRaster}}.
-#' @param algorithm the algorithm to use, as a string ("GNSPI_IDL" is currently 
+#' @param algorithm the algorithm to use, as a string ("GNSPI_IDL" is currently
 #' the only supported algorithm)
 #' @param sample_size the sample size of sample pixels
 #' @param size_wind the maximum window size
@@ -10137,25 +10223,25 @@ RNF,159,75,slight
 #' @param idl path to the IDL binary
 #' @param verbose whether to print detailed status messages
 #' @param overwrite whether to overwrite output files if they already exist
-#' @return a list of two rasters: 1) "filled", the gap filled image, and 2) 
+#' @return a list of two rasters: 1) "filled", the gap filled image, and 2)
 #' "uncertainty", the uncertainty image.
 #' @export
-#' @references Zhu, X., Liu, D., Chen, J., 2012. A new geostatistical approach 
-#' for filling gaps in Landsat ETM+ SLC-off images. Remote Sensing of 
+#' @references Zhu, X., Liu, D., Chen, J., 2012. A new geostatistical approach
+#' for filling gaps in Landsat ETM+ SLC-off images. Remote Sensing of
 #' Environment 124, 49--60.
 #' @examples
 #' \dontrun{
-#' slc_off <- brick(system.file('tests', 'testthat_idl', 'fill_gaps', 
+#' slc_off <- brick(system.file('tests', 'testthat_idl', 'fill_gaps',
 #' 'TM20100429_toaR_gap', package='teamlucc'))
-#' fill <- brick(system.file('tests', 'testthat_idl', 'fill_gaps', 
+#' fill <- brick(system.file('tests', 'testthat_idl', 'fill_gaps',
 #' 'TM20100515_toaR', package='teamlucc'))
-#' timeseries <- c(brick(system.file('tests', 'testthat_idl', 'fill_gaps', 
+#' timeseries <- c(brick(system.file('tests', 'testthat_idl', 'fill_gaps',
 #' 'TM20100208_toaR', package='teamlucc')))
 #' filled <- fill_gaps(slc_off, fill, timeseries)
 #' }
 fill_gaps <- function(slc_off, fill, timeseries=c(), out_base=NULL, ext="tif",
-                      algorithm="GNSPI_IDL", sample_size=20, size_wind=12, 
-                      class_num=4, DN_min=0.0, 
+                      algorithm="GNSPI_IDL", sample_size=20, size_wind=12,
+                      class_num=4, DN_min=0.0,
                       DN_max=1.0, patch_long=1000,
                       idl="C:/Program Files/Exelis/IDL83/bin/bin.x86_64/idl.exe",
                       verbose=FALSE, overwrite=FALSE) {
@@ -10199,11 +10285,11 @@ fill_gaps <- function(slc_off, fill, timeseries=c(), out_base=NULL, ext="tif",
             stop('output uncertainty file already exists - use a different "out_base"')
         }
     }
-    
+
     if (algorithm == "GNSPI_IDL") {
-        filled <- fill_gaps_idl(slc_off, fill, timeseries, out_base, 
-                                sample_size, size_wind, class_num, DN_min, 
-                                DN_max, patch_long, idl, algorithm, ext, 
+        filled <- fill_gaps_idl(slc_off, fill, timeseries, out_base,
+                                sample_size, size_wind, class_num, DN_min,
+                                DN_max, patch_long, idl, algorithm, ext,
                                 verbose)
     } else {
         stop("Native R gap filling not yet supported")
@@ -10212,8 +10298,8 @@ fill_gaps <- function(slc_off, fill, timeseries=c(), out_base=NULL, ext="tif",
     return(filled)
 }
 
-fill_gaps_idl <- function(slc_off, fill, timeseries, out_base, sample_size, 
-                          size_wind, class_num, DN_min, DN_max, patch_long, 
+fill_gaps_idl <- function(slc_off, fill, timeseries, out_base, sample_size,
+                          size_wind, class_num, DN_min, DN_max, patch_long,
                           idl, algorithm, ext, verbose) {
     if (verbose) {
         warning('verbose=TRUE not supported when algorithm="GNSPI_IDL"')
@@ -10228,14 +10314,14 @@ fill_gaps_idl <- function(slc_off, fill, timeseries, out_base, sample_size,
         stop("Unable to load ENVI in IDL - do you have ENVI and IDL licenses, and ENVI >= 5.0?")
     }
 
-    # Save proj4string and extend to ensure the same proj4string and extent is 
+    # Save proj4string and extend to ensure the same proj4string and extent is
     # returned even if they are changed by IDL
     orig_proj <- proj4string(slc_off)
     orig_ext <- extent(slc_off)
     orig_datatype <- dataType(slc_off)[1]
 
-    # Write in-memory rasters to files for hand off to IDL. The capture.output 
-    # line is used to avoid printing the rasterOptions to screen as they are 
+    # Write in-memory rasters to files for hand off to IDL. The capture.output
+    # line is used to avoid printing the rasterOptions to screen as they are
     # temporarily reset.
     dummy <- capture.output(def_format <- rasterOptions()$format)
     rasterOptions(format='ENVI')
@@ -10256,22 +10342,22 @@ fill_gaps_idl <- function(slc_off, fill, timeseries, out_base, sample_size,
     temp_dir <- tempdir()
     dummy <- capture.output(rasterOptions(format=def_format))
 
-    # Save IDL output to a temp folder - it will be copied over and saved with 
-    # writeRaster later to ensure the extents and projection are not modified 
+    # Save IDL output to a temp folder - it will be copied over and saved with
+    # writeRaster later to ensure the extents and projection are not modified
     # from those of the original files.
     temp_out_base <- file_path_sans_ext(rasterTmpFile())
     param_vals <- list(slc_off_file, fill_file, timeseries_files,
                        temp_out_base, sample_size, size_wind, class_num,
                        DN_min, DN_max, patch_long, temp_dir)
-    param_names <- list('slc_off_file', 'input_file', 'timeseries_files', 
-                        'out_base', 'sample_size', 'size_wind', 'class_num', 
+    param_names <- list('slc_off_file', 'input_file', 'timeseries_files',
+                        'out_base', 'sample_size', 'size_wind', 'class_num',
                         'DN_min', 'DN_max', 'patch_long', 'temp_dir')
     idl_params <- mapply(format_IDL_param, param_names, param_vals)
     idl_params <- paste(idl_params, collapse='')
 
     script_dir <- dirname(script_path)
     idl_script <- tempfile(fileext='.pro')
-    idl_cmd <- paste0('CD, "', script_dir, '"\n', idl_params, 'GNSPI,', 
+    idl_cmd <- paste0('CD, "', script_dir, '"\n', idl_params, 'GNSPI,',
                       paste(param_names, collapse=','), '\nexit')
 
     f <- file(idl_script, 'wt')
@@ -10283,21 +10369,21 @@ fill_gaps_idl <- function(slc_off, fill, timeseries, out_base, sample_size,
     log_file <- paste0(out_base, '_GNSPI_idllog.txt')
     idl_out <- gsub('\r', '', idl_out)
     f <- file(log_file, 'wt')
-    writeLines(idl_out, f) 
+    writeLines(idl_out, f)
     close(f)
 
     filled <- brick(paste0(temp_out_base, '_GNSPI.envi'))
     filled_out_file <- paste0(out_base, paste0('_GNSPI.', ext))
     proj4string(filled) <- orig_proj
     extent(filled) <- orig_ext
-    filled <- writeRaster(filled, filename=filled_out_file, overwrite=TRUE, 
+    filled <- writeRaster(filled, filename=filled_out_file, overwrite=TRUE,
                           datatype=orig_datatype)
 
     uncertainty <- brick(paste0(temp_out_base, '_GNSPI_uncertainty.envi'))
     uncertainty_out_file <- paste0(out_base, paste0('_GNSPI_uncertainty.', ext))
     proj4string(uncertainty) <- orig_proj
     extent(uncertainty) <- orig_ext
-    uncertainty <- writeRaster(uncertainty, filename=uncertainty_out_file, 
+    uncertainty <- writeRaster(uncertainty, filename=uncertainty_out_file,
                                overwrite=TRUE, datatype=orig_datatype)
 
     return(list(filled=filled, uncertainty=uncertainty))
@@ -10306,7 +10392,7 @@ georef <-
 function(target, tofix, maxdist = 1000, startx = 0, starty = 0)
 {
     ## find best-match shift of tofix to target
-    ## returns coefficients, but geoshift() must be used to 
+    ## returns coefficients, but geoshift() must be used to
     ## actually adjust the matrix/dataframe/SpatialGridDataFrame
 
     # minimum-path fitting of tofix matrix to target matrix
@@ -10360,10 +10446,10 @@ function(target, tofix, maxdist = 1000, startx = 0, starty = 0)
         newy <- results[results[,"RMSE"] == currrmse, "y"]
         maxx <- max(abs(newx-1), abs(newx+1))
         maxy <- max(abs(newy-1), abs(newy+1))
-	
+
 	# check to see if the loop should stop anyway
 	if(abs(newx) > maxdist | abs(newy) > maxdist) currrmse <- 9999
-    
+
     }
     list(shiftx=newx, shifty=newy, initrmse=initrmse, currrmse=currrmse)
 }
@@ -10401,7 +10487,7 @@ function(mat, padx, pady, shiftx, shifty, nodata=NA)
 #-#        mat.coords[1, 2] <- mat.coords[1, 2] - (pady * mat.grid@cellsize[2])
 #-#        mat.coords[2, 2] <- mat.coords[2, 2] + (pady * mat.grid@cellsize[2])
 #-#        mat@coords <- mat.coords
-         
+
         # not S4 class
         mat.bbox <- bbox(mat)
         mat.bbox[1, "min"] <- mat.bbox[1, "min"] - (padx * mat.grid@cellsize[1])
@@ -10410,7 +10496,7 @@ function(mat, padx, pady, shiftx, shifty, nodata=NA)
         mat.bbox[2, "max"] <- mat.bbox[2, "max"] + (pady * mat.grid@cellsize[2])
         mat@bbox <- mat.bbox
     }
-    
+
     # return the same structure as the input values
     if(class(results) == "SpatialGridDataFrame")
         results <- mat
@@ -10420,7 +10506,7 @@ function(mat, padx, pady, shiftx, shifty, nodata=NA)
         results <- newmat
     else # no result
         results <- NA
-    
+
     results
 
 }
@@ -10444,15 +10530,15 @@ get_band_names_from_hdr <- function(hdr_file) {
 }
 #' Generate a SpatialPolygonDataFrame of raster extents
 #'
-#' Also includes the filename associated with each raster object. Useful for 
-#' providing the \code{dem_extents} argument to the 
+#' Also includes the filename associated with each raster object. Useful for
+#' providing the \code{dem_extents} argument to the
 #' \code{\link{auto_setup_dem}} function.
 #'
 #' @export
 #' @importFrom maptools spRbind
 #' @param rast_list a \code{Raster*} object, or \code{list} of\code{Raster*} objects
-#' @return \code{SpatialPolygonDataFrame} with the extent of each raster object 
-#' as a polygon, with a "filename" attribute giving the filename for the raster 
+#' @return \code{SpatialPolygonDataFrame} with the extent of each raster object
+#' as a polygon, with a "filename" attribute giving the filename for the raster
 #' object from with each extent is derived.
 get_extent_polys <- function(rast_list) {
     if (!is.list(rast_list)) rast_list <- list(rast_list)
@@ -10467,20 +10553,20 @@ get_extent_polys <- function(rast_list) {
     # Convert extents to a list of SpatialPolygons objects
     extent_sps_list <- lapply(extents, function(x) as(x, 'SpatialPolygons'))
 
-    # Convert from list of SpatialPolygons objects to a single SpatialPolygons 
+    # Convert from list of SpatialPolygons objects to a single SpatialPolygons
     # object
     extent_sps <- extent_sps_list[[1]]
     if (length(extent_sps_list) > 1) {
         for (n in 2:length(extent_sps_list)) {
-            extent_sps <- spRbind(extent_sps, spChFIDs(extent_sps_list[[n]], 
+            extent_sps <- spRbind(extent_sps, spChFIDs(extent_sps_list[[n]],
                                                  as.character(n)))
         }
     }
 
-    # Finally convert the SpatialPolygons object into a 
-    # SpatialPolygonsDataFrame that also includes the filename of the raster 
+    # Finally convert the SpatialPolygons object into a
+    # SpatialPolygonsDataFrame that also includes the filename of the raster
     # associated with each extent polygon as an attribute
-    extent_polys <- SpatialPolygonsDataFrame(extent_sps, 
+    extent_polys <- SpatialPolygonsDataFrame(extent_sps,
                                              data=data.frame(filename=unlist(filenames)))
     proj4string(extent_polys) <- proj4strings[[1]]
 
@@ -10495,7 +10581,7 @@ get_extent_polys <- function(rast_list) {
 #' @export
 #' @importFrom raster extension
 #' @importFrom XML xmlInternalTreeParse xpathApply xmlValue
-#' @param x an image file that has an accompanying GDAL PAM format metadata 
+#' @param x an image file that has an accompanying GDAL PAM format metadata
 #' file (ending in .aux.xml)
 #' @param key a string giving the name of the metadata item to extract
 #' @return The metadata item (as a string)
@@ -10517,20 +10603,20 @@ get_metadata_item <- function(x, key) {
 }
 #' Draw a random sample from a grid laid out on a RasterLayer or matrix
 #'
-#' This function is used to subsample a \code{RasterLayer} or \code{matrix} by 
-#' dividing the dataset into a grid of \code{horizcells} x \code{vertcells}, 
-#' and by then drawing a sample of size \code{nsamp} from within each grid 
+#' This function is used to subsample a \code{RasterLayer} or \code{matrix} by
+#' dividing the dataset into a grid of \code{horizcells} x \code{vertcells},
+#' and by then drawing a sample of size \code{nsamp} from within each grid
 #' cell.
 #'
 #' @export
 #' @param x a matrix or RasterLayer to draw sample from
-#' @param horizcells how many cells to break the raster in horizontally (over 
+#' @param horizcells how many cells to break the raster in horizontally (over
 #' the columns)
-#' @param vertcells how many cells to break the raster in vertically (over 
+#' @param vertcells how many cells to break the raster in vertically (over
 #' the rows)
 #' @param nsamp how many samples to draw from each grid cell
-#' @param rowmajor whether to return indices in row-major format (default is 
-#' column-major). Row-major format is useful in conjunction with \code{Raster*} 
+#' @param rowmajor whether to return indices in row-major format (default is
+#' column-major). Row-major format is useful in conjunction with \code{Raster*}
 #' objects.
 #' @param replace whether to sample with replacement (within each grid cell)
 #' @return vector of sample indices
@@ -10542,19 +10628,19 @@ get_metadata_item <- function(x, key) {
 #' # random samples from each grid cell without replacement (these are the
 #' # default parameters).
 #' y <- gridsample(x)
-gridsample <- function(x, horizcells=10, vertcells=10, nsamp=10, 
+gridsample <- function(x, horizcells=10, vertcells=10, nsamp=10,
                        rowmajor=FALSE, replace=FALSE) {
-    # horizstart is a vector of column numbers of the first column in each cell 
+    # horizstart is a vector of column numbers of the first column in each cell
     # in the grid
     horizstart <- round(seq(1, ncol(x), ncol(x) / horizcells))
-    # horizend is a vector of column numbers of the last column in each cell in 
+    # horizend is a vector of column numbers of the last column in each cell in
     # the grid
     if (length(horizstart) > 1) {
         horizend <- c((horizstart - 1)[2:length(horizstart)], ncol(x))
     } else {
         horizend <- c(ncol(x))
     }
-    # vertstart is a vector of row numbers of the first row in each cell in the 
+    # vertstart is a vector of row numbers of the first row in each cell in the
     # grid
     vertstart <- round(seq(1, nrow(x), nrow(x) / vertcells))
     # vertend is a vector of row numbers of the last row in each cell in the
@@ -10565,37 +10651,37 @@ gridsample <- function(x, horizcells=10, vertcells=10, nsamp=10,
         vertend <- c(nrow(x))
     }
     # retvalues is a vector to store the sample values chosen from x
-    # sampindices is a vector to store the column major indices of the locations 
+    # sampindices is a vector to store the column major indices of the locations
     # of each sampled value in x
     sampindices <- vector('numeric', horizcells * vertcells * nsamp)
-    # retval_index tracks position in the vector storing the sampled values 
+    # retval_index tracks position in the vector storing the sampled values
     # returned from this function
     retval_index <- 1
-    # cell1row is used in calculating the column-major index of the first entry 
+    # cell1row is used in calculating the column-major index of the first entry
     # (top left) of each grid cell
     cell1row <- 1
     for (vertcellnum in 1:length(vertstart)) {
-        # cell1col is used in calculating the column-major index of the first 
+        # cell1col is used in calculating the column-major index of the first
         # entry (top left) of each grid cell
         cell1col <- 1
-        # cell_nrows is the number of rows in this particular cell (cells may 
+        # cell_nrows is the number of rows in this particular cell (cells may
         # have varying numbers of rows due to rounding)
         cell_nrows <- vertend[vertcellnum] - vertstart[vertcellnum] + 1
         for (horizcellnum in 1:length(horizstart)) {
-            # cell1colmajindex is the column-major index of the first (top 
+            # cell1colmajindex is the column-major index of the first (top
             # left) value in this particular grid cell
             cell1colmajindex <- cell1row + nrow(x) * (cell1col - 1)
-            # cell_ncols is the number of rows in this particular cell (cells 
+            # cell_ncols is the number of rows in this particular cell (cells
             # may have varying numbers of columns due to rounding)
             cell_ncols <- horizend[horizcellnum] - horizstart[horizcellnum] + 1
-            # cell_colmaj_indices is a matrix of column-major indices of the 
-            # position of each value in this grid cell, within the larger 
+            # cell_colmaj_indices is a matrix of column-major indices of the
+            # position of each value in this grid cell, within the larger
             # matrix x
             cell_colmaj_indices <- matrix(rep(1:cell_nrows, cell_ncols),
                                           nrow=cell_nrows) +
-                                   matrix(rep(seq(cell1colmajindex, by=nrow(x), 
-                                                  length.out=cell_ncols), 
-                                              cell_nrows), nrow=cell_nrows, 
+                                   matrix(rep(seq(cell1colmajindex, by=nrow(x),
+                                                  length.out=cell_ncols),
+                                              cell_nrows), nrow=cell_nrows,
                                           byrow=TRUE) - 1
             samp_indices <- sample(cell_colmaj_indices, nsamp, replace=replace)
             sampindices[retval_index:(retval_index + length(samp_indices) - 1)] <- samp_indices
@@ -10626,9 +10712,9 @@ function(master, tofix, mask, minval=0, maxval=255, by=1)
     tofix <- tofix[is.na(mask)]
 
 	breaks <- seq(minval, maxval, by=by)
-	master.cdf <- hist(master, breaks=breaks, plot=FALSE) 
+	master.cdf <- hist(master, breaks=breaks, plot=FALSE)
 	master.cdf <- c(0, cumsum(master.cdf$counts/sum(master.cdf$counts)))
-	tofix.cdf <- hist(tofix, breaks=breaks, plot=FALSE) 
+	tofix.cdf <- hist(tofix, breaks=breaks, plot=FALSE)
 	tofix.cdf <- c(0, cumsum(tofix.cdf$counts/sum(tofix.cdf$counts)))
 
     # fixed 2012-07-16 to work with continuous data
@@ -10644,7 +10730,7 @@ function(master, tofix, mask, minval=0, maxval=255, by=1)
 
     for (i in 2:length(breaks)) {
         testvals <- breaks[master.cdf < tofix.cdf[i]]
-        if (length(testvals) > 0) 
+        if (length(testvals) > 0)
             results.recode[i] <- max(testvals)
         results.values[tofix > breaks[i-1] & tofix <= breaks[i]] <- results.recode[i]
     }
@@ -10694,20 +10780,20 @@ YAN,6,67
 YAS,9,60
 YAS,9,61
 YAS,8,61
-#' Estimates Earth-Sun distance (in AU) for a given date 
-#' 
+#' Estimates Earth-Sun distance (in AU) for a given date
+#'
 #' Function taken from the landsat package: S. Goslee (2012)
-#' 
+#'
 #' @param adate character. date in format "YYYY-MM-DD"
 #' @keywords internal
-.ESdist <- function(adate){	
+.ESdist <- function(adate){
 	edist <- julian(as.Date(adate), origin=as.Date(paste(substring(adate, 1, 4), "12", "31", sep="-")))[[1]]
 	 1 - 0.016729 * cos((2*pi) * (0.9856 * (edist - 4)/360))
 }
 
 
 #' Extract numbers from strings
-#' 
+#'
 #' @param x string or vector of strings
 #' @param returnNumeric logical. should results be formatted \code{as.numeric}? If so, "05" will be converted to 5. Set returnNumeric to \code{FALSE} to keep preceeding zeros.
 #' @note decimal numbers will be returned as two separate numbers
@@ -10731,19 +10817,19 @@ YAS,8,61
 
 #' Apply a linear stretch to an image
 #'
-#' Applies a linear stretch to an image (default linear 2% stretch), and 
-#' returns the image with each band individually stretched and rescaled to 
+#' Applies a linear stretch to an image (default linear 2% stretch), and
+#' returns the image with each band individually stretched and rescaled to
 #' range between zero and \code{max_val} (default of \code{max_val} is 1).
 #'
 #' @export
 #' @param x image to stretch
 #' @param pct percent stretch
-#' @param max_val maximum value of final output (image will be rescaled to 
+#' @param max_val maximum value of final output (image will be rescaled to
 #' range from 0 - \code{max_val})
 #' @return image with stretch applied
 linear_stretch <- function(x, pct=2, max_val=1) {
-    # Applies linear stretch (2 percent by default). Assumes image is arranged 
-    # with bands in columns. Returns the image with stretch applied and bands 
+    # Applies linear stretch (2 percent by default). Assumes image is arranged
+    # with bands in columns. Returns the image with stretch applied and bands
     # rescaled to range from 0 - max_val.
     if ((pct < 0) | pct >= 50) {
         stop('pct must be > 0 and < 50')
@@ -10764,16 +10850,16 @@ linear_stretch <- function(x, pct=2, max_val=1) {
 }
 #' Catalog a folder of Landsat images
 #'
-#' This function is used to produce a \code{data.frame} of Landsat images 
-#' stored locally after download from the USGS. The images should be in a 
-#' series of subfolders named following the naming scheme of 
+#' This function is used to produce a \code{data.frame} of Landsat images
+#' stored locally after download from the USGS. The images should be in a
+#' series of subfolders named following the naming scheme of
 #' \code{\link{espa_extract}}.
 #'
 #' @export
 #' @importFrom stringr str_extract
-#' @param in_folder path to a folder of Landsat surface reflectance images (for 
+#' @param in_folder path to a folder of Landsat surface reflectance images (for
 #' example, as extracted by the \code{espa_extract} function).
-#' @return a \code{data.frame} with a list of the Landsat images found within 
+#' @return a \code{data.frame} with a list of the Landsat images found within
 #' in_folder
 ls_catalog <- function(in_folder) {
     if (!file_test('-d', in_folder)) {
@@ -10790,11 +10876,11 @@ ls_catalog <- function(in_folder) {
             inner_item_full <- file.path(outer_item_full, inner_item)
             # Check to ensure inner item is a Landsat HDF file
             if (!file_test('-f', inner_item_full) ||
-                !grepl('^(lndsr.)?((LT4)|(LT5)|(LE7)|(LC8))[0-9]{13}[A-Z]{3}[0-9]{2}.hdf$', 
+                !grepl('^(lndsr.)?((LT4)|(LT5)|(LE7)|(LC8))[0-9]{13}[A-Z]{3}[0-9]{2}.hdf$',
                        inner_item)) {
                 next
             }
-            metadata_string <- str_extract(inner_item, 
+            metadata_string <- str_extract(inner_item,
                                            '((LT4)|(LT5)|(LE7)|(LC8))[0-9]{13}')
             if (grepl('^LT4', metadata_string)) {
                 sensor <- 'LT4'
@@ -10819,7 +10905,7 @@ ls_catalog <- function(in_folder) {
                                     year,
                                     julian_day,
                                     sensor,
-                                    format(img_date, '%m'), 
+                                    format(img_date, '%m'),
                                     format(img_date, '%d'),
                                     inner_item)))
 
@@ -10838,7 +10924,7 @@ lssub <-
 function(filename, outname, centerx, centery, centerepsg, widthx, widthy)
 {
 
-### subset a landsat image 
+### subset a landsat image
 
     ## get information about the landsat image
     ## assuming that gdalinfo always provides the same format
@@ -10864,7 +10950,7 @@ function(filename, outname, centerx, centery, centerepsg, widthx, widthy)
     if(!missing(centerepsg)) {
         if(centerepsg != lsepsg) {
             cat("reprojecting...\n")
-            newcenter <- system(paste("echo ", centerx, " ", centery, " | gdaltransform -s_srs EPSG:", centerepsg, " -t_srs EPSG:", lsepsg, 
+            newcenter <- system(paste("echo ", centerx, " ", centery, " | gdaltransform -s_srs EPSG:", centerepsg, " -t_srs EPSG:", lsepsg,
                 sep=""), intern=TRUE)
             newcenter <- as.numeric(strsplit(newcenter, " ")[[1]][1:2])
             centerx <- newcenter[1]
@@ -10895,26 +10981,26 @@ function(filename, outname, centerx, centery, centerepsg, widthx, widthy)
 #' Match the coordinate system and extent of two rasters
 #'
 #' @export
-#' @param baseimg A /code{Raster*} to use as the base image. This layer will 
+#' @param baseimg A /code{Raster*} to use as the base image. This layer will
 #' determine the output coordinate system.
-#' @param matchimg A /code{Raster*} to match to the base image. If necessary 
-#' the /code{matchimg} will be reprojected to match the coordinate system of 
-#' the /code{baseimg}. The /code{matchimg} will then be cropped and extended to 
+#' @param matchimg A /code{Raster*} to match to the base image. If necessary
+#' the /code{matchimg} will be reprojected to match the coordinate system of
+#' the /code{baseimg}. The /code{matchimg} will then be cropped and extended to
 #' match the extent of the /code{baseimg}.
 #' @param filename file on disk to save \code{Raster*} to (optional)
-#' @param method the method to use if projection is needed to match image 
-#' coordinate systems, or if resampling is needed to align image origins. Can 
+#' @param method the method to use if projection is needed to match image
+#' coordinate systems, or if resampling is needed to align image origins. Can
 #' be "ngb" for nearest-neighbor, or "binlinear" for bilinear interpolation
-#' @param ... additional arguments to pass to \code{writeRaster} (such as 
+#' @param ... additional arguments to pass to \code{writeRaster} (such as
 #' datatype and filename)
-#' @return The /code{matchimg} reprojected (if necessary), cropped, and 
+#' @return The /code{matchimg} reprojected (if necessary), cropped, and
 #' extended to match the /code{baseimg}.
-#' @details Note that \code{match_rasters} can run in parallel if 
+#' @details Note that \code{match_rasters} can run in parallel if
 #' \code{beginCluster()} is run prior to running \code{match_rasters}.
 #' @examples
 #' # Mosaic the two ASTER DEM tiles needed to a Landsat image
 #' DEM_mosaic <- mosaic(ASTER_V002_EAST, ASTER_V002_WEST, fun='mean')
-#' 
+#'
 #' # Crop and extend the DEM mosaic to match the Landsat image
 #' matched_DEM <- match_rasters(L5TSR_1986, DEM_mosaic)
 match_rasters <- function(baseimg, matchimg, filename, method='bilinear',
@@ -10973,7 +11059,7 @@ minnaert <- function(x, slope, aspect, sunelev, sunazimuth, na.value=NA, GRASS.a
     IL <- cos(sloper) * cos(sunzenith) + sin(sloper) * sin(sunzenith) * cos(sunazimuth - aspect)
     IL[IL == 0] <- IL.epsilon
 
-    if(missing(coverclass)) 
+    if(missing(coverclass))
         coverclass <- rep(TRUE, length(as.vector(x)))
 
     ## Minnaert
@@ -11030,14 +11116,14 @@ minnaert <- function(x, slope, aspect, sunelev, sunazimuth, na.value=NA, GRASS.a
                           coverclass, sunzenith) {
     if (!is.null(sampleindices)) {
         K <- data.frame(x=x[sampleindices],
-                        IL=IL[sampleindices], 
+                        IL=IL[sampleindices],
                         slope=slope[sampleindices])
-        # Remember that the sample indices are row-major (as they were drawn 
-        # for a RasterLayer), so the coverclass matrix needs to be transposed 
+        # Remember that the sample indices are row-major (as they were drawn
+        # for a RasterLayer), so the coverclass matrix needs to be transposed
         # as it is stored in column-major order
         if(!is.null(coverclass)) coverclass <- t(coverclass)[sampleindices]
     } else {
-        K <- data.frame(x=getValues(x), IL=getValues(IL), 
+        K <- data.frame(x=getValues(x), IL=getValues(IL),
                         slope=getValues(slope))
     }
 
@@ -11064,20 +11150,20 @@ minnaert <- function(x, slope, aspect, sunelev, sunazimuth, na.value=NA, GRASS.a
     k_table$n <- table(K.cut)
 
     for(i in sort(unique(K.cut[!is.na(K.cut)]))) {
-        k_table$k[i] <- coefficients(lm(log10(K$x)[K.cut == i] ~ 
+        k_table$k[i] <- coefficients(lm(log10(K$x)[K.cut == i] ~
                                         log10(K$IL/cos(sunzenith))[K.cut == i]))[[2]]
     }
 
     return(k_table)
 }
 
-# Function to combine classes defined by the upper limits 'lims' with their 
-# smallest neighbors until each class has at least n members. 'counts' stores 
+# Function to combine classes defined by the upper limits 'lims' with their
+# smallest neighbors until each class has at least n members. 'counts' stores
 # the number of members in each class.
 clean_intervals <- function(counts, lims, n) {
     while(min(counts) < n) {
-        # The "rev" below is so that the classes at the end are combined first 
-        # (as classes with higher slopes are more more likely to be more rare 
+        # The "rev" below is so that the classes at the end are combined first
+        # (as classes with higher slopes are more more likely to be more rare
         # and therefore have fewer members)
         min_index <- length(counts) - match(TRUE,
                                             rev(counts == min(counts))) + 1
@@ -11102,13 +11188,13 @@ clean_intervals <- function(counts, lims, n) {
 
 #' Topographic correction for satellite imagery using Minnaert method
 #'
-#' Perform topographic correction using the Minnaert method. This code is 
-#' modified from the code in the \code{landsat} package written by Sarah 
-#' Goslee.  This version of the code has been altered from the \code{landsat} 
-#' version to allow the option of using a sample of pixels for calculation of k 
+#' Perform topographic correction using the Minnaert method. This code is
+#' modified from the code in the \code{landsat} package written by Sarah
+#' Goslee.  This version of the code has been altered from the \code{landsat}
+#' version to allow the option of using a sample of pixels for calculation of k
 #' in the Minnaert correction (useful when dealing with large images).
-#' 
-#' See the help page for \code{minnaert} in the \code{landsat} package for 
+#'
+#' See the help page for \code{minnaert} in the \code{landsat} package for
 #' additional details on the parameters.
 #'
 #' @export
@@ -11117,30 +11203,30 @@ clean_intervals <- function(counts, lims, n) {
 #' @param aspect the aspect in radians as a \code{RasterLayer}
 #' @param sunelev sun elevation in degrees
 #' @param sunazimuth sun azimuth in degrees
-#' @param IL.epsilon a small amount to add to calculated illumination values 
+#' @param IL.epsilon a small amount to add to calculated illumination values
 #' that are equal to zero to avoid division by zero resulting in Inf values
-#' @param slopeclass the slope classes to calculate k for (in radians), or 
-#' NULL, in which case an algorithm will be used to choose reasonable defaults 
-#' for the given image. If provided, \code{slopeclass} should be a list of 
+#' @param slopeclass the slope classes to calculate k for (in radians), or
+#' NULL, in which case an algorithm will be used to choose reasonable defaults
+#' for the given image. If provided, \code{slopeclass} should be a list of
 #' slope class limits. For example: c(1, 5, 10, 15, 20, 25, 30, 45) * (pi/180)
 #' @param coverclass used to calculate k for specific cover class (optional)
 #' as \code{RasterLayer}
-#' @param sampleindices (optional) row-major indices of sample pixels to use in 
+#' @param sampleindices (optional) row-major indices of sample pixels to use in
 #' the calculation of k values for the Minnaert correction. See
 #' \code{\link{gridsample}}.
-#' @param DN_min minimum allowable pixel value after correction (values less 
+#' @param DN_min minimum allowable pixel value after correction (values less
 #' than \code{DN_min} are set to NA)
-#' @param DN_max maximum allowable pixel value after correction (values less 
+#' @param DN_max maximum allowable pixel value after correction (values less
 #' than \code{DN_max} are set to NA)
 #' @return \code{RasterLayer} with topographically corrected data
 #' @author Sarah Goslee and Alex Zvoleff
 #' @references
-#' Sarah Goslee. Analyzing Remote Sensing Data in {R}: The {landsat} Package.  
-#' Journal of Statistical Software, 2011, 43:4, pg 1--25.  
+#' Sarah Goslee. Analyzing Remote Sensing Data in {R}: The {landsat} Package.
+#' Journal of Statistical Software, 2011, 43:4, pg 1--25.
 #' http://www.jstatsoft.org/v43/i04/
 minnaert_samp <- function(x, slope, aspect, sunelev, sunazimuth,
-                          IL.epsilon=0.000001, slopeclass=NULL, 
-                          coverclass=NULL, sampleindices=NULL, DN_min=NULL, 
+                          IL.epsilon=0.000001, slopeclass=NULL,
+                          coverclass=NULL, sampleindices=NULL, DN_min=NULL,
                           DN_max=NULL) {
 
     if (is.null(slopeclass)) {
@@ -11150,13 +11236,13 @@ minnaert_samp <- function(x, slope, aspect, sunelev, sunazimuth,
 
     if (is.null(sampleindices)) {
         counts <- raster::freq(raster::cut(slope, slopeclass,
-                                           include.lowest=TRUE), 
+                                           include.lowest=TRUE),
                                useNA='no')
         # Eliminate empty bins:
         slopeclass <- slopeclass[c(TRUE, 1:(length(slopeclass) - 1) %in% counts[, 1])]
         counts <- counts[, 2]
     } else {
-        counts <- as.numeric(table(cut(slope[sampleindices], slopeclass, 
+        counts <- as.numeric(table(cut(slope[sampleindices], slopeclass,
                                        include.lowest=TRUE), useNA='no'))
     }
     # The [-1] below is because clean_intervals only needs the upper limits
@@ -11177,12 +11263,12 @@ minnaert_samp <- function(x, slope, aspect, sunelev, sunazimuth,
     IL <- .calc_IL(slope, aspect, sunzenith, sunazimuth, IL.epsilon)
     rm(aspect, sunazimuth)
 
-    k_table <- .calc_k_table(x, IL, slope, sampleindices, slopeclass, 
+    k_table <- .calc_k_table(x, IL, slope, sampleindices, slopeclass,
                              coverclass, sunzenith)
-    
+
     k_model <- with(k_table, bam(k ~ s(midpoint, k=length(midpoint) - 1), data=k_table))
 
-    # If slope is greater than modeled range, use maximum of modeled range. If 
+    # If slope is greater than modeled range, use maximum of modeled range. If
     # slope is less than modeled range, treat it as flat.
     slopeclass_max <- max(slopeclass)
     slopeclass_min <- min(slopeclass)
@@ -11250,11 +11336,11 @@ function(x, kernel)
 
 #' Normalizes two rasters
 #'
-#' Performs relative normalization on two rasters using model II regression. 
-#' Based on the approach in the \code{relnorm} function in the \code{landsat} 
+#' Performs relative normalization on two rasters using model II regression.
+#' Based on the approach in the \code{relnorm} function in the \code{landsat}
 #' package.
 #'
-#' This function will run in parallel if a parallel backend is registered with 
+#' This function will run in parallel if a parallel backend is registered with
 #' \code{\link{foreach}}.
 #'
 #' @export
@@ -11263,9 +11349,9 @@ function(x, kernel)
 #' @importFrom lmodel2 lmodel2
 #' @param x a \code{Raster*} to use as the base image
 #' @param y a \code{Raster*} to normalize to the base image
-#' @param msk a \code{RasterLayer} with missing values in \code{x} or in {y} 
+#' @param msk a \code{RasterLayer} with missing values in \code{x} or in {y}
 #' coded as 1, and all other values coded as 0 (optional)
-#' @param method the regression method to use (must be a method recognized by 
+#' @param method the regression method to use (must be a method recognized by
 #' \code{lmodel2}
 #' @param size the number of pixels to use in developing the model
 #' @return a \code{Raster*} of \code{y} normalized to \code{x}
@@ -11274,12 +11360,12 @@ function(x, kernel)
 #' plotRGB(L5TSR_2001_normed_1, stretch='lin')
 #'
 #' # Use only half as many pixels to calculate the models
-#' L5TSR_2001_normed_2 <- normalize(L5TSR_1986, L5TSR_2001, 
+#' L5TSR_2001_normed_2 <- normalize(L5TSR_1986, L5TSR_2001,
 #'                                  size=ncell(L5TSR_1986)/2)
 #' plotRGB(L5TSR_2001_normed_2, stretch='lin')
 #' @references
-#' Sarah Goslee. Analyzing Remote Sensing Data in {R}: The {landsat} Package.  
-#' Journal of Statistical Software, 2011, 43:4, pg 1--25.  
+#' Sarah Goslee. Analyzing Remote Sensing Data in {R}: The {landsat} Package.
+#' Journal of Statistical Software, 2011, 43:4, pg 1--25.
 #' http://www.jstatsoft.org/v43/i04/
 normalize <- function(x, y, msk, method="MA", size=ncell(x)) {
     orig_datatype <- dataType(y)[1]
@@ -11292,7 +11378,7 @@ normalize <- function(x, y, msk, method="MA", size=ncell(x)) {
     }
 
     if (size < ncell(x)) {
-        # Note that sampleRegular with cells=TRUE returns cell numbers in the 
+        # Note that sampleRegular with cells=TRUE returns cell numbers in the
         # first column
         x_vals <- sampleRegular(x, size=size, cells=TRUE)
         if (!missing(msk)) {
@@ -11316,7 +11402,7 @@ normalize <- function(x, y, msk, method="MA", size=ncell(x)) {
         normed_y <- foreach(unnormed_layer=unstack(y),
                             x_sample=iter(x_vals, by='column'),
                             y_sample=iter(y_vals, by='column'),
-                            .combine='addLayer', .multicombine=TRUE, 
+                            .combine='addLayer', .multicombine=TRUE,
                             .init=raster(),
                             .packages=c('raster', 'lmodel2', 'rgdal')) %dopar% {
             model <- suppressMessages(lmodel2(x_sample ~ y_sample, nperm=0))
@@ -11342,7 +11428,7 @@ normalize <- function(x, y, msk, method="MA", size=ncell(x)) {
 }
 #' Make plot of image with overlaid polygon
 #'
-#' Useful for quick plots showing overlap between an area of interest (AOI) and 
+#' Useful for quick plots showing overlap between an area of interest (AOI) and
 #' a satellite image.
 #'
 #' @export
@@ -11350,7 +11436,7 @@ normalize <- function(x, y, msk, method="MA", size=ncell(x)) {
 #' @import ggplot2
 #' @param x image as a \code{Raster*} object
 #' @param y polygon to overlay, as \code{SpatialPolygonDataFrame}
-#' @param out filename for output image. The extension of this file will 
+#' @param out filename for output image. The extension of this file will
 #' determine the output file format (png, pdf, etc.).
 #' @param title title of plot
 #' @param width width (in inches) of output image
@@ -11436,10 +11522,10 @@ intersect_wrs_polys <- function(wrs_polys, x, as_polys) {
 #' @import wrspathrowData
 #' @param x a spatial object
 #' @param wrs_type 1 (for WRS-1) or 2 (for WRS-2)
-#' @param wrs_mode either 'D' for descending (daytime) or 'A' for ascending 
-#' @param as_polys if FALSE (default) return a data.frame. If TRUE, return a 
+#' @param wrs_mode either 'D' for descending (daytime) or 'A' for ascending
+#' @param as_polys if FALSE (default) return a data.frame. If TRUE, return a
 #' \code{SpatialPolygonsDataFrame}.
-#' @return data.frame with path and row as integers, or, if as_polys=TRUE, a 
+#' @return data.frame with path and row as integers, or, if as_polys=TRUE, a
 #' \code{SpatialPolygonsDataFrame}
 #' @examples
 #' \dontrun{
@@ -11452,7 +11538,7 @@ intersect_wrs_polys <- function(wrs_polys, x, as_polys) {
 #' plot(test_poly, add=TRUE, lty=2, col="#00ff0050")
 #' text(coordinates(x), labels=paste(x$PATH, x$ROW, sep=', '))
 #' }
-setGeneric("pathrow_num", function(x, wrs_type='2', wrs_mode='D', 
+setGeneric("pathrow_num", function(x, wrs_type='2', wrs_mode='D',
                                    as_polys=FALSE) {
     standardGeneric("pathrow_num")
 })
@@ -11487,7 +11573,7 @@ setMethod("pathrow_num", signature(x="Spatial"),
 #' @param wrs_path WRS-1 or WRS-2 path as an integer
 #' @param wrs_row WRS-1 or WRS-2 row as an integer
 #' @param wrs_type 1 (for WRS-1) or 2 (for WRS-2)
-#' @param wrs_mode either 'D' for descending (daytime) or 'A' for ascending 
+#' @param wrs_mode either 'D' for descending (daytime) or 'A' for ascending
 #' (nighttime)
 #' @return \code{SpatialPolygonsDataFrame} with path and row polygon
 #' @examples
@@ -11518,7 +11604,7 @@ pathrow_poly <- function(wrs_path, wrs_row, wrs_type='2', wrs_mode='D') {
 PIF <-
 function(band3, band4, band7, level=.99) {
 # identify pseudo-invariant features after SSV1988
-   
+
     if(is.character(band3)) {
         band3 <- read.asciigrid(band3)
         pifgrid <- band3
@@ -11526,8 +11612,8 @@ function(band3, band4, band7, level=.99) {
     } else {
         pifgrid <- band3
         band3 <- as.vector(as.matrix(band3))
-    } 
-    
+    }
+
     if(is.character(band4)) {
         band4 <- read.asciigrid(band4)@data[,1]
     } else {
@@ -11541,12 +11627,12 @@ function(band3, band4, band7, level=.99) {
     }
 
     band43 <- band4/band3
-        
+
     band43.level <- quantile(band43, 1-level, na.rm=TRUE)
     band7.level <- quantile(band7, level, na.rm=TRUE)
-    
+
     pifmask <- ifelse(band43 < band43.level & band7 > band7.level & band7 < 255, 1, 0)
-    
+
     # return the same structure as the input values
     if(class(pifgrid) == "SpatialGridDataFrame")
         pifgrid@data[,1] <- pifmask
@@ -11554,34 +11640,34 @@ function(band3, band4, band7, level=.99) {
         pifgrid <- data.frame(matrix(pifmask, nrow=nrow(pifgrid), ncol=ncol(pifgrid)))
     else if(is.matrix(pifgrid))
         pifgrid <- matrix(pifmask, nrow=nrow(pifgrid), ncol=ncol(pifgrid))
-    else # return a vector 
+    else # return a vector
         pifgrid <- pifmask
-    
+
     pifgrid
 }
 
 #' A class for representing training or testing data
 #'
-#' Used to represent training data for a machine learning classifier for image 
+#' Used to represent training data for a machine learning classifier for image
 #' classificaion, or testing data used for testing a classification.
 #'
 #' @exportClass pixel_data
 #' @rdname pixel_data-class
 #' @aliases pixel_data
 #' @slot x a \code{data.frame} of independent variables (usually pixel values)
-#' @slot y a \code{data.frame} of the dependent variable (usually land cover 
+#' @slot y a \code{data.frame} of the dependent variable (usually land cover
 #' classes)
-#' @slot pixel_src a data.frame used to link pixels in \code{x} and \code{y} to 
+#' @slot pixel_src a data.frame used to link pixels in \code{x} and \code{y} to
 #' an input polygon
-#' @slot training_flag a binary vector of length equal to \code{nrow(x)} 
-#' indicating each row in x should be used in training (TRUE) or in testing 
+#' @slot training_flag a binary vector of length equal to \code{nrow(x)}
+#' indicating each row in x should be used in training (TRUE) or in testing
 #' (FALSE)
-#' @slot polys a \code{SpatialPolygonsDataFrame} of the polygons used to choose 
+#' @slot polys a \code{SpatialPolygonsDataFrame} of the polygons used to choose
 #' the pixels in \code{x} and \code{y}.
 #' @import methods
 #' @importFrom sp SpatialPolygonsDataFrame
-setClass('pixel_data', slots=c(x='data.frame', y='factor', 
-                               pixel_src='data.frame', training_flag='logical', 
+setClass('pixel_data', slots=c(x='data.frame', y='factor',
+                               pixel_src='data.frame', training_flag='logical',
                                polys='SpatialPolygonsDataFrame')
 )
 
@@ -11595,14 +11681,14 @@ summary.pixel_data <- function(object, ...) {
     obj[['n_polys']] <- nrow(object@polys)
     obj[['n_pixels']] <- nrow(object@x)
     training_df <- data.frame(y=object@y,
-                              pixel_src=src_name(object), 
+                              pixel_src=src_name(object),
                               training_flag=object@training_flag)
     y=pixel_src=training_flag=NULL # Keep R CMD CHECK happy
     class_stats <- summarize(group_by(training_df, y),
                              n_polys=length(unique(pixel_src)),
                              n_train_pixels=sum(training_flag),
                              n_test_pixels=sum(!training_flag),
-                             train_frac=round(sum(training_flag) / 
+                             train_frac=round(sum(training_flag) /
                                               length(training_flag), 2))
     names(class_stats)[names(class_stats) == 'y'] <- 'class'
     obj[['class_stats']]  <- class_stats
@@ -11680,41 +11766,41 @@ function(x, i, j, ...) {
         stop(paste0('"', i, '"', ' is not a class in this pixel_data object'))
     }
     sel_rows <- x@y %in% i
-    used_polys <- which(paste(x@polys@data$src, x@polys@data$ID) %in% 
+    used_polys <- which(paste(x@polys@data$src, x@polys@data$ID) %in%
                         with(x@pixel_src[sel_rows, ], paste(src, ID)))
-    initialize(x, x=x@x[sel_rows, ], y=x@y[sel_rows], 
-               pixel_src=x@pixel_src[sel_rows, ], 
-               training_flag=x@training_flag[sel_rows], 
+    initialize(x, x=x@x[sel_rows, ], y=x@y[sel_rows],
+               pixel_src=x@pixel_src[sel_rows, ],
+               training_flag=x@training_flag[sel_rows],
                polys=x@polys[used_polys, ])
 })
 
-setMethod("show", signature(object="pixel_data"), function(object) 
+setMethod("show", signature(object="pixel_data"), function(object)
           print(object))
 
 #' Subsample a pixel_data object
 #'
 #' @export subsample
 #' @param x a \code{pixel_data} object
-#' @param size either 1) a number from 0 to 1, indicating \code{size} is the 
-#' fraction of pixels to sample, or 2) a number greater than 1, in which case 
-#' \code{size} is the number of pixels to sample. Size applies per strata, if 
+#' @param size either 1) a number from 0 to 1, indicating \code{size} is the
+#' fraction of pixels to sample, or 2) a number greater than 1, in which case
+#' \code{size} is the number of pixels to sample. Size applies per strata, if
 #' stratification is chosen.
-#' @param strata whether to draw samples from within individual classes, nested 
-#' within source polygons (\code{strata='sources'}), or from within individual 
+#' @param strata whether to draw samples from within individual classes, nested
+#' within source polygons (\code{strata='sources'}), or from within individual
 #' classes alone (\code{strata='classes'})
-#' @param type whether to subsample training data (\code{type='training'}) or 
-#' testing data (\code{type='testing'}). Whichever type is chosen, the other 
-#' type will be left untouched (for example, if \code{type='testing'}, the 
+#' @param type whether to subsample training data (\code{type='training'}) or
+#' testing data (\code{type='testing'}). Whichever type is chosen, the other
+#' type will be left untouched (for example, if \code{type='testing'}, the
 #' training data will not be changed).
-#' @param flag whether to swap training flag on sampled data (for example, flag 
-#' sampled training data as testing data, if \code{flag=TRUE} and 
-#' \code{type='training'}) or remove sampled data from dataset entirely 
+#' @param flag whether to swap training flag on sampled data (for example, flag
+#' sampled training data as testing data, if \code{flag=TRUE} and
+#' \code{type='training'}) or remove sampled data from dataset entirely
 #' (\code{flag=FALSE}).
-#' @param classes specifies which classes to sample, defaults to all classes in 
+#' @param classes specifies which classes to sample, defaults to all classes in
 #' \code{x}
 #' @rdname subsample
 #' @aliases subsample,pixel_data-method
-setGeneric("subsample", function(x, size, strata="sources", type="training", 
+setGeneric("subsample", function(x, size, strata="sources", type="training",
                                  flag=TRUE, classes=levels(x@y))
     standardGeneric("subsample")
 )
@@ -11794,7 +11880,7 @@ setGeneric("training_flag<-", function(x, classes=levels(x@y), value) {
 setMethod("training_flag<-", signature(x="pixel_data"),
 function(x, classes=levels(x@y), value) {
     if (identical(classes, levels(x@y))) {
-        # More efficiently handle special case of reassigning flags for all 
+        # More efficiently handle special case of reassigning flags for all
         # classes in x.
         if (length(value) == 1) value <- rep(value, length(x@training_flag))
         stopifnot(length(value) == length(x@training_flag))
@@ -11888,7 +11974,7 @@ function(x, value) {
 
     new_full_polyID <- paste(x@polys$src, x@polys$ID)
 
-    poly_pixel_match <- match(paste(x@pixel_src$src, x@pixel_src$ID), 
+    poly_pixel_match <- match(paste(x@pixel_src$src, x@pixel_src$ID),
                               old_full_polyID)
 
     x@pixel_src$src <- x@polys$src[poly_pixel_match]
@@ -11900,25 +11986,25 @@ function(x, value) {
 #' Extract observed data for use in a classification (training or testing)
 #'
 #' @export
-#' @param x a \code{Raster*} object from which observed data will be extracted.  
-#' The data will be extracted from each layer in a \code{RasterBrick} or 
+#' @param x a \code{Raster*} object from which observed data will be extracted.
+#' The data will be extracted from each layer in a \code{RasterBrick} or
 #' \code{RasterStack}.
-#' @param polys a \code{SpatialPolygonsDataFrame} with polygons, each of which 
+#' @param polys a \code{SpatialPolygonsDataFrame} with polygons, each of which
 #' has been assigned to a particular class (using the \code{class_col}
-#' @param class_col the name of the column containing the response variable 
+#' @param class_col the name of the column containing the response variable
 #' (for example the land cover type of each pixel)
-#' @param training indicator of which polygons to use in training. Can be: 1) a 
-#' string giving the name of a column indicating whether each polygon is to be 
-#' used in training (rows equal to 1) or in testing (rows equal to FALSE), or 
-#' 2) a logical vector of length equal to length(polys), or 3) a number between 
-#' 0 and 1 indicating the fraction of the polygons to be randomly selected for 
+#' @param training indicator of which polygons to use in training. Can be: 1) a
+#' string giving the name of a column indicating whether each polygon is to be
+#' used in training (rows equal to 1) or in testing (rows equal to FALSE), or
+#' 2) a logical vector of length equal to length(polys), or 3) a number between
+#' 0 and 1 indicating the fraction of the polygons to be randomly selected for
 #'   use in training.
-#' @param src name of this data source. Useful when gathering training 
+#' @param src name of this data source. Useful when gathering training
 #' data from multiple images.
 #' @return a \code{link{pixel_data}} object
 #' will contain the the @examples
 #' set.seed(1)
-#' train_data <- get_pixels(L5TSR_1986, L5TSR_1986_2001_training, "class_1986", 
+#' train_data <- get_pixels(L5TSR_1986, L5TSR_1986_2001_training, "class_1986",
 #'                          training=.6)
 get_pixels <- function(x, polys, class_col, training=1, src='none') {
     if (projection(x) != projection(polys)) {
@@ -11953,7 +12039,7 @@ get_pixels <- function(x, polys, class_col, training=1, src='none') {
             stop('"training_flag" column already present in polys')
         }
         if (training == 0) {
-            # Handle training=0 separately to enable use of quantile function 
+            # Handle training=0 separately to enable use of quantile function
             # below.
             polys$training_flag <- FALSE
         } else {
@@ -11961,8 +12047,8 @@ get_pixels <- function(x, polys, class_col, training=1, src='none') {
                 rand_vals <- runif(length(x))
                 rand_vals <= quantile(rand_vals, training)
             }
-            polys$training_flag <- unlist(tapply(polys@data$ID, 
-                                                 polys@data[class_colnum], 
+            polys$training_flag <- unlist(tapply(polys@data$ID,
+                                                 polys@data[class_colnum],
                                                  sample_strata))
         }
     } else if ((length(training) == length(polys)) && is.logical(training)) {
@@ -11976,12 +12062,12 @@ get_pixels <- function(x, polys, class_col, training=1, src='none') {
     poly_rows <- pixels$ID
     pixels <- pixels[!(names(pixels) == 'ID')]
 
-    # Convert y classes to valid R variable names - if they are not valid R 
+    # Convert y classes to valid R variable names - if they are not valid R
     # variable names, the classification algorithm may throw an error
     y <- factor(make.names(polys@data[poly_rows, class_colnum]))
 
     pixel_src <- data.frame(src=polys@data[poly_rows, ]$src,
-                            ID=polys@data[poly_rows, ]$ID, 
+                            ID=polys@data[poly_rows, ]$ID,
                             stringsAsFactors=FALSE)
 
     return(new("pixel_data", x=pixels, y=y, pixel_src=pixel_src,
@@ -11990,9 +12076,9 @@ get_pixels <- function(x, polys, class_col, training=1, src='none') {
 }
 #' Performs a rough comparison of two proj4strings to see if they match
 #'
-#' Compares the proj, ellps, zone (if applicable), units, and datum tags in two 
-#' proj4strings to determine if two projections match. Requires proj and ellps 
-#' to be present. If present, zone, units, and datum must match in both 
+#' Compares the proj, ellps, zone (if applicable), units, and datum tags in two
+#' proj4strings to determine if two projections match. Requires proj and ellps
+#' to be present. If present, zone, units, and datum must match in both
 #' strings.
 #'
 #' @export
@@ -12041,7 +12127,7 @@ proj4comp <- function(x, y) {
         if (!is.na(x_south) || !is.na(y_south)) {
             # Get here if one or more of x_south and y_south is not NA
             if (xor(is.na(x_south), is.na(y_south)) || (x_south != y_south)) {
-                # Get here if ONLY one of x_south and y_south is NA, or, if 
+                # Get here if ONLY one of x_south and y_south is NA, or, if
                 # x_south and y_south are both not NA and are both not equal
                 return(FALSE)
             }
@@ -12053,7 +12139,7 @@ proj4comp <- function(x, y) {
     if ((!is.na(x_datum) && !is.na(y_datum)) & (x_datum != y_datum)) {
         return(FALSE)
     }
-    
+
     x_units <- str_extract(x, '+units=[a-zA-Z0-9]*')
     y_units <- str_extract(y, '+units=[a-zA-Z0-9]*')
     if ((!is.na(x_units) && !is.na(y_units)) & (x_units != y_units)) {
@@ -12063,12 +12149,12 @@ proj4comp <- function(x, y) {
     return(TRUE)
 }
 #' Radiometric calibration and correction
-#' 
+#'
 #' Implements several different methods for absolute radiometric correction of Landsat data.
 #' You can either specify a metadata file, or supply all neccesary values manually. With proper parametrization APREF and SDOS should work for other sensors as well.
-#' 
+#'
 #' @param x raster object
-#' @param metaData either the result of \code{readMeta} or a path to the meta data (MCL) file. 
+#' @param metaData either the result of \code{readMeta} or a path to the meta data (MCL) file.
 #' @param reflectance logical. If \code{TRUE} output will be reflectance, if \code{FALSE} it will be radiance
 #' @param thermal logical. If \code{TRUE} thermal bands will be converted to brightness temperature (Kelvin).
 #' @param bandSet numeric or character. original Landsat band numbers or names in the form of ("B1", "B2" etc). If set to 'full' all bands in the solar region will be processed.
@@ -12093,23 +12179,23 @@ proj4comp <- function(x, y) {
 #' }
 #' @references S. Goslee (2011): Analyzing Remote Sensing Data in R: The landsat Package. Journal of Statistical Software 43(4).
 #' @export
-#' @seealso \link[landsat]{radiocorr} 
+#' @seealso \link[landsat]{radiocorr}
 radCor <-	function(x, metaData, reflectance = TRUE, thermal = TRUE, satellite, bandSet = "full", gain, offset, G_rescale, B_rescale,
 		sunElev, satZenith = 0, d, esun, date, SHV, hazeBand, atHaze,  method = "APREF"){
 	# http://landsat.usgs.gov/Landsat8_Using_Product.php
-	
+
 	if(!method %in% c("APREF", "DOS", "COSTZ", "SDOS")) stop("method must be one of 'APREF', 'DOS', 'COSTZ' 'SDOS'", call.=FALSE)
-	
+
 	if(!reflectance & method != "APREF"){
 		warning("For radiance calculations the 'method' argument is ignored")
 		method <- "APREF"
 	}
-	
+
 	if(!missing(metaData)) {
-		
+
 		## Read metadata from file
 		if(is.character(metaData)) metaData <- readMeta(metaData)
-		
+
 		satellite 	<- metaData$UNIFIED_METADATA$SPACECRAFT_ID
 		sensor 		<- metaData$UNIFIED_METADATA$SENSOR_ID
 		B_rescale	<- metaData$UNIFIED_METADATA$RAD_OFFSET
@@ -12119,7 +12205,7 @@ radCor <-	function(x, metaData, reflectance = TRUE, thermal = TRUE, satellite, b
 		rad 		<- metaData$UNIFIED_METADATA$RADIOMETRIC_RES
 		K1			<- metaData$UNIFIED_METADATA$K1
 		K2			<- metaData$UNIFIED_METADATA$K2
-		
+
 	} else {
 		###  FIXME: HARD CODED !!
 		sensor = 1
@@ -12133,97 +12219,97 @@ radCor <-	function(x, metaData, reflectance = TRUE, thermal = TRUE, satellite, b
 				G_rescale <- -offset/gain
 			}
 		}
-		
-		
+
+
 		if(missing(d)) {
-			if(missing(date)) { 
-				stop("Please specify either a) edist or b)date", call. = FALSE) 
+			if(missing(date)) {
+				stop("Please specify either a) edist or b)date", call. = FALSE)
 			} else {
-				d <- .ESdist(date) 
+				d <- .ESdist(date)
 			}
 		}
 	}
-	
+
 	if(satellite == "LANDSAT8" & method != "APREF") {
-		warning("DOS, COSTZ and SDOS are currently not implemented for Landsat 8. Using official reflectance calibration coefficients, i.e. output corresponds to method = 'APREF'", call. = FALSE) 
+		warning("DOS, COSTZ and SDOS are currently not implemented for Landsat 8. Using official reflectance calibration coefficients, i.e. output corresponds to method = 'APREF'", call. = FALSE)
 		method <- "APREF"
 	}
-	
+
 	satZenith	<- satZenith * pi / 180
 	satphi 		<- cos(satZenith)
-	suntheta 	<- cos((90 - sunElev) * pi / 180)	
-	
-	## Query internal db	
+	suntheta 	<- cos((90 - sunElev) * pi / 180)
+
+	## Query internal db
 	sDB <- LANDSAT.db[[satellite]][[sensor]]
-	
+
 	## We use .getNumeric to deal with band name appendices (e.g. LS7 can have to versions of band 6: B6_VCID_1 and B6_VCID_2
 	## which would not match the database name B6
-	sDB 	<- sDB[match(paste0("B", sapply(.getNumeric(names(x)),"[",1)), sDB$band),]	
+	sDB 	<- sDB[match(paste0("B", sapply(.getNumeric(names(x)),"[",1)), sDB$band),]
 	sDB		<- sDB[match(sDB$band, paste0("B",sapply(.getNumeric(names(x)),"[",1))),]
-	
+
 	if(any(bandSet == "full")) {
 		bandSet <- names(x)
 	} else {
 		if(is.numeric(bandSet)) bandSet <- paste0("B", bandSet)
-	}	
-	
+	}
+
 	if(missing(metaData))	names(B_rescale) <- names(G_rescale) <- bandSet
-	
-	origBands 	<- names(x)   
+
+	origBands 	<- names(x)
 	corBands 	<- sDB[!sDB$bandtype %in% c("TIR", "PAN"), "band"]
 	bandSet 	<- bandSet[bandSet %in% corBands]
 	if(thermal){
-		tirBands	<- if(satellite=="LANDSAT8") c("B10", "B11") else c("B6", "B6_VCID_1", "B6_VCID_2")	
+		tirBands	<- if(satellite=="LANDSAT8") c("B10", "B11") else c("B6", "B6_VCID_1", "B6_VCID_2")
 		tirBands 	<- origBands[origBands %in% tirBands]
 	} else {
 		tirBands <- NULL
 	}
 	exclBands	<- origBands[!origBands %in% c(bandSet, tirBands)]
-	
+
 	if(length(exclBands) > 0) {
-		xexc <- x[[exclBands]] 
+		xexc <- x[[exclBands]]
 	} else {
 		xexc <- NULL
 	}
-	
+
 	if(missing(esun)) {
-		esun <- sDB[,"esun"] 
+		esun <- sDB[,"esun"]
 		names(esun) <- sDB$band
 	}
 	xref <- x[[bandSet]]
-	
+
 	if(reflectance) {
 		message("Bands to convert to reflectance: ", paste(bandSet, collapse = ", "))
 		if(length(tirBands) > 0 & thermal) message("Thermal bands to convert to brightness temperatures: ", paste(tirBands, collapse=", "))
-		if(length(exclBands) > 0) message("Excluding bands: ", paste(exclBands, collapse = ", "))	
+		if(length(exclBands) > 0) message("Excluding bands: ", paste(exclBands, collapse = ", "))
 	} else {
 		bandSet <- c(bandSet, tirBands)
 		message("Bands to convert to toa radiance: ", paste(bandSet, collapse = ", "))
 	}
-	
+
 	## Thermal processing
 	if(thermal & reflectance & length(tirBands) > 0) {
 		message("Processing thermal band(s)")
 		## Convert to radiance
 		L <- G_rescale[tirBands] * x[[tirBands]] + B_rescale[tirBands]
 		## Convert to temperature
-		xtir <- K2 / log(K1/L + 1) 
+		xtir <- K2 / log(K1/L + 1)
 		names(xtir) <- tirBands
 	} else {
 		xtir <- NULL
 	}
-	
+
 	message("Processing radiance / reflectance")
-	
+
 	## Radiance and reflectance processing
 	if(method == "APREF") {
 		TAUz <- 1
 		TAUv <- 1
 		Edown <- 0
 		Lhaze <- 0
-		
+
 	} else {
-		
+
 		## Estimate SHV automatically
 		if(missing(SHV)){
 			if(missing(hazeBand))  hazeBand <- "B1"
@@ -12241,73 +12327,73 @@ radCor <-	function(x, metaData, reflectance = TRUE, thermal = TRUE, satellite, b
 			message(paste0("SHV estimated as: ", SHV[[1]]))
 			SHV <- SHV[[1]]
 		}
-		
-		
+
+
 		# For SDOS gain, offset, Lhaze and Esun must be provided as coresponding vectors of equal length
-		if(method == "SDOS") hazeBand <- bandSet 
+		if(method == "SDOS") hazeBand <- bandSet
 		TAUz <- 1
 		TAUv <- 1
-		Edown <- 0				
+		Edown <- 0
 		if (method == "COSTZ") {
 			TAUz <- suntheta
 			TAUv <- satphi
-		}  
-		
+		}
+
 		## 1% correction and conversion to radiance
 		Ldo <- 0.01 * ((esun[hazeBand] * suntheta * TAUz) + Edown) * TAUv / (pi * d ^ 2)
 		Lhaze <- (SHV * G_rescale[hazeBand] + B_rescale[hazeBand]) - Ldo
-		
-		if(method %in% c("DOS", "COSTZ")) {		
+
+		if(method %in% c("DOS", "COSTZ")) {
 			## Pick atmoshpere type
 			if(missing(atHaze)) {
 				atHaze.db <- data.frame(min = c(1,56,76,96,116), max = c(55,75,95,115,255)) / 255 * (2^rad-1)
 				atHaze <- c("veryClear", "clear", "moderate", "hazy", "veryHazy")[Lhaze > atHaze.db[,1] & Lhaze <= atHaze.db[,2]]
 				message("Selcting atmosphere: '", atHaze, "'")
-			}		
+			}
 			Lhaze	  <- Lhaze  * sDB[match(bandSet,sDB$band), paste0(hazeBand,"_", atHaze)]
-			
+
 			## Calculate corrected RAD_haze
 			NORM  <- G_rescale[bandSet] / G_rescale[hazeBand]
-			Lhaze <- Lhaze * NORM + B_rescale[bandSet]	
+			Lhaze <- Lhaze * NORM + B_rescale[bandSet]
 		}
 		# In case Lhaze becomes negative we reset it to zero to prevent artefacts.
 		Lhaze [Lhaze < 0] <- 0
 	}
-	
+
 	B_rescale	<- B_rescale[bandSet]
 	G_rescale 	<- G_rescale[bandSet]
 	esun <- esun[bandSet]
-	
+
 	if(satellite != "LANDSAT8"){
-		
+
 		if(!reflectance) {
 			## TOA Radiance
 			xref <-  ( xref * G_rescale + B_rescale) / suntheta
 		} else {
 			## At-surface reflectance (precalculate coefficients to speed up raster processing)
-			C <- (pi * d ^ 2)/(TAUv * (esun * suntheta * TAUz + Edown))	
+			C <- (pi * d ^ 2)/(TAUv * (esun * suntheta * TAUz + Edown))
 			b <- C * (B_rescale - Lhaze)
-			a <- C * G_rescale 
+			a <- C * G_rescale
 			xref <-  a * xref  + b
 		}
-		
+
 	} else {
-		
+
 		if(reflectance) {
 			B_rescale 		<- metaData$UNIFIED_METADATA$REF_OFFSET[bandSet]
 			G_rescale 		<- metaData$UNIFIED_METADATA$REF_GAIN[bandSet]
-		} 
-		
+		}
+
 		## At sensor radiance / reflectance
 		xref <-  (G_rescale * xref + B_rescale) / suntheta
-		
+
 		## At-surface reflectance?
 	}
-	
+
 	## Re-combine thermal, solar and excluded imagery
 	x <- stack(xref,xtir, xexc)
 	x <- x[[origBands]]
-	
+
 	return(x)
 }
 
@@ -12338,29 +12424,29 @@ LANDSAT.db <- list(
 						bandtype = c(rep("REF", 7), "PAN", "REF", "TIR", "TIR", "QA"),
 						spatRes1 = c(rep(30, 7), 15, rep(30,4)),
 						spatRes2 = c(rep(30, 7), 15, rep(30,4)),  ## ETM+ Band 6 is acquired at 60-meter resolution. Products processed after February 25, 2010 are resampled to 30-meter pixels.
-						centerWavl = c(0.44,0.48,0.56,0.655,0.865,1.61,2.2,0.59,1.37,10.6,11.5, NA), 
+						centerWavl = c(0.44,0.48,0.56,0.655,0.865,1.61,2.2,0.59,1.37,10.6,11.5, NA),
 						esun = c(NA, 2067, 1893, 1603, 972.6, 245, 79.72, NA, 399.7, NA, NA, NA ) ## http://www.gisagmaps.com/landsat-8-atco/ ##http://landsat.usgs.gov/Landsat8_Using_Product.php
 				)
 		)
 
-) 
+)
 
 exponents <- c(-4, -2, -1, -.7, -.5)
 for(s in names(LANDSAT.db)){
 	bandType		<- LANDSAT.db[[s]][[1]][,"bandtype"] == "REF"
-	centerWavl		<- LANDSAT.db[[s]][[1]][bandType, "centerWavl"] 
+	centerWavl		<- LANDSAT.db[[s]][[1]][bandType, "centerWavl"]
 	bands 			<- LANDSAT.db[[s]][[1]][bandType, "band"]
-	
+
 	## Calc Chavez Tab 1
 	TAB1			<- sapply(exponents, function(x) centerWavl ^ x)
 	rownames(TAB1)  <- bands
 	colnames(TAB1)	<- c("veryClear", "clear", "moderate", "hazy", "veryHazy")
-	
+
 	## Calc Chavez Tab 2, but only until SHVB = B4, larger wavelengths don't make sense to estimate haze
 	TAB2 <- lapply(paste0("B", 1:4), function(SHVB){ sweep(TAB1, 2, TAB1[SHVB,], "/")})
 	TAB2 <- do.call("cbind", TAB2)
 	colnames(TAB2) <- paste0(rep(paste0("B", 1:4), each = 5),"_", colnames(TAB2))
-	
+
 	LANDSAT.db[[s]][[1]] <-  merge(LANDSAT.db[[s]][[1]] , TAB2, by.x = "band", by.y = "row.names", all.x = TRUE, sort = FALSE)
 }
 
@@ -12394,9 +12480,9 @@ function(x, gain, offset, Grescale, Brescale, sunelev, satzenith=0, edist, Esun,
 
     METHODS <- c("apparentreflectance", "DOS", "COSTZ", "DOS4")
     method <- pmatch(method, METHODS)
-    if (is.na(method)) 
+    if (is.na(method))
         stop("invalid method")
-    if (method == -1) 
+    if (method == -1)
         stop("ambiguous method")
 
     suntheta <- (90-sunelev) * pi / 180
@@ -12418,15 +12504,15 @@ function(x, gain, offset, Grescale, Brescale, sunelev, satzenith=0, edist, Esun,
     ## 1. Apparent Reflectance
         TAUz <- 1.0
         TAUv <- 1.0
-        Edown <- 0.0 
+        Edown <- 0.0
         Lhaze <- 0.0
     }
     else if(method == 2) {
     ## 2. DOS
         TAUz <- 1.0
         TAUv <- 1.0
-        Edown <- 0.0 
-        if(missing(Lhaze)) stop("This model requires Lhaze to be specified.\n")	
+        Edown <- 0.0
+        if(missing(Lhaze)) stop("This model requires Lhaze to be specified.\n")
     }
     else if(method == 3) {
     ## 3. COSTZ
@@ -12434,19 +12520,19 @@ function(x, gain, offset, Grescale, Brescale, sunelev, satzenith=0, edist, Esun,
         TAUv <- satphi
         Edown <- 0.0
         if(missing(Lhaze)) stop("This model requires Lhaze to be specified.\n")
-    } 
+    }
     else if(method == 4) {
     ## 4. DOS4 of SWS+2001
         TAUv <- TAUz <- 1
         taudiff <- 1
             tau <- 9999
             Edown <- 0
-            
+
         Lhaze.orig <- Lhaze
-        
+
         while(abs(taudiff) > 0.0000001) {
             taudiff <- tau
-            
+
             ## if Lhaze is too large, the formula tries to take log of a negative number
             ## iteratively adjust Lhaze downward until it works
             ## This is a lazy kludge!!!
@@ -12462,18 +12548,18 @@ function(x, gain, offset, Grescale, Brescale, sunelev, satzenith=0, edist, Esun,
                 Lp <- (Lhaze - offset) / gain - 0.01 * (Eo * suntheta * TAUz + Edown) * TAUv / pi
                 taustep <- 1 - (4 * pi * Lp) / (Eo * suntheta)
             }
-            
+
             tau <- -1 * suntheta * log(1 - (4 * pi * Lp) / (Eo * suntheta))
             TAUv <- exp(-1 * tau / satphi)
-            TAUz <- exp(-1 * tau / suntheta)		
+            TAUz <- exp(-1 * tau / suntheta)
             Edown <- pi * Lp
-            
+
                     taudiff <- taudiff - tau
 
         }
-            
+
         if(!identical(Lhaze.orig, Lhaze)) warning(paste("Lhaze adjusted from ", Lhaze.orig, " to ", Lhaze, sep=""))
-        
+
         if(missing(Lhaze)) stop("This model requires Lhaze to be specified.\n")
     #-#
 
@@ -12500,9 +12586,9 @@ function(x, gain, offset, Grescale, Brescale, sunelev, satzenith=0, edist, Esun,
         results@data[,1] <- x
     else if(is.data.frame(x))
         results <- data.frame(matrix(x, nrow=nrow(results), ncol=ncol(results)))
-    else # return a matrix 
+    else # return a matrix
         results <- x
-    
+
     results
 }
 
@@ -12511,11 +12597,11 @@ function(x, gain, offset, Grescale, Brescale, sunelev, satzenith=0, edist, Esun,
 
 #' Threshold an image using Huang's fuzzy thresholding method.
 #'
-#' Implements Huang's fuzzy thresholding method. This function is called by 
-#' the \code{\link{threshold}} function. It is not intended to be used 
+#' Implements Huang's fuzzy thresholding method. This function is called by
+#' the \code{\link{threshold}} function. It is not intended to be used
 #' directly.
 #'
-#' Ported to C++ by from the code in the Auto_threshold imageJ plugin by 
+#' Ported to C++ by from the code in the Auto_threshold imageJ plugin by
 #' Gabriel Landini.
 #'
 #' See original code at:
@@ -12523,7 +12609,7 @@ function(x, gain, offset, Grescale, Brescale, sunelev, satzenith=0, edist, Esun,
 #'
 #' @param data the input image
 #' @return integer threshold value
-#' @references Huang, L.-K., and M.-J. J. Wang. 1995. Image thresholding by 
+#' @references Huang, L.-K., and M.-J. J. Wang. 1995. Image thresholding by
 #' minimizing the measures of fuzziness. Pattern recognition 28 (1):41--51.
 threshold_Huang <- function(data) {
     .Call('teamlucc_threshold_Huang', PACKAGE = 'teamlucc', data)
@@ -12535,17 +12621,17 @@ threshold_Huang <- function(data) {
 #' intended to be called directly - see \code{chg_dir}.
 #'
 #' @export
-#' @param t1p time 1 posterior probability matrix (with pixels in rows, bands 
+#' @param t1p time 1 posterior probability matrix (with pixels in rows, bands
 #' in columns)
-#' @param t2p time 2 posterior probability matrix (with pixels in rows, bands 
+#' @param t2p time 2 posterior probability matrix (with pixels in rows, bands
 #' in columns)
 #' @return vector of change directions
 #' @references Chen, J., P. Gong, C. He, R. Pu, and P. Shi. 2003.
 #' Land-use/land-cover change detection using improved change-vector analysis.
 #' Photogrammetric Engineering and Remote Sensing 69:369-380.
-#' 
-#' Chen, J., X. Chen, X. Cui, and J. Chen. 2011. Change vector analysis in 
-#' posterior probability space: a new method for land cover change detection.  
+#'
+#' Chen, J., X. Chen, X. Cui, and J. Chen. 2011. Change vector analysis in
+#' posterior probability space: a new method for land cover change detection.
 #' IEEE Geoscience and Remote Sensing Letters 8:317-321.
 calc_chg_dir <- function(t1p, t2p) {
     .Call('teamlucc_calc_chg_dir', PACKAGE = 'teamlucc', t1p, t2p)
@@ -12556,15 +12642,15 @@ calc_chg_dir <- function(t1p, t2p) {
 #' This function is called by the \code{\link{cloud_remove}} function. It is
 #' not intended to be used directly.
 #'
-#' @param cloudy the cloudy image as a matrix, with pixels in columns (in 
+#' @param cloudy the cloudy image as a matrix, with pixels in columns (in
 #' column-major order) and with number of columns equal to number of bands
-#' @param clear the clear image as a matrix, with pixels in columns (in 
+#' @param clear the clear image as a matrix, with pixels in columns (in
 #' column-major order) and with number of columns equal to number of bands
-#' @param cloud_mask the cloud mask image as a vector (in column-major order), 
-#' with clouds coded with unique integer codes starting at 1, and with areas 
-#' that are clear in both images  coded as 0. Areas that are missing in the 
+#' @param cloud_mask the cloud mask image as a vector (in column-major order),
+#' with clouds coded with unique integer codes starting at 1, and with areas
+#' that are clear in both images  coded as 0. Areas that are missing in the
 #' clear image, should be coded as -1.
-#' @param dims the dimensions of the cloudy image as a length 3 vector: (rows, 
+#' @param dims the dimensions of the cloudy image as a length 3 vector: (rows,
 #' columns, bands)
 #' @param num_class set the estimated number of classes in image
 #' @param min_pixel the sample size of similar pixels
@@ -12576,7 +12662,7 @@ calc_chg_dir <- function(t1p, t2p) {
 #' @return array with cloud filled image with dims: cols, rows, bands
 #' parameter, containing the selected textures measures
 #' @references Zhu, X., Gao, F., Liu, D., Chen, J., 2012. A modified
-#' neighborhood similar pixel interpolator approach for removing thick clouds 
+#' neighborhood similar pixel interpolator approach for removing thick clouds
 #' in Landsat images. Geoscience and Remote Sensing Letters, IEEE 9, 521--525.
 cloud_fill <- function(cloudy, clear, cloud_mask, dims, num_class, min_pixel, max_pixel, cloud_nbh, DN_min, DN_max, verbose = FALSE) {
     .Call('teamlucc_cloud_fill', PACKAGE = 'teamlucc', cloudy, clear, cloud_mask, dims, num_class, min_pixel, max_pixel, cloud_nbh, DN_min, DN_max, verbose)
@@ -12584,28 +12670,28 @@ cloud_fill <- function(cloudy, clear, cloud_mask, dims, num_class, min_pixel, ma
 
 #' Cloud fill using a simple linear model approach
 #'
-#' This algorithm fills clouds using a simple approach in which the value of 
+#' This algorithm fills clouds using a simple approach in which the value of
 #' each clouded pixel is calculated using a linear model. The script
-#' develops a separate linear model (with slope and intercept) for each band 
-#' and each cloud. For each cloud, and each image band, the script finds all 
-#' pixels clear in both the cloudy and fill images, and calculates a 
-#' regression model in which pixel values in the fill image are the 
-#' independent variable, and pixel values in the clouded image are the 
-#' dependent variable. The script then uses this model to predict pixel values 
+#' develops a separate linear model (with slope and intercept) for each band
+#' and each cloud. For each cloud, and each image band, the script finds all
+#' pixels clear in both the cloudy and fill images, and calculates a
+#' regression model in which pixel values in the fill image are the
+#' independent variable, and pixel values in the clouded image are the
+#' dependent variable. The script then uses this model to predict pixel values
 #' for each band in each cloud in the clouded image.
 #'
 #' This function is called by the \code{\link{cloud_remove}} function. It is
 #' not intended to be used directly.
 #'
-#' @param cloudy the cloudy image as a matrix, with pixels in columns (in 
+#' @param cloudy the cloudy image as a matrix, with pixels in columns (in
 #' column-major order) and with number of columns equal to number of bands
-#' @param clear the clear image as a matrix, with pixels in columns (in 
+#' @param clear the clear image as a matrix, with pixels in columns (in
 #' column-major order) and with number of columns equal to number of bands
-#' @param cloud_mask the cloud mask image as a vector (in column-major order), 
-#' with clouds coded with unique integer codes starting at 1, and with areas 
-#' that are clear in both images  coded as 0. Areas that are missing in the 
+#' @param cloud_mask the cloud mask image as a vector (in column-major order),
+#' with clouds coded with unique integer codes starting at 1, and with areas
+#' that are clear in both images  coded as 0. Areas that are missing in the
 #' clear image, should be coded as -1.
-#' @param dims the dimensions of the cloudy image as a length 3 vector: (rows, 
+#' @param dims the dimensions of the cloudy image as a length 3 vector: (rows,
 #' columns, bands)
 #' @param num_class set the estimated number of classes in image
 #' @param cloud_nbh the range of cloud neighborhood (in pixels)
@@ -12626,25 +12712,25 @@ function(data.tc, level=.01) {
 # or named data frame, which is also a list
 
     rcsgrid <- data.tc$Brightness
-    
+
     brightness <- as.vector(as.matrix(data.tc$Brightness))
     greenness <- as.vector(as.matrix(data.tc$Greenness))
-        
+
     bright.llevel <- quantile(brightness, level, na.rm=TRUE)
     bright.ulevel <- quantile(brightness, 1-level, na.rm=TRUE)
     green.level <- quantile(greenness, level, na.rm=TRUE)
-    
+
     rcsmask <- ifelse(brightness < bright.llevel & greenness < green.level, 1, 0)
     rcsmask <- ifelse(brightness > bright.ulevel & greenness < green.level, 1, rcsmask)
 
     # return the same structure as the input values
-    if(class(rcsgrid) == "SpatialGridDataFrame") 
+    if(class(rcsgrid) == "SpatialGridDataFrame")
         rcsgrid@data[,1] <- rcsmask
-    else if(is.data.frame(rcsgrid)) 
+    else if(is.data.frame(rcsgrid))
         rcsgrid <- data.frame(matrix(rcsmask, nrow=nrow(rcsgrid), ncol=ncol(rcsgrid)))
-    else if(is.matrix(rcsgrid)) 
+    else if(is.matrix(rcsgrid))
         rcsgrid <- matrix(rcsmask, nrow=nrow(rcsgrid), ncol=ncol(rcsgrid))
-    else # return a vector 
+    else # return a vector
         rcsgrid <- rcsmask
 
     rcsgrid
@@ -12711,33 +12797,33 @@ ReadLandsat8 <- function(product) {
   )
 }
 #' Read landsat MTL metadata files
-#' 
+#'
 #' Besides reading metadata, readMeta deals with legacy versions of Landsat metadata files and where possible adds missing information (radiometric gain and offset, earth-sun distance).
-#' 
+#'
 #' @param file path to Landsat MTL file (...MTL.txt)
 #' @param unifiedMetadata logical. If \code{TRUE} some relevant etadata of Landsat 5:8 are homogenized into a standard format and appended to the original metadata.
 #' @return Returns a list containing the Metadata of the MTL file, structured by the original grouping.
-#' 
+#'
 #' @import landsat
-#' @export 
-#' 
-#' 
-#' 
+#' @export
+#'
+#'
+#'
 readMeta <- function(file, unifiedMetadata = TRUE){
 	if(!grepl("MTL", file) & !grepl("xml", file)) warning("The Landsat metadata file you have specified looks unusual. Typically the filename contains the string 'MTL' or 'xml'. Are you sure you specified the right file? \n I'll try to read it but check the results!")
-	
+
 	## Read mtl file
 	metaDataFormat <- if(grepl('xml', file)) "XML" else "MTL"
-	
+
 	if(metaDataFormat == "MTL") {
 		## PROCESS LPS MTL FILES
-		
+
 		meta <- read.delim(file, sep = "=", head = FALSE, stringsAsFactors = FALSE, strip.white = TRUE, skip = 1, skipNul = TRUE)
 		meta <- meta[-(nrow(meta)-c(1,0)),]
-		
+
 		## Retrieve groups
 		l <- meta[grep("GROUP",meta[,1]),]
-		
+
 		## Assemble metadata list
 		meta <- lapply(unique(l[,2]), FUN = function(x){
 					w <- which(meta[,2] == x)
@@ -12747,29 +12833,29 @@ readMeta <- function(file, unifiedMetadata = TRUE){
 					colnames(m) <- "VALUE"
 					return(m)
 				})
-		
+
 		names(meta) <- unique(l[,2])
-		
-		## Legacy MTL? 
+
+		## Legacy MTL?
 		legacy <- "PROCESSING_SOFTWARE" %in% rownames(meta$PRODUCT_METADATA)
 		if(legacy) message("This scene was processed before August 29, 2012. Using MTL legacy format. Some minor infos such as SCENE_ID will be missing")
-		
+
 		if(unifiedMetadata){
-			
+
 			meta[["UNIFIED_METADATA"]] <- list(
 					SPACECRAFT_ID 		= {SAT <- paste0("LANDSAT", .getNumeric(meta$PRODUCT_METADATA["SPACECRAFT_ID",]))},
-					SENSOR_ID 			= meta$PRODUCT_METADATA["SENSOR_ID",]	,			
+					SENSOR_ID 			= meta$PRODUCT_METADATA["SENSOR_ID",]	,
 					SCENE_ID 			= meta$METADATA_FILE_INFO["LANDSAT_SCENE_ID",],  ## could assemble name for legacy files: http://landsat.usgs.gov/naming_conventions_scene_identifiers.php
 					DATA_TYPE			= if(!legacy) meta$PRODUCT_METADATA["DATA_TYPE",] else meta$PRODUCT_METADATA["PRODUCT_TYPE",],
 					ACQUISITION_DATE	= {date <- if(!legacy) meta$PRODUCT_METADATA["DATE_ACQUIRED",] else meta$PRODUCT_METADATA["ACQUISITION_DATE",]},
-					PROCESSING_DATE		= if(!legacy) meta$METADATA_FILE_INFO["FILE_DATE",] else meta$METADATA_FILE_INFO["PRODUCT_CREATION_TIME",], 
+					PROCESSING_DATE		= if(!legacy) meta$METADATA_FILE_INFO["FILE_DATE",] else meta$METADATA_FILE_INFO["PRODUCT_CREATION_TIME",],
 					PATH				= as.numeric(meta$PRODUCT_METADATA["WRS_PATH",]),
 					ROW					= if(!legacy) as.numeric(meta$PRODUCT_METADATA["WRS_ROW",]) else as.numeric(meta$PRODUCT_METADATA["STARTING_ROW",]),
-					RADIOMETRIC_RES		= if(SAT == "LANDSAT8") 16 else 8,				
+					RADIOMETRIC_RES		= if(SAT == "LANDSAT8") 16 else 8,
 					FILES				= {files <- row.names(meta[["PRODUCT_METADATA"]])[grep("^.*FILE_NAME", row.names(meta$PRODUCT_METADATA))]
 						files <- files[grep("^.*BAND",files)]
 						files <- meta[["PRODUCT_METADATA"]][files,]	},
-					
+
 					BANDS 				= {junk <- unique(sapply(str_split(files, "_B"), "[" ,1 ))
 						bds <- str_replace(str_replace(files, paste0(junk,"_"), ""), {if(SAT=="LANDSAT5") "0.TIF" else ".TIF"}, "")
 					},
@@ -12786,9 +12872,9 @@ readMeta <- function(file, unifiedMetadata = TRUE){
 						if(is.null(es) || is.na(es)) es <- .ESdist(date)
 						as.numeric(es)}
 			)
-			
+
 			## RADIOMETRIC CORRECTION/RESCALING PARAMETERS
-			RADCOR <-  if(!legacy) { list(		
+			RADCOR <-  if(!legacy) { list(
 								RAD_OFFSET				= {
 									r <- meta$RADIOMETRIC_RESCALING
 									r[,1]		<- as.numeric(r[,1])
@@ -12809,27 +12895,27 @@ readMeta <- function(file, unifiedMetadata = TRUE){
 									ro 			<- r[go,]
 									names(ro)	<- bandnames[go]
 									ro})
-										
+
 					} else {
-						
+
 						bandnames <- paste0("B", .getNumeric(rownames(meta$MIN_MAX_RADIANCE)))
 						bandnames <- bandnames[seq(1, length(bandnames), 2)]
-						
+
 						L <- diff(as.numeric(meta$MIN_MAX_RADIANCE[,1]))
-						L <- L[seq(1, length(L), 2)] 
-						
-						Q <- diff(as.numeric(meta$MIN_MAX_PIXEL_VALUE[,1]))  
+						L <- L[seq(1, length(L), 2)]
+
+						Q <- diff(as.numeric(meta$MIN_MAX_PIXEL_VALUE[,1]))
 						Q <- Q[seq(1, length(Q), 2)]
-						
+
 						RAD_GAIN	<- L/Q
 						RAD_OFFSET 	<- as.numeric(meta$MIN_MAX_RADIANCE[,1])[seq(2,nrow(meta$MIN_MAX_RADIANCE),2)] - (RAD_GAIN) * 1
-						
+
 						names(RAD_OFFSET) <- names(RAD_GAIN) <- bandnames
-												
+
 						list(RAD_OFFSET = RAD_OFFSET, RAD_GAIN = RAD_GAIN)
-						
+
 					}
-			
+
 	 if(SAT == "LANDSAT8"){
 				RADCOR$K1 ={ r <- meta$TIRS_THERMAL_CONSTANTS
 					r[,1]		<- as.numeric(r[,1])
@@ -12841,16 +12927,16 @@ readMeta <- function(file, unifiedMetadata = TRUE){
 				RADCOR$K2 = {go			<- grep("K2", rownames(r))
 					ro 			<- r[go,]
 					names(ro)	<- bandnames[go]
-					ro}				
+					ro}
 			} else {
 				TAB7 <- list(LANDSAT4 = c(B6=671.62,B6=1284.3), # TAB7 from Chander 2009
 						LANDSAT5 = c(B6=607.76,B6=1260.56),
 						LANDSAT7 = c(B6=666.09,B6=1282.71))
-					
+
 				RADCOR$K1 <- TAB7[[SAT]][1]
 				RADCOR$K2 <- TAB7[[SAT]][2]
 			}
-			
+
 			meta[["UNIFIED_METADATA"]] <- c(meta[["UNIFIED_METADATA"]], RADCOR)
 		}
 	} else {
@@ -12858,29 +12944,29 @@ readMeta <- function(file, unifiedMetadata = TRUE){
 		meta <- xmlParse(file)
 		meta <- xmlToList(meta)
 		names(meta$bands) <- str_replace_all(unlist(sapply(meta$bands, "[", "long_name")), " ", "_")
-		
+
 		if(unifiedMetadata){
-			
+
 			atts <- sapply(meta$bands, "[", ".attrs")
-			
+
 			meta[["UNIFIED_METADATA"]] <- list(
 					SPACECRAFT_ID 		= {SAT <- paste0("LANDSAT", .getNumeric(meta$global_metadata$satellite))},
-					SENSOR_ID 			= meta$global_metadata$instrument,			
+					SENSOR_ID 			= meta$global_metadata$instrument,
 					SCENE_ID 			= SID <- str_replace(meta$global_metadata$lpgs_metadata_file, "_MTL.txt", ""),  ## could assemble name for legacy files: http://landsat.usgs.gov/naming_conventions_scene_identifiers.php
-					DATA_TYPE			= if(meta$bands[[1]]$.attrs["product"] == "sr_refl") "SR", 
+					DATA_TYPE			= if(meta$bands[[1]]$.attrs["product"] == "sr_refl") "SR",
 					ACQUISITION_DATE	= {date <- meta$global_metadata$acquisition_date},
-					PROCESSING_DATE		= meta$bands[[1]]$production_date, 
+					PROCESSING_DATE		= meta$bands[[1]]$production_date,
 					PATH				= as.numeric(meta$global_metadata$wrs["path"]),
 					ROW					= as.numeric(meta$global_metadata$wrs["row"]),
-					
+
 					FILES				= {files <- sapply(meta$bands, "[[", "file_name")
 						names(files) <- NULL
-						files},					
-					BANDS 				= {	
+						files},
+					BANDS 				= {
 						bds <- grepl("_band", files)
 						toa <- grepl("_toa_", files)
-						qas <- grepl("qa", files)	
-						bnames				<- toupper(str_replace(files, paste0(SID, "_"), ""))					
+						qas <- grepl("qa", files)
+						bnames				<- toupper(str_replace(files, paste0(SID, "_"), ""))
 						bnames[bds]			<- paste0("B", .getNumeric(bnames[bds]))
 						bnames[bds & qas] 	<- paste0(bnames[bds & qas], "_QA")
 						bnames				<- str_replace(str_replace(str_replace(bnames, "\\.TIF", ""), "SR_", ""), "TOA_", "")
@@ -12894,14 +12980,14 @@ readMeta <- function(file, unifiedMetadata = TRUE){
 					NA_VALUE 			= as.numeric(sapply(atts, "[" , "fill_value")),
 					SATURATE_VALUE 		= as.numeric(sapply(atts, "[" , "saturate_value")),
 					SCALE_FACTOR 		= as.numeric(sapply(atts, "[" , "scale_factor")),
-					
+
 					SUN_AZIMUTH			= as.numeric(meta$global_metadata$solar_angles["azimuth"]),
 					SUN_ELEVATION		= 90 - as.numeric(meta$global_metadata$solar_angles["zenith"]),
 					EARTH_SUN_DISTANCE  = {.ESdist(date)}
 			)
-			
+
 		}
-		
+
 	}
 	return(meta)
 }
@@ -12911,60 +12997,60 @@ readMeta <- function(file, unifiedMetadata = TRUE){
 
 
 #' Import separate Landsat files into single stack
-#' 
+#'
 #' Reads Landsat MTL or XML metadata files and loads single Landsat Tiffs into a rasterStack.
 #' Be aware that by default stackLS() does NOT import panchromatic bands nor thermal bands with resolutions != 30m.
-#' 
+#'
 #' @param file character. Path to Landsat MTL metadata file.
 #' @param allResolutions logical. if \code{TRUE} a list will be returned with length = unique spatial resolutions.
 #' @param resampleTIR logical. As of  the USGS resamples TIR bands to 30m. Use this option if you use data processed prior to February 25, 2010 which has not been resampled.
 #' @param resamplingMethod character. Method to use for TUR resampling ('ngb' or 'bilinear'). Defaults to 'ngb' (nearest neighbor).
-#' @param products character vector. Which products should be returned in the stack? (only relevant for LS8 and LEDAPS processed products). 'image': image data, 'index': multiband indices, 'qa' quality flag bands. 
+#' @param products character vector. Which products should be returned in the stack? (only relevant for LS8 and LEDAPS processed products). 'image': image data, 'index': multiband indices, 'qa' quality flag bands.
 #' @return Either a list of rasterStacks comprising all resolutions or only one rasterStack comprising only 30m resolution imagery
-#' @note 
+#' @note
 #' Be aware that by default stackLS() does NOT import panchromatic bands nor thermal bands with resolutions != 30m. Use the allResolutions argument to import all layers.
-#' 
-#' The USGS uses cubic convolution to resample TIR bands to 30m resolution. In the opinion of the author this may not be the best choice for supersampling. 
+#'
+#' The USGS uses cubic convolution to resample TIR bands to 30m resolution. In the opinion of the author this may not be the best choice for supersampling.
 #' Therefore the default method in this implementation is nearest neighbor. Keep this in mind if you plan to compare TIR bands created by differing resampling routines.
 #' Typically, however, you will already have the USGS 30m TIR products, so no need to worry...
 #' @export
 stackMeta <- function(file, allResolutions = FALSE,  resampleTIR = FALSE, resamplingMethod = "ngb", products = c("image", "index", "qa")){
-	
+
 	## Read metadata and extract layer file names
 	meta  <- readMeta(file)
 	files <- meta$UNIFIED_METADATA$FILES
-	
+
 	## Load layers
 	path  <- if(basename(file) != file)  str_replace(file, basename(file), "") else NULL
-	
+
 	## Import rasters
 	rl <- lapply(paste0(path, files), raster)
 	resL <- lapply(lapply(rl, res),"[", 1)
-	
+
 	if(any(resL > 30)) {
 		message("Your Landsat data includes TIR band(s) which were not resampled to 30m.
 						\nYou can set resampleTIR = TRUE to resample TIR bands to 30m if you want a single stack")
-		
+
 		## Resample TIR to 30m
 		if(resampleTIR){
 			for(i in which(resL > 30))
-				rl[[i]] <- resample(rl[[i]], rl[[which(resL == 30)[1]]], method = resamplingMethod)		
+				rl[[i]] <- resample(rl[[i]], rl[[which(resL == 30)[1]]], method = resamplingMethod)
 		}
 	}
-	
+
 	## Stack
 	returnRes <- if(allResolutions) unlist(unique(resL)) else 30
-	
+
 	LS 	<- lapply(returnRes, function(x){
 				s			<- stack(rl[resL == x])
 				names(s) 	<- meta$UNIFIED_METADATA$BANDS[resL == x]
-				NAvalue(s)	<- meta$UNIFIED_METADATA$NA_VALUE[resL == x]	
+				NAvalue(s)	<- meta$UNIFIED_METADATA$NA_VALUE[resL == x]
 				s <- s[[ which(names(s) %in% meta$UNIFIED_METADATA$BANDS[meta$UNIFIED_METADATA$BAND_TYPE %in% products])	]]
 				s
 			})
-	
+
 	if(!allResolutions) LS <- LS[[1]]
-	
+
 	return(LS)
 }relnorm <-
 function(master, tofix, mask, method="MA", nperm=1000)
@@ -12979,7 +13065,7 @@ function(master, tofix, mask, method="MA", nperm=1000)
     master <- as.vector(as.matrix(master))
     tofix <- as.vector(as.matrix(tofix))
 
-    if(missing(mask)) { 
+    if(missing(mask)) {
         mask <- rep(NA, length(master))
     } else {
         mask <- as.vector(as.matrix(mask))
@@ -12989,12 +13075,12 @@ function(master, tofix, mask, method="MA", nperm=1000)
     x.mask <- tofix[is.na(mask)]
 
     master.lm <- lmodel2(master.mask ~ x.mask, nperm=nperm)
-    
+
     master.lm <- master.lm$regression.results[master.lm$regression.results[, "Method"] == method, ]
     names(master.lm) <- gsub("^ *", "", names(master.lm))
-    
+
     x.transform <- master.lm$Slope * tofix + master.lm$Intercept
-    
+
     x.transform[!is.na(mask)] <- NA
 
 
@@ -13005,7 +13091,7 @@ function(master, tofix, mask, method="MA", nperm=1000)
         results <- data.frame(matrix(x.transform, nrow=nrow(results), ncol=ncol(results)))
     else if(is.matrix(results))
         results <- matrix(x.transform, nrow=nrow(results), ncol=ncol(results))
-    else # return a vector 
+    else # return a vector
         results <- x.transform
 
     list(regression.results = master.lm, newimage = results)
@@ -13026,7 +13112,7 @@ tsrs="`ciop-getparam tsrs`"
 INPUTDIR=$TMPDIR/input
 OUTPUTDIR=$TMPDIR/output
 
-mkdir -p $INPUTDIR $OUTPUTDIR 
+mkdir -p $INPUTDIR $OUTPUTDIR
 
 while read product
 do
@@ -13040,7 +13126,7 @@ do
   for band in 4 5 6
   do
   	tar tfz $retrieved | grep B$band.TIF | xargs tar -C $INPUTDIR -zxvf $retrieved 1>&2
-  done  
+  done
 
   ciop-log "DEBUG" "`tree $TMPDIR`"
 
@@ -13065,32 +13151,32 @@ ciop-log "DEBUG" "`tree $TMPDIR`"
   ciop-publish -m $NDVIDIR/ndvi.tif
   ciop-publish -m $NDVIDIR/ndbi.tif
 
-  rm -fr $OUTPUTDIR/* $INPUTDIR/* 
+  rm -fr $OUTPUTDIR/* $INPUTDIR/*
 done
 
-#' Generate random sample polygons from a raster layer, optionally with 
+#' Generate random sample polygons from a raster layer, optionally with
 #' stratification
 #'
-#' Useful for gathering training data for an image classification. With the 
-#' default settings, the output polygons will be perfectly aligned with the 
+#' Useful for gathering training data for an image classification. With the
+#' default settings, the output polygons will be perfectly aligned with the
 #' pixels in the input raster.
 #'
 #' @export
 #' @importFrom rgdal writeOGR
 #' @param x a \code{Raster*}
 #' @param size the sample size (number of sample polygons to return)
-#' @param side desired length for each side of the sample polygon (units of the 
+#' @param side desired length for each side of the sample polygon (units of the
 #' input \code{Raster*}, usually meters)
-#' @param strata (optional) a \code{RasterLayer} of integers giving the strata 
+#' @param strata (optional) a \code{RasterLayer} of integers giving the strata
 #' of each pixel (for example, a classified image)
-#' @param fields a list of fields to include in the output 
-#' \code{SpatialPolygonsDataFrame} (such as a "class" field if you will be 
+#' @param fields a list of fields to include in the output
+#' \code{SpatialPolygonsDataFrame} (such as a "class" field if you will be
 #' digitizing classes).
 #' @param na.rm whether to remove pixels with NA values from the sample
-#' @param exp multiplier used to draw larger initial sample to account for the 
-#' loss of sample polygons lost because they contain NAs, and, for stratified 
-#' sampling, to account for classes that occur very infrequently in the data.  
-#' Increase this value if the final sample has fewer sample polygons than 
+#' @param exp multiplier used to draw larger initial sample to account for the
+#' loss of sample polygons lost because they contain NAs, and, for stratified
+#' sampling, to account for classes that occur very infrequently in the data.
+#' Increase this value if the final sample has fewer sample polygons than
 #' desired.
 #' @return a \code{SpatialPolygonsDataFrame}
 #' @examples
@@ -13102,7 +13188,7 @@ done
 #' plot(L5TSR_1986_b1)
 #' plot(training_polys, add=TRUE)
 #' }
-sample_raster <- function(x, size, strata=NULL, side=xres(x), fields=c(), 
+sample_raster <- function(x, size, strata=NULL, side=xres(x), fields=c(),
                           na.rm=TRUE, exp=5) {
     if (!is.null(strata)) {
         stratified <- TRUE
@@ -13127,7 +13213,7 @@ sample_raster <- function(x, size, strata=NULL, side=xres(x), fields=c(),
     # Convert from cell-center coordinates to ul corner of cell coordinates
     xy[, 1] <- xy[, 1] - xres(x)/2
     xy[, 2] <- xy[, 2] + yres(x)/2
-    # Coordinate order is: ll, lr, ur, ul, ll. Need to end with ll to close the 
+    # Coordinate order is: ll, lr, ur, ul, ll. Need to end with ll to close the
     # polygon
     xcoords <- cbind(xy[, 1],
                      xy[, 1] + side,
@@ -13142,7 +13228,7 @@ sample_raster <- function(x, size, strata=NULL, side=xres(x), fields=c(),
     xycoords <- array(cbind(xcoords, ycoords),
                       dim=c(nrow(xcoords), ncol(xcoords), 2))
 
-    # TODO: Add check to ensure no polygons overlap, and warn if they fall 
+    # TODO: Add check to ensure no polygons overlap, and warn if they fall
     # outside raster extent
 
     # Function to make individual polygons for each sample area
@@ -13150,7 +13236,7 @@ sample_raster <- function(x, size, strata=NULL, side=xres(x), fields=c(),
         list(Polygon(cbind(x=slice[, 1], y=slice[, 2])))
     }
     polys <- apply(xycoords, c(1), make_Polygon)
-    # Now convert the list of Polygon objects to a list of Polygons objects 
+    # Now convert the list of Polygon objects to a list of Polygons objects
     # (notice the trailing "s" in "Polygons")
     polys <- mapply(function(poly, ID) Polygons(poly, ID=ID),
                     polys, seq(1, length(polys)))
@@ -13173,32 +13259,32 @@ sample_raster <- function(x, size, strata=NULL, side=xres(x), fields=c(),
 
     return(polys)
 }
-#' Scales a \code{Raster*} by a power of a given integer and rounds to nearest 
+#' Scales a \code{Raster*} by a power of a given integer and rounds to nearest
 #' integer
 #'
-#' Useful for scaling and (optionally) rounding a \code{RasterLayer} to integer 
-#' so that a layer can be saved as an integer datatype such as "INT1U", 
+#' Useful for scaling and (optionally) rounding a \code{RasterLayer} to integer
+#' so that a layer can be saved as an integer datatype such as "INT1U",
 #' "INT1S", "INT2" or "INT2S".
 #'
-#' This function will run in parallel if a parallel backend is registered with 
+#' This function will run in parallel if a parallel backend is registered with
 #' \code{\link{foreach}}.
 #'
 #' @export scale_raster
 #' @import methods
 #' @seealso \code{\link{dataType}}
 #' @param x a \code{Raster*} object
-#' @param power_of raster will be scaled using the highest possible power of 
+#' @param power_of raster will be scaled using the highest possible power of
 #' this number
-#' @param max_out the scaling factors will be chosen for each layer to ensure 
-#' that the maximum and minimum (if minimum is negative) values of each layer 
+#' @param max_out the scaling factors will be chosen for each layer to ensure
+#' that the maximum and minimum (if minimum is negative) values of each layer
 #' do not exceed \code{max_out}
-#' @param do_scaling perform the scaling and return a \code{Raster*} (if 
-#' \code{do_scaling} is TRUE) or return a list of scale factors (if 
+#' @param do_scaling perform the scaling and return a \code{Raster*} (if
+#' \code{do_scaling} is TRUE) or return a list of scale factors (if
 #' \code{do_scaling} is FALSE)
 #' @param round_output whether to round the output to the nearest integer
-#' @return a \code{Raster*} if \code{do_scaling} is TRUE, or a list of scaling 
+#' @return a \code{Raster*} if \code{do_scaling} is TRUE, or a list of scaling
 #' factors if \code{do_scaling} is false.
-setGeneric("scale_raster", function(x, power_of=10, max_out=32767, 
+setGeneric("scale_raster", function(x, power_of=10, max_out=32767,
                                     round_output=TRUE, do_scaling=TRUE) {
     standardGeneric("scale_raster")
 })
@@ -13236,18 +13322,18 @@ setMethod("scale_raster", signature(x="RasterLayer"),
 scale_stack_or_brick <- function(x, power_of, max_out, round_output, do_scaling) {
     unscaled_layer=NULL
     if (do_scaling) {
-        scale_outputs <- foreach(unscaled_layer=unstack(x), 
-                                 .combine='addLayer', .multicombine=TRUE, 
+        scale_outputs <- foreach(unscaled_layer=unstack(x),
+                                 .combine='addLayer', .multicombine=TRUE,
                                  .init=raster(), .packages=c('teamlucc'),
                                  .export=c('scale_layer')) %dopar% {
-            scale_output <- scale_layer(unscaled_layer, power_of, max_out, 
+            scale_output <- scale_layer(unscaled_layer, power_of, max_out,
                                         round_output, do_scaling)
         }
     } else {
-        scale_outputs <- foreach(unscaled_layer=unstack(x), 
+        scale_outputs <- foreach(unscaled_layer=unstack(x),
                                  .packages=c('raster', 'teamlucc'),
                                  .export=c('scale_layer')) %dopar% {
-            scale_output <- scale_layer(unscaled_layer, power_of, max_out, 
+            scale_output <- scale_layer(unscaled_layer, power_of, max_out,
                                         round_output, do_scaling)
         }
     }
@@ -13259,7 +13345,7 @@ scale_stack_or_brick <- function(x, power_of, max_out, round_output, do_scaling)
 #' @aliases scale_raster,RasterStack,ANY-method
 setMethod("scale_raster", signature(x="RasterStack"),
     function(x, power_of, max_out, round_output, do_scaling) {
-        ret <- scale_stack_or_brick(x, power_of, max_out, round_output, 
+        ret <- scale_stack_or_brick(x, power_of, max_out, round_output,
                                     do_scaling)
         return(ret)
     }
@@ -13269,7 +13355,7 @@ setMethod("scale_raster", signature(x="RasterStack"),
 #' @aliases scale_raster,RasterBrick,ANY-method
 setMethod("scale_raster", signature(x="RasterBrick"),
     function(x, power_of, max_out, round_output, do_scaling) {
-        ret <- scale_stack_or_brick(x, power_of, max_out, round_output, 
+        ret <- scale_stack_or_brick(x, power_of, max_out, round_output,
                                     do_scaling)
         return(ret)
     }
@@ -13338,12 +13424,12 @@ setMethod("scale_raster", signature(x="RasterBrick"),
 #' @examples
 #' # TODO: Write an example.
 nverts <- function(poly_obj) {
-    n_verts <- sapply(poly_obj@polygons, function(y) 
+    n_verts <- sapply(poly_obj@polygons, function(y)
                       nrow(y@Polygons[[1]]@coords))[[1]]
     if (is.null(n_verts)) {
         n_verts <- 0
     } else {
-        # Need to subtract one as the starting coordinate and ending coordinate 
+        # Need to subtract one as the starting coordinate and ending coordinate
         # are identical, but appear twice - at beginning and at end of list.
         n_verts <- n_verts - 1
     }
@@ -13352,28 +13438,28 @@ nverts <- function(poly_obj) {
 
 #' Simplify a polygon to contain less than a certain number of vertices
 #'
-#' Useful for simplifying area of interest (AOI) polygons for use with online 
-#' data portals (like USGS EarthExplorer) that limit the number of vertices 
+#' Useful for simplifying area of interest (AOI) polygons for use with online
+#' data portals (like USGS EarthExplorer) that limit the number of vertices
 #' allowed in uploaded AOI shapefiles.
 #'
 #' @export
 #' @importFrom rgeos gSimplify
 #' @param poly_obj a polygon as an sp object
-#' @param max_vertices the maximum number of vertices to allow in the 
+#' @param max_vertices the maximum number of vertices to allow in the
 #' simplified polygon
 #' @param maxit the maximum number of iterations to use to simplify the polygon
-#' @param multiplier a number used to increase the tolerance for each 
-#' subsequent iteration, if the number of vertices in the simplified polygon is 
+#' @param multiplier a number used to increase the tolerance for each
+#' subsequent iteration, if the number of vertices in the simplified polygon is
 #' not less than /code{max_vertices}
-#' @param initial_tolerance initial value for tolerance used to remove vertices 
-#' from polygon.  If set to the default option, "dynamic", the code will 
-#' automatically set the \code{initial_tolerance} to .01 * the length of the 
-#' diagonal of the bounding box of the polygon. \code{initial_tolerance} can 
+#' @param initial_tolerance initial value for tolerance used to remove vertices
+#' from polygon.  If set to the default option, "dynamic", the code will
+#' automatically set the \code{initial_tolerance} to .01 * the length of the
+#' diagonal of the bounding box of the polygon. \code{initial_tolerance} can
 #' also be set to an arbitrary value, in the same units as the polygon object.
 #' @return polygon with less than \code{max_vertices} vertices
 #' @examples
 #' # TODO: add an example
-simplify_polygon <- function(poly_obj, max_vertices, maxit=100, 
+simplify_polygon <- function(poly_obj, max_vertices, maxit=100,
                              multiplier=1.05, initial_tolerance='dynamic') {
     if (class(poly_obj) == 'SpatialPolygonsDataFrame') {
         poly_data <- poly_obj@data
@@ -13396,14 +13482,14 @@ simplify_polygon <- function(poly_obj, max_vertices, maxit=100,
         tolerance <- initial_tolerance
     }
 
-    # Iterate, increasing tolerance, until polygon has less than maxpts 
+    # Iterate, increasing tolerance, until polygon has less than maxpts
     # vertices.
     n_verts <- nverts(poly_obj)
     n <- 0
     while ((n_verts > 0) && (n < maxit) && (n_verts > max_vertices)) {
         poly_obj <- gSimplify(poly_obj, tol=tolerance)
         n_verts <- nverts(poly_obj)
-        tolerance <- tolerance * multiplier 
+        tolerance <- tolerance * multiplier
         n <- n + 1
     }
     if (n == maxit)
@@ -13423,20 +13509,20 @@ Site.Name.Code,Site.Name,Site.Name.Short,Site.Type,Site.Country,Site.Continent
 BBS,Bukit Barisan,Bukit Barisan,II,PAN,LA
 BCI,Barro Colorado Nature Monument - Soberania National Park,Barro Colorado - Soberania,II/III,IDN,AS
 BIF,Bwindi Impenetrable Forest,Bwindi,III,UGA,AF
-CAX,Caxiuanã,Caxiuanã,I,BRA,LA
+CAX,Caxiuan?,Caxiuan?,I,BRA,LA
 COU,Cocha Cashu - Manu National Park,Cocha Cashu - Manu,I,PER,LA
 CSN,Central Suriname Nature Reserve,Central Suriname,I,SUR,LA
 KRP,Korup National Park,Korup,II,CMR,AF
 MAS,Manaus,Manaus,II,BRA,LA
 NAK,Nam Kading,Nam Kading,III,LAO,AS
-NNN,Nouabalé Ndoki,Nouabalé Ndoki,I,COG,AF
+NNN,Nouabal? Ndoki,Nouabal? Ndoki,I,COG,AF
 PSH,Pasoh Forest Reserve,Pasoh,III,MYS,AS
 RNF,Ranomafana,Ranomafana,III,MDG,AF
 UDZ,Udzungwa,Udzungwa,II,TZA,AF
-VB,Volcán Barva,Volcán Barva,III,CRI,LA
-YAN,Yanachaga Chimillén National Park,Yanachaga Chimillén,I,PER,LA
+VB,Volc?n Barva,Volc?n Barva,III,CRI,LA
+YAN,Yanachaga Chimill?n National Park,Yanachaga Chimill?n,I,PER,LA
 YAS,Yasuni,Yasuni,I,ECU,LA
-slopeasp <- function (x, EWres, NSres, EWkernel, NSkernel, smoothing = 1) 
+slopeasp <- function (x, EWres, NSres, EWkernel, NSkernel, smoothing = 1)
 {
     if(class(x) == "SpatialGridDataFrame") {
     	xmat <- t(as.matrix(x))
@@ -13461,12 +13547,12 @@ slopeasp <- function (x, EWres, NSres, EWkernel, NSkernel, smoothing = 1)
         }
     }
     if (missing(EWkernel)) {
-        EWkernel <- matrix(c(-1/8, 0, 1/8, -2/8, 0, 2/8, -1/8, 
+        EWkernel <- matrix(c(-1/8, 0, 1/8, -2/8, 0, 2/8, -1/8,
             0, 1/8), ncol = 3, nrow = 3, byrow = TRUE)
     }
     EW.mat <- movingwindow(xmat, EWkernel)/EWres
     if (missing(NSkernel)) {
-        NSkernel <- matrix(c(1/8, 2/8, 1/8, 0, 0, 0, -1/8, -2/8, 
+        NSkernel <- matrix(c(1/8, 2/8, 1/8, 0, 0, 0, -1/8, -2/8,
             -1/8), ncol = 3, nrow = 3, byrow = TRUE)
     }
     NS.mat <- movingwindow(xmat, NSkernel)/NSres
@@ -13485,21 +13571,21 @@ slopeasp <- function (x, EWres, NSres, EWkernel, NSkernel, smoothing = 1)
 }
 
 #' Spectral indices
-#' 
+#'
 #' @param inputRaster Raster* object. Typically remote sensing imagery, which is to be classified.
-#' @param indices character. one or more spectral indices 
+#' @param indices character. one or more spectral indices
 #' @param sensor if a sensor is specified \code{bands} is populated automatically. Specifying a sensor requires the layernames in inputRaster to match the official band designations formatted as "B1", "B2" etc.
 #' @param bands list of band designations. See notes for details
 #' @param maskRaster Raster layer containing a binary mask to exclude areas from prediction.
 #' @param verbose logical. prints progress, statistics and graphics during execution
 #' @param ... further arguments such as filename etc. passed to \link[raster]{writeRaster}
 #' @return rasterBrick or rasterStack
-#' @seealso \code{\link[raster]{overlay}} 
+#' @seealso \code{\link[raster]{overlay}}
 #' @export
 #' @examples
 #' r <- raster(ncol=10,nrow=10)
 #' r[] <- sample(1:155, 100, TRUE)
-#' r <- stack(r, r + 90 + rnorm(100, 10)) 
+#' r <- stack(r, r + 90 + rnorm(100, 10))
 #' names(r) <- c("red", "nir")
 #' SI <- spectralIndices(r, indices = c("SR", "NDVI"), bands = list(NIR = "nir", RED = "red"))
 #' plot(SI)
@@ -13509,78 +13595,78 @@ spectralIndices <- function(inputRaster, indices = "NDVI", sensor, bands , maskR
 	# TODO: add formulas to help file
 	# TODO: internal sensor db
 	# TODO: value checks?
-	# TODO: check sensor list for correctness and extend it 
-	
+	# TODO: check sensor list for correctness and extend it
+
 	## Sensor db
 	SENSORS <- list(
 			LANDSAT5 = list(BLUE = "B1", GREEN = "B2", RED = "B3", NIR = "B4", MIR = "B7"),
 			LANDSAT7 = list(BLUE = "B1", GREEN = "B2", RED = "B3", NIR = "B4"),
 			LANDSAT8 = list(BLUE = "B2", GREEN = "B3", RED = "B4", NIR = "B5")
 	)
-	
+
 	if(!missing(sensor)){
 		if(!sensor %in% names(SENSORS)) stop(paste0("Unknown sensor. Please provide the 'bands' argument or 'sensor' as one of ", names(SENSORS)))
 		bands <- SENSORS[[sensor]]
 		if(any(!bands %in% names(inputRaster))) stop("Bandnames of inputRaster do not match the required format or are missing. Please provide 'bands' argument manually or make sure the names(inputRaster) follow the 'B1' 'B2'  ... format if you want to make use of the 'sensor' argument.")
 	}
 	bands <- lapply(bands, function(x) if(is.character(x)) which(names(inputRaster) == x) else x )
-	
+
 	## Internal db
 	INDICES <-  list(
 			SR 		= function(NIR, RED) {NIR / RED},
 			DVI		= function(NIR, RED) {NIR-RED},
-			NDVI	= function(NIR, RED) {(NIR-RED)/(NIR+RED)}, 
-			TVI 	= function(NIR, RED) {(((NIR-RED)/(NIR+RED))+0.5)^0.5}, 
+			NDVI	= function(NIR, RED) {(NIR-RED)/(NIR+RED)},
+			TVI 	= function(NIR, RED) {(((NIR-RED)/(NIR+RED))+0.5)^0.5},
 			MSAVI	= function(NIR, RED) {NIR + 0.5 - (0.5 * sqrt((2 * NIR + 1)^2 - 8 * (NIR - (2 * RED))))},
 			MSAVI2	= function(NIR, RED) {(2 * (NIR + 1) - sqrt((2 * NIR + 1)^2 - 8 * (NIR - RED))) / 2},
-			GEMI	= function(NIR, RED) {(((NIR^2 - RED^2) * 2 + (NIR * 1.5) + (RED * 0.5) ) / (NIR + RED + 0.5)) * (1 - ((((NIR^2 - RED^2) * 2 + (NIR * 1.5) + (RED * 0.5) ) / (NIR + RED + 0.5)) * 0.25)) - ((RED - 0.125) / (1 - RED))},                   
+			GEMI	= function(NIR, RED) {(((NIR^2 - RED^2) * 2 + (NIR * 1.5) + (RED * 0.5) ) / (NIR + RED + 0.5)) * (1 - ((((NIR^2 - RED^2) * 2 + (NIR * 1.5) + (RED * 0.5) ) / (NIR + RED + 0.5)) * 0.25)) - ((RED - 0.125) / (1 - RED))},
 			SLAVI	= function(RED, MIR) {NIR / (RED + MIR)},
 			EVI		= function(NIR, RED, BLUE) {G * ((NIR - RED) / (NIR + C1 * RED - C2 * BLUE + L))}# include a G or L specification in command
 	)
-	
+
 	## Get arguments and check for mising arguments
 	args <- lapply(indices, function(index) {
-				need <- names(formals(INDICES[[index]]))	
-				if(any(!need %in% names(bands))) stop("Band specification(s) of >> ", paste(names(bands)[!names(bands) %in% need], collapse = ","), 
+				need <- names(formals(INDICES[[index]]))
+				if(any(!need %in% names(bands))) stop("Band specification(s) of >> ", paste(names(bands)[!names(bands) %in% need], collapse = ","),
 							" << are missing or do not match layer names in the brick/stack. \nPlease specify the correct layer number or name in a list, e.g. bands = list(RED = 'B4', NIR = 'B5')", call. = FALSE)
 				need <- unlist(bands[need])
 			})
-	names(args) <- indices 
-	
+	names(args) <- indices
+
 	## We do this in a separate step, so we can throw an error before we start the calculations
 	inList <- lapply(indices, function(index) {
 				if(verbose) print(paste0("Calculating ", index))
 			m<-	overlay(inputRaster[[args[[index]]]], fun = INDICES[[index]])
 			})
-	
+
 	## Combine and return
 	outStack <- stack(inList)
-		
-	## Write file if filename is provided. Doing it this way we write the file twice. We could provide filenames to overlay instead and return a stack so we only write once. 
+
+	## Write file if filename is provided. Doing it this way we write the file twice. We could provide filenames to overlay instead and return a stack so we only write once.
 	## But then we have an output of n single files instead of one multi-layer file containing all indices.
 	## Maybe we should make this optional
 	if(any(grepl("file", names(list(...))))) outStack <-  writeRaster(outStack, ...)
-	
-	names(outStack) <- indices	 
+
+	names(outStack) <- indices
 
 	return(outStack)
 }#' Split classes in a training dataset using normal mixture modeling
 #'
-#' This function can be used to aid in classifying spectrally diverse classes 
-#' by splitting the input classes into subclasses using a clustering algorithm.  
-#' After classification, these subclasses are merged back into their original 
-#' parent classes. For example, the training data for an agriculture class 
-#' might have both fallow and planted fields in the training data, or fields 
-#' planted with different crops that are spectrally dissimilar.  This function 
-#' can be used to automatically split the agriculture class into a number of 
-#' subclasses.  The classifier is then run on this larger set of classes, and 
-#' following classification, these subclasses can all be merged together into a 
+#' This function can be used to aid in classifying spectrally diverse classes
+#' by splitting the input classes into subclasses using a clustering algorithm.
+#' After classification, these subclasses are merged back into their original
+#' parent classes. For example, the training data for an agriculture class
+#' might have both fallow and planted fields in the training data, or fields
+#' planted with different crops that are spectrally dissimilar.  This function
+#' can be used to automatically split the agriculture class into a number of
+#' subclasses.  The classifier is then run on this larger set of classes, and
+#' following classification, these subclasses can all be merged together into a
 #' single overall agriculture class.
 #'
 #' @export
 #' @importFrom mclust Mclust
 #' @param train_data a \code{link{pixel_data}} object
-#' @param split_levels (optional) a list giving the names of the levels to 
+#' @param split_levels (optional) a list giving the names of the levels to
 #' split. If missing, all levels will be split.
 #' @param verbose whether to report status while running
 split_classes <- function(train_data, split_levels, verbose=FALSE) {
@@ -13591,7 +13677,7 @@ split_classes <- function(train_data, split_levels, verbose=FALSE) {
     for (level in split_levels) {
         level_ind <- train_data@y == level
         model <- Mclust(train_data@x[level_ind, ])
-        y_reclass[level_ind]  <- paste(train_data@y[level_ind], 
+        y_reclass[level_ind]  <- paste(train_data@y[level_ind],
                                        model$classification, sep='_clust')
         if (verbose) print(paste(level, 'split into', model$g, 'classes'))
     }
@@ -13603,9 +13689,9 @@ split_classes <- function(train_data, split_levels, verbose=FALSE) {
     return(list(reclass_mat=reclass_mat, y=factor(y_reclass)))
 }
 #' Supervised Classification
-#' 
+#'
 #' @param inputRaster Raster* object. Typically remote sensing imagery, which is to be classified.
-#' @param trainingData SpatialPolygonsDataFrame containing the training data used to train the classifier.  
+#' @param trainingData SpatialPolygonsDataFrame containing the training data used to train the classifier.
 #' @param classAttributes character giving the column in \code{trainingData}, which contains the class attribute. Can be omitted, when \code{trainingData} has only one column.
 #' @param nSamples number of samples per land cover class
 #' @param filename path to output file (optional). If \code{NULL}, standard raster handling will apply, i.e. storage either in memory or in the raster temp directory.
@@ -13613,8 +13699,8 @@ split_classes <- function(train_data, split_levels, verbose=FALSE) {
 #' @param verbose logical. prints progress, statistics and graphics during execution
 #' @param predict logical. \code{TRUE} (default) will return a classified map, \code{FALSE} will only train the classifier
 #' @param ... further arguments to be passed to randomForest
-#' @return A list containing [[1]] the model, [[2]] the predicted raster and [[3]] the class mapping  
-#' @seealso \code{\link{randomForest}} 
+#' @return A list containing [[1]] the model, [[2]] the predicted raster and [[3]] the class mapping
+#' @seealso \code{\link{randomForest}}
 #' @export
 superClass <- function(inputRaster, trainingData, classAttributes = NULL, nSamples = 100, filename = NULL, maskRaster = NULL, verbose = FALSE, predict = TRUE, overwrite = TRUE, ...) {
 	# TODO: point vector data
@@ -13622,13 +13708,13 @@ superClass <- function(inputRaster, trainingData, classAttributes = NULL, nSampl
 	# TODO: cross-validation
 	# TODO: make classifier modular
 	# TODO: add examples
-	# TODO: check applicability of raster:::.intersectExtent 
+	# TODO: check applicability of raster:::.intersectExtent
 	# DISCUSS: demo data
-	
+
 	## Filetypes
 	if(!inherits(inputRaster, 'Raster')) stop("inputRaster must be a raster object (RasterLayer,RasterBrick or RasterStack)", call.=FALSE)
 	if(!inherits(trainingData, 'SpatialPolygonsDataFrame')) stop("traingData must be a SpatialPolygonsDataFrame", call.=FALSE)
-	
+
 	## Attribute column
 	if(is.null(classAttributes)){
 		if(ncol(trainingData) == 1) {
@@ -13637,78 +13723,78 @@ superClass <- function(inputRaster, trainingData, classAttributes = NULL, nSampl
 		} else {
 			stop(paste("Dont't know which column in trainingData contains the class attribute. \nPlease specify classAttributes as one of: ", paste(colnames(trainingData@data),collapse=", ")), call. = FALSE)
 		}
-	} 
-	if(!classAttributes %in% colnames(trainingData@data)) 
-		stop(paste0("The column ", classAttributes, " does not exist in trainingData. \nAvailable columns are: ", colnames(trainingData@data,collapse=", ")), call. = FALSE) 
-		
+	}
+	if(!classAttributes %in% colnames(trainingData@data))
+		stop(paste0("The column ", classAttributes, " does not exist in trainingData. \nAvailable columns are: ", colnames(trainingData@data,collapse=", ")), call. = FALSE)
+
 	## Check projections
-	if(!compareCRS(inputRaster, trainingData)) 
+	if(!compareCRS(inputRaster, trainingData))
 		stop("Projection of trainingData does not match inputRaster")
 		## DISCUSS: Should we do a spTransform of vector data here, or require proper projection from the user?
-	
-	## Check overlap of vector and raster data	
-	if(!gIntersects(as(extent(inputRaster),"SpatialPolygons"), as(extent(trainingData),"SpatialPolygons"))) 
+
+	## Check overlap of vector and raster data
+	if(!gIntersects(as(extent(inputRaster),"SpatialPolygons"), as(extent(trainingData),"SpatialPolygons")))
 		stop("inputRaster and trainingData do not overlap")
-	
+
 	## Calculate area weighted number of samples per polygon
 	## this way we'll end up with n > nSamples, but make sure to sample each polygon at least once
 	if(is.projected(trainingData)){
 		trainingData[["area"]] <- gArea(trainingData, byid = TRUE)
 	} else {
-		trainingData[["area"]] <- areaPolygon(trainingData)		
+		trainingData[["area"]] <- areaPolygon(trainingData)
 	}
-	
+
 	## Calculate optimal nSamples per class
-	trainingData@data[["order"]] <- 1:nrow(trainingData) 		
+	trainingData@data[["order"]] <- 1:nrow(trainingData)
 	weights <- ddply(trainingData@data, .variables = classAttributes, .fun = here(mutate), nSamplesClass = ceiling(nSamples * area / sum(area)))
 	trainingData@data <- weights[order(weights$order),]
-		
+
 	## Get random coordinates within polygons
-	xy  <- lapply(seq_along(trainingData), function(i_poly){	
-				pts <- spsample(trainingData[i_poly, ], type = "random", n = trainingData@data[i_poly,"nSamplesClass"], iter = 20) 
+	xy  <- lapply(seq_along(trainingData), function(i_poly){
+				pts <- spsample(trainingData[i_poly, ], type = "random", n = trainingData@data[i_poly,"nSamplesClass"], iter = 20)
 			})
 	xy <- do.call("rbind", xy)
-	
+
 	### Display, verbose only
 	if(verbose) {
 		plot(inputRaster,1)
 		plot(trainingData, add = T)
 		points(xy, pch = 3, cex = 0.5)
-	}	
-	
+	}
+
 	## Extract response and predictors and combine in final training set
 	if(verbose) print("Begin extract")
 	dataSet <- data.frame(
 			response = as.factor(over(x = xy, y = trainingData)[[classAttributes]]),
 			extract(inputRaster, xy, cellnumbers = TRUE))
-	
+
 	## Discard duplicate cells
 	dataSet <- dataSet[!duplicated(dataSet[,"cells"]),]
 	dataSet <- dataSet[,colnames(dataSet) != "cells"]
-	
+
 	## Unique classes
 	classes <- unique(trainingData[[classAttributes]])
 	classMapping <- data.frame(classID = as.numeric(classes), class = levels(classes))
-	
-	## TRAIN ######################### 
-	if(verbose) print("Starting to calculate random forest model") 
-	model <- randomForest(response ~ . , data = dataSet, na.action = na.omit, confusion = TRUE, ...)		
-	
-	## PREDICT ######################### 
+
+	## TRAIN #########################
+	if(verbose) print("Starting to calculate random forest model")
+	model <- randomForest(response ~ . , data = dataSet, na.action = na.omit, confusion = TRUE, ...)
+
+	## PREDICT #########################
 	progress <- "none"
 	if(verbose) { print("Starting spatial predict")
 		progress <- "text"
 	}
-	 
+
 	## Don't know whether we need this, who would be crazy enough to do more than 255 classes...
 	ifelse(length(classes) < 255, dataType <- "INT1U",  dataType <- "INT2U")
-	
+
 	if(is.null(filename)){
 		spatPred <- predict(inputRaster, model, progress = progress, dataType = dataType, overwrite = overwrite)
 	} else {
 		spatPred <- predict(inputRaster, model, filename = filename, progress = progress, dataType = dataType, overwrite = overwrite)
 	}
-	 
+
 	## Print summary stats
 	if(verbose)
 		print(paste0(paste0(rep("*",20), collapse = "")," Classification summary " ,paste0(rep("*",20), collapse = "")))
@@ -13716,10 +13802,10 @@ superClass <- function(inputRaster, trainingData, classAttributes = NULL, nSampl
 		## Samples per class
 		print(model)
 	## TODO: calculate users,producer's accuracies and kappas
-	
+
 	## DISCUSS: should we return sample points as well?
-	return(list(model = model, map = spatPred, classMapping = classMapping)) 
-	
+	return(list(model = model, map = spatPred, classMapping = classMapping))
+
 }
 
 #' Calculates the Normalized Difference Vegetation Index (NDVI)
@@ -13731,7 +13817,7 @@ superClass <- function(inputRaster, trainingData, classAttributes = NULL, nSampl
 #' @param nir near-infrared
 #' @param ... additional arguments as for \code{\link{writeRaster}}
 #' @examples
-#' NDVI_img <- NDVI(red=raster(L5TSR_1986, layer=3), nir=raster(L5TSR_1986, 
+#' NDVI_img <- NDVI(red=raster(L5TSR_1986, layer=3), nir=raster(L5TSR_1986,
 #'                 layer=4))
 #' plot(NDVI_img)
 setGeneric("NDVI", function(red, nir, ...) {
@@ -13786,7 +13872,7 @@ setMethod("NDVI", signature(red="RasterLayer", nir="RasterLayer"),
 #' IGARSS '97. Remote Sensing - A Scientific Vision for Sustainable
 #' Development., 1997 IEEE International.
 #' @examples
-#' EVI_img <- EVI(blue=raster(L5TSR_1986, layer=1), red=raster(L5TSR_1986, layer=3), 
+#' EVI_img <- EVI(blue=raster(L5TSR_1986, layer=1), red=raster(L5TSR_1986, layer=3),
 #'                nir=raster(L5TSR_1986, layer=4))
 #' plot(EVI_img)
 setGeneric("EVI", function(blue, red, nir, ...) {
@@ -13818,7 +13904,7 @@ setMethod("EVI", signature(blue="matrix", red="matrix", nir="matrix"),
 #' @rdname EVI
 #' @aliases EVI,RasterLayer,RasterLayer,RasterLayer-method
 #' @importFrom raster overlay
-setMethod("EVI", signature(blue="RasterLayer", red="RasterLayer", 
+setMethod("EVI", signature(blue="RasterLayer", red="RasterLayer",
                            nir="RasterLayer"),
     function(blue, red, nir, ...) {
         ret <- overlay(blue, red, nir, fun=function(blue, red, nir) {
@@ -13830,7 +13916,7 @@ setMethod("EVI", signature(blue="RasterLayer", red="RasterLayer",
 
 #' Calculates the Modified Soil-Adjusted Vegetation Index (MSAVI)
 #'
-#' Note that this avoids the need for calculating L by using the equation for 
+#' Note that this avoids the need for calculating L by using the equation for
 #' MSAVI2 from Qi et al. (1994).
 #'
 #' @export MSAVI2
@@ -13895,7 +13981,7 @@ setMethod("MSAVI2", signature(red="RasterLayer", nir="RasterLayer"),
 #' indirect methods for correcting the aerosol effect on remote sensing: from
 #' AVHRR to EOS-MODIS. Remote Sensing of Environment:65-79.
 #' @examples
-#' ARVI_img <- ARVI(blue=raster(L5TSR_1986, layer=1), red=raster(L5TSR_1986, 
+#' ARVI_img <- ARVI(blue=raster(L5TSR_1986, layer=1), red=raster(L5TSR_1986,
 #'                  layer=3), nir=raster(L5TSR_1986, layer=4))
 #' plot(ARVI_img)
 setGeneric("ARVI", function(blue, red, nir, ...) {
@@ -13928,7 +14014,7 @@ setMethod("ARVI", signature(blue="matrix", red="matrix", nir="matrix"),
 #' @rdname ARVI
 #' @aliases ARVI,RasterLayer,RasterLayer,RasterLayer-method
 #' @importFrom raster overlay
-setMethod("ARVI", signature(blue="RasterLayer", red="RasterLayer", 
+setMethod("ARVI", signature(blue="RasterLayer", red="RasterLayer",
                             nir="RasterLayer"),
     function(blue, red, nir, ...) {
         ret <- overlay(blue, red, nir, fun=function(blue, red, nir) {
@@ -13944,7 +14030,7 @@ function(basename, sat=7)
     # basename is the name of the band data files, which will have the band number appended
     # should be in at-sensor reflectance (rc1)
     # sat: 5 = Landsat 5 (TM) or 7 = Landsat 7 (ETM+)
-        
+
         # original papers
         # Kauth and Thomas
         # Crist and Cicone
@@ -13969,17 +14055,17 @@ function(basename, sat=7)
 
     all.bands <- cbind(band1, band2, band3, band4, band5, band7)
 
-        
+
     if(sat == 7) {
         tc.coef <- matrix(c(
         # Tasseled cap coefficients for Landsat 7 ETM+ at-satellite reflectance from HWY+2002
     # Band 1     Band 2       Band 3     Band 4     Band 5        Band 7     Index
-     0.3561,     0.3972,      0.3904,    0.6966,    0.2286,       0.1596,    #  Brightness       
-    -0.3344,    -0.3544,     -0.4556,    0.6966,   -0.0242,      -0.2630,    #  Greenness       
-     0.2626,     0.2141,      0.0926,    0.0656,   -0.7629,      -0.5388,    #  Wetness          
-     0.0805,    -0.0498,      0.1950,   -0.1327,    0.5752,      -0.7775,    #  Fourth           
-    -0.7252,    -0.0202,      0.6683,    0.0631,   -0.1494,      -0.0274,    #  Fifth           
-     0.4000,    -0.8172,      0.3832,    0.0602,   -0.1095,       0.0985     #  Sixth            
+     0.3561,     0.3972,      0.3904,    0.6966,    0.2286,       0.1596,    #  Brightness
+    -0.3344,    -0.3544,     -0.4556,    0.6966,   -0.0242,      -0.2630,    #  Greenness
+     0.2626,     0.2141,      0.0926,    0.0656,   -0.7629,      -0.5388,    #  Wetness
+     0.0805,    -0.0498,      0.1950,   -0.1327,    0.5752,      -0.7775,    #  Fourth
+    -0.7252,    -0.0202,      0.6683,    0.0631,   -0.1494,      -0.0274,    #  Fifth
+     0.4000,    -0.8172,      0.3832,    0.0602,   -0.1095,       0.0985     #  Sixth
     ), ncol=6, byrow=TRUE)
     } else if(sat == 5) {
         tc.coef <- matrix(c(
@@ -14018,9 +14104,9 @@ function(basename, sat=7)
 
 #' TEAM land use and cover change data processing toolkit
 #'
-#' teamlucc is a set of routines to support analyzing land use and cover change 
-#' (LUCC) in R. The package was designed to support analyzing LUCC in the Zone 
-#' of Interaction (ZOIs) of monitoring sites in the Tropical Ecology Assessment 
+#' teamlucc is a set of routines to support analyzing land use and cover change
+#' (LUCC) in R. The package was designed to support analyzing LUCC in the Zone
+#' of Interaction (ZOIs) of monitoring sites in the Tropical Ecology Assessment
 #' and Monitoring (TEAM) Network.
 #'
 #' @name teamlucc-package
@@ -14032,9 +14118,9 @@ function(basename, sat=7)
 #' @useDynLib teamlucc
 NULL
 #' Landsat 5 Surface Reflectance Image from February 6, 1986 (path 15, row 53)
-#' 
-#' Portion of Landsat 5 Surface Reflectance image from the Landsat Climate Data 
-#' Record archive. This subset of the image includes only bands 1-4, and pixel 
+#'
+#' Portion of Landsat 5 Surface Reflectance image from the Landsat Climate Data
+#' Record archive. This subset of the image includes only bands 1-4, and pixel
 #' values have been scaled by 10000 and rounded off.
 #'
 #' @docType data
@@ -14042,9 +14128,9 @@ NULL
 #' @seealso L5TSR_2001
 NULL
 #' Landsat 5 Surface Reflectance Image from January 14, 2001 (path 15, row 53)
-#' 
-#' Portion of Landsat 5 Surface Reflectance image from the Landsat Climate Data 
-#' Record archive. This subset of the image includes only bands 1-4, and pixel 
+#'
+#' Portion of Landsat 5 Surface Reflectance image from the Landsat Climate Data
+#' Record archive. This subset of the image includes only bands 1-4, and pixel
 #' values have been scaled by 10000 and rounded off.
 #'
 #' @docType data
@@ -14052,32 +14138,32 @@ NULL
 #' @seealso L5TSR_1986
 NULL
 #' Subset of ASTER Digital Elevation Model V002
-#' 
+#'
 #' @docType data
 #' @name ASTER_V002_WEST
 #' @seealso ASTER_V002_EAST
 NULL
 #' Training polygons for 1986 and 2001 Landsat 5 Surface Reflectance images
-#' 
-#' Polygons digitized from 1986 and 2001 Landsat 5 Surface Reflectance image 
-#' from the Landsat Climate Data Record archive. The training polygons can be 
+#'
+#' Polygons digitized from 1986 and 2001 Landsat 5 Surface Reflectance image
+#' from the Landsat Climate Data Record archive. The training polygons can be
 #' used for testing classification algorithms.
 #'
-#' There are three columns in the dataset. "class_1986" is the cover class for 
-#' the pixels in the polygon from the 1986 image. "class_2001" is the cover class 
+#' There are three columns in the dataset. "class_1986" is the cover class for
+#' the pixels in the polygon from the 1986 image. "class_2001" is the cover class
 #' for the pixels in the polygon from the 2001 image.
 #'
 #' @docType data
 #' @name L5TSR_1986_2001_training
 NULL
 #' Subset of ASTER Digital Elevation Model V002
-#' 
+#'
 #' @docType data
 #' @name ASTER_V002_WEST
 #' @seealso ASTER_V002_EAST
 NULL
 #' Subset of ASTER Digital Elevation Model V002
-#' 
+#'
 #' @docType data
 #' @name ASTER_V002_EAST
 #' @seealso ASTER_V002_WEST
@@ -14107,34 +14193,34 @@ function(x, band)
         results <- data.frame(matrix(x, nrow=nrow(results), ncol=ncol(results)))
     else if(is.matrix(results))
         results <- matrix(x, nrow=nrow(results), ncol=ncol(results))
-    else # return a vector 
+    else # return a vector
         results <- x
-    
+
     results
 }
 
 #' Automatically determine value for image thresholding
 #'
-#' The only method currently implemented is Huang's fuzzy thresholding method.  
-#' The code for Huang's method was ported to C++ for \code{teamlucc} from the 
-#' code in the Auto_threshold imageJ plugin by Gabriel Landini. See original 
+#' The only method currently implemented is Huang's fuzzy thresholding method.
+#' The code for Huang's method was ported to C++ for \code{teamlucc} from the
+#' code in the Auto_threshold imageJ plugin by Gabriel Landini. See original
 #' code at:
 #' http://www.mecourse.com/landinig/software/autothreshold/autothreshold.html
 #'
-#' This function will run in parallel if a parallel backend is registered with 
+#' This function will run in parallel if a parallel backend is registered with
 #' \code{\link{foreach}}.
 #'
 #' @export
 #' @import foreach
 #' @importFrom iterators iter
 #' @param x the input image, as a matrix or raster
-#' @param method the thresholding method. Currently only "huang" is 
+#' @param method the thresholding method. Currently only "huang" is
 #' implemented.
 #' @param n_bin number of bins to use when calculating histogram
-#' @param maxpixels maximum number of pixels size to use when calculating 
+#' @param maxpixels maximum number of pixels size to use when calculating
 #' histogram
 #' @return integer threshold value
-#' @references Huang, L.-K., and M.-J. J. Wang. 1995. Image thresholding by 
+#' @references Huang, L.-K., and M.-J. J. Wang. 1995. Image thresholding by
 #' minimizing the measures of fuzziness. Pattern recognition 28 (1):41--51.
 threshold <- function(x, method="huang", n_bin=1000, maxpixels=5e5) {
     stopifnot(method %in% c("huang"))
@@ -14151,11 +14237,11 @@ threshold <- function(x, method="huang", n_bin=1000, maxpixels=5e5) {
     bys <- (maxs - mins) / (n_bin)
 
     bandnum=minval=maxval=NULL
-    thresholds <- foreach(bandnum=iter(1:nlayers(x)), minval=iter(mins), 
+    thresholds <- foreach(bandnum=iter(1:nlayers(x)), minval=iter(mins),
                           maxval=iter(maxs), by=iter(bys),
                           .packages=c('teamlucc'),
                           .combine=c) %dopar% {
-        image_hist <- hist(x[[bandnum]], breaks=seq(minval, maxval+by, by=by), 
+        image_hist <- hist(x[[bandnum]], breaks=seq(minval, maxval+by, by=by),
                            plot=FALSE, maxpixels=maxpixels)
         threshold_index <- threshold_Huang(image_hist$counts)
         image_hist$breaks[threshold_index]
@@ -14178,28 +14264,28 @@ threshold <- function(x, method="huang", n_bin=1000, maxpixels=5e5) {
 #' @import raster
 
 ToAtSatelliteBrightnessTemperature <- function(landsat8, band) {
-  
+
   bandnames <-c("aerosol", "blue", "green", "red",
   "nir", "swir1", "swir2",
   "panchromatic",
   "cirrus",
   "tirs1", "tirs2")
-  
+
   allowedbands <- c("tirs1", "tirs2")
-  
+
   if (!band %in% allowedbands)
   {
        stop(paste(band, "band not allowed"))
   }
-  
+
   toarad <- ToTOARadiance(landsat8, band)
-  
+
   idx <- seq_along(bandnames)[sapply(bandnames, function(x) band %in% x)]
 
   k1 <- as.numeric(landsat8$metadata[[paste0("k1_constant_band_",idx)]])
   k2 <- as.numeric(landsat8$metadata[[paste0("k2_constant_band_",idx)]])
 
-  bt <- k2 / log(k1 / toarad + 1) 
+  bt <- k2 / log(k1 / toarad + 1)
 
   return(bt)
 
@@ -14220,17 +14306,17 @@ ToAtSatelliteBrightnessTemperature <- function(landsat8, band) {
 
 ToLSWI <- function(landsat8, is.suncorrected = FALSE) {
 
-  # LSWI=(??NIR ?????SWIR1)/(??NIR +??SWIR1) 
+  # LSWI=(??NIR ?????SWIR1)/(??NIR +??SWIR1)
   nir <- ToTOAReflectance(landsat8, "nir", is.suncorrected)
   swir1 <- ToTOAReflectance(landsat8, "swir1", is.suncorrected)
-  
-  lswi <- (nir - swir1) / (nir + swir1)  
-  
+
+  lswi <- (nir - swir1) / (nir + swir1)
+
   return(lswi)
 
 }
 #' creates a raster with the MNDWI vegetation index
-#' @description Creates a raster with the with the MNDWI vegetation index: MNDWI=(??Green ??? ??SWIR1)/(??Green + ??SWIR1) 
+#' @description Creates a raster with the with the MNDWI vegetation index: MNDWI=(??Green ??? ??SWIR1)/(??Green + ??SWIR1)
 #'
 #' @param product name of the product, e.g. LC80522102014165LGN00. It must be in the working directory.
 #' @param sun angle correction, default is.suncorrected = FALSE
@@ -14245,17 +14331,17 @@ ToLSWI <- function(landsat8, is.suncorrected = FALSE) {
 
 ToMNDWI <- function(landsat8, is.suncorrected = FALSE) {
 
-  # MNDWI=(??Green ??? ??SWIR1)/(??Green + ??SWIR1) 
+  # MNDWI=(??Green ??? ??SWIR1)/(??Green + ??SWIR1)
   green <- ToTOAReflectance(landsat8, "green", is.suncorrected)
   swir1 <- ToTOAReflectance(landsat8, "swir1", is.suncorrected)
-  
+
   mndwi <- (green - swir1) / (green + swir1)
-  
+
   return(mndwi)
 
 }
 #' creates a raster with the classified Normalized Burn Ratio (NBR) index
-#' @description Creates a raster with the classified Normalized Burn Ratio (NBR) index 
+#' @description Creates a raster with the classified Normalized Burn Ratio (NBR) index
 #'
 #' @param prefire name of the prefire product, e.g. LC80522102014165LGN00. It must be in the working directory.
 #' @param postfire name of the postfire product, e.g. LC80522102014165LGN00. It must be in the working directory.
@@ -14276,17 +14362,17 @@ ToMNDWI <- function(landsat8, is.suncorrected = FALSE) {
 ToNBRClass <- function(prefire, postfire, is.suncorrected = FALSE) {
 
   # classify
-  m <- c(-Inf, -500, -1, -500, -251, 1, -251, -101, 2, -101, 99, 3, 99, 269, 
+  m <- c(-Inf, -500, -1, -500, -251, 1, -251, -101, 2, -101, 99, 3, 99, 269,
     4, 269, 439, 5, 439, 659, 6, 659, 1300, 7, 1300, +Inf, -1)
   class.mat <- matrix(m, ncol=3, byrow=TRUE)
 
   reclass <- reclassify(10^3 * dNBR(prefire, postfire, is.suncorrected), class.mat)
-  
+
   reclass <- ratify(reclass)
   rat <- levels(reclass)[[1]]
   rat$legend  <- c("NA", "Enhanced Regrowth, High", "Enhanced Regrowth, Low", "Unburned", "Low Severity", "Moderate-low Severity", "Moderate-high Severity", "High Severity")
   levels(reclass) <- rat
-  
+
   return(reclass)
 
 }
@@ -14309,9 +14395,9 @@ ToNBR <- function(landsat8, is.suncorrected = FALSE) {
   # NBR =(ÏNIR âˆ’ÏSWIR2)/(ÏNIR +ÏSWIR2)
   nir <- ToTOAReflectance(landsat8, "nir", is.suncorrected)
   swir2 <- ToTOAReflectance(landsat8, "swir2", is.suncorrected)
-  
+
   nbr <- (nir - swir2) / (nir + swir2)
-  
+
   return(nbr)
 
 }
@@ -14334,9 +14420,9 @@ ToNDVI <- function(landsat8, is.suncorrected = FALSE) {
   # NDVI=(??NIR ?????Red)/(??NIR +??Red)
   nir <- ToTOAReflectance(landsat8, "nir", is.suncorrected)
   red <- ToTOAReflectance(landsat8, "red", is.suncorrected)
-  
+
   ndvi <- (nir - red) / (nir + red)
-  
+
   return(ndvi)
 
 }
@@ -14374,9 +14460,9 @@ function(x, slope, aspect, sunelev, sunazimuth, method="cosine", na.value=NA, GR
 
         METHODS <- c("cosine", "improvedcosine", "minnaert", "minslope", "ccorrection", "gamma", "SCS", "illumination")
         method <- pmatch(method, METHODS)
-        if (is.na(method)) 
+        if (is.na(method))
             stop("invalid method")
-        if (method == -1) 
+        if (method == -1)
             stop("ambiguous method")
 
     if(method == 1){
@@ -14461,7 +14547,7 @@ function(x, slope, aspect, sunelev, sunazimuth, method="cosine", na.value=NA, GR
     }
 
     ## if slope is zero, reflectance does not change
-    if(method != 8) 
+    if(method != 8)
         xout[slope == 0 & !is.na(slope)] <- x[slope == 0 & !is.na(slope)]
 
     ## if x was a SpatialGridDataFrame, return an object of the same class
@@ -14476,7 +14562,7 @@ function(x, slope, aspect, sunelev, sunazimuth, method="cosine", na.value=NA, GR
 }
 
 .calc_IL_vector <- function(slope, aspect, sunzenith, sunazimuth, IL.epsilon) {
-    IL <- cos(slope) * cos(sunzenith) + sin(slope) * sin(sunzenith) * 
+    IL <- cos(slope) * cos(sunzenith) + sin(slope) * sin(sunzenith) *
         cos(sunazimuth - aspect)
     IL[IL == 0] <- IL.epsilon
     return(IL)
@@ -14485,20 +14571,20 @@ function(x, slope, aspect, sunelev, sunazimuth, method="cosine", na.value=NA, GR
 .calc_IL <- function(slope, aspect, sunzenith, sunazimuth, IL.epsilon) {
     overlay(slope, aspect,
             fun=function(slope_vals, aspect_vals) {
-                .calc_IL_vector(slope_vals, aspect_vals, sunzenith, sunazimuth, 
+                .calc_IL_vector(slope_vals, aspect_vals, sunzenith, sunazimuth,
                                IL.epsilon)
             })
 }
 
 #' Topographic correction for satellite imagery
 #'
-#' Perform topographic correction using a number of different methods. This 
-#' code is modified from the code in the \code{landsat} package by Sarah 
-#' Goslee.  This version of the code has been altered from the \code{landsat} 
-#' version to allow the option of using a sample of pixels for calculation of k 
+#' Perform topographic correction using a number of different methods. This
+#' code is modified from the code in the \code{landsat} package by Sarah
+#' Goslee.  This version of the code has been altered from the \code{landsat}
+#' version to allow the option of using a sample of pixels for calculation of k
 #' in the Minnaert correction (useful when dealing with large images).
-#' 
-#' See the help page for \code{topocorr} in the \code{landsat} package for 
+#'
+#' See the help page for \code{topocorr} in the \code{landsat} package for
 #' details on the parameters.
 #'
 #' @export
@@ -14508,28 +14594,28 @@ function(x, slope, aspect, sunelev, sunazimuth, method="cosine", na.value=NA, GR
 #' @param sunelev sun elevation in degrees
 #' @param sunazimuth sun azimuth in degrees
 #' @param method the method to use for the topographic correction:
-#' cosine, improvedcosine, minnaert, minslope, ccorrection, gamma, SCS, or 
+#' cosine, improvedcosine, minnaert, minslope, ccorrection, gamma, SCS, or
 #' illumination
 #' @param na.value the value used to code no data values
-#' @param IL.epsilon a small amount to add to calculated illumination values 
+#' @param IL.epsilon a small amount to add to calculated illumination values
 #' that are equal to zero to avoid division by zero resulting in Inf values
-#' @param sampleindices (optional) row-major indices of sample pixels to use in 
-#' regression models used for some topographic correction methods (like 
+#' @param sampleindices (optional) row-major indices of sample pixels to use in
+#' regression models used for some topographic correction methods (like
 #' Minnaert). Useful when handling very large images. See
 #' \code{\link{gridsample}} for one method of calculating these indices.
-#' @param DN_min minimum allowable pixel value after correction (values less 
+#' @param DN_min minimum allowable pixel value after correction (values less
 #' than \code{DN_min} are set to NA)
-#' @param DN_max maximum allowable pixel value after correction (values less 
+#' @param DN_max maximum allowable pixel value after correction (values less
 #' than \code{DN_max} are set to NA)
 #' @return RasterBrick with two layers: 'slope' and 'aspect'
 #' @author Sarah Goslee and Alex Zvoleff
 #' @references
-#' Sarah Goslee. Analyzing Remote Sensing Data in {R}: The {landsat} Package.  
-#' Journal of Statistical Software, 2011, 43:4, pg 1--25.  
+#' Sarah Goslee. Analyzing Remote Sensing Data in {R}: The {landsat} Package.
+#' Journal of Statistical Software, 2011, 43:4, pg 1--25.
 #' http://www.jstatsoft.org/v43/i04/
 #' @examples
 #' #TODO: add examples
-topocorr_samp <- function(x, slope, aspect, sunelev, sunazimuth, method="cosine", 
+topocorr_samp <- function(x, slope, aspect, sunelev, sunazimuth, method="cosine",
                           na.value=NA, IL.epsilon=0.000001,
                           sampleindices=NULL, DN_min=NULL, DN_max=NULL) {
     # some inputs are in degrees, but we need radians
@@ -14543,18 +14629,18 @@ topocorr_samp <- function(x, slope, aspect, sunelev, sunazimuth, method="cosine"
     IL <- .calc_IL(slope, aspect, sunzenith, sunazimuth, IL.epsilon)
     rm(aspect, sunazimuth)
 
-    if (!is.null(sampleindices) && !(method %in% c('minnaert', 'minslope', 
+    if (!is.null(sampleindices) && !(method %in% c('minnaert', 'minslope',
                                                    'ccorrection'))) {
         warning(paste0('sampleindices are not used when method is "', method,
                        '". Ignoring sampleindices.'))
     }
 
-    METHODS <- c("cosine", "improvedcosine", "minnaert", "minslope", 
+    METHODS <- c("cosine", "improvedcosine", "minnaert", "minslope",
                  "ccorrection", "gamma", "SCS", "illumination")
     method <- pmatch(method, METHODS)
-    if (is.na(method)) 
+    if (is.na(method))
         stop("invalid method")
-    if (method == -1) 
+    if (method == -1)
         stop("ambiguous method")
 
 
@@ -14582,7 +14668,7 @@ topocorr_samp <- function(x, slope, aspect, sunelev, sunazimuth, method="cosine"
                                 x=IL[slope >= targetslope]/cos(sunzenith))
             }
             # IL can be <=0 under certain conditions
-            # but that makes it impossible to take log10 so remove those 
+            # but that makes it impossible to take log10 so remove those
             # elements
             K <- K[!apply(K, 1, function(x)any(is.na(x))),]
             K <- K[K$x > 0, ]
@@ -14608,7 +14694,7 @@ topocorr_samp <- function(x, slope, aspect, sunelev, sunazimuth, method="cosine"
                 K <- data.frame(y=x[slope >= targetslope][sampleindices],
                                 x=IL[slope >= targetslope][sampleindices] / cos(sunzenith))
             } else {
-                K <- data.frame(y=x[slope >= targetslope], 
+                K <- data.frame(y=x[slope >= targetslope],
                                 x=IL[slope >= targetslope]/cos(sunzenith))
             }
             # IL can be <=0 under certain conditions
@@ -14647,7 +14733,7 @@ topocorr_samp <- function(x, slope, aspect, sunelev, sunazimuth, method="cosine"
     }
 
     ## if slope is zero, reflectance does not change
-    if(method != 8) 
+    if(method != 8)
         xout[slope == 0 & !is.na(slope)] <- x[slope == 0 & !is.na(slope)]
 
     if ((!is.null(DN_min)) || (!is.null(DN_max))) {
@@ -14662,67 +14748,67 @@ topocorr_samp <- function(x, slope, aspect, sunelev, sunazimuth, method="cosine"
 
 #' Topographically correct a raster
 #'
-#' Performs topographic correction using code based on \code{topocorr} from the 
-#' \code{landsat} package by Sarah Goslee. The code in this package has been 
-#' modifed from \code{topocorr} to allow using a subsample of the image for 
-#' Minnaert k calculations, and to provide the option of running the 
+#' Performs topographic correction using code based on \code{topocorr} from the
+#' \code{landsat} package by Sarah Goslee. The code in this package has been
+#' modifed from \code{topocorr} to allow using a subsample of the image for
+#' Minnaert k calculations, and to provide the option of running the
 #' topographic correction in parallel using \code{foreach}.
 #'
-#' This function will run in parallel if a parallel backend is registered with 
+#' This function will run in parallel if a parallel backend is registered with
 #' \code{\link{foreach}}.
 #'
 #' @export
 #' @import foreach
 #' @param x an image to correct
-#' @param slopeaspect a \code{RasterBrick} or \code{RasterStack} with two 
-#' layers.  The first layer should be the slope, the second layer should be 
-#' the aspect. The slope and aspect are defined as in \code{terrain} in the 
+#' @param slopeaspect a \code{RasterBrick} or \code{RasterStack} with two
+#' layers.  The first layer should be the slope, the second layer should be
+#' the aspect. The slope and aspect are defined as in \code{terrain} in the
 #' \code{raster} package, and both should be in radians.
 #' @param sunelev sun elevation in degrees
 #' @param sunazimuth sun azimuth in degrees
-#' @param method the topographic correction method to use. See the help for 
+#' @param method the topographic correction method to use. See the help for
 #' \code{topocorr} for more guidance on this.
-#' @param sampleindices (optional) row-major indices of sample pixels to use in 
-#' regression models used for some topographic correction methods (like 
+#' @param sampleindices (optional) row-major indices of sample pixels to use in
+#' regression models used for some topographic correction methods (like
 #' Minnaert). Useful when handling very large images. See
 #' \code{\link{gridsample}} for one method of calculating these indices.
-#' @param scale_factor factor by which to multiply results. Useful if rounding 
+#' @param scale_factor factor by which to multiply results. Useful if rounding
 #' results to integers (see \code{asinteger} argument).
-#' @param asinteger whether to round results to nearest integer. Can be used to 
+#' @param asinteger whether to round results to nearest integer. Can be used to
 #' save space by saving results as, for example, an 'INT2S' \code{raster}.
-#' @param DN_min minimum allowable pixel value after correction (values less 
+#' @param DN_min minimum allowable pixel value after correction (values less
 #' than \code{DN_min} are set to NA)
-#' @param DN_max maximum allowable pixel value after correction (values less 
+#' @param DN_max maximum allowable pixel value after correction (values less
 #' than \code{DN_max} are set to NA)
-#' @param ... additional arguments to pass to \code{minnaert_samp} or 
+#' @param ... additional arguments to pass to \code{minnaert_samp} or
 #' \code{topocorr_samp}, depending on chosen topographic correction method
-#' @return The topographically corrected image as a \code{RasterLayer} or 
+#' @return The topographically corrected image as a \code{RasterLayer} or
 #' \code{RasterStack}
 #' @references
-#' Sarah Goslee. Analyzing Remote Sensing Data in {R}: The {landsat} Package.  
-#' Journal of Statistical Software, 2011, 43:4, pg 1--25.  
+#' Sarah Goslee. Analyzing Remote Sensing Data in {R}: The {landsat} Package.
+#' Journal of Statistical Software, 2011, 43:4, pg 1--25.
 #' http://www.jstatsoft.org/v43/i04/
 #' @examples
 #' \dontrun{
 #' # Mosaic the two ASTER DEM tiles needed to a Landsat image
 #' DEM_mosaic <- mosaic(ASTER_V002_EAST, ASTER_V002_WEST, fun='mean')
-#' 
+#'
 #' # Crop and extend the DEM mosaic to match the Landsat image
 #' matched_DEM <- match_rasters(L5TSR_1986, DEM_mosaic)
 #' slopeaspect <- terrain(matched_DEM, opt=c('slope', 'aspect')
-#' 
+#'
 #' # Apply the topographic correction
 #' sunelev <- 90 - 44.97 # From metadata file
 #' sunazimuth <- 124.37 # From metadata file
-#' L5TSR_1986_topocorr <- topographic_corr(L5TSR_1986, slopeaspect, sunelev, 
+#' L5TSR_1986_topocorr <- topographic_corr(L5TSR_1986, slopeaspect, sunelev,
 #'                                         sunazimuth, method='minslope')
-#' 
+#'
 #' plotRGB(L5TSR_1986, stretch='lin', r=3, g=2, b=1)
 #' plotRGB(L5TSR_1986_topocorr, stretch='lin', r=3, g=2, b=1)
 #' }
-topographic_corr <- function(x, slopeaspect, sunelev, sunazimuth, 
-                             method='minnaert_full', sampleindices=NULL, 
-                             scale_factor=1, asinteger=FALSE, DN_min=NULL, 
+topographic_corr <- function(x, slopeaspect, sunelev, sunazimuth,
+                             method='minnaert_full', sampleindices=NULL,
+                             scale_factor=1, asinteger=FALSE, DN_min=NULL,
                              DN_max=NULL, ...) {
     if (!(class(x) %in% c('RasterLayer', 'RasterStack', 'RasterBrick'))) {
         stop('x must be a Raster* object')
@@ -14740,20 +14826,20 @@ topographic_corr <- function(x, slopeaspect, sunelev, sunazimuth,
     was_rasterlayer <- class(x) == "RasterLayer"
     # Convert x to stack so foreach will run
     x <- stack(x)
-    corr_img <- foreach(uncorr_layer=unstack(x), .combine='addLayer', 
-                        .multicombine=TRUE, .init=raster(), 
+    corr_img <- foreach(uncorr_layer=unstack(x), .combine='addLayer',
+                        .multicombine=TRUE, .init=raster(),
                         .packages=c('teamlucc', 'rgdal')) %dopar% {
         if (method == 'minnaert_full') {
-            minnaert_data <- minnaert_samp(uncorr_layer, slope, aspect, 
-                                           sunelev=sunelev, 
-                                           sunazimuth=sunazimuth, 
-                                           sampleindices=sampleindices, 
+            minnaert_data <- minnaert_samp(uncorr_layer, slope, aspect,
+                                           sunelev=sunelev,
+                                           sunazimuth=sunazimuth,
+                                           sampleindices=sampleindices,
                                            DN_min=DN_min, DN_max=DN_max, ...)
             corr_layer <- minnaert_data$minnaert
         } else {
-            corr_layer <- topocorr_samp(uncorr_layer, slope, aspect, 
-                                        sunelev=sunelev, sunazimuth=sunazimuth, 
-                                        method=method, 
+            corr_layer <- topocorr_samp(uncorr_layer, slope, aspect,
+                                        sunelev=sunelev, sunazimuth=sunazimuth,
+                                        method=method,
                                         sampleindices=sampleindices,
                                         DN_min=DN_min, DN_max=DN_max, ...)
         }
@@ -14768,11 +14854,11 @@ topographic_corr <- function(x, slopeaspect, sunelev, sunazimuth,
     }
     return(corr_img)
 }
-#' creates a raster with the TOA radiance 
+#' creates a raster with the TOA radiance
 #' @description Creates a raster with the TOA radiance
 #'
 #' @param landsat8 list returned by rLandsat8::ReadLandsat8
-#' @param band Landsat 11 bandname (one of "aerosol", "blue", "green", "red", "nir", "swir1", "swir2", "panchromatic", "cirrus", "tirs1", "tirs2" 
+#' @param band Landsat 11 bandname (one of "aerosol", "blue", "green", "red", "nir", "swir1", "swir2", "panchromatic", "cirrus", "tirs1", "tirs2"
 #' @return TOA Radiance raster
 #' @examples \dontrun{
 #' ls8 <- ReadLandsat8("LC81880342014174LGN00")
@@ -14789,23 +14875,23 @@ ToTOARadiance <- function(landsat8, band) {
   "panchromatic",
   "cirrus",
   "tirs1", "tirs2")
-  
+
   allowedbands <- bandnames
-  
+
   if (!band %in% allowedbands)
   {
        stop(paste(band, "band not allowed"))
   }
-  
+
   idx <- seq_along(bandnames)[sapply(bandnames, function(x) band %in% x)]
 
   ml <- as.numeric(landsat8$metadata[[paste0("radiance_mult_band_",idx)]])
   al <- as.numeric(landsat8$metadata[[paste0("radiance_add_band_",idx)]])
-  
+
   TOArad <- landsat8$band[[band]] * ml + al
-  
+
   return(TOArad)
-  
+
 }
 #' creates a raster with the TOA reflectance
 #' @description Creates a raster with the TOA reflectance
@@ -14829,45 +14915,45 @@ ToTOAReflectance <- function(landsat8, band, is.suncorrected = FALSE) {
   "panchromatic",
   "cirrus",
   "tirs1", "tirs2")
-  
+
   allowedbands <- c("aerosol", "blue", "green", "red",
   "nir", "swir1", "swir2",
   "panchromatic",
   "cirrus")
-  
+
   if (!band %in% allowedbands)
   {
        stop(paste(band, "band not allowed"))
   }
-  
+
   idx <- seq_along(bandnames)[sapply(bandnames, function(x) band %in% x)]
 
   ml <- as.numeric(landsat8$metadata[[paste0("reflectance_mult_band_",idx)]])
   al <- as.numeric(landsat8$metadata[[paste0("reflectance_add_band_",idx)]])
-  
+
   # sun_elevation is in degree, need to convert into radians
   sun.correction.factor <- 1
   if(is.suncorrected)
        sun.correction.factor <- sin(as.numeric(landsat8$metadata$sun_elevation) * pi /180)
 
   TOAref <- (landsat8$band[[band]] * ml + al)/sun.correction.factor
-  
+
   return(TOAref)
 
-  
+
 }
 #' Function to convert TIMESAT .tpa binary format file to an R dataframe.
 #'
 #' @export
-#' @param x A string giving the location of a .tpa file output by 
+#' @param x A string giving the location of a .tpa file output by
 #' TIMESAT
-#' @param max_num_seasons the maximum number of seasons for any of the pixels 
+#' @param max_num_seasons the maximum number of seasons for any of the pixels
 #' in the file
-#' @return A data.frame containing 14 columns: row, col, season, start, end, 
-#' length, base_value, peak_time, peak_value, amp, left_deriv, right_deriv, 
+#' @return A data.frame containing 14 columns: row, col, season, start, end,
+#' length, base_value, peak_time, peak_value, amp, left_deriv, right_deriv,
 #' large_integ, and small_integ
 #' @examples
-#' # TODO: Need to add examples here, and need to include a sample TIMESAT tpa 
+#' # TODO: Need to add examples here, and need to include a sample TIMESAT tpa
 #' # file in the package data.
 tpa2df <- function(x, max_num_seasons) {
     if (missing(x) || !grepl('[.]tpa$', tolower(x))) {
@@ -14880,7 +14966,7 @@ tpa2df <- function(x, max_num_seasons) {
     # The number of seasonal indicators output by TIMESAT.
     NUM_SEASONAL_INDICATORS <- 11
 
-    # Number of elements in the tpa file line header (which are normally: row, 
+    # Number of elements in the tpa file line header (which are normally: row,
     # column, number of seasons).
     LINE_HEADER_SIZE <- 3
 
@@ -14888,7 +14974,7 @@ tpa2df <- function(x, max_num_seasons) {
     raw_vector <- readBin(tpa_file_obj, n=file.info(x)$size, raw())
     close(tpa_file_obj)
 
-    # This function is used to track the offset within the binary vector as readBin 
+    # This function is used to track the offset within the binary vector as readBin
     # does not track position except for file objects
     offset <- 1
     raw_vec_length <- length(raw_vector)
@@ -14922,7 +15008,7 @@ tpa2df <- function(x, max_num_seasons) {
         num_seasons <- line_header[3]
         if (num_seasons > max_num_seasons) {
             stop(paste('pixel', pixelnum, 'has', num_seasons,
-                       'seasons, but max_num_seasons was set to ', max_num_seasons, 
+                       'seasons, but max_num_seasons was set to ', max_num_seasons,
                        'seasons'))
         }
         if (num_seasons == 0) {
@@ -14932,9 +15018,9 @@ tpa2df <- function(x, max_num_seasons) {
         for (seasonnum in 1:max_num_seasons) {
             # Seasons were found for this pixel - read them
             tpa_data_row <- (pixelnum - 1)*num_seasons + seasonnum
-            line_data <- offset_readBin(raw_vector, numeric(), 
+            line_data <- offset_readBin(raw_vector, numeric(),
                                         n=NUM_SEASONAL_INDICATORS, size=4)
-            tpa_data[tpa_data_row, ] <- c(line_header[1], line_header[2], 
+            tpa_data[tpa_data_row, ] <- c(line_header[1], line_header[2],
                                           seasonnum, line_data)
         }
     }
@@ -14946,19 +15032,19 @@ tpa2df <- function(x, max_num_seasons) {
                          "right_deriv", "large_integ", "small_integ")
     return(tpa_data)
 }
-#' Function to convert TIMESAT .tpa data.frame to an R raster. 
+#' Function to convert TIMESAT .tpa data.frame to an R raster.
 #'
 #' @export
 #' @param x A TPA data.frame as output by tpa2df
-#' @param base_image A string giving the location of a raster file to use 
-#' for georeferencing the output raster. Use one of the original raster files 
+#' @param base_image A string giving the location of a raster file to use
+#' for georeferencing the output raster. Use one of the original raster files
 #' that was input to TIMESAT.
-#' @param variable A string giving the variable name to write to a raster.  Can 
-#' be one of: start, end, length, base_value, peak_time, peak_value, amp, 
+#' @param variable A string giving the variable name to write to a raster.  Can
+#' be one of: start, end, length, base_value, peak_time, peak_value, amp,
 #' left_deriv, right_deriv, large_integ, and small_integ.
 #' @return A raster object
 #' @examples
-#' # TODO: Need to add examples here, and need to include a sample TIMESAT tpa 
+#' # TODO: Need to add examples here, and need to include a sample TIMESAT tpa
 #' # file in the package data.
 tpadf2raster <- function(x, base_image, variable) {
     if (missing(x) || !is.data.frame(x)) {
@@ -14979,7 +15065,7 @@ tpadf2raster <- function(x, base_image, variable) {
     for (season in sort(unique(x$season))) {
         season_data <- x[x$season == season, ]
         data_matrix <- matrix(NA, nrow(base_image), ncol(base_image))
-        vector_indices <- (nrow(data_matrix) * season_data$col) - 
+        vector_indices <- (nrow(data_matrix) * season_data$col) -
             (nrow(data_matrix) - season_data$row)
         data_matrix[vector_indices] <- season_data[, var_col]
         out_raster <- raster(data_matrix, template=base_image)
@@ -14992,26 +15078,26 @@ tpadf2raster <- function(x, base_image, variable) {
 }
 #' A class for tracking running time of individual sections of an R script
 #' @slot timers a \code{data.frame} tracking timer names and start times
-#' @slot notify function to use for outputting timers (defaults to 
+#' @slot notify function to use for outputting timers (defaults to
 #' \code{\link{print}}
 #' @import methods
 #' @importFrom lubridate now
 #' @export Track_time
 #' @name Track_time-class
 setClass('Track_time', slots=c(timers='data.frame', notify="function"),
-    prototype=list(timers=data.frame(label='Default', starttime=now()), 
+    prototype=list(timers=data.frame(label='Default', starttime=now()),
                    notify=print)
 )
 
 #' Instantiate a new Track_time object
 #'
-#' Creates a new Track_time object for use in tracking and printing status the 
+#' Creates a new Track_time object for use in tracking and printing status the
 #' running time of processes in an R script.
 #'
 #' @export Track_time
 #' @import methods
 #' @importFrom lubridate now
-#' @param notify a function to handle the string output from Track_time.  This 
+#' @param notify a function to handle the string output from Track_time.  This
 #' function should accept a string as an argument. Default is the
 #' \code{\link{print}} function.
 #' @return Track_time object
@@ -15040,7 +15126,7 @@ print.Track_time <- function(x, label, ...) {
         if (!(label %in% timers$label)) {
             stop(paste0('"', label, '"', ' timer not defined'))
         } else {
-            timers <- timers[timers$label == label, ] 
+            timers <- timers[timers$label == label, ]
         }
     }
     for (n in 1:nrow(timers)) {
@@ -15069,7 +15155,7 @@ setMethod("show", signature(object="Track_time"), function(object) print(object)
 
 #' Start a tracking timer
 #'
-#' The \code{label} is optional. If not supplied the default timer (labelled 
+#' The \code{label} is optional. If not supplied the default timer (labelled
 #' "Default") will be used.
 #'
 #' @export start_timer
@@ -15114,7 +15200,7 @@ setMethod("start_timer", signature(x="Track_time", label="character"),
         # Never delete the default timer. Only reset it.
         x@timers$starttime[x@timers$label == 'Default'] <- now()
     } else {
-        x@timers <- x@timers[x@timers$label != label, ] 
+        x@timers <- x@timers[x@timers$label != label, ]
     }
     x@notify(paste0(now(), ': finished "', label, '" (', round(elapsed, 3),' elapsed)'))
     return(x)
@@ -15122,7 +15208,7 @@ setMethod("start_timer", signature(x="Track_time", label="character"),
 
 #' Stop a tracking timer
 #'
-#' The \code{label} is optional. If not supplied, the default timer, labelled 
+#' The \code{label} is optional. If not supplied, the default timer, labelled
 #' 'Default' will be used.
 #'
 #' @export stop_timer
@@ -15158,14 +15244,14 @@ setMethod("stop_timer", signature(x="Track_time", label="character"),
 )
 #' Train a random forest or SVM classifier
 #'
-#' This function trains a Support Vector Machine (SVM) or Random Forest (RF) 
+#' This function trains a Support Vector Machine (SVM) or Random Forest (RF)
 #' classifier for use in an image classification.
 #'
-#' For \code{type='svm'}, \code{tunegrid} must be a \code{data.frame} with two 
-#' columns: ".sigma" and ".C". For \code{type='rf'}, must be a 
+#' For \code{type='svm'}, \code{tunegrid} must be a \code{data.frame} with two
+#' columns: ".sigma" and ".C". For \code{type='rf'}, must be a
 #' \code{data.frame} with one column: '.mtry'.
 #'
-#' This function will run in parallel if a parallel backend is registered with 
+#' This function will run in parallel if a parallel backend is registered with
 #' \code{\link{foreach}}.
 #'
 #' @export
@@ -15173,31 +15259,31 @@ setMethod("stop_timer", signature(x="Track_time", label="character"),
 #' @param train_data a \code{link{pixel_data}} object
 #' @param type either "svm" (to fit a support vector machine) or "rf" (to fit a
 #' random forest).
-#' @param use_training_flag indicates whether to exclude data flagged as 
-#' testing data when training the classifier. For this to work the input 
-#' train_data \code{data.frame} must have a column named 'training_flag' that 
-#' indicates, for each pixel, whether that pixel is a training pixel (coded as 
+#' @param use_training_flag indicates whether to exclude data flagged as
+#' testing data when training the classifier. For this to work the input
+#' train_data \code{data.frame} must have a column named 'training_flag' that
+#' indicates, for each pixel, whether that pixel is a training pixel (coded as
 #' TRUE) or testing pixel (coded as FALSE).
-#' @param train_control default is NULL (reasonable values will be set 
+#' @param train_control default is NULL (reasonable values will be set
 #' automatically).  For details see \code{\link{trainControl}}.
-#' @param tune_grid the training grid to be used for training the classifier.  
+#' @param tune_grid the training grid to be used for training the classifier.
 #' See Details.
-#' @param use_rfe whether to use Recursive Feature Extraction (RFE) as 
-#' implemented in the \code{caret} package to select a subset of the input 
+#' @param use_rfe whether to use Recursive Feature Extraction (RFE) as
+#' implemented in the \code{caret} package to select a subset of the input
 #' features to be used in the classification. NOT YET SUPPORTED.
-#' @param factors a list of character vector giving the names of predictors 
-#' (layer names from the images used to build \code{train_data}) that should be 
-#' treated as factors, and specifying the levels of each factor. For example, 
+#' @param factors a list of character vector giving the names of predictors
+#' (layer names from the images used to build \code{train_data}) that should be
+#' treated as factors, and specifying the levels of each factor. For example,
 #' \code{factors=list(year=c(1990, 1995, 2000, 2005, 2010))}.
-#' @param ... additional arguments (such as \code{ntree} for random forest 
+#' @param ... additional arguments (such as \code{ntree} for random forest
 #' classifier) to pass to \code{train}
-#' @return a trained model (as a \code{train} object from the \code{caret} 
+#' @return a trained model (as a \code{train} object from the \code{caret}
 #' package)
 #' @examples
-#' train_data <- get_pixels(L5TSR_1986, L5TSR_1986_2001_training, "class_1986", 
+#' train_data <- get_pixels(L5TSR_1986, L5TSR_1986_2001_training, "class_1986",
 #'                          training=.6)
 #' model <- train_classifier(train_data)
-train_classifier <- function(train_data, type='rf', use_training_flag=TRUE, 
+train_classifier <- function(train_data, type='rf', use_training_flag=TRUE,
                              train_control=NULL, tune_grid=NULL,
                              use_rfe=FALSE, factors=list(), ...) {
     stopifnot(type %in% c('svm', 'rf'))
@@ -15209,17 +15295,17 @@ train_classifier <- function(train_data, type='rf', use_training_flag=TRUE,
     stopifnot(length(unique(names(factors))) == length(factors))
     for (factor_var in names(factors)) {
         pred_index <- which(predictor_names == factor_var)
-        train_data@x[, pred_index] <- factor(train_data@x[, pred_index], 
+        train_data@x[, pred_index] <- factor(train_data@x[, pred_index],
                                              levels=factors[[factor_var]])
     }
 
-    # Build the formula, excluding the training flag column (if it exists) from 
+    # Build the formula, excluding the training flag column (if it exists) from
     # the model formula
     model_formula <- formula(paste('y ~', paste(predictor_names, collapse=' + ')))
 
     if (use_rfe) {
         stop('recursive feature extraction not yet supported')
-        # This recursive feature elimination procedure follows Algorithm 19.5 
+        # This recursive feature elimination procedure follows Algorithm 19.5
         # in Kuhn and Johnson 2013
         svmFuncs <- caretFuncs
         # First center and scale
@@ -15278,19 +15364,19 @@ train_classifier <- function(train_data, type='rf', use_training_flag=TRUE,
 #'
 #' @export
 #' @param x A .tts file output by TIMESAT
-#' @return A data.frame containing 'row' and 'col' columns giving the the row 
-#' and column of a pixel in the input image to timesat, and then a number of 
-#' columns named 't1', 't2', ...'tn', where n is the total number of image 
+#' @return A data.frame containing 'row' and 'col' columns giving the the row
+#' and column of a pixel in the input image to timesat, and then a number of
+#' columns named 't1', 't2', ...'tn', where n is the total number of image
 #' dates input to TIMESAT.
 #' @examples
-#' # TODO: Need to add examples here, and need to include a sample TIMESAT tts 
+#' # TODO: Need to add examples here, and need to include a sample TIMESAT tts
 #' # file in the package data.
 tts2df <- function(x) {
     if (missing(x) || !grepl('[.]tts$', tolower(x))) {
         stop('must specify a .tts file')
     }
 
-    # Number of elements in the tts file line header (which are normally: row, 
+    # Number of elements in the tts file line header (which are normally: row,
     # column).
     LINE_HEADER_SIZE <- 2
 
@@ -15298,7 +15384,7 @@ tts2df <- function(x) {
     raw_vector <- readBin(tts_file_obj, n=file.info(x)$size, raw())
     close(tts_file_obj)
 
-    # This function is used to track the offset within the binary vector as readBin 
+    # This function is used to track the offset within the binary vector as readBin
     # does not track position except for file objects
     offset <- 1
     raw_vec_length <- length(raw_vector)
@@ -15325,9 +15411,9 @@ tts2df <- function(x) {
     for (pixelnum in 1:num_pixels) {
         line_header <- offset_readBin(raw_vector, integer(), n=2, size=4)
         # Line header format is: rownum colnum
-        tts_data[pixelnum, ] <- c(line_header[1], line_header[2], 
-                                  offset_readBin(raw_vector, numeric(), 
-                                                 n=n_pts_per_year*num_years, 
+        tts_data[pixelnum, ] <- c(line_header[1], line_header[2],
+                                  offset_readBin(raw_vector, numeric(),
+                                                 n=n_pts_per_year*num_years,
                                                  size=4))
     }
     tts_data <- data.frame(tts_data)
@@ -15340,12 +15426,12 @@ tts2df <- function(x) {
 #'
 #' @export
 #' @param x A TTS data.frame as output by tts2df
-#' @param base_image A string giving the location of a raster file to use 
-#' for georeferencing the output raster. Use one of the original raster files 
+#' @param base_image A string giving the location of a raster file to use
+#' for georeferencing the output raster. Use one of the original raster files
 #' that was input to TIMESAT.
 #' @return A raster object
 #' @examples
-#' # TODO: Need to add examples here, and need to include a sample TIMESAT tpa 
+#' # TODO: Need to add examples here, and need to include a sample TIMESAT tpa
 #' # file in the package data.
 ttsdf2raster <- function(x, base_image) {
     if (missing(x) || !is.data.frame(x)) {
@@ -15362,7 +15448,7 @@ ttsdf2raster <- function(x, base_image) {
     for (t_col in t_cols) {
         this_time_data <- x[, t_col]
         data_matrix <- matrix(NA, nrow(base_image), ncol(base_image))
-        vector_indices <- (nrow(data_matrix) * x$col) - 
+        vector_indices <- (nrow(data_matrix) * x$col) -
             (nrow(data_matrix) - x$row)
         data_matrix[vector_indices] <- this_time_data
         out_raster <- raster(data_matrix, template=base_image)
@@ -15375,13 +15461,13 @@ ttsdf2raster <- function(x, base_image) {
 }
 #' Convert Landsat CDR images from HDF4 to GeoTIFF format
 #'
-#' This function converts a Landsat surface reflectance (SR) image from the 
-#' Landsat Climate Data Record (CDR) archive into a series of single band 
+#' This function converts a Landsat surface reflectance (SR) image from the
+#' Landsat Climate Data Record (CDR) archive into a series of single band
 #' images in GeoTIFF format.
 #'
-#' This function uses \code{gdalUtils}, which requires a local GDAL 
-#' installation.  See http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries 
-#' or http://trac.osgeo.org/osgeo4w/ to download the appropriate installer for 
+#' This function uses \code{gdalUtils}, which requires a local GDAL
+#' installation.  See http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries
+#' or http://trac.osgeo.org/osgeo4w/ to download the appropriate installer for
 #' your operating system.
 #'
 #'
@@ -15397,13 +15483,13 @@ ttsdf2raster <- function(x, base_image) {
 #' \dontrun{
 #' # Unstack files downloaded from CDR:
 #' unstack_ledapscdr('lndsr.LT50150531986021XXX03.hdf')
-#' 
-#' # Unstack files downloaded from CDR, overwriting any existing files, and 
+#'
+#' # Unstack files downloaded from CDR, overwriting any existing files, and
 #' # deleting original HDF files after unstacking:
-#' unstack_ledapscdr('lndsr.LT50150531986021XXX03.hdf', overwrite=TRUE, 
+#' unstack_ledapscdr('lndsr.LT50150531986021XXX03.hdf', overwrite=TRUE,
 #'                   rmhdf=TRUE)
 #' }
-unstack_ledapscdr <- function(x, output_folder=NULL, overwrite=FALSE, 
+unstack_ledapscdr <- function(x, output_folder=NULL, overwrite=FALSE,
                               rmhdf=FALSE) {
     if (is.null(output_folder)) {
         output_folder <- dirname(x)
@@ -15428,28 +15514,28 @@ unstack_ledapscdr <- function(x, output_folder=NULL, overwrite=FALSE,
         if (file.exists(this_out)) {
             if (overwrite) {
                 unlink(this_out)
-                if (file.exists(extension(this_out, 'hdr'))) 
+                if (file.exists(extension(this_out, 'hdr')))
                     unlink(extension(this_out, 'hdr'))
-                if (file.exists(extension(this_out, 'tif.aux.xml'))) 
+                if (file.exists(extension(this_out, 'tif.aux.xml')))
                     unlink(extension(this_out, 'tif.aux.xml'))
-                if (file.exists(extension(this_out, 'tif.enp'))) 
+                if (file.exists(extension(this_out, 'tif.enp')))
                     unlink(extension(this_out, 'tif.enp'))
             } else {
                 warning(paste(this_out, 'already exists - skipping file'))
                 next
             }
         }
-        out_rast <- gdal_translate(x, of="GTiff", sd_index=n, this_out, 
+        out_rast <- gdal_translate(x, of="GTiff", sd_index=n, this_out,
                                    outRaster=TRUE)
     }
     if (rmhdf) {
-        if (file.exists(extension(x, 'hdf'))) 
+        if (file.exists(extension(x, 'hdf')))
             unlink(extension(x, 'hdf'))
-        if (file.exists(extension(x, 'hdr'))) 
+        if (file.exists(extension(x, 'hdr')))
             unlink(extension(x, 'hdr'))
         if (file.exists(paste0(file_path_sans_ext(x), '.hdf.hdr')))
             unlink(paste0(file_path_sans_ext(x), '.hdf.hdr'))
-        if (file.exists(extension(x, 'txt'))) 
+        if (file.exists(extension(x, 'txt')))
             unlink(extension(x, 'txt'))
     }
 }
@@ -15496,7 +15582,7 @@ f.VegIndex <- function(x = x, index = 'ndvi'){
   } else if(index == 2){
     out.ind <- (x[[5]]-x[[6]])/(x[[5]]+x[[6]])
   } else if(index == 3){
-    out.ind <- (x[[5]]-x[[7]])/(x[[5]]+x[[7]])      
+    out.ind <- (x[[5]]-x[[7]])/(x[[5]]+x[[7]])
   }
   out.ind
 }
@@ -15542,7 +15628,7 @@ stk30_01_2014 <-  reclassify(stk30_01_2014, cbind(NA, NA, -99))
 # PCA on Bands 1:6 and retain first 3 Components with > 99% expl var ---------------
 f.Pca <- function(x=x, cor = F){
   xdf <- as.data.frame(x)
-  pca1 <-  princomp(xdf, cor=cor) 
+  pca1 <-  princomp(xdf, cor=cor)
   pcastk <- stack()
   for(i in 1:3){
     pcax <- matrix(pca1$scores[ ,i], nrow = nrow(x), ncol = ncol(x),
@@ -15601,22 +15687,22 @@ writeRaster(ngkmeanspca20140214, file.path(dir.work, dir.landsat, dir.rst,
                                            paste0('ngkmeans20140214ae_', num.clss,'.rst')),
             datatype = 'FLT4S', format = 'RST',
             overwrite = TRUE, NAflag = -9999)
-            
+
 #' Given a spatial object, calculate the UTM zone of the centroid
 #'
-#' For a line or polygon, the UTM zone of the centroid is given, after 
+#' For a line or polygon, the UTM zone of the centroid is given, after
 #' reprojecting the object into WGS-84.
 #'
 #' Based on the code on gis.stackexchange.com at http://bit.ly/17SdcuN.
 #'
 #' @export utm_zone
 #' @import methods
-#' @param x a longitude (with western hemisphere longitudes negative), or a 
+#' @param x a longitude (with western hemisphere longitudes negative), or a
 #' \code{Spatial} object
-#' @param y a latitude (with southern hemisphere latitudes negative), or 
+#' @param y a latitude (with southern hemisphere latitudes negative), or
 #' missing (if x is a \code{Spatial} object)
-#' @param proj4string if FALSE (default) return the UTM zone as a string (for 
-#' example "34S" for UTM Zone 34 South). If TRUE, return a proj4string using 
+#' @param proj4string if FALSE (default) return the UTM zone as a string (for
+#' example "34S" for UTM Zone 34 South). If TRUE, return a proj4string using
 #' the EPSG code as an initialization string.
 #' @examples
 #' utm_zone(45, 10)
@@ -15689,9 +15775,9 @@ setMethod("utm_zone", signature(x='Spatial', y='missing'),
     }
 )
 #' Polygon outlining TEAM site in CaxiuanÃ£, Brazil
-#' 
-#' Contains a SpatialPolygonsDataFrame with a simplified polygon of the area 
-#' within the Tropical Ecology Assessment and Monitoring (TEAM) network site in 
+#'
+#' Contains a SpatialPolygonsDataFrame with a simplified polygon of the area
+#' within the Tropical Ecology Assessment and Monitoring (TEAM) network site in
 #' CaxiuanÃ£, Brazil.
 #'
 #' @encoding UTF-8
@@ -15699,7 +15785,7 @@ setMethod("utm_zone", signature(x='Spatial', y='missing'),
 #' @name test_poly
 NULL
 .onLoad <- function(libname, pkgname) {
-    load(system.file("data", "wrs1_asc_desc.RData", package="wrspathrowData"), 
+    load(system.file("data", "wrs1_asc_desc.RData", package="wrspathrowData"),
          envir=parent.env(environment()))
     load(system.file("data", "wrs2_asc_desc.RData", package="wrspathrowData"),
          envir=parent.env(environment()))
