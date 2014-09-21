@@ -502,7 +502,7 @@ rs.todown(worklist, dir.tar, "todown")
                   print(pict)
                   dev.off()
           }
-  }
+  }r
 
 #+END_SRC
 **** Demo
