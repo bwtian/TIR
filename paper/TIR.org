@@ -493,10 +493,9 @@ rs.todown(worklist, dir.tar, "todown")
 *** Plot Raster
 **** Code
 #+BEGIN_SRC R :tangle ../R/rs.tif2png.R
-
-  rs.tif2png <- function(inRaster){
+   rs.tif2png <- function(inRaster){
           for (i in inRaster) {
-                  outName <- gsub("\\.tif","\\.tif.png" , outfile)
+                  outName <- gsub("\\.tif", "\\.tif.png", i)
                   pict <- sp::spplot(i, col.regions = rainbow(200, start = 2/6, end = 1))
                   png(filename = outName)
                   print(pict)
@@ -506,7 +505,10 @@ rs.todown(worklist, dir.tar, "todown")
 
 #+END_SRC
 **** Demo
-#+BEGIN_SRC R 
+#+BEGIN_SRC R :tangle ../demo/rs15_tif2png.R
+source("~/SparkleShare/Rprofile/R/sourceDir.R")
+sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
+sourceDir("~/SparkleShare/TIR/R/")
 inRaster <- list.files("~/Share500sda/Landsat8", pattern = ".tif$", recursive = TRUE)
 rs.tif2png(inRaster)
 #+END_SRC
