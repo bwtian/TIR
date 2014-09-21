@@ -70,7 +70,7 @@ TIR(idList) Object: 1 click get all results from a list
   }
 #+END_SRC
 
-** DONE rs.untar untar file in the list to sceneDir
+** DONE rs.untar:: untar file in the list to sceneDir
 - State "DONE"       from "DEMO"       [2014-09-18 Thu 14:50]
 - State "DEMO"       from "CODE"       [2014-09-18 Thu 14:22]
 - State "DONE"       from "DOING"      [2014-09-16 Tue 15:26]
@@ -121,7 +121,7 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 }
 #+END_EXAMPLE
 
-** DONE rs.todown data need to download from list
+** DONE rs.todown:: data need to download from list
 - State "DONE"       from "DEMO"       [2014-09-18 Thu 14:56]
 - State "DEMO"       from "CODE"       [2014-09-18 Thu 14:21]
 - State "CODE"       from ""           [2014-09-18 Thu 14:21]
