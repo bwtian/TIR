@@ -490,7 +490,31 @@ rs.todown(worklist, dir.tar, "todown")
 
 **
 ** At Surface
+*** Plot Raster
+**** Code
+#+BEGIN_SRC R :tangle ../R/rs.tif2png.R
+
+  rs.tif2png <- function(inRaster){
+          for (i in inRaster) {
+                  outName <- gsub("\\.tif","\\.tif.png" , outfile)
+                  pict <- sp::spplot(i, col.regions = rainbow(200, start = 2/6, end = 1))
+                  png(filename = outName)
+                  print(pict)
+                  dev.off()
+          }
+  }
+
+#+END_SRC
+**** Demo
+#+BEGIN_SRC R 
+inRaster <- list.files("~/Share500sda/Landsat8", pattern = ".tif$", recursive = TRUE)
+rs.tif2png(inRaster)
+#+END_SRC
 *** Project Raster
+#+BEGIN_SRC R
+
+
+#+END_SRC
 *** Mosaic
 *** 
 * Man 
