@@ -548,11 +548,11 @@ rs.todown(worklist, dir.tar, "todown")
                   print(pict)
                   dev.off()
           }
-  }r
+  }
 
 #+END_SRC
 **** Demo
-#+BEGIN_SRC R :tangle ../demo/rs15_tif2png.R
++BEGIN_SRC R :tangle ../demo/rs15_tif2png.R
 source("~/SparkleShare/Rprofile/R/sourceDir.R")
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
 sourceDir("~/SparkleShare/TIR/R/")
