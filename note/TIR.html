@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>TIR</title>
-<!-- 2014-09-24 Wed 22:37 -->
+<!-- 2014-09-24 Wed 23:15 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="tian" />
@@ -175,7 +175,7 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#sec-3-3">3.3. At Surface</a>
 <ul>
-<li><a href="#sec-3-3-1">3.3.1. Plot Raster</a></li>
+<li><a href="#sec-3-3-1">3.3.1. Plot Raster tif2png</a></li>
 <li><a href="#sec-3-3-2">3.3.2. Project Raster</a></li>
 <li><a href="#sec-3-3-3">3.3.3. Mosaic</a></li>
 <li><a href="#sec-3-3-4">3.3.4. </a></li>
@@ -996,35 +996,96 @@ sceneList <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347
 <h3 id="sec-3-3"><span class="section-number-3">3.3</span> At Surface</h3>
 <div class="outline-text-3" id="text-3-3">
 </div><div id="outline-container-sec-3-3-1" class="outline-4">
-<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Plot Raster</h4>
+<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Plot Raster tif2png</h4>
 <div class="outline-text-4" id="text-3-3-1">
-</div><ol class="org-ol"><li>Code<br  /><div class="outline-text-5" id="text-3-3-1-1">
+</div><ol class="org-ol"><li>Examples<br  /><div class="outline-text-5" id="text-3-3-1-1">
 <div class="org-src-container">
 
-<pre class="src src-R"> <span style="color: #ff6347;">rs.tif2png</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>inRaster<span style="color: #20b2aa;">){</span>
-        <span style="color: #ff00ff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #ff00ff;">in</span> inRaster<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
-                outName <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">gsub</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"\\.tif"</span>, <span style="color: #00ff00;">"\\.tif.png"</span>, i<span style="color: #20b2aa;">)</span>
-                r <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">raster</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">)</span>
-                pict <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">spplot</span><span style="color: #20b2aa;">(</span>r, col.regions <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">rainbow</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">200</span>, start <span style="color: #00ffff;">=</span> <span style="color: #daa520;">2</span><span style="color: #00ffff;">/</span><span style="color: #daa520;">6</span>, end <span style="color: #00ffff;">=</span> <span style="color: #daa520;">1</span><span style="color: #20b2aa;">))</span>
-                <span style="color: #ff6347;">png</span><span style="color: #20b2aa;">(</span>filename <span style="color: #00ffff;">=</span> outName<span style="color: #20b2aa;">)</span>
-                <span style="color: #ff6347;">print</span><span style="color: #20b2aa;">(</span>pict<span style="color: #20b2aa;">)</span>
-                <span style="color: #ff6347;">dev.off</span><span style="color: #20b2aa;">()</span>
-        <span style="color: #20b2aa;">}</span>
-<span style="color: #20b2aa;">}</span>r
+<pre class="src src-R"><span style="color: #00bfff;"># </span><span style="color: #00bfff;">RasterLayer</span>
+r <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">raster</span><span style="color: #20b2aa;">(</span>nrows<span style="color: #00ffff;">=</span><span style="color: #daa520;">10</span>, ncols<span style="color: #00ffff;">=</span><span style="color: #daa520;">10</span><span style="color: #20b2aa;">)</span>
+r <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">setValues</span><span style="color: #20b2aa;">(</span>r, <span style="color: #daa520;">1</span>:<span style="color: #ff6347;">ncell</span><span style="color: #20b2aa;">(</span>r<span style="color: #20b2aa;">))</span>
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>r<span style="color: #20b2aa;">)</span>
+
+e <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">extent</span><span style="color: #20b2aa;">(</span>r<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>e, add<span style="color: #00ffff;">=</span><span style="color: #daa520;">TRUE</span>, col<span style="color: #00ffff;">=</span><span style="color: #00ff00;">'red'</span>, lwd<span style="color: #00ffff;">=</span><span style="color: #daa520;">4</span><span style="color: #20b2aa;">)</span>
+e <span style="color: #00ffff;">&lt;-</span> e <span style="color: #00ffff;">/</span> <span style="color: #daa520;">2</span>
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>e, add<span style="color: #00ffff;">=</span><span style="color: #daa520;">TRUE</span>, col<span style="color: #00ffff;">=</span><span style="color: #00ff00;">'red'</span><span style="color: #20b2aa;">)</span>
+
+
+<span style="color: #00bfff;"># </span><span style="color: #00bfff;">Scatterplot of </span><span style="color: #daa520;">2</span><span style="color: #00bfff;"> RasterLayers</span>
+r<span style="color: #daa520;">2</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">sqrt</span><span style="color: #20b2aa;">(</span>r<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>r, r<span style="color: #daa520;">2</span><span style="color: #20b2aa;">)</span>
+
+<span style="color: #00bfff;"># </span><span style="color: #00bfff;">Multi-layer object (RasterStack / Brick)</span>
+s <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">stack</span><span style="color: #20b2aa;">(</span>r, r<span style="color: #daa520;">2</span>, r<span style="color: #00ffff;">/</span>r<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>s, <span style="color: #daa520;">2</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>s<span style="color: #20b2aa;">)</span>
+
+<span style="color: #00bfff;"># </span><span style="color: #00bfff;">two objects, different range, one scale:</span>
+r<span style="color: #20b2aa;">[]</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">runif</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">ncell</span><span style="color: #20b2aa;">(</span>r<span style="color: #20b2aa;">))</span>
+r<span style="color: #daa520;">2</span> <span style="color: #00ffff;">&lt;-</span> r<span style="color: #00ffff;">/</span><span style="color: #daa520;">2</span>
+brks <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">seq</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">0</span>, <span style="color: #daa520;">1</span>, by<span style="color: #00ffff;">=</span><span style="color: #daa520;">0</span>.<span style="color: #daa520;">1</span><span style="color: #20b2aa;">)</span> 
+nb <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">length</span><span style="color: #20b2aa;">(</span>brks<span style="color: #20b2aa;">)</span><span style="color: #00ffff;">-</span><span style="color: #daa520;">1</span> 
+<span style="color: #ff6347;">par</span><span style="color: #20b2aa;">(</span>mfrow<span style="color: #00ffff;">=</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">1</span>,<span style="color: #daa520;">2</span><span style="color: #20b2aa;">))</span>
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>r, breaks<span style="color: #00ffff;">=</span>brks, col<span style="color: #00ffff;">=</span><span style="color: #ff6347;">rev</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">terrain.colors</span><span style="color: #20b2aa;">(</span>nb<span style="color: #20b2aa;">))</span>, lab.breaks<span style="color: #00ffff;">=</span>brks, zlim<span style="color: #00ffff;">=</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">0</span>,<span style="color: #daa520;">1</span><span style="color: #20b2aa;">))</span> 
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>r<span style="color: #daa520;">2</span>, breaks<span style="color: #00ffff;">=</span>brks, col<span style="color: #00ffff;">=</span><span style="color: #ff6347;">rev</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">terrain.colors</span><span style="color: #20b2aa;">(</span>nb<span style="color: #20b2aa;">))</span>, lab.breaks<span style="color: #00ffff;">=</span>brks, zlim<span style="color: #00ffff;">=</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">0</span>,<span style="color: #daa520;">1</span><span style="color: #20b2aa;">))</span> 
+
+
+<span style="color: #00bfff;"># </span><span style="color: #00bfff;">breaks and labels</span>
+x <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">raster</span><span style="color: #20b2aa;">(</span>nc<span style="color: #00ffff;">=</span><span style="color: #daa520;">10</span>, nr<span style="color: #00ffff;">=</span><span style="color: #daa520;">10</span><span style="color: #20b2aa;">)</span>
+x<span style="color: #20b2aa;">[]</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">runif</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">ncell</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">))</span>
+brk <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">0</span>, <span style="color: #daa520;">0</span>.<span style="color: #daa520;">25</span>, <span style="color: #daa520;">0</span>.<span style="color: #daa520;">75</span>, <span style="color: #daa520;">1</span><span style="color: #20b2aa;">)</span>
+arg <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">list</span><span style="color: #20b2aa;">(</span>at<span style="color: #00ffff;">=</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">0</span>.<span style="color: #daa520;">12</span>,<span style="color: #daa520;">0</span>.<span style="color: #daa520;">5</span>,<span style="color: #daa520;">0</span>.<span style="color: #daa520;">87</span><span style="color: #20b2aa;">)</span>, labels<span style="color: #00ffff;">=</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"Low"</span>,<span style="color: #00ff00;">"Med."</span>,<span style="color: #00ff00;">"High"</span><span style="color: #20b2aa;">))</span>
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>x, col<span style="color: #00ffff;">=</span><span style="color: #ff6347;">terrain.colors</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">3</span><span style="color: #20b2aa;">)</span>, breaks<span style="color: #00ffff;">=</span>brk<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>x, col<span style="color: #00ffff;">=</span><span style="color: #ff6347;">terrain.colors</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">3</span><span style="color: #20b2aa;">)</span>, breaks<span style="color: #00ffff;">=</span>brk, axis.args<span style="color: #00ffff;">=</span>arg<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">par</span><span style="color: #20b2aa;">(</span>mfrow<span style="color: #00ffff;">=</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">1</span>,<span style="color: #daa520;">1</span><span style="color: #20b2aa;">))</span>
+
+<span style="color: #00bfff;"># </span><span style="color: #00bfff;">color ramp</span>
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>x, col<span style="color: #00ffff;">=</span><span style="color: #ff6347;">colorRampPalette</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"red"</span>, <span style="color: #00ff00;">"white"</span>, <span style="color: #00ff00;">"blue"</span><span style="color: #20b2aa;">))(</span><span style="color: #daa520;">255</span><span style="color: #20b2aa;">))</span>
+
+<span style="color: #00bfff;"># </span><span style="color: #00bfff;">adding random points to the map</span>
+xy <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">cbind</span><span style="color: #20b2aa;">(</span><span style="color: #00ffff;">-</span><span style="color: #daa520;">180</span> <span style="color: #00ffff;">+</span> <span style="color: #ff6347;">runif</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">10</span><span style="color: #20b2aa;">)</span> * <span style="color: #daa520;">360</span>, <span style="color: #00ffff;">-</span><span style="color: #daa520;">90</span> <span style="color: #00ffff;">+</span> <span style="color: #ff6347;">runif</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">10</span><span style="color: #20b2aa;">)</span> * <span style="color: #daa520;">180</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">points</span><span style="color: #20b2aa;">(</span>xy, pch<span style="color: #00ffff;">=</span><span style="color: #daa520;">3</span>, cex<span style="color: #00ffff;">=</span><span style="color: #daa520;">5</span><span style="color: #20b2aa;">)</span>
+
+<span style="color: #00bfff;"># </span><span style="color: #00bfff;">for SpatialPolygons do</span>
+<span style="color: #00bfff;"># </span><span style="color: #00bfff;">plot(pols, add=TRUE)</span>
+
+<span style="color: #00bfff;"># </span><span style="color: #00bfff;">adding the same points to each map of each layer of a RasterStack</span>
+<span style="color: #ff6347;">fun</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">()</span> <span style="color: #20b2aa;">{</span>
+        <span style="color: #ff6347;">points</span><span style="color: #20b2aa;">(</span>xy, cex<span style="color: #00ffff;">=</span><span style="color: #daa520;">2</span><span style="color: #20b2aa;">)</span>
+        <span style="color: #ff6347;">points</span><span style="color: #20b2aa;">(</span>xy, pch<span style="color: #00ffff;">=</span><span style="color: #daa520;">3</span>, col<span style="color: #00ffff;">=</span><span style="color: #00ff00;">'red'</span><span style="color: #20b2aa;">)</span>
+<span style="color: #20b2aa;">}</span>
+<span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>s, addfun<span style="color: #00ffff;">=</span>fun<span style="color: #20b2aa;">)</span>
 </pre>
 </div>
 </div>
 </li>
-<li>Demo<br  /><div class="outline-text-5" id="text-3-3-1-2">
+<li>Code<br  /><div class="outline-text-5" id="text-3-3-1-2">
+<div class="org-src-container">
+
+<pre class="src src-R"> <span style="color: #ff6347;">rs.tif2png</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>dir <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">getwd</span><span style="color: #20b2aa;">()){</span>
+        inRaster <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">list.files</span><span style="color: #20b2aa;">(</span>path <span style="color: #00ffff;">=</span> dir, pattern <span style="color: #00ffff;">=</span> <span style="color: #00ff00;">".tif$"</span>, full.names <span style="color: #00ffff;">=</span> <span style="color: #daa520;">TRUE</span>, recursive <span style="color: #00ffff;">=</span> <span style="color: #daa520;">TRUE</span><span style="color: #20b2aa;">)</span>
+        <span style="color: #ff00ff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #ff00ff;">in</span> inRaster<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+                outName <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">gsub</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"\\.tif"</span>, <span style="color: #00ff00;">"\\.tif.png"</span>, i<span style="color: #20b2aa;">)</span>
+                r <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">raster</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">)</span>
+                <span style="color: #ff6347;">png</span><span style="color: #20b2aa;">(</span>filename <span style="color: #00ffff;">=</span> outName<span style="color: #20b2aa;">)</span>
+                <span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>r, col <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">rainbow</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">255</span>, start <span style="color: #00ffff;">=</span> <span style="color: #daa520;">2</span><span style="color: #00ffff;">/</span><span style="color: #daa520;">6</span>, end <span style="color: #00ffff;">=</span> <span style="color: #daa520;">1</span><span style="color: #20b2aa;">))</span>
+                <span style="color: #ff6347;">dev.off</span><span style="color: #20b2aa;">()</span>
+        <span style="color: #20b2aa;">}</span>
+<span style="color: #20b2aa;">}</span>
+</pre>
+</div>
+</div>
+</li>
+<li>Demo<br  /><div class="outline-text-5" id="text-3-3-1-3">
 <div class="org-src-container">
 
 <pre class="src src-R"><span style="color: #00ffff;">source</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/Rprofile/R/sourceDir.R"</span><span style="color: #20b2aa;">)</span>
 <span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/src/main/R/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/R"</span><span style="color: #20b2aa;">)</span>
 <span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/TIR/R/"</span><span style="color: #20b2aa;">)</span>
-dataDir <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaBT"</span>
+dataDir <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA"</span>
 <span style="color: #ff6347;">setwd</span><span style="color: #20b2aa;">(</span>dataDir<span style="color: #20b2aa;">)</span>
-inRaster <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">list.files</span><span style="color: #20b2aa;">(</span>dataDir, pattern <span style="color: #00ffff;">=</span> <span style="color: #00ff00;">".tif$"</span>, recursive <span style="color: #00ffff;">=</span> <span style="color: #daa520;">TRUE</span><span style="color: #20b2aa;">)</span>
-<span style="color: #ff6347;">rs.tif</span><span style="color: #daa520;">2</span><span style="color: #ff6347;">png</span><span style="color: #20b2aa;">(</span>inRaster<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">rs.tif</span><span style="color: #daa520;">2</span><span style="color: #ff6347;">png</span><span style="color: #20b2aa;">()</span>
 </pre>
 </div>
 </div>
@@ -1053,7 +1114,7 @@ inRaster <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tian</p>
-<p class="date">Created: 2014-09-24 Wed 22:37</p>
+<p class="date">Created: 2014-09-24 Wed 23:15</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
