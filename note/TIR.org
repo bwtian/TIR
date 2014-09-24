@@ -485,10 +485,12 @@ rs.todown(worklist, dir.tar, "todown")
 
 *** NEXT RadtoTOARef
 *** NEXT RadtoTOABT
+*** TODO OLI Atmospheric Correction
+- State "TODO"       from ""           [2014-09-24 Wed 22:22]
+*** TODO TIRS Atmospheric Correction
+- State "TODO"       from ""           [2014-09-24 Wed 22:22]
+*** Scale Tb
 *** 
-*** Atmospheric Correction
-
-**
 ** At Surface
 *** Plot Raster
 **** Code
