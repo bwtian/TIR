@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>TIR</title>
-<!-- 2014-09-20 Sat 22:50 -->
+<!-- 2014-09-24 Wed 22:37 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="tian" />
@@ -144,61 +144,46 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#sec-1">1. Credits and Source code Pool</a></li>
 <li><a href="#sec-2">2. Workfolw of The TIR</a></li>
-<li><a href="#sec-3">3. R and Demo Floder</a>
+<li><a href="#sec-3">3. R and Demo</a>
 <ul>
-<li><a href="#sec-3-1">3.1. rs.untar1</a></li>
-<li><a href="#sec-3-2">3.2. rs.untar untar file in the list to sceneDir</a>
+<li><a href="#sec-3-1">3.1. At Sensor</a>
 <ul>
-<li><a href="#sec-3-2-1">3.2.1. Code</a></li>
-<li><a href="#sec-3-2-2">3.2.2. Demo</a></li>
-<li><a href="#sec-3-2-3">3.2.3. Code Note</a></li>
+<li><a href="#sec-3-1-1">3.1.1. rs.untar1</a></li>
+<li><a href="#sec-3-1-2">3.1.2. rs.untar:: untar file in the list to sceneDir</a></li>
+<li><a href="#sec-3-1-3">3.1.3. rs.todown:: data need to download from list</a></li>
+<li><a href="#sec-3-1-4">3.1.4. SOMEDAY rs.minCloud</a></li>
+<li><a href="#sec-3-1-5">3.1.5. SOMEDAY rs.bestSesson</a></li>
+<li><a href="#sec-3-1-6">3.1.6. SOMEDAY rs.shortBaseline</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-3">3.3. rs.todown data need to download from list</a>
+<li><a href="#sec-3-2">3.2. At TOA</a>
 <ul>
-<li><a href="#sec-3-3-1">3.3.1. Code</a></li>
-<li><a href="#sec-3-3-2">3.3.2. Demo</a></li>
+<li><a href="#sec-3-2-1">3.2.1. rs.readL8 Read Landsat8</a></li>
+<li><a href="#sec-3-2-2">3.2.2. rs.DNtoTOARadiance</a></li>
+<li><a href="#sec-3-2-3">3.2.3. l8.DNtoTOARadiance</a></li>
+<li><a href="#sec-3-2-4">3.2.4. DNtoTOAReflectance</a></li>
+<li><a href="#sec-3-2-5">3.2.5. Sun elevation Correction pixel by pixel, caculate sun elv use oce</a></li>
+<li><a href="#sec-3-2-6">3.2.6. DNtoTOABT</a></li>
+<li><a href="#sec-3-2-7">3.2.7. RadtoTOARef</a></li>
+<li><a href="#sec-3-2-8">3.2.8. RadtoTOABT</a></li>
+<li><a href="#sec-3-2-9">3.2.9. OLI Atmospheric Correction</a></li>
+<li><a href="#sec-3-2-10">3.2.10. TIRS Atmospheric Correction</a></li>
+<li><a href="#sec-3-2-11">3.2.11. MergeTOA</a></li>
+<li><a href="#sec-3-2-12">3.2.12. Scale Tb</a></li>
+<li><a href="#sec-3-2-13">3.2.13. </a></li>
 </ul>
 </li>
-<li><a href="#sec-3-4">3.4. rs.minCloud</a></li>
-<li><a href="#sec-3-5">3.5. rs.bestSesson</a></li>
-<li><a href="#sec-3-6">3.6. rs.shortBaseline</a></li>
-<li><a href="#sec-3-7">3.7. rs.readL8 Read Landsat8</a></li>
-<li><a href="#sec-3-8">3.8. rs.DNtoTOARadiance</a>
+<li><a href="#sec-3-3">3.3. At Surface</a>
 <ul>
-<li><a href="#sec-3-8-1">3.8.1. Reference DNtoTOARadiance</a></li>
-<li><a href="#sec-3-8-2">3.8.2. Code</a></li>
-<li><a href="#sec-3-8-3">3.8.3. Demo</a></li>
+<li><a href="#sec-3-3-1">3.3.1. Plot Raster</a></li>
+<li><a href="#sec-3-3-2">3.3.2. Project Raster</a></li>
+<li><a href="#sec-3-3-3">3.3.3. Mosaic</a></li>
+<li><a href="#sec-3-3-4">3.3.4. </a></li>
 </ul>
 </li>
-<li><a href="#sec-3-9">3.9. l8.DNtoTOARadiance</a>
-<ul>
-<li><a href="#sec-3-9-1">3.9.1. refercode rLandsat8::ToTOARadiance</a></li>
-<li><a href="#sec-3-9-2">3.9.2. refercode</a></li>
-<li><a href="#sec-3-9-3">3.9.3. Code</a></li>
-<li><a href="#sec-3-9-4">3.9.4. Demo</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-10">3.10. DNtoTOAReflectance</a>
-<ul>
-<li><a href="#sec-3-10-1">3.10.1. Code</a></li>
-<li><a href="#sec-3-10-2">3.10.2. Demo</a></li>
-<li><a href="#sec-3-10-3">3.10.3. Demo2</a></li>
-</ul>
-</li>
-<li><a href="#sec-3-11">3.11. Sun elevation Correction pixel by pixel, caculate sun elv use oce</a></li>
-<li><a href="#sec-3-12">3.12. DNtoTOABT</a>
-<ul>
-<li><a href="#sec-3-12-1">3.12.1. Demo</a></li>
-</ul>
-</li>
-<li><a href="#sec-3-13">3.13. RadtoTOARef</a></li>
-<li><a href="#sec-3-14">3.14. RadtoTOABT</a></li>
-<li><a href="#sec-3-15">3.15. Map</a></li>
-<li><a href="#sec-3-16">3.16. Atmospheric Correction</a></li>
-<li><a href="#sec-3-17">3.17. </a></li>
-</ul>
-</li>
+<li><a href="#sec-4">4. Man</a></li>
 </ul>
 </div>
 </div>
@@ -399,11 +384,14 @@ TIR(idList) Object: 1 click get all results from a list
 </div>
 
 <div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> R and Demo Floder</h2>
+<h2 id="sec-3"><span class="section-number-2">3</span> R and Demo</h2>
 <div class="outline-text-2" id="text-3">
 </div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> rs.untar1</h3>
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> At Sensor</h3>
 <div class="outline-text-3" id="text-3-1">
+</div><div id="outline-container-sec-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> rs.untar1</h4>
+<div class="outline-text-4" id="text-3-1-1">
 <ul class="org-ul">
 <li>State &ldquo;DEMO&rdquo;       from &ldquo;CODE&rdquo;       <span class="timestamp-wrapper"><span class="timestamp">[2014-09-18 Thu 14:22]</span></span>
 </li>
@@ -412,18 +400,18 @@ TIR(idList) Object: 1 click get all results from a list
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #ff6347;">rs.untar</span>  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>list, path <span style="color: #ff00ff;">=</span> <span style="color: #00ff00;">"."</span>, outdir <span style="color: #ff00ff;">=</span> <span style="color: #00ff00;">"../tif"</span>, pattern <span style="color: #ff00ff;">=</span> <span style="color: #00ff00;">".tgz"</span><span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
-        tarFiles_v <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">list.files</span><span style="color: #20b2aa;">(</span>path <span style="color: #ff00ff;">=</span> path, pattern <span style="color: #ff00ff;">=</span> pattern, all.files <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">T</span>, full.names <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span> 
-        <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>tarFiles_v, <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>utils::<span style="color: #ff6347;">untar</span><span style="color: #20b2aa;">(</span>tarfile <span style="color: #ff00ff;">=</span> i, exdir <span style="color: #ff00ff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>outdir, tools::<span style="color: #ff6347;">file_path_sans_ext</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">basename</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">))))})</span>
+<pre class="src src-R"><span style="color: #ff6347;">rs.untar</span>  <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>list, path <span style="color: #00ffff;">=</span> <span style="color: #00ff00;">"."</span>, outdir <span style="color: #00ffff;">=</span> <span style="color: #00ff00;">"../tif"</span>, pattern <span style="color: #00ffff;">=</span> <span style="color: #00ff00;">".tgz"</span><span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+        tarFiles_v <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">list.files</span><span style="color: #20b2aa;">(</span>path <span style="color: #00ffff;">=</span> path, pattern <span style="color: #00ffff;">=</span> pattern, all.files <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span>, full.names <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span> 
+        <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>tarFiles_v, <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>utils::<span style="color: #ff6347;">untar</span><span style="color: #20b2aa;">(</span>tarfile <span style="color: #00ffff;">=</span> i, exdir <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>outdir, tools::<span style="color: #ff6347;">file_path_sans_ext</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">basename</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">))))})</span>
 <span style="color: #20b2aa;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> rs.untar untar file in the list to sceneDir</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-sec-3-1-2" class="outline-4">
+<h4 id="sec-3-1-2"><span class="section-number-4">3.1.2</span> rs.untar:: untar file in the list to sceneDir</h4>
+<div class="outline-text-4" id="text-3-1-2">
 <ul class="org-ul">
 <li>State &ldquo;DONE&rdquo;       from &ldquo;DEMO&rdquo;       <span class="timestamp-wrapper"><span class="timestamp">[2014-09-18 Thu 14:50]</span></span>
 </li>
@@ -436,46 +424,40 @@ TIR(idList) Object: 1 click get all results from a list
 <li></li>
 </ul>
 </div>
-<div id="outline-container-sec-3-2-1" class="outline-4">
-<h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> Code</h4>
-<div class="outline-text-4" id="text-3-2-1">
+<ol class="org-ol"><li>Code<br  /><div class="outline-text-5" id="text-3-1-2-1">
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> Select and untar files in the list form tar dir to tif dir </span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> </span><span style="color: #00ffff;">@param</span><span style="color: #cccccc;"> </span><span style="color: #ffa500;">list</span><span style="color: #cccccc;"> like LC</span><span style="color: #daa520;">81050292013262</span><span style="color: #cccccc;">LGN</span><span style="color: #daa520;">00</span><span style="color: #cccccc;">.tgz or LC</span><span style="color: #daa520;">81050292013262</span><span style="color: #cccccc;">LGN</span><span style="color: #daa520;">00</span><span style="color: #cccccc;">.tar.gz</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> </span><span style="color: #00ffff;">@param</span><span style="color: #cccccc;"> </span><span style="color: #ffa500;">formdir</span><span style="color: #cccccc;"> folders contain the Image usrally the download or database</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> </span><span style="color: #00ffff;">@param</span><span style="color: #cccccc;"> </span><span style="color: #ffa500;">todir</span><span style="color: #cccccc;">  Where the files will copy to, usually the workdir</span>
-<span style="color: #ff6347;">rs.untar</span> <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>list, fromdir, todir<span style="color: #20b2aa;">){</span>
-        <span style="color: #00ffff;">if</span> <span style="color: #20b2aa;">(</span><span style="color: #ff6347;">all</span><span style="color: #20b2aa;">(</span>list <span style="color: #ff00ff;">%</span><span style="color: #00ffff;">in</span><span style="color: #ff00ff;">%</span> <span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>fromdir<span style="color: #20b2aa;">))){</span>
-                <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>list, <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
-                        sceneDir <span style="color: #ff00ff;">&lt;-</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>tools::<span style="color: #ff6347;">file_path_as_absolute</span><span style="color: #20b2aa;">(</span>todir<span style="color: #20b2aa;">)</span>, <span style="color: #ff6347;">gsub</span><span style="color: #20b2aa;">(</span>pattern <span style="color: #ff00ff;">=</span> <span style="color: #00ff00;">"(^[^.]+)(.*)"</span>, replacement <span style="color: #ff00ff;">=</span> <span style="color: #00ff00;">"\\</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, i<span style="color: #20b2aa;">))</span>
-                        utils::<span style="color: #ff6347;">untar</span><span style="color: #20b2aa;">(</span>tarfile <span style="color: #ff00ff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>tools::<span style="color: #ff6347;">file_path_as_absolute</span><span style="color: #20b2aa;">(</span>fromdir<span style="color: #20b2aa;">)</span>,i<span style="color: #20b2aa;">)</span>, exdir <span style="color: #ff00ff;">=</span> sceneDir<span style="color: #20b2aa;">)</span>
+<pre class="src src-R"><span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> Select and untar files in the list form tar dir to tif dir </span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> </span><span style="color: #ff00ff;">@param</span><span style="color: #00bfff;"> </span><span style="color: #ffa500;">list</span><span style="color: #00bfff;"> like LC</span><span style="color: #daa520;">81050292013262</span><span style="color: #00bfff;">LGN</span><span style="color: #daa520;">00</span><span style="color: #00bfff;">.tgz or LC</span><span style="color: #daa520;">81050292013262</span><span style="color: #00bfff;">LGN</span><span style="color: #daa520;">00</span><span style="color: #00bfff;">.tar.gz</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> </span><span style="color: #ff00ff;">@param</span><span style="color: #00bfff;"> </span><span style="color: #ffa500;">formdir</span><span style="color: #00bfff;"> folders contain the Image usrally the download or database</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> </span><span style="color: #ff00ff;">@param</span><span style="color: #00bfff;"> </span><span style="color: #ffa500;">todir</span><span style="color: #00bfff;">  Where the files will copy to, usually the workdir</span>
+<span style="color: #ff6347;">rs.untar</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>list, fromdir, todir<span style="color: #20b2aa;">){</span>
+        <span style="color: #ff00ff;">if</span> <span style="color: #20b2aa;">(</span><span style="color: #ff6347;">all</span><span style="color: #20b2aa;">(</span>list <span style="color: #00ffff;">%</span><span style="color: #ff00ff;">in</span><span style="color: #00ffff;">%</span> <span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>fromdir<span style="color: #20b2aa;">))){</span>
+                <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>list, <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+                        sceneDir <span style="color: #00ffff;">&lt;-</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>tools::<span style="color: #ff6347;">file_path_as_absolute</span><span style="color: #20b2aa;">(</span>todir<span style="color: #20b2aa;">)</span>, <span style="color: #ff6347;">gsub</span><span style="color: #20b2aa;">(</span>pattern <span style="color: #00ffff;">=</span> <span style="color: #00ff00;">"(^[^.]+)(.*)"</span>, replacement <span style="color: #00ffff;">=</span> <span style="color: #00ff00;">"\\</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, i<span style="color: #20b2aa;">))</span>
+                        utils::<span style="color: #ff6347;">untar</span><span style="color: #20b2aa;">(</span>tarfile <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>tools::<span style="color: #ff6347;">file_path_as_absolute</span><span style="color: #20b2aa;">(</span>fromdir<span style="color: #20b2aa;">)</span>,i<span style="color: #20b2aa;">)</span>, exdir <span style="color: #00ffff;">=</span> sceneDir<span style="color: #20b2aa;">)</span>
                 <span style="color: #20b2aa;">})</span>
-          <span style="color: #20b2aa;">}</span> <span style="color: #00ffff;">else</span> <span style="color: #20b2aa;">{</span>
-                  <span style="color: #00ffff;">stop</span> <span style="color: #20b2aa;">(</span><span style="color: #ff6347;">paste</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"Not all the files in"</span>, fromdir, <span style="color: #00ff00;">"Use rs.todown to check it!"</span><span style="color: #20b2aa;">))</span>
+          <span style="color: #20b2aa;">}</span> <span style="color: #ff00ff;">else</span> <span style="color: #20b2aa;">{</span>
+                  <span style="color: #ff00ff;">stop</span> <span style="color: #20b2aa;">(</span><span style="color: #ff6347;">paste</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"Not all the files in"</span>, fromdir, <span style="color: #00ff00;">"Use rs.todown to check it!"</span><span style="color: #20b2aa;">))</span>
           <span style="color: #20b2aa;">}</span>
 <span style="color: #20b2aa;">}</span>
 </pre>
 </div>
 </div>
-</div>
-<div id="outline-container-sec-3-2-2" class="outline-4">
-<h4 id="sec-3-2-2"><span class="section-number-4">3.2.2</span> Demo</h4>
-<div class="outline-text-4" id="text-3-2-2">
+</li>
+<li>Demo<br  /><div class="outline-text-5" id="text-3-1-2-2">
 <div class="org-src-container">
 
-<pre class="src src-R">worklist  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span>hkdMinCloud$ID,<span style="color: #00ff00;">".tgz"</span><span style="color: #20b2aa;">)</span>
-dir.tar  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">300</span><span style="color: #00ff00;">sdb/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/N</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">/LISTEJapan"</span>
-dir.tif  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">_Sensor"</span>
-<span style="color: #ff6347;">rs.untar</span><span style="color: #20b2aa;">(</span>worklist, fromdir <span style="color: #ff00ff;">=</span> dir.tar, todir <span style="color: #ff00ff;">=</span> dir.tif<span style="color: #20b2aa;">)</span>
+<pre class="src src-R">worklist  <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span>hkdMinCloud$ID,<span style="color: #00ff00;">".tgz"</span><span style="color: #20b2aa;">)</span>
+dir.tar  <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">300</span><span style="color: #00ff00;">sdb/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/N</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">/LISTEJapan"</span>
+dir.tif  <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">_Sensor"</span>
+<span style="color: #ff6347;">rs.untar</span><span style="color: #20b2aa;">(</span>worklist, fromdir <span style="color: #00ffff;">=</span> dir.tar, todir <span style="color: #00ffff;">=</span> dir.tif<span style="color: #20b2aa;">)</span>
 </pre>
 </div>
 </div>
-</div>
+</li>
 
-<div id="outline-container-sec-3-2-3" class="outline-4">
-<h4 id="sec-3-2-3"><span class="section-number-4">3.2.3</span> Code Note</h4>
-<div class="outline-text-4" id="text-3-2-3">
+<li>Code Note<br  /><div class="outline-text-5" id="text-3-1-2-3">
 <p>
 .tgz test ok
 .tar.gz get the wrong basename identifire.tar
@@ -497,12 +479,12 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 }
 </pre>
 </div>
-</div>
+</li></ol>
 </div>
 
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> rs.todown data need to download from list</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-sec-3-1-3" class="outline-4">
+<h4 id="sec-3-1-3"><span class="section-number-4">3.1.3</span> rs.todown:: data need to download from list</h4>
+<div class="outline-text-4" id="text-3-1-3">
 <ul class="org-ul">
 <li>State &ldquo;DONE&rdquo;       from &ldquo;DEMO&rdquo;       <span class="timestamp-wrapper"><span class="timestamp">[2014-09-18 Thu 14:56]</span></span>
 </li>
@@ -514,49 +496,49 @@ utils::untar(tarfile = file.path(fromdir,i), exdir = file.path(tools::file_path_
 </li>
 </ul>
 </div>
-<div id="outline-container-sec-3-3-1" class="outline-4">
-<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Code</h4>
-<div class="outline-text-4" id="text-3-3-1">
+<ol class="org-ol"><li>Code<br  /><div class="outline-text-5" id="text-3-1-3-1">
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #ff6347;">rs.todown</span> <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>list, downeddir, tolistName<span style="color: #20b2aa;">){</span>
-        downedFiles  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">list.files</span><span style="color: #20b2aa;">(</span>downeddir<span style="color: #20b2aa;">)</span>
-        todownList   <span style="color: #ff00ff;">&lt;-</span>  <span style="color: #ff6347;">setdiff</span><span style="color: #20b2aa;">(</span>list, downedFiles<span style="color: #20b2aa;">)</span>
-        Now <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">format</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">Sys.time</span><span style="color: #20b2aa;">()</span>, <span style="color: #00ff00;">"_%y%m%d_%H%M%S"</span><span style="color: #20b2aa;">)</span>
-        todownListName <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span>todownListName, Now, <span style="color: #00ff00;">".txt"</span><span style="color: #20b2aa;">)</span>
-        <span style="color: #ff6347;">write.table</span><span style="color: #20b2aa;">(</span>todownList , todownListName, quote <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">F</span>, row.names <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">F</span>,col.names <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">F</span><span style="color: #20b2aa;">)</span>
+<pre class="src src-R"><span style="color: #ff6347;">rs.todown</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>list, downeddir, tolistName<span style="color: #20b2aa;">){</span>
+        downedFiles  <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">list.files</span><span style="color: #20b2aa;">(</span>downeddir<span style="color: #20b2aa;">)</span>
+        todownList   <span style="color: #00ffff;">&lt;-</span>  <span style="color: #ff6347;">setdiff</span><span style="color: #20b2aa;">(</span>list, downedFiles<span style="color: #20b2aa;">)</span>
+        Now <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">format</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">Sys.time</span><span style="color: #20b2aa;">()</span>, <span style="color: #00ff00;">"_%y%m%d_%H%M%S"</span><span style="color: #20b2aa;">)</span>
+        todownListName <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span>todownListName, Now, <span style="color: #00ff00;">".txt"</span><span style="color: #20b2aa;">)</span>
+        <span style="color: #ff6347;">write.table</span><span style="color: #20b2aa;">(</span>todownList , todownListName, quote <span style="color: #00ffff;">=</span> <span style="color: #daa520;">F</span>, row.names <span style="color: #00ffff;">=</span> <span style="color: #daa520;">F</span>,col.names <span style="color: #00ffff;">=</span> <span style="color: #daa520;">F</span><span style="color: #20b2aa;">)</span>
 <span style="color: #20b2aa;">}</span>
 </pre>
 </div>
 </div>
-</div>
-<div id="outline-container-sec-3-3-2" class="outline-4">
-<h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> Demo</h4>
-<div class="outline-text-4" id="text-3-3-2">
+</li>
+<li>Demo<br  /><div class="outline-text-5" id="text-3-1-3-2">
 <div class="org-src-container">
 
 <pre class="src src-R"><span style="color: #ff6347;">rs.todown</span><span style="color: #20b2aa;">()</span>
-worklist  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span>hkdMinCloud$ID,<span style="color: #00ff00;">".tgz"</span><span style="color: #20b2aa;">)</span>
-dir.tar  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">300</span><span style="color: #00ff00;">sdb/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/N</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">/LISTEJapan"</span>
+worklist  <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span>hkdMinCloud$ID,<span style="color: #00ff00;">".tgz"</span><span style="color: #20b2aa;">)</span>
+dir.tar  <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">300</span><span style="color: #00ff00;">sdb/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/N</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">/LISTEJapan"</span>
 <span style="color: #ff6347;">rs.todown</span><span style="color: #20b2aa;">(</span>worklist, dir.tar, <span style="color: #00ff00;">"todown"</span><span style="color: #20b2aa;">)</span>
 </pre>
 </div>
 </div>
-</div>
+</li></ol>
 </div>
 
-<div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> rs.minCloud</h3>
+<div id="outline-container-sec-3-1-4" class="outline-4">
+<h4 id="sec-3-1-4"><span class="section-number-4">3.1.4</span> SOMEDAY rs.minCloud</h4>
 </div>
-<div id="outline-container-sec-3-5" class="outline-3">
-<h3 id="sec-3-5"><span class="section-number-3">3.5</span> rs.bestSesson</h3>
+<div id="outline-container-sec-3-1-5" class="outline-4">
+<h4 id="sec-3-1-5"><span class="section-number-4">3.1.5</span> SOMEDAY rs.bestSesson</h4>
 </div>
-<div id="outline-container-sec-3-6" class="outline-3">
-<h3 id="sec-3-6"><span class="section-number-3">3.6</span> rs.shortBaseline</h3>
+<div id="outline-container-sec-3-1-6" class="outline-4">
+<h4 id="sec-3-1-6"><span class="section-number-4">3.1.6</span> SOMEDAY rs.shortBaseline</h4>
 </div>
-<div id="outline-container-sec-3-7" class="outline-3">
-<h3 id="sec-3-7"><span class="section-number-3">3.7</span> rs.readL8 Read Landsat8</h3>
-<div class="outline-text-3" id="text-3-7">
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> At TOA</h3>
+<div class="outline-text-3" id="text-3-2">
+</div><div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> rs.readL8 Read Landsat8</h4>
+<div class="outline-text-4" id="text-3-2-1">
 <ul class="org-ul">
 <li>State &ldquo;DEMO&rdquo;       from &ldquo;DONE&rdquo;       <span class="timestamp-wrapper"><span class="timestamp">[2014-09-18 Thu 14:21]</span></span>
 </li>
@@ -569,84 +551,82 @@ dir.tar  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> Reads a Landsat </span><span style="color: #daa520;">8</span><span style="color: #cccccc;"> product</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> @description Reads a Landsat </span><span style="color: #daa520;">8</span><span style="color: #cccccc;"> product</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> </span><span style="color: #00ffff;">@param</span><span style="color: #cccccc;"> </span><span style="color: #ffa500;">product</span><span style="color: #cccccc;"> name of the product, e.g. LC</span><span style="color: #daa520;">80522102014165</span><span style="color: #cccccc;">LGN</span><span style="color: #daa520;">00</span><span style="color: #cccccc;">. It must be in the working directory</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> </span><span style="color: #00ffff;">@return</span><span style="color: #cccccc;"> list with metadata and raster bands</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> </span><span style="color: #00ffff;">@examples</span><span style="color: #cccccc;"> \dontrun{</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">("LC</span><span style="color: #daa520;">80522102014165</span><span style="color: #cccccc;">LGN</span><span style="color: #daa520;">00</span><span style="color: #cccccc;">")</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> }</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> </span><span style="color: #00ffff;">@note</span><span style="color: #cccccc;">  ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #cccccc;"> Function orignally from Package rLandsat</span><span style="color: #daa520;">8</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> </span><span style="color: #ffa500;">@export</span>
-<span style="color: #cccccc; font-weight: bold;">#</span><span style="color: #cccccc; font-weight: bold;">'</span><span style="color: #cccccc;"> </span><span style="color: #00ffff;">@import</span><span style="color: #cccccc;"> raster</span>
+<pre class="src src-R"><span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> Reads a Landsat </span><span style="color: #daa520;">8</span><span style="color: #00bfff;"> product</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> @description Reads a Landsat </span><span style="color: #daa520;">8</span><span style="color: #00bfff;"> product</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> </span><span style="color: #ff00ff;">@param</span><span style="color: #00bfff;"> </span><span style="color: #ffa500;">product</span><span style="color: #00bfff;"> name of the product, e.g. LC</span><span style="color: #daa520;">80522102014165</span><span style="color: #00bfff;">LGN</span><span style="color: #daa520;">00</span><span style="color: #00bfff;">. It must be in the working directory</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> </span><span style="color: #ff00ff;">@return</span><span style="color: #00bfff;"> list with metadata and raster bands</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> </span><span style="color: #ff00ff;">@examples</span><span style="color: #00bfff;"> \dontrun{</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">("LC</span><span style="color: #daa520;">80522102014165</span><span style="color: #00bfff;">LGN</span><span style="color: #daa520;">00</span><span style="color: #00bfff;">")</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> }</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> </span><span style="color: #ff00ff;">@note</span><span style="color: #00bfff;">  ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #00bfff;"> Function orignally from Package rLandsat</span><span style="color: #daa520;">8</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> </span><span style="color: #ffa500;">@export</span>
+<span style="color: #00bfff; font-weight: bold;">#</span><span style="color: #00bfff; font-weight: bold;">'</span><span style="color: #00bfff;"> </span><span style="color: #ff00ff;">@import</span><span style="color: #00bfff;"> raster</span>
 
-<span style="color: #ff6347;">ReadLandsat8</span> <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>product<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+<span style="color: #ff6347;">ReadLandsat8</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>product<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
 
-  raster.files <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">list</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span><span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>,
-    <span style="color: #00ff00;">"blue"</span><span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span>,
-    <span style="color: #00ff00;">"green"</span><span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">3</span><span style="color: #00ff00;">"</span>,
-    <span style="color: #00ff00;">"red"</span><span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">4</span><span style="color: #00ff00;">"</span>,
-    <span style="color: #00ff00;">"nir"</span><span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">5</span><span style="color: #00ff00;">"</span>,
-    <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span><span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">6</span><span style="color: #00ff00;">"</span>,
-    <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span><span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">7</span><span style="color: #00ff00;">"</span>,
-    <span style="color: #00ff00;">"panchromatic"</span><span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">"</span>,
-    <span style="color: #00ff00;">"cirrus"</span><span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">9</span><span style="color: #00ff00;">"</span>,
-    <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span><span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">10</span><span style="color: #00ff00;">"</span>,
-    <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span><span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">11</span><span style="color: #00ff00;">"</span>
+  raster.files <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">list</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span><span style="color: #00ffff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>,
+    <span style="color: #00ff00;">"blue"</span><span style="color: #00ffff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span>,
+    <span style="color: #00ff00;">"green"</span><span style="color: #00ffff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">3</span><span style="color: #00ff00;">"</span>,
+    <span style="color: #00ff00;">"red"</span><span style="color: #00ffff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">4</span><span style="color: #00ff00;">"</span>,
+    <span style="color: #00ff00;">"nir"</span><span style="color: #00ffff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">5</span><span style="color: #00ff00;">"</span>,
+    <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span><span style="color: #00ffff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">6</span><span style="color: #00ff00;">"</span>,
+    <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span><span style="color: #00ffff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">7</span><span style="color: #00ff00;">"</span>,
+    <span style="color: #00ff00;">"panchromatic"</span><span style="color: #00ffff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">"</span>,
+    <span style="color: #00ff00;">"cirrus"</span><span style="color: #00ffff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">9</span><span style="color: #00ff00;">"</span>,
+    <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span><span style="color: #00ffff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">10</span><span style="color: #00ff00;">"</span>,
+    <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span><span style="color: #00ffff;">=</span><span style="color: #00ff00;">"file_name_band_</span><span style="color: #daa520;">11</span><span style="color: #00ff00;">"</span>
     <span style="color: #20b2aa;">)</span>
 
-  meta.file <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span>product, <span style="color: #00ff00;">"/"</span>, product, <span style="color: #00ff00;">"_MTL.txt"</span><span style="color: #20b2aa;">)</span>
+  meta.file <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span>product, <span style="color: #00ff00;">"/"</span>, product, <span style="color: #00ff00;">"_MTL.txt"</span><span style="color: #20b2aa;">)</span>
 
-  <span style="color: #00ffff;">if</span> <span style="color: #20b2aa;">(</span>!<span style="color: #ff6347;">file.exists</span><span style="color: #20b2aa;">(</span>meta.file<span style="color: #20b2aa;">))</span>
-       <span style="color: #00ffff;">stop</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">paste</span><span style="color: #20b2aa;">(</span>meta.file, <span style="color: #00ff00;">"file not found."</span><span style="color: #20b2aa;">))</span>
+  <span style="color: #ff00ff;">if</span> <span style="color: #20b2aa;">(</span>!<span style="color: #ff6347;">file.exists</span><span style="color: #20b2aa;">(</span>meta.file<span style="color: #20b2aa;">))</span>
+       <span style="color: #ff00ff;">stop</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">paste</span><span style="color: #20b2aa;">(</span>meta.file, <span style="color: #00ff00;">"file not found."</span><span style="color: #20b2aa;">))</span>
 
-  textLines <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">readLines</span><span style="color: #20b2aa;">(</span>meta.file<span style="color: #20b2aa;">)</span>
+  textLines <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">readLines</span><span style="color: #20b2aa;">(</span>meta.file<span style="color: #20b2aa;">)</span>
 
-  counts <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">count.fields</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">textConnection</span><span style="color: #20b2aa;">(</span>textLines<span style="color: #20b2aa;">)</span>, sep<span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"="</span><span style="color: #20b2aa;">)</span>
+  counts <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">count.fields</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">textConnection</span><span style="color: #20b2aa;">(</span>textLines<span style="color: #20b2aa;">)</span>, sep<span style="color: #00ffff;">=</span><span style="color: #00ff00;">"="</span><span style="color: #20b2aa;">)</span>
 
-  met <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">read.table</span><span style="color: #20b2aa;">(</span>text<span style="color: #ff00ff;">=</span>textLines<span style="color: #20b2aa;">[</span>counts <span style="color: #ff00ff;">==</span> <span style="color: #daa520;">2</span><span style="color: #20b2aa;">]</span>, as.is<span style="color: #ff00ff;">=</span><span style="color: #daa520;">TRUE</span>, header<span style="color: #ff00ff;">=</span><span style="color: #daa520;">FALSE</span>, sep<span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"="</span>, strip.white<span style="color: #ff00ff;">=</span><span style="color: #daa520;">TRUE</span>, stringsAsFactors<span style="color: #ff00ff;">=</span><span style="color: #daa520;">FALSE</span><span style="color: #20b2aa;">)</span>
+  met <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">read.table</span><span style="color: #20b2aa;">(</span>text<span style="color: #00ffff;">=</span>textLines<span style="color: #20b2aa;">[</span>counts <span style="color: #00ffff;">==</span> <span style="color: #daa520;">2</span><span style="color: #20b2aa;">]</span>, as.is<span style="color: #00ffff;">=</span><span style="color: #daa520;">TRUE</span>, header<span style="color: #00ffff;">=</span><span style="color: #daa520;">FALSE</span>, sep<span style="color: #00ffff;">=</span><span style="color: #00ff00;">"="</span>, strip.white<span style="color: #00ffff;">=</span><span style="color: #daa520;">TRUE</span>, stringsAsFactors<span style="color: #00ffff;">=</span><span style="color: #daa520;">FALSE</span><span style="color: #20b2aa;">)</span>
 
-  met <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">read.table</span><span style="color: #20b2aa;">(</span>text<span style="color: #ff00ff;">=</span>textLines<span style="color: #20b2aa;">[</span>counts <span style="color: #ff00ff;">==</span> <span style="color: #daa520;">2</span><span style="color: #20b2aa;">]</span>, as.is<span style="color: #ff00ff;">=</span><span style="color: #daa520;">TRUE</span>, header<span style="color: #ff00ff;">=</span><span style="color: #daa520;">FALSE</span>, sep<span style="color: #ff00ff;">=</span><span style="color: #00ff00;">"="</span>, strip.white<span style="color: #ff00ff;">=</span><span style="color: #daa520;">TRUE</span>, stringsAsFactors<span style="color: #ff00ff;">=</span><span style="color: #daa520;">FALSE</span>, row.names <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">NULL</span>, col.names<span style="color: #ff00ff;">=</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"name"</span>, <span style="color: #00ff00;">"value"</span><span style="color: #20b2aa;">))</span>
+  met <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">read.table</span><span style="color: #20b2aa;">(</span>text<span style="color: #00ffff;">=</span>textLines<span style="color: #20b2aa;">[</span>counts <span style="color: #00ffff;">==</span> <span style="color: #daa520;">2</span><span style="color: #20b2aa;">]</span>, as.is<span style="color: #00ffff;">=</span><span style="color: #daa520;">TRUE</span>, header<span style="color: #00ffff;">=</span><span style="color: #daa520;">FALSE</span>, sep<span style="color: #00ffff;">=</span><span style="color: #00ff00;">"="</span>, strip.white<span style="color: #00ffff;">=</span><span style="color: #daa520;">TRUE</span>, stringsAsFactors<span style="color: #00ffff;">=</span><span style="color: #daa520;">FALSE</span>, row.names <span style="color: #00ffff;">=</span> <span style="color: #daa520;">NULL</span>, col.names<span style="color: #00ffff;">=</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"name"</span>, <span style="color: #00ff00;">"value"</span><span style="color: #20b2aa;">))</span>
 
-  met <span style="color: #ff00ff;">&lt;-</span> met<span style="color: #20b2aa;">[</span>!met$name <span style="color: #ff00ff;">==</span> <span style="color: #00ff00;">"GROUP"</span>, <span style="color: #20b2aa;">]</span>
-  met <span style="color: #ff00ff;">&lt;-</span> met<span style="color: #20b2aa;">[</span>!met$name <span style="color: #ff00ff;">==</span> <span style="color: #00ff00;">"END_GROUP"</span>, <span style="color: #20b2aa;">]</span>
-  <span style="color: #ff6347;">rownames</span><span style="color: #20b2aa;">(</span>met<span style="color: #20b2aa;">)</span> <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">tolower</span><span style="color: #20b2aa;">(</span>met<span style="color: #20b2aa;">[</span>, <span style="color: #00ff00;">"name"</span><span style="color: #20b2aa;">])</span>
-  met<span style="color: #20b2aa;">[</span>, <span style="color: #00ff00;">"name"</span><span style="color: #20b2aa;">]</span> <span style="color: #ff00ff;">&lt;-</span> <span style="color: #daa520;">NULL</span>
+  met <span style="color: #00ffff;">&lt;-</span> met<span style="color: #20b2aa;">[</span>!met$name <span style="color: #00ffff;">==</span> <span style="color: #00ff00;">"GROUP"</span>, <span style="color: #20b2aa;">]</span>
+  met <span style="color: #00ffff;">&lt;-</span> met<span style="color: #20b2aa;">[</span>!met$name <span style="color: #00ffff;">==</span> <span style="color: #00ff00;">"END_GROUP"</span>, <span style="color: #20b2aa;">]</span>
+  <span style="color: #ff6347;">rownames</span><span style="color: #20b2aa;">(</span>met<span style="color: #20b2aa;">)</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">tolower</span><span style="color: #20b2aa;">(</span>met<span style="color: #20b2aa;">[</span>, <span style="color: #00ff00;">"name"</span><span style="color: #20b2aa;">])</span>
+  met<span style="color: #20b2aa;">[</span>, <span style="color: #00ff00;">"name"</span><span style="color: #20b2aa;">]</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #daa520;">NULL</span>
 
-  met <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">as.list</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">as.data.frame</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">t</span><span style="color: #20b2aa;">(</span>met<span style="color: #20b2aa;">)</span>, stringsAsFactors<span style="color: #ff00ff;">=</span><span style="color: #daa520;">FALSE</span><span style="color: #20b2aa;">))</span>
+  met <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">as.list</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">as.data.frame</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">t</span><span style="color: #20b2aa;">(</span>met<span style="color: #20b2aa;">)</span>, stringsAsFactors<span style="color: #00ffff;">=</span><span style="color: #daa520;">FALSE</span><span style="color: #20b2aa;">))</span>
 
-  bands<span style="color: #ff00ff;">=</span><span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span>raster.files, <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
-    r <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">raster</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span>product, <span style="color: #00ff00;">"/"</span>, met<span style="color: #20b2aa;">[[</span>x<span style="color: #20b2aa;">]]))</span>
-    r@title <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">names</span><span style="color: #20b2aa;">(</span>raster.files<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>raster.files<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>raster.files, <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>a<span style="color: #20b2aa;">)</span> x <span style="color: #ff00ff;">%</span><span style="color: #00ffff;">in</span><span style="color: #ff00ff;">%</span> a<span style="color: #20b2aa;">)]]</span>
-    <span style="color: #ff6347;">NAvalue</span><span style="color: #20b2aa;">(</span>r<span style="color: #20b2aa;">)</span> <span style="color: #ff00ff;">&lt;-</span> <span style="color: #daa520;">0</span>
-    <span style="color: #00ffff;">return</span><span style="color: #20b2aa;">(</span>r<span style="color: #20b2aa;">)</span>
+  bands<span style="color: #00ffff;">=</span><span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span>raster.files, <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+    r <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">raster</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span>product, <span style="color: #00ff00;">"/"</span>, met<span style="color: #20b2aa;">[[</span>x<span style="color: #20b2aa;">]]))</span>
+    r@title <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">names</span><span style="color: #20b2aa;">(</span>raster.files<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>raster.files<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>raster.files, <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>a<span style="color: #20b2aa;">)</span> x <span style="color: #00ffff;">%</span><span style="color: #ff00ff;">in</span><span style="color: #00ffff;">%</span> a<span style="color: #20b2aa;">)]]</span>
+    <span style="color: #ff6347;">NAvalue</span><span style="color: #20b2aa;">(</span>r<span style="color: #20b2aa;">)</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #daa520;">0</span>
+    <span style="color: #ff00ff;">return</span><span style="color: #20b2aa;">(</span>r<span style="color: #20b2aa;">)</span>
   <span style="color: #20b2aa;">})</span>
 
-  <span style="color: #00ffff;">return</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">list</span><span style="color: #20b2aa;">(</span>metadata<span style="color: #ff00ff;">=</span>met,
-    band<span style="color: #ff00ff;">=</span>bands<span style="color: #20b2aa;">)</span>
+  <span style="color: #ff00ff;">return</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">list</span><span style="color: #20b2aa;">(</span>metadata<span style="color: #00ffff;">=</span>met,
+    band<span style="color: #00ffff;">=</span>bands<span style="color: #20b2aa;">)</span>
   <span style="color: #20b2aa;">)</span>
 <span style="color: #20b2aa;">}</span>
-<span style="color: #ff00ff;">require</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
-rs.readL<span style="color: #daa520;">8</span> <span style="color: #ff00ff;">&lt;-</span> ReadLandsat<span style="color: #daa520;">8</span>
+<span style="color: #00ffff;">require</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
+rs.readL<span style="color: #daa520;">8</span> <span style="color: #00ffff;">&lt;-</span> ReadLandsat<span style="color: #daa520;">8</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-3-8" class="outline-3">
-<h3 id="sec-3-8"><span class="section-number-3">3.8</span> rs.DNtoTOARadiance</h3>
-<div class="outline-text-3" id="text-3-8">
+<div id="outline-container-sec-3-2-2" class="outline-4">
+<h4 id="sec-3-2-2"><span class="section-number-4">3.2.2</span> rs.DNtoTOARadiance</h4>
+<div class="outline-text-4" id="text-3-2-2">
 <ul class="org-ul">
 <li>State &ldquo;CODE&rdquo;       from &ldquo;DEMO&rdquo;       <span class="timestamp-wrapper"><span class="timestamp">[2014-09-18 Thu 14:22]</span></span>
 </li>
 </ul>
 </div>
-<div id="outline-container-sec-3-8-1" class="outline-4">
-<h4 id="sec-3-8-1"><span class="section-number-4">3.8.1</span> Reference DNtoTOARadiance</h4>
-<div class="outline-text-4" id="text-3-8-1">
+<ol class="org-ol"><li>Reference DNtoTOARadiance<br  /><div class="outline-text-5" id="text-3-2-2-1">
 <ul class="org-ul">
 <li>State &ldquo;CODE&rdquo;       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2014-09-18 Thu 14:21]</span></span>
 </li>
@@ -654,135 +634,129 @@ rs.readL<span style="color: #daa520;">8</span> <span style="color: #ff00ff;">&lt
 
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #ff00ff;">library</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
-l<span style="color: #daa520;">8</span>.lst  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>, ReadLandsat<span style="color: #daa520;">8</span><span style="color: #20b2aa;">)</span>
-dir.toaRad  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaRad/"</span>
-bandnames <span style="color: #ff00ff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
+<pre class="src src-R"><span style="color: #00ffff;">library</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
+l<span style="color: #daa520;">8</span>.lst  <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>, ReadLandsat<span style="color: #daa520;">8</span><span style="color: #20b2aa;">)</span>
+dir.toaRad  <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaRad/"</span>
+bandnames <span style="color: #00ffff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
      <span style="color: #00ff00;">"nir"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span>,
      <span style="color: #00ff00;">"panchromatic"</span>,
      <span style="color: #00ff00;">"cirrus"</span>,
      <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span><span style="color: #20b2aa;">)</span>
-<span style="color: #00ffff;">for</span><span style="color: #20b2aa;">(</span>i <span style="color: #00ffff;">in</span> l<span style="color: #daa520;">8</span>.lst<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
-  sceneName  <span style="color: #ff00ff;">&lt;-</span> i$metadata$landsat_scene_id
-  <span style="color: #00ffff;">for</span><span style="color: #20b2aa;">(</span>j <span style="color: #00ffff;">in</span> bandnames<span style="color: #20b2aa;">){</span>
-     idx <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> j <span style="color: #ff00ff;">%</span><span style="color: #00ffff;">in</span><span style="color: #ff00ff;">%</span> x<span style="color: #20b2aa;">)]</span> <span style="color: #cccccc;"># </span><span style="color: #cccccc;">a number</span>
-     bandidx <span style="color: #ff00ff;">&lt;-</span> <span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"file_name_band_"</span>, idx<span style="color: #20b2aa;">)</span>
+<span style="color: #ff00ff;">for</span><span style="color: #20b2aa;">(</span>i <span style="color: #ff00ff;">in</span> l<span style="color: #daa520;">8</span>.lst<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+  sceneName  <span style="color: #00ffff;">&lt;-</span> i$metadata$landsat_scene_id
+  <span style="color: #ff00ff;">for</span><span style="color: #20b2aa;">(</span>j <span style="color: #ff00ff;">in</span> bandnames<span style="color: #20b2aa;">){</span>
+     idx <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> j <span style="color: #00ffff;">%</span><span style="color: #ff00ff;">in</span><span style="color: #00ffff;">%</span> x<span style="color: #20b2aa;">)]</span> <span style="color: #00bfff;"># </span><span style="color: #00bfff;">a number</span>
+     bandidx <span style="color: #00ffff;">&lt;-</span> <span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"file_name_band_"</span>, idx<span style="color: #20b2aa;">)</span>
      <span style="color: #ff6347;">grepl</span><span style="color: #20b2aa;">(</span>i$metadata, bandidx<span style="color: #20b2aa;">)</span>
-     bandName <span style="color: #ff00ff;">&lt;-</span>   i$metadata$paste<span style="color: #daa520;">0</span>
-     Rad.rst  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">ToTOARadiance</span><span style="color: #20b2aa;">(</span>i, j<span style="color: #20b2aa;">)</span>
-     <span style="color: #ff6347;">writeRaster</span><span style="color: #20b2aa;">(</span>Rad.rst, filename <span style="color: #ff00ff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRad, sceneName, bandName<span style="color: #20b2aa;">)</span>, overwrite <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
+     bandName <span style="color: #00ffff;">&lt;-</span>   i$metadata$paste<span style="color: #daa520;">0</span>
+     Rad.rst  <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">ToTOARadiance</span><span style="color: #20b2aa;">(</span>i, j<span style="color: #20b2aa;">)</span>
+     <span style="color: #ff6347;">writeRaster</span><span style="color: #20b2aa;">(</span>Rad.rst, filename <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRad, sceneName, bandName<span style="color: #20b2aa;">)</span>, overwrite <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
     <span style="color: #20b2aa;">}</span>
 <span style="color: #20b2aa;">}</span>
 </pre>
 </div>
 </div>
-</div>
-<div id="outline-container-sec-3-8-2" class="outline-4">
-<h4 id="sec-3-8-2"><span class="section-number-4">3.8.2</span> Code</h4>
-</div>
+</li>
+<li>Code<br  /></li>
 
-<div id="outline-container-sec-3-8-3" class="outline-4">
-<h4 id="sec-3-8-3"><span class="section-number-4">3.8.3</span> Demo</h4>
-<div class="outline-text-4" id="text-3-8-3">
+<li>Demo<br  /><div class="outline-text-5" id="text-3-2-2-3">
 <div class="org-src-container">
 
 <pre class="src src-R"><span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/src/main/R/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/R"</span><span style="color: #20b2aa;">)</span>
 <span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/TIR/R/"</span><span style="color: #20b2aa;">)</span>
-driver     <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"D://tian/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/"</span>      <span style="color: #cccccc;"># </span><span style="color: #cccccc;">Windows</span>
-driver     <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/"</span> <span style="color: #cccccc;"># </span><span style="color: #cccccc;">Linux</span>
-dir.tif    <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>driver, <span style="color: #00ff00;">"at</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">_Sensor"</span><span style="color: #20b2aa;">)</span>
-dir.toaRad <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>driver, <span style="color: #00ff00;">"at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaRad"</span><span style="color: #20b2aa;">)</span>
-dir.tmp    <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>driver, <span style="color: #00ff00;">"raster_tmp"</span><span style="color: #20b2aa;">)</span>
-<span style="color: #ff6347;">rasterOptions</span><span style="color: #20b2aa;">(</span>tmpdir <span style="color: #ff00ff;">=</span> dir.tmp<span style="color: #20b2aa;">)</span>  
-<span style="color: #ff00ff;">library</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
-<span style="color: #ff6347;">setwd</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>  <span style="color: #cccccc;">## </span><span style="color: #cccccc;">very important tips for use rLandsat</span><span style="color: #daa520;">8</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">files  &lt;- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">basename(files)</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">l</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">.lst  &lt;- lapply(basename(files), ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">)</span>
-l<span style="color: #daa520;">8</span>.lst   <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>, ReadLandsat<span style="color: #daa520;">8</span><span style="color: #20b2aa;">)</span>
-bandnames <span style="color: #ff00ff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
+driver     <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"D://tian/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/"</span>      <span style="color: #00bfff;"># </span><span style="color: #00bfff;">Windows</span>
+driver     <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/"</span> <span style="color: #00bfff;"># </span><span style="color: #00bfff;">Linux</span>
+dir.tif    <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>driver, <span style="color: #00ff00;">"at</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">_Sensor"</span><span style="color: #20b2aa;">)</span>
+dir.toaRad <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>driver, <span style="color: #00ff00;">"at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaRad"</span><span style="color: #20b2aa;">)</span>
+dir.tmp    <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>driver, <span style="color: #00ff00;">"raster_tmp"</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">rasterOptions</span><span style="color: #20b2aa;">(</span>tmpdir <span style="color: #00ffff;">=</span> dir.tmp<span style="color: #20b2aa;">)</span>  
+<span style="color: #00ffff;">library</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">setwd</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>  <span style="color: #00bfff;">## </span><span style="color: #00bfff;">very important tips for use rLandsat</span><span style="color: #daa520;">8</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">files  &lt;- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">basename(files)</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">l</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">.lst  &lt;- lapply(basename(files), ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">)</span>
+l<span style="color: #daa520;">8</span>.lst   <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>, ReadLandsat<span style="color: #daa520;">8</span><span style="color: #20b2aa;">)</span>
+bandnames <span style="color: #00ffff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
               <span style="color: #00ff00;">"nir"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span>,
               <span style="color: #00ff00;">"panchromatic"</span>,
               <span style="color: #00ff00;">"cirrus"</span>,
               <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span><span style="color: #20b2aa;">)</span>
-<span style="color: #00ffff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #00ffff;">in</span> l<span style="color: #daa520;">8</span>.lst<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
-        sceneName  <span style="color: #ff00ff;">&lt;-</span> i$metadata$landsat_scene_id
-        <span style="color: #00ffff;">if</span> <span style="color: #20b2aa;">(</span>!<span style="color: #ff6347;">file.exists</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRad, sceneName<span style="color: #20b2aa;">)))</span> <span style="color: #20b2aa;">{</span>
-                <span style="color: #ff6347;">dir.create</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRad, sceneName<span style="color: #20b2aa;">)</span>, recursive <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff00ff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #ff00ff;">in</span> l<span style="color: #daa520;">8</span>.lst<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+        sceneName  <span style="color: #00ffff;">&lt;-</span> i$metadata$landsat_scene_id
+        <span style="color: #ff00ff;">if</span> <span style="color: #20b2aa;">(</span>!<span style="color: #ff6347;">file.exists</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRad, sceneName<span style="color: #20b2aa;">)))</span> <span style="color: #20b2aa;">{</span>
+                <span style="color: #ff6347;">dir.create</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRad, sceneName<span style="color: #20b2aa;">)</span>, recursive <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
         <span style="color: #20b2aa;">}</span>
-        <span style="color: #00ffff;">for</span><span style="color: #20b2aa;">(</span>j <span style="color: #00ffff;">in</span> bandnames<span style="color: #20b2aa;">){</span>
-                idx <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> j <span style="color: #ff00ff;">%</span><span style="color: #00ffff;">in</span><span style="color: #ff00ff;">%</span> x<span style="color: #20b2aa;">)]</span> <span style="color: #cccccc;"># </span><span style="color: #cccccc;">a number</span>
-                bandidx <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"file_name_band_"</span>, idx<span style="color: #20b2aa;">)</span>
-                bandName <span style="color: #ff00ff;">&lt;-</span>  <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>i, <span style="color: #00ff00;">"[["</span>, bandidx<span style="color: #20b2aa;">)[[</span><span style="color: #daa520;">1</span><span style="color: #20b2aa;">]]</span>
-                <span style="color: #cccccc;"># </span><span style="color: #cccccc;">fileName &lt;- paste</span><span style="color: #daa520;">0</span><span style="color: #cccccc;">(tools::file_path_sans_ext(bandName), "_TOARad.tif")               </span>
-                Rad.rst  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">ToTOARadiance</span><span style="color: #20b2aa;">(</span>i, j<span style="color: #20b2aa;">)</span>
-                <span style="color: #ff6347;">writeRaster</span><span style="color: #20b2aa;">(</span>Rad.rst, filename <span style="color: #ff00ff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRad, sceneName, bandName<span style="color: #20b2aa;">)</span>, overwrite <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
-                raster::<span style="color: #ff6347;">removeTmpFiles</span><span style="color: #20b2aa;">(</span>h <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">0</span>.<span style="color: #daa520;">5</span><span style="color: #20b2aa;">)</span> <span style="color: #cccccc;">## </span><span style="color: #cccccc;">Improtant tips for save hardisk</span>
+        <span style="color: #ff00ff;">for</span><span style="color: #20b2aa;">(</span>j <span style="color: #ff00ff;">in</span> bandnames<span style="color: #20b2aa;">){</span>
+                idx <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> j <span style="color: #00ffff;">%</span><span style="color: #ff00ff;">in</span><span style="color: #00ffff;">%</span> x<span style="color: #20b2aa;">)]</span> <span style="color: #00bfff;"># </span><span style="color: #00bfff;">a number</span>
+                bandidx <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"file_name_band_"</span>, idx<span style="color: #20b2aa;">)</span>
+                bandName <span style="color: #00ffff;">&lt;-</span>  <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>i, <span style="color: #00ff00;">"[["</span>, bandidx<span style="color: #20b2aa;">)[[</span><span style="color: #daa520;">1</span><span style="color: #20b2aa;">]]</span>
+                <span style="color: #00bfff;"># </span><span style="color: #00bfff;">fileName &lt;- paste</span><span style="color: #daa520;">0</span><span style="color: #00bfff;">(tools::file_path_sans_ext(bandName), "_TOARad.tif")               </span>
+                Rad.rst  <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">ToTOARadiance</span><span style="color: #20b2aa;">(</span>i, j<span style="color: #20b2aa;">)</span>
+                <span style="color: #ff6347;">writeRaster</span><span style="color: #20b2aa;">(</span>Rad.rst, filename <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRad, sceneName, bandName<span style="color: #20b2aa;">)</span>, overwrite <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
+                raster::<span style="color: #ff6347;">removeTmpFiles</span><span style="color: #20b2aa;">(</span>h <span style="color: #00ffff;">=</span> <span style="color: #daa520;">0</span>.<span style="color: #daa520;">5</span><span style="color: #20b2aa;">)</span> <span style="color: #00bfff;">## </span><span style="color: #00bfff;">Improtant tips for save hardisk</span>
         <span style="color: #20b2aa;">}</span>
 <span style="color: #20b2aa;">}</span>
 </pre>
 </div>
 </div>
-</div>
+</li></ol>
 </div>
 
-<div id="outline-container-sec-3-9" class="outline-3">
-<h3 id="sec-3-9"><span class="section-number-3">3.9</span> l8.DNtoTOARadiance</h3>
-<div class="outline-text-3" id="text-3-9">
-</div><div id="outline-container-sec-3-9-1" class="outline-4">
-<h4 id="sec-3-9-1"><span class="section-number-4">3.9.1</span> refercode rLandsat8::ToTOARadiance</h4>
-<div class="outline-text-4" id="text-3-9-1">
+<div id="outline-container-sec-3-2-3" class="outline-4">
+<h4 id="sec-3-2-3"><span class="section-number-4">3.2.3</span> l8.DNtoTOARadiance</h4>
+<div class="outline-text-4" id="text-3-2-3">
+</div><ol class="org-ol"><li>refercode rLandsat8::ToTOARadiance<br  /><div class="outline-text-5" id="text-3-2-3-1">
 <div class="org-src-container">
 
-<pre class="src src-R"> <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' creates a raster with the TOA radiance </span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' @description Creates a raster with the TOA radiance</span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">'</span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' @param landsat</span><span style="color: #daa520;">8</span><span style="color: #cccccc;"> list returned by rLandsat</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">::ReadLandsat</span><span style="color: #daa520;">8</span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' @param band Landsat </span><span style="color: #daa520;">11</span><span style="color: #cccccc;"> bandname (one of "aerosol", "blue", "green", "red", "nir", "swir</span><span style="color: #daa520;">1</span><span style="color: #cccccc;">", "swir</span><span style="color: #daa520;">2</span><span style="color: #cccccc;">", "panchromatic", "cirrus", "tirs</span><span style="color: #daa520;">1</span><span style="color: #cccccc;">", "tirs</span><span style="color: #daa520;">2</span><span style="color: #cccccc;">" </span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' @return TOA Radiance raster</span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' @examples \dontrun{</span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' ls</span><span style="color: #daa520;">8</span><span style="color: #cccccc;"> &lt;- ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">("LC</span><span style="color: #daa520;">81880342014174</span><span style="color: #cccccc;">LGN</span><span style="color: #daa520;">00</span><span style="color: #cccccc;">")</span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' r &lt;- ToTOARadiance(ls</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">, "red")</span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' }</span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' @note form rLandsat</span><span style="color: #daa520;">8</span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' </span><span style="color: #ffa500;">@export</span>
- <span style="color: #cccccc;">#</span><span style="color: #cccccc;">' @import raster</span>
+<pre class="src src-R"> <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' creates a raster with the TOA radiance </span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' @description Creates a raster with the TOA radiance</span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">'</span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' @param landsat</span><span style="color: #daa520;">8</span><span style="color: #00bfff;"> list returned by rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">::ReadLandsat</span><span style="color: #daa520;">8</span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' @param band Landsat </span><span style="color: #daa520;">11</span><span style="color: #00bfff;"> bandname (one of "aerosol", "blue", "green", "red", "nir", "swir</span><span style="color: #daa520;">1</span><span style="color: #00bfff;">", "swir</span><span style="color: #daa520;">2</span><span style="color: #00bfff;">", "panchromatic", "cirrus", "tirs</span><span style="color: #daa520;">1</span><span style="color: #00bfff;">", "tirs</span><span style="color: #daa520;">2</span><span style="color: #00bfff;">" </span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' @return TOA Radiance raster</span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' @examples \dontrun{</span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' ls</span><span style="color: #daa520;">8</span><span style="color: #00bfff;"> &lt;- ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">("LC</span><span style="color: #daa520;">81880342014174</span><span style="color: #00bfff;">LGN</span><span style="color: #daa520;">00</span><span style="color: #00bfff;">")</span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' r &lt;- ToTOARadiance(ls</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">, "red")</span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' }</span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' @note form rLandsat</span><span style="color: #daa520;">8</span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' </span><span style="color: #ffa500;">@export</span>
+ <span style="color: #00bfff;">#</span><span style="color: #00bfff;">' @import raster</span>
 
- <span style="color: #ff6347;">ToTOARadiance</span> <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>landsat<span style="color: #daa520;">8</span>, band<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+ <span style="color: #ff6347;">ToTOARadiance</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>landsat<span style="color: #daa520;">8</span>, band<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
 
-   bandnames <span style="color: #ff00ff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
+   bandnames <span style="color: #00ffff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
    <span style="color: #00ff00;">"nir"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span>,
    <span style="color: #00ff00;">"panchromatic"</span>,
    <span style="color: #00ff00;">"cirrus"</span>,
    <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span><span style="color: #20b2aa;">)</span>
 
-   allowedbands <span style="color: #ff00ff;">&lt;-</span> bandnames
+   allowedbands <span style="color: #00ffff;">&lt;-</span> bandnames
 
-   <span style="color: #00ffff;">if</span> <span style="color: #20b2aa;">(</span>!band <span style="color: #ff00ff;">%</span><span style="color: #00ffff;">in</span><span style="color: #ff00ff;">%</span> allowedbands<span style="color: #20b2aa;">)</span>
+   <span style="color: #ff00ff;">if</span> <span style="color: #20b2aa;">(</span>!band <span style="color: #00ffff;">%</span><span style="color: #ff00ff;">in</span><span style="color: #00ffff;">%</span> allowedbands<span style="color: #20b2aa;">)</span>
    <span style="color: #20b2aa;">{</span>
-        <span style="color: #00ffff;">stop</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">paste</span><span style="color: #20b2aa;">(</span>band, <span style="color: #00ff00;">"band not allowed"</span><span style="color: #20b2aa;">))</span>
+        <span style="color: #ff00ff;">stop</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">paste</span><span style="color: #20b2aa;">(</span>band, <span style="color: #00ff00;">"band not allowed"</span><span style="color: #20b2aa;">))</span>
    <span style="color: #20b2aa;">}</span>
 
-   idx <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> band <span style="color: #ff00ff;">%</span><span style="color: #00ffff;">in</span><span style="color: #ff00ff;">%</span> x<span style="color: #20b2aa;">)]</span>
+   idx <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> band <span style="color: #00ffff;">%</span><span style="color: #ff00ff;">in</span><span style="color: #00ffff;">%</span> x<span style="color: #20b2aa;">)]</span>
 
-   ml <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">as.numeric</span><span style="color: #20b2aa;">(</span>landsat<span style="color: #daa520;">8</span>$metadata<span style="color: #20b2aa;">[[</span><span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"radiance_mult_band_"</span>,idx<span style="color: #20b2aa;">)]])</span>
-   al <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">as.numeric</span><span style="color: #20b2aa;">(</span>landsat<span style="color: #daa520;">8</span>$metadata<span style="color: #20b2aa;">[[</span><span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"radiance_add_band_"</span>,idx<span style="color: #20b2aa;">)]])</span>
+   ml <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">as.numeric</span><span style="color: #20b2aa;">(</span>landsat<span style="color: #daa520;">8</span>$metadata<span style="color: #20b2aa;">[[</span><span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"radiance_mult_band_"</span>,idx<span style="color: #20b2aa;">)]])</span>
+   al <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">as.numeric</span><span style="color: #20b2aa;">(</span>landsat<span style="color: #daa520;">8</span>$metadata<span style="color: #20b2aa;">[[</span><span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"radiance_add_band_"</span>,idx<span style="color: #20b2aa;">)]])</span>
 
-   TOArad <span style="color: #ff00ff;">&lt;-</span> landsat<span style="color: #daa520;">8</span>$band<span style="color: #20b2aa;">[[</span>band<span style="color: #20b2aa;">]]</span> * ml <span style="color: #ff00ff;">+</span> al
+   TOArad <span style="color: #00ffff;">&lt;-</span> landsat<span style="color: #daa520;">8</span>$band<span style="color: #20b2aa;">[[</span>band<span style="color: #20b2aa;">]]</span> * ml <span style="color: #00ffff;">+</span> al
 
-   <span style="color: #00ffff;">return</span><span style="color: #20b2aa;">(</span>TOArad<span style="color: #20b2aa;">)</span>
+   <span style="color: #ff00ff;">return</span><span style="color: #20b2aa;">(</span>TOArad<span style="color: #20b2aa;">)</span>
 
  <span style="color: #20b2aa;">}</span>
 
- <span style="color: #cccccc;">## </span><span style="color: #cccccc;">Add new</span>
- <span style="color: #ff6347;">l8.DNtoTOARadiance</span> <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>idenfier<span style="color: #20b2aa;">){</span>
-bandnames <span style="color: #ff00ff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
+ <span style="color: #00bfff;">## </span><span style="color: #00bfff;">Add new</span>
+ <span style="color: #ff6347;">l8.DNtoTOARadiance</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>idenfier<span style="color: #20b2aa;">){</span>
+bandnames <span style="color: #00ffff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
    <span style="color: #00ff00;">"nir"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span>,
    <span style="color: #00ff00;">"panchromatic"</span>,
    <span style="color: #00ff00;">"cirrus"</span>,
    <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span><span style="color: #20b2aa;">)</span>
 
-   <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">){</span><span style="color: #ff6347;">ToTOARadiance</span><span style="color: #20b2aa;">(</span>idenfier, i<span style="color: #20b2aa;">)})</span> 
+   <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">){</span><span style="color: #ff6347;">ToTOARadiance</span><span style="color: #20b2aa;">(</span>idenfier, i<span style="color: #20b2aa;">)})</span> 
  <span style="color: #20b2aa;">}</span>
 </pre>
 </div>
@@ -793,187 +767,293 @@ bandnames <span style="color: #ff00ff;">&lt;-</span><span style="color: #ff6347;
 <pre class="src src-R"></pre>
 </div>
 </div>
+</li>
+
+<li>refercode<br  /></li>
+<li>Code<br  /></li>
+<li>Demo<br  /></li></ol>
 </div>
 
-<div id="outline-container-sec-3-9-2" class="outline-4">
-<h4 id="sec-3-9-2"><span class="section-number-4">3.9.2</span> refercode</h4>
-</div>
-<div id="outline-container-sec-3-9-3" class="outline-4">
-<h4 id="sec-3-9-3"><span class="section-number-4">3.9.3</span> Code</h4>
-</div>
-<div id="outline-container-sec-3-9-4" class="outline-4">
-<h4 id="sec-3-9-4"><span class="section-number-4">3.9.4</span> Demo</h4>
-</div>
-</div>
-
-<div id="outline-container-sec-3-10" class="outline-3">
-<h3 id="sec-3-10"><span class="section-number-3">3.10</span> DNtoTOAReflectance</h3>
-<div class="outline-text-3" id="text-3-10">
+<div id="outline-container-sec-3-2-4" class="outline-4">
+<h4 id="sec-3-2-4"><span class="section-number-4">3.2.4</span> DNtoTOAReflectance</h4>
+<div class="outline-text-4" id="text-3-2-4">
 <ul class="org-ul">
 <li>State &ldquo;CODE&rdquo;       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2014-09-18 Thu 15:16]</span></span>
 </li>
 </ul>
 </div>
 
-<div id="outline-container-sec-3-10-1" class="outline-4">
-<h4 id="sec-3-10-1"><span class="section-number-4">3.10.1</span> Code</h4>
-</div>
-<div id="outline-container-sec-3-10-2" class="outline-4">
-<h4 id="sec-3-10-2"><span class="section-number-4">3.10.2</span> Demo</h4>
-<div class="outline-text-4" id="text-3-10-2">
+<ol class="org-ol"><li>Code<br  /></li>
+<li>Demo<br  /><div class="outline-text-5" id="text-3-2-4-2">
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #ff00ff;">source</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/Rprofile/R/sourceDir.R"</span><span style="color: #20b2aa;">)</span>
+<pre class="src src-R"><span style="color: #00ffff;">source</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/Rprofile/R/sourceDir.R"</span><span style="color: #20b2aa;">)</span>
 <span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/src/main/R/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/R"</span><span style="color: #20b2aa;">)</span>
 <span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/TIR/R/"</span><span style="color: #20b2aa;">)</span>
-dir.tif  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">_Sensor"</span>
-dir.toaRef  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaRef"</span>
-dir.tmp <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/raster_tmp"</span>
-<span style="color: #ff00ff;">library</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
-<span style="color: #ff6347;">rasterOptions</span><span style="color: #20b2aa;">(</span>tmpdir <span style="color: #ff00ff;">=</span> dir.tmp<span style="color: #20b2aa;">)</span>  
+dir.tif  <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">_Sensor"</span>
+dir.toaRef  <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaRef"</span>
+dir.tmp <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/raster_tmp"</span>
+<span style="color: #00ffff;">library</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">rasterOptions</span><span style="color: #20b2aa;">(</span>tmpdir <span style="color: #00ffff;">=</span> dir.tmp<span style="color: #20b2aa;">)</span>  
 
-<span style="color: #ff6347;">setwd</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>  <span style="color: #cccccc;">## </span><span style="color: #cccccc;">very important tips for use rLandsat</span><span style="color: #daa520;">8</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">files  &lt;- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">basename(files)</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">l</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">.lst  &lt;- lapply(basename(files), ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">)</span>
-l<span style="color: #daa520;">8</span>.lst   <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>, ReadLandsat<span style="color: #daa520;">8</span><span style="color: #20b2aa;">)</span>
-bandnames <span style="color: #ff00ff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
+<span style="color: #ff6347;">setwd</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>  <span style="color: #00bfff;">## </span><span style="color: #00bfff;">very important tips for use rLandsat</span><span style="color: #daa520;">8</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">files  &lt;- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">basename(files)</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">l</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">.lst  &lt;- lapply(basename(files), ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">)</span>
+l<span style="color: #daa520;">8</span>.lst   <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>, ReadLandsat<span style="color: #daa520;">8</span><span style="color: #20b2aa;">)</span>
+bandnames <span style="color: #00ffff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
               <span style="color: #00ff00;">"nir"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span>,
               <span style="color: #00ff00;">"panchromatic"</span>,
               <span style="color: #00ff00;">"cirrus"</span><span style="color: #20b2aa;">)</span>
-<span style="color: #00ffff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #00ffff;">in</span> l<span style="color: #daa520;">8</span>.lst<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
-        sceneName  <span style="color: #ff00ff;">&lt;-</span> i$metadata$landsat_scene_id
-        <span style="color: #00ffff;">if</span> <span style="color: #20b2aa;">(</span>!<span style="color: #ff6347;">file.exists</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRef, sceneName<span style="color: #20b2aa;">)))</span> <span style="color: #20b2aa;">{</span>
-                <span style="color: #ff6347;">dir.create</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRef, sceneName<span style="color: #20b2aa;">)</span>, recursive <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff00ff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #ff00ff;">in</span> l<span style="color: #daa520;">8</span>.lst<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+        sceneName  <span style="color: #00ffff;">&lt;-</span> i$metadata$landsat_scene_id
+        <span style="color: #ff00ff;">if</span> <span style="color: #20b2aa;">(</span>!<span style="color: #ff6347;">file.exists</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRef, sceneName<span style="color: #20b2aa;">)))</span> <span style="color: #20b2aa;">{</span>
+                <span style="color: #ff6347;">dir.create</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRef, sceneName<span style="color: #20b2aa;">)</span>, recursive <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
         <span style="color: #20b2aa;">}</span>
-        <span style="color: #00ffff;">for</span><span style="color: #20b2aa;">(</span>j <span style="color: #00ffff;">in</span> bandnames<span style="color: #20b2aa;">){</span>
-                idx <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> j <span style="color: #ff00ff;">%</span><span style="color: #00ffff;">in</span><span style="color: #ff00ff;">%</span> x<span style="color: #20b2aa;">)]</span> <span style="color: #cccccc;"># </span><span style="color: #cccccc;">a number</span>
-                bandidx <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"file_name_band_"</span>, idx<span style="color: #20b2aa;">)</span>
-                bandName <span style="color: #ff00ff;">&lt;-</span>  <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>i, <span style="color: #00ff00;">"[["</span>, bandidx<span style="color: #20b2aa;">)[[</span><span style="color: #daa520;">1</span><span style="color: #20b2aa;">]]</span>
-                <span style="color: #cccccc;"># </span><span style="color: #cccccc;">fileName &lt;- paste</span><span style="color: #daa520;">0</span><span style="color: #cccccc;">(tools::file_path_sans_ext(bandName), "_TOARef.tif")</span>
-                Ref.rst  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">ToTOAReflectance</span><span style="color: #20b2aa;">(</span>i, j<span style="color: #20b2aa;">)</span>
-                <span style="color: #ff6347;">writeRaster</span><span style="color: #20b2aa;">(</span>Ref.rst, filename <span style="color: #ff00ff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRef, sceneName, bandName<span style="color: #20b2aa;">)</span>, overwrite <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
-                raster::<span style="color: #ff6347;">removeTmpFiles</span><span style="color: #20b2aa;">(</span>h <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">0</span>.<span style="color: #daa520;">5</span><span style="color: #20b2aa;">)</span> <span style="color: #cccccc;">## </span><span style="color: #cccccc;">Improtant tips for save hardisk</span>
+        <span style="color: #ff00ff;">for</span><span style="color: #20b2aa;">(</span>j <span style="color: #ff00ff;">in</span> bandnames<span style="color: #20b2aa;">){</span>
+                idx <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> j <span style="color: #00ffff;">%</span><span style="color: #ff00ff;">in</span><span style="color: #00ffff;">%</span> x<span style="color: #20b2aa;">)]</span> <span style="color: #00bfff;"># </span><span style="color: #00bfff;">a number</span>
+                bandidx <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"file_name_band_"</span>, idx<span style="color: #20b2aa;">)</span>
+                bandName <span style="color: #00ffff;">&lt;-</span>  <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>i, <span style="color: #00ff00;">"[["</span>, bandidx<span style="color: #20b2aa;">)[[</span><span style="color: #daa520;">1</span><span style="color: #20b2aa;">]]</span>
+                <span style="color: #00bfff;"># </span><span style="color: #00bfff;">fileName &lt;- paste</span><span style="color: #daa520;">0</span><span style="color: #00bfff;">(tools::file_path_sans_ext(bandName), "_TOARef.tif")</span>
+                Ref.rst  <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">ToTOAReflectance</span><span style="color: #20b2aa;">(</span>i, j<span style="color: #20b2aa;">)</span>
+                <span style="color: #ff6347;">writeRaster</span><span style="color: #20b2aa;">(</span>Ref.rst, filename <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRef, sceneName, bandName<span style="color: #20b2aa;">)</span>, overwrite <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
+                raster::<span style="color: #ff6347;">removeTmpFiles</span><span style="color: #20b2aa;">(</span>h <span style="color: #00ffff;">=</span> <span style="color: #daa520;">0</span>.<span style="color: #daa520;">5</span><span style="color: #20b2aa;">)</span> <span style="color: #00bfff;">## </span><span style="color: #00bfff;">Improtant tips for save hardisk</span>
         <span style="color: #20b2aa;">}</span>
 <span style="color: #20b2aa;">}</span>
 </pre>
 </div>
 </div>
-</div>
+</li>
 
 
 
-<div id="outline-container-sec-3-10-3" class="outline-4">
-<h4 id="sec-3-10-3"><span class="section-number-4">3.10.3</span> Demo2</h4>
-<div class="outline-text-4" id="text-3-10-3">
+<li>Demo2<br  /><div class="outline-text-5" id="text-3-2-4-3">
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #ff00ff;">source</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/Rprofile/R/sourceDir.R"</span><span style="color: #20b2aa;">)</span>
+<pre class="src src-R"><span style="color: #00ffff;">source</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/Rprofile/R/sourceDir.R"</span><span style="color: #20b2aa;">)</span>
 <span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/src/main/R/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/R"</span><span style="color: #20b2aa;">)</span>
 <span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/TIR/R/"</span><span style="color: #20b2aa;">)</span>
-dir.tif  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">_Sensor"</span>
-dir.toaRefSun  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaRefSun"</span>
-dir.tmp <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/raster_tmp"</span>
-<span style="color: #ff00ff;">library</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
-<span style="color: #ff6347;">rasterOptions</span><span style="color: #20b2aa;">(</span>tmpdir <span style="color: #ff00ff;">=</span> dir.tmp<span style="color: #20b2aa;">)</span>  
-<span style="color: #ff6347;">setwd</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>  <span style="color: #cccccc;">## </span><span style="color: #cccccc;">very important tips for use rLandsat</span><span style="color: #daa520;">8</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">files  &lt;- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">basename(files)</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">l</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">.lst  &lt;- lapply(basename(files), ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">)</span>
-l<span style="color: #daa520;">8</span>.lst   <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>, ReadLandsat<span style="color: #daa520;">8</span><span style="color: #20b2aa;">)</span>
-bandnames <span style="color: #ff00ff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
+dir.tif  <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">_Sensor"</span>
+dir.toaRefSun  <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaRefSun"</span>
+dir.tmp <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/raster_tmp"</span>
+<span style="color: #00ffff;">library</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">rasterOptions</span><span style="color: #20b2aa;">(</span>tmpdir <span style="color: #00ffff;">=</span> dir.tmp<span style="color: #20b2aa;">)</span>  
+<span style="color: #ff6347;">setwd</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>  <span style="color: #00bfff;">## </span><span style="color: #00bfff;">very important tips for use rLandsat</span><span style="color: #daa520;">8</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">files  &lt;- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">basename(files)</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">l</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">.lst  &lt;- lapply(basename(files), ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">)</span>
+l<span style="color: #daa520;">8</span>.lst   <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>, ReadLandsat<span style="color: #daa520;">8</span><span style="color: #20b2aa;">)</span>
+bandnames <span style="color: #00ffff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"aerosol"</span>, <span style="color: #00ff00;">"blue"</span>, <span style="color: #00ff00;">"green"</span>, <span style="color: #00ff00;">"red"</span>,
               <span style="color: #00ff00;">"nir"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"swir</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span>,
               <span style="color: #00ff00;">"panchromatic"</span>,
               <span style="color: #00ff00;">"cirrus"</span><span style="color: #20b2aa;">)</span>
-<span style="color: #00ffff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #00ffff;">in</span> l<span style="color: #daa520;">8</span>.lst<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
-        sceneName  <span style="color: #ff00ff;">&lt;-</span> i$metadata$landsat_scene_id
-        <span style="color: #00ffff;">if</span> <span style="color: #20b2aa;">(</span>!<span style="color: #ff6347;">file.exists</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRefSun, sceneName<span style="color: #20b2aa;">)))</span> <span style="color: #20b2aa;">{</span>
-                <span style="color: #ff6347;">dir.create</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRefSun, sceneName<span style="color: #20b2aa;">)</span>, recursive <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff00ff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #ff00ff;">in</span> l<span style="color: #daa520;">8</span>.lst<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+        sceneName  <span style="color: #00ffff;">&lt;-</span> i$metadata$landsat_scene_id
+        <span style="color: #ff00ff;">if</span> <span style="color: #20b2aa;">(</span>!<span style="color: #ff6347;">file.exists</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRefSun, sceneName<span style="color: #20b2aa;">)))</span> <span style="color: #20b2aa;">{</span>
+                <span style="color: #ff6347;">dir.create</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRefSun, sceneName<span style="color: #20b2aa;">)</span>, recursive <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
         <span style="color: #20b2aa;">}</span>
-        <span style="color: #00ffff;">for</span><span style="color: #20b2aa;">(</span>j <span style="color: #00ffff;">in</span> bandnames<span style="color: #20b2aa;">){</span>
-                idx <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> j <span style="color: #ff00ff;">%</span><span style="color: #00ffff;">in</span><span style="color: #ff00ff;">%</span> x<span style="color: #20b2aa;">)]</span> <span style="color: #cccccc;"># </span><span style="color: #cccccc;">a number</span>
-                bandidx <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"file_name_band_"</span>, idx<span style="color: #20b2aa;">)</span>
-                bandName <span style="color: #ff00ff;">&lt;-</span>  <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>i, <span style="color: #00ff00;">"[["</span>, bandidx<span style="color: #20b2aa;">)[[</span><span style="color: #daa520;">1</span><span style="color: #20b2aa;">]]</span>
-                <span style="color: #cccccc;"># </span><span style="color: #cccccc;">fileName &lt;- paste</span><span style="color: #daa520;">0</span><span style="color: #cccccc;">(tools::file_path_sans_ext(bandName), "_TOARefSun.tif")</span>
-                Ref.rst  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">ToTOAReflectance</span><span style="color: #20b2aa;">(</span>i, j, is.suncorrected <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">TRUE</span><span style="color: #20b2aa;">)</span>
-                <span style="color: #ff6347;">writeRaster</span><span style="color: #20b2aa;">(</span>Ref.rst, filename <span style="color: #ff00ff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRefSun, sceneName, bandName<span style="color: #20b2aa;">)</span>, overwrite <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
-                raster::<span style="color: #ff6347;">removeTmpFiles</span><span style="color: #20b2aa;">(</span>h <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">0</span>.<span style="color: #daa520;">5</span><span style="color: #20b2aa;">)</span> <span style="color: #cccccc;">## </span><span style="color: #cccccc;">Improtant tips for save hardisk</span>
+        <span style="color: #ff00ff;">for</span><span style="color: #20b2aa;">(</span>j <span style="color: #ff00ff;">in</span> bandnames<span style="color: #20b2aa;">){</span>
+                idx <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> j <span style="color: #00ffff;">%</span><span style="color: #ff00ff;">in</span><span style="color: #00ffff;">%</span> x<span style="color: #20b2aa;">)]</span> <span style="color: #00bfff;"># </span><span style="color: #00bfff;">a number</span>
+                bandidx <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"file_name_band_"</span>, idx<span style="color: #20b2aa;">)</span>
+                bandName <span style="color: #00ffff;">&lt;-</span>  <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>i, <span style="color: #00ff00;">"[["</span>, bandidx<span style="color: #20b2aa;">)[[</span><span style="color: #daa520;">1</span><span style="color: #20b2aa;">]]</span>
+                <span style="color: #00bfff;"># </span><span style="color: #00bfff;">fileName &lt;- paste</span><span style="color: #daa520;">0</span><span style="color: #00bfff;">(tools::file_path_sans_ext(bandName), "_TOARefSun.tif")</span>
+                Ref.rst  <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">ToTOAReflectance</span><span style="color: #20b2aa;">(</span>i, j, is.suncorrected <span style="color: #00ffff;">=</span> <span style="color: #daa520;">TRUE</span><span style="color: #20b2aa;">)</span>
+                <span style="color: #ff6347;">writeRaster</span><span style="color: #20b2aa;">(</span>Ref.rst, filename <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaRefSun, sceneName, bandName<span style="color: #20b2aa;">)</span>, overwrite <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
+                raster::<span style="color: #ff6347;">removeTmpFiles</span><span style="color: #20b2aa;">(</span>h <span style="color: #00ffff;">=</span> <span style="color: #daa520;">0</span>.<span style="color: #daa520;">5</span><span style="color: #20b2aa;">)</span> <span style="color: #00bfff;">## </span><span style="color: #00bfff;">Improtant tips for save hardisk</span>
         <span style="color: #20b2aa;">}</span>
 <span style="color: #20b2aa;">}</span>
 </pre>
 </div>
 </div>
-</div>
+</li></ol>
 </div>
 
-
-<div id="outline-container-sec-3-11" class="outline-3">
-<h3 id="sec-3-11"><span class="section-number-3">3.11</span> Sun elevation Correction pixel by pixel, caculate sun elv use oce</h3>
+<div id="outline-container-sec-3-2-5" class="outline-4">
+<h4 id="sec-3-2-5"><span class="section-number-4">3.2.5</span> Sun elevation Correction pixel by pixel, caculate sun elv use oce</h4>
 </div>
-<div id="outline-container-sec-3-12" class="outline-3">
-<h3 id="sec-3-12"><span class="section-number-3">3.12</span> DNtoTOABT</h3>
-<div class="outline-text-3" id="text-3-12">
-</div><div id="outline-container-sec-3-12-1" class="outline-4">
-<h4 id="sec-3-12-1"><span class="section-number-4">3.12.1</span> Demo</h4>
-<div class="outline-text-4" id="text-3-12-1">
+<div id="outline-container-sec-3-2-6" class="outline-4">
+<h4 id="sec-3-2-6"><span class="section-number-4">3.2.6</span> DNtoTOABT</h4>
+<div class="outline-text-4" id="text-3-2-6">
+</div><ol class="org-ol"><li>Demo<br  /><div class="outline-text-5" id="text-3-2-6-1">
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #ff00ff;">source</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/Rprofile/R/sourceDir.R"</span><span style="color: #20b2aa;">)</span>
+<pre class="src src-R"><span style="color: #00ffff;">source</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/Rprofile/R/sourceDir.R"</span><span style="color: #20b2aa;">)</span>
 <span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/src/main/R/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/R"</span><span style="color: #20b2aa;">)</span>
 <span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/TIR/R/"</span><span style="color: #20b2aa;">)</span>
-dir.tif  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">_Sensor"</span>
-dir.toaBT  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaBT"</span>
-dir.tmp <span style="color: #ff00ff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/raster_tmp"</span>
-<span style="color: #ff00ff;">library</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
-<span style="color: #ff6347;">rasterOptions</span><span style="color: #20b2aa;">(</span>tmpdir <span style="color: #ff00ff;">=</span> dir.tmp<span style="color: #20b2aa;">)</span>
-<span style="color: #ff6347;">setwd</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>  <span style="color: #cccccc;">## </span><span style="color: #cccccc;">very important tips for use rLandsat</span><span style="color: #daa520;">8</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">files  &lt;- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">basename(files)</span>
-<span style="color: #cccccc;">## </span><span style="color: #cccccc;">l</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">.lst  &lt;- lapply(basename(files), ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #cccccc;">)</span>
-l<span style="color: #daa520;">8</span>.lst   <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>, ReadLandsat<span style="color: #daa520;">8</span><span style="color: #20b2aa;">)</span>
-bandnames <span style="color: #ff00ff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span><span style="color: #20b2aa;">)</span>
-<span style="color: #00ffff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #00ffff;">in</span> l<span style="color: #daa520;">8</span>.lst<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
-        sceneName  <span style="color: #ff00ff;">&lt;-</span> i$metadata$landsat_scene_id
-        <span style="color: #00ffff;">if</span> <span style="color: #20b2aa;">(</span>!<span style="color: #ff6347;">file.exists</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaBT, sceneName<span style="color: #20b2aa;">)))</span> <span style="color: #20b2aa;">{</span>
-                <span style="color: #ff6347;">dir.create</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaBT, sceneName<span style="color: #20b2aa;">)</span>, recursive <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
+dir.tif  <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">_Sensor"</span>
+dir.toaBT  <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaBT"</span>
+dir.tmp <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/raster_tmp"</span>
+<span style="color: #00ffff;">library</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">rasterOptions</span><span style="color: #20b2aa;">(</span>tmpdir <span style="color: #00ffff;">=</span> dir.tmp<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">setwd</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>  <span style="color: #00bfff;">## </span><span style="color: #00bfff;">very important tips for use rLandsat</span><span style="color: #daa520;">8</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">files  &lt;- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">basename(files)</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">l</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">.lst  &lt;- lapply(basename(files), ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">)</span>
+l<span style="color: #daa520;">8</span>.lst   <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>, ReadLandsat<span style="color: #daa520;">8</span><span style="color: #20b2aa;">)</span>
+bandnames <span style="color: #00ffff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff00ff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #ff00ff;">in</span> l<span style="color: #daa520;">8</span>.lst<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+        sceneName  <span style="color: #00ffff;">&lt;-</span> i$metadata$landsat_scene_id
+        <span style="color: #ff00ff;">if</span> <span style="color: #20b2aa;">(</span>!<span style="color: #ff6347;">file.exists</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaBT, sceneName<span style="color: #20b2aa;">)))</span> <span style="color: #20b2aa;">{</span>
+                <span style="color: #ff6347;">dir.create</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaBT, sceneName<span style="color: #20b2aa;">)</span>, recursive <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
         <span style="color: #20b2aa;">}</span>
-        <span style="color: #00ffff;">for</span><span style="color: #20b2aa;">(</span>j <span style="color: #00ffff;">in</span> bandnames<span style="color: #20b2aa;">){</span>
-                idx <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #00ffff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> j <span style="color: #ff00ff;">%</span><span style="color: #00ffff;">in</span><span style="color: #ff00ff;">%</span> x<span style="color: #20b2aa;">)]</span> <span style="color: #ff00ff;">+</span> <span style="color: #daa520;">9</span> <span style="color: #cccccc;"># </span><span style="color: #cccccc;">a number</span>
-                bandidx <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"file_name_band_"</span>, idx<span style="color: #20b2aa;">)</span>
-                bandName <span style="color: #ff00ff;">&lt;-</span>  <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>i, <span style="color: #00ff00;">"[["</span>, bandidx<span style="color: #20b2aa;">)[[</span><span style="color: #daa520;">1</span><span style="color: #20b2aa;">]]</span>
-                <span style="color: #cccccc;">#</span><span style="color: #cccccc;">fileName &lt;- paste</span><span style="color: #daa520;">0</span><span style="color: #cccccc;">(tools::file_path_sans_ext(bandName), "_TOABT.tif")</span>
-                BT.rst  <span style="color: #ff00ff;">&lt;-</span> <span style="color: #ff6347;">ToAtSatelliteBrightnessTemperature</span><span style="color: #20b2aa;">(</span>i, j<span style="color: #20b2aa;">)</span>
-                <span style="color: #ff6347;">writeRaster</span><span style="color: #20b2aa;">(</span>BT.rst, filename <span style="color: #ff00ff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaBT, sceneName, bandName<span style="color: #20b2aa;">)</span>, overwrite <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
-                raster::<span style="color: #ff6347;">removeTmpFiles</span><span style="color: #20b2aa;">(</span>h <span style="color: #ff00ff;">=</span> <span style="color: #daa520;">1</span><span style="color: #20b2aa;">)</span> <span style="color: #cccccc;">## </span><span style="color: #cccccc;">Improtant tips for save hardisk</span>
+        <span style="color: #ff00ff;">for</span><span style="color: #20b2aa;">(</span>j <span style="color: #ff00ff;">in</span> bandnames<span style="color: #20b2aa;">){</span>
+                idx <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">seq_along</span><span style="color: #20b2aa;">(</span>bandnames<span style="color: #20b2aa;">)[</span><span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>bandnames, <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>x<span style="color: #20b2aa;">)</span> j <span style="color: #00ffff;">%</span><span style="color: #ff00ff;">in</span><span style="color: #00ffff;">%</span> x<span style="color: #20b2aa;">)]</span> <span style="color: #00ffff;">+</span> <span style="color: #daa520;">9</span> <span style="color: #00bfff;"># </span><span style="color: #00bfff;">a number</span>
+                bandidx <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"file_name_band_"</span>, idx<span style="color: #20b2aa;">)</span>
+                bandName <span style="color: #00ffff;">&lt;-</span>  <span style="color: #ff6347;">sapply</span><span style="color: #20b2aa;">(</span>i, <span style="color: #00ff00;">"[["</span>, bandidx<span style="color: #20b2aa;">)[[</span><span style="color: #daa520;">1</span><span style="color: #20b2aa;">]]</span>
+                <span style="color: #00bfff;">#</span><span style="color: #00bfff;">fileName &lt;- paste</span><span style="color: #daa520;">0</span><span style="color: #00bfff;">(tools::file_path_sans_ext(bandName), "_TOABT.tif")</span>
+                BT.rst  <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">ToAtSatelliteBrightnessTemperature</span><span style="color: #20b2aa;">(</span>i, j<span style="color: #20b2aa;">)</span>
+                <span style="color: #ff6347;">writeRaster</span><span style="color: #20b2aa;">(</span>BT.rst, filename <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaBT, sceneName, bandName<span style="color: #20b2aa;">)</span>, overwrite <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
+                raster::<span style="color: #ff6347;">removeTmpFiles</span><span style="color: #20b2aa;">(</span>h <span style="color: #00ffff;">=</span> <span style="color: #daa520;">1</span><span style="color: #20b2aa;">)</span> <span style="color: #00bfff;">## </span><span style="color: #00bfff;">Improtant tips for save hardisk</span>
         <span style="color: #20b2aa;">}</span>
 <span style="color: #20b2aa;">}</span>
 </pre>
 </div>
 </div>
-</div>
-</div>
-
-<div id="outline-container-sec-3-13" class="outline-3">
-<h3 id="sec-3-13"><span class="section-number-3">3.13</span> RadtoTOARef</h3>
-</div>
-<div id="outline-container-sec-3-14" class="outline-3">
-<h3 id="sec-3-14"><span class="section-number-3">3.14</span> RadtoTOABT</h3>
-</div>
-<div id="outline-container-sec-3-15" class="outline-3">
-<h3 id="sec-3-15"><span class="section-number-3">3.15</span> Map</h3>
-</div>
-<div id="outline-container-sec-3-16" class="outline-3">
-<h3 id="sec-3-16"><span class="section-number-3">3.16</span> Atmospheric Correction</h3>
+</li></ol>
 </div>
 
-<div id="outline-container-sec-3-17" class="outline-3">
-<h3 id="sec-3-17"><span class="section-number-3">3.17</span> </h3>
+<div id="outline-container-sec-3-2-7" class="outline-4">
+<h4 id="sec-3-2-7"><span class="section-number-4">3.2.7</span> RadtoTOARef</h4>
 </div>
+<div id="outline-container-sec-3-2-8" class="outline-4">
+<h4 id="sec-3-2-8"><span class="section-number-4">3.2.8</span> RadtoTOABT</h4>
+</div>
+<div id="outline-container-sec-3-2-9" class="outline-4">
+<h4 id="sec-3-2-9"><span class="section-number-4">3.2.9</span> OLI Atmospheric Correction</h4>
+<div class="outline-text-4" id="text-3-2-9">
+<ul class="org-ul">
+<li>State &ldquo;TODO&rdquo;       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2014-09-24 Wed 22:22]</span></span>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-3-2-10" class="outline-4">
+<h4 id="sec-3-2-10"><span class="section-number-4">3.2.10</span> TIRS Atmospheric Correction</h4>
+<div class="outline-text-4" id="text-3-2-10">
+<ul class="org-ul">
+<li>State &ldquo;TODO&rdquo;       from ""           <span class="timestamp-wrapper"><span class="timestamp">[2014-09-24 Wed 22:22]</span></span>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-3-2-11" class="outline-4">
+<h4 id="sec-3-2-11"><span class="section-number-4">3.2.11</span> MergeTOA</h4>
+<div class="outline-text-4" id="text-3-2-11">
+</div><ol class="org-ol"><li>Demo<br  /><div class="outline-text-5" id="text-3-2-11-1">
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #00ffff;">source</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/Rprofile/R/sourceDir.R"</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/src/main/R/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/R"</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/TIR/R/"</span><span style="color: #20b2aa;">)</span>
+dir.tif   <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">0</span><span style="color: #00ff00;">_Sensor"</span>
+dir.toaTb <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaTb"</span>
+dir.toaTs <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaTs"</span>
+dir.toaTe <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaTe"</span>
+dir.tmp   <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/raster_tmp"</span>
+<span style="color: #00ffff;">library</span><span style="color: #20b2aa;">(</span>raster<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">rasterOptions</span><span style="color: #20b2aa;">(</span>tmpdir <span style="color: #00ffff;">=</span> dir.tmp<span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">setwd</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>  <span style="color: #00bfff;">## </span><span style="color: #00bfff;">very important tips for use rLandsat</span><span style="color: #daa520;">8</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">files  &lt;- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">basename(files)</span>
+<span style="color: #00bfff;">## </span><span style="color: #00bfff;">l</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">.lst  &lt;- lapply(basename(files), ReadLandsat</span><span style="color: #daa520;">8</span><span style="color: #00bfff;">)</span>
+l<span style="color: #daa520;">8</span>.lst   <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">lapply</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">dir</span><span style="color: #20b2aa;">(</span>dir.tif<span style="color: #20b2aa;">)</span>, ReadLandsat<span style="color: #daa520;">8</span><span style="color: #20b2aa;">)</span>
+bandnames <span style="color: #00ffff;">&lt;-</span><span style="color: #ff6347;">c</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">"</span>, <span style="color: #00ff00;">"tirs</span><span style="color: #daa520;">2</span><span style="color: #00ff00;">"</span><span style="color: #20b2aa;">)</span>
+sceneList <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">list.files</span><span style="color: #20b2aa;">(</span>dir.toaTb, full.names <span style="color: #00ffff;">=</span> <span style="color: #daa520;">TRUE</span><span style="color: #20b2aa;">)</span> 
+<span style="color: #ff00ff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #ff00ff;">in</span> sceneList<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+        bandList <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">list.files</span><span style="color: #20b2aa;">(</span>sceneList, full.names <span style="color: #00ffff;">=</span> <span style="color: #daa520;">TRUE</span><span style="color: #20b2aa;">)</span>
+        emiName <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">basename</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">)</span>, <span style="color: #00ff00;">".tif"</span><span style="color: #20b2aa;">)</span>
+        pngName <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">paste</span><span style="color: #daa520;">0</span><span style="color: #20b2aa;">(</span>emiName,<span style="color: #00ff00;">".png"</span><span style="color: #20b2aa;">)</span>
+        Tb<span style="color: #daa520;">10</span> <span style="color: #00ffff;">&lt;-</span> raster::<span style="color: #ff6347;">raster</span><span style="color: #20b2aa;">(</span>bandList<span style="color: #20b2aa;">[</span><span style="color: #daa520;">1</span><span style="color: #20b2aa;">])</span>
+        Tb<span style="color: #daa520;">11</span> <span style="color: #00ffff;">&lt;-</span> raster::<span style="color: #ff6347;">raster</span><span style="color: #20b2aa;">(</span>bandList<span style="color: #20b2aa;">[</span><span style="color: #daa520;">2</span><span style="color: #20b2aa;">])</span>
+        TbS  <span style="color: #00ffff;">&lt;-</span> raster::<span style="color: #ff6347;">stack</span><span style="color: #20b2aa;">(</span>Tb<span style="color: #daa520;">10</span>, Tb<span style="color: #daa520;">11</span><span style="color: #20b2aa;">)</span>
+        a <span style="color: #00ffff;">&lt;-</span> <span style="color: #daa520;">1</span>.<span style="color: #daa520;">438</span>*<span style="color: #daa520;">10</span>^<span style="color: #00ffff;">-</span><span style="color: #daa520;">2</span>
+        L<span style="color: #daa520;">10</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #daa520;">10</span>.<span style="color: #daa520;">9</span>
+        L<span style="color: #daa520;">11</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #daa520;">12</span>.<span style="color: #daa520;">0</span>
+        TbE  <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">exp</span><span style="color: #20b2aa;">((</span>a*<span style="color: #20b2aa;">(</span>Tb<span style="color: #daa520;">10</span> <span style="color: #00ffff;">-</span> Tb<span style="color: #daa520;">11</span><span style="color: #20b2aa;">))</span><span style="color: #00ffff;">/</span><span style="color: #20b2aa;">(</span>Tb<span style="color: #daa520;">10</span>*Tb<span style="color: #daa520;">11</span>*<span style="color: #20b2aa;">(</span>L<span style="color: #daa520;">10</span><span style="color: #00ffff;">-</span>L<span style="color: #daa520;">11</span><span style="color: #20b2aa;">)))</span>
+        Ts<span style="color: #daa520;">10</span>  <span style="color: #00ffff;">&lt;-</span> Tb<span style="color: #daa520;">10</span><span style="color: #00ffff;">/</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">1</span> <span style="color: #00ffff;">+</span> <span style="color: #20b2aa;">(</span>L<span style="color: #daa520;">10</span>*Tb<span style="color: #daa520;">10</span><span style="color: #00ffff;">/</span>a<span style="color: #20b2aa;">)</span>*<span style="color: #ff6347;">log</span><span style="color: #20b2aa;">(</span>TbE<span style="color: #20b2aa;">)</span>
+        <span style="color: #ff6347;">writeRaster</span><span style="color: #20b2aa;">(</span>TbE, filename <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaTe,emiName<span style="color: #20b2aa;">)</span>, overwrite <span style="color: #00ffff;">=</span> <span style="color: #daa520;">T</span><span style="color: #20b2aa;">)</span>
+        <span style="color: #ff6347;">png</span><span style="color: #20b2aa;">(</span><span style="color: #ff6347;">file.path</span><span style="color: #20b2aa;">(</span>dir.toaTe,pngName<span style="color: #20b2aa;">))</span>
+        <span style="color: #ff6347;">plot</span><span style="color: #20b2aa;">(</span>TbE<span style="color: #20b2aa;">)</span>                       
+        <span style="color: #ff6347;">dev.off</span><span style="color: #20b2aa;">()</span>                       
+        raster::<span style="color: #ff6347;">removeTmpFiles</span><span style="color: #20b2aa;">(</span>h <span style="color: #00ffff;">=</span> <span style="color: #daa520;">1</span><span style="color: #20b2aa;">)</span> <span style="color: #00bfff;">## </span><span style="color: #00bfff;">Improtant tips for save hardisk</span>
+        <span style="color: #20b2aa;">}</span>
+<span style="color: #20b2aa;">}</span>
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+
+
+<div id="outline-container-sec-3-2-12" class="outline-4">
+<h4 id="sec-3-2-12"><span class="section-number-4">3.2.12</span> Scale Tb</h4>
+</div>
+<div id="outline-container-sec-3-2-13" class="outline-4">
+<h4 id="sec-3-2-13"><span class="section-number-4">3.2.13</span> </h4>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> At Surface</h3>
+<div class="outline-text-3" id="text-3-3">
+</div><div id="outline-container-sec-3-3-1" class="outline-4">
+<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Plot Raster</h4>
+<div class="outline-text-4" id="text-3-3-1">
+</div><ol class="org-ol"><li>Code<br  /><div class="outline-text-5" id="text-3-3-1-1">
+<div class="org-src-container">
+
+<pre class="src src-R"> <span style="color: #ff6347;">rs.tif2png</span> <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff00ff;">function</span><span style="color: #20b2aa;">(</span>inRaster<span style="color: #20b2aa;">){</span>
+        <span style="color: #ff00ff;">for</span> <span style="color: #20b2aa;">(</span>i <span style="color: #ff00ff;">in</span> inRaster<span style="color: #20b2aa;">)</span> <span style="color: #20b2aa;">{</span>
+                outName <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">gsub</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"\\.tif"</span>, <span style="color: #00ff00;">"\\.tif.png"</span>, i<span style="color: #20b2aa;">)</span>
+                r <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">raster</span><span style="color: #20b2aa;">(</span>i<span style="color: #20b2aa;">)</span>
+                pict <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">spplot</span><span style="color: #20b2aa;">(</span>r, col.regions <span style="color: #00ffff;">=</span> <span style="color: #ff6347;">rainbow</span><span style="color: #20b2aa;">(</span><span style="color: #daa520;">200</span>, start <span style="color: #00ffff;">=</span> <span style="color: #daa520;">2</span><span style="color: #00ffff;">/</span><span style="color: #daa520;">6</span>, end <span style="color: #00ffff;">=</span> <span style="color: #daa520;">1</span><span style="color: #20b2aa;">))</span>
+                <span style="color: #ff6347;">png</span><span style="color: #20b2aa;">(</span>filename <span style="color: #00ffff;">=</span> outName<span style="color: #20b2aa;">)</span>
+                <span style="color: #ff6347;">print</span><span style="color: #20b2aa;">(</span>pict<span style="color: #20b2aa;">)</span>
+                <span style="color: #ff6347;">dev.off</span><span style="color: #20b2aa;">()</span>
+        <span style="color: #20b2aa;">}</span>
+<span style="color: #20b2aa;">}</span>r
+</pre>
+</div>
+</div>
+</li>
+<li>Demo<br  /><div class="outline-text-5" id="text-3-3-1-2">
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #00ffff;">source</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/Rprofile/R/sourceDir.R"</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/src/main/R/rLandsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/R"</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">sourceDir</span><span style="color: #20b2aa;">(</span><span style="color: #00ff00;">"~/SparkleShare/TIR/R/"</span><span style="color: #20b2aa;">)</span>
+dataDir <span style="color: #00ffff;">&lt;-</span> <span style="color: #00ff00;">"~/Share</span><span style="color: #daa520;">500</span><span style="color: #00ff00;">sda/Landsat</span><span style="color: #daa520;">8</span><span style="color: #00ff00;">/at</span><span style="color: #daa520;">1</span><span style="color: #00ff00;">_TOA/toaBT"</span>
+<span style="color: #ff6347;">setwd</span><span style="color: #20b2aa;">(</span>dataDir<span style="color: #20b2aa;">)</span>
+inRaster <span style="color: #00ffff;">&lt;-</span> <span style="color: #ff6347;">list.files</span><span style="color: #20b2aa;">(</span>dataDir, pattern <span style="color: #00ffff;">=</span> <span style="color: #00ff00;">".tif$"</span>, recursive <span style="color: #00ffff;">=</span> <span style="color: #daa520;">TRUE</span><span style="color: #20b2aa;">)</span>
+<span style="color: #ff6347;">rs.tif</span><span style="color: #daa520;">2</span><span style="color: #ff6347;">png</span><span style="color: #20b2aa;">(</span>inRaster<span style="color: #20b2aa;">)</span>
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+<div id="outline-container-sec-3-3-2" class="outline-4">
+<h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> Project Raster</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<div class="org-src-container">
+
+<pre class="src src-R"></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3-3" class="outline-4">
+<h4 id="sec-3-3-3"><span class="section-number-4">3.3.3</span> Mosaic</h4>
+</div>
+<div id="outline-container-sec-3-3-4" class="outline-4">
+<h4 id="sec-3-3-4"><span class="section-number-4">3.3.4</span> </h4>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Man</h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tian</p>
-<p class="date">Created: 2014-09-20 Sat 22:50</p>
+<p class="date">Created: 2014-09-24 Wed 22:37</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
