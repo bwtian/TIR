@@ -61,5 +61,3 @@ ReadLandsat8 <- function(product) {
 }
 require(raster)
 rs.readL8 <- ReadLandsat8
-
-
