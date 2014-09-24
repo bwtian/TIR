@@ -604,7 +604,7 @@ plot(s, addfun=fun)
                   outName <- gsub("\\.tif", "\\.tif.png", i)
                   r <- raster(i)
                   png(filename = outName)
-                  plot(r, col = topo.colors(255))
+                  plot(r)
                   dev.off()
           }
   }
