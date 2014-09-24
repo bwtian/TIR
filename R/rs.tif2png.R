@@ -5,7 +5,7 @@ rs.tif2png <- function(dir = getwd()){
                 outName <- gsub("\\.tif", "\\.tif.png", i)
                 r <- raster(i)
                 png(filename = outName)
-                plot(r, col.regions = rainbow(200, start = 2/6, end = 1))
+                plot(r, col = rainbow(255, start = 2/6, end = 1))
                 dev.off()
         }
 }
