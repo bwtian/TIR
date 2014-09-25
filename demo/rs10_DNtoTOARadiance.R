@@ -6,7 +6,7 @@ driver     <- "~/Share500sda/Landsat8/" # Linux
 dir.tif    <- file.path(driver, "at0_Sensor")
 dir.toaRad <- file.path(driver, "at1_TOA/toaRad")
 dir.tmp    <- file.path(driver, "raster_tmp")
-rasterOptions(tmpdir = dir.tmp)  
+rasterOptions(tmpdir = dir.tmp)
 library(raster)
 setwd(dir.tif)  ## very important tips for use rLandsat8
 ## files  <- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)
@@ -28,7 +28,7 @@ for (i in l8.lst) {
                 bandidx <- paste0("file_name_band_", idx)
                 bandName <-  sapply(i, "[[", bandidx)[[1]]
                 pngName <- paste0(bandName, ".png")
-                #fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOARad.tif")               
+                #fileName <- paste0(tools::file_path_sans_ext(bandName), "_TOARad.tif")
                 Rad.rst  <- ToTOARadiance(i, j)
                 writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName,
                                      bandName), overwrite = T)
@@ -37,7 +37,7 @@ for (i in l8.lst) {
                 plot(Rad.rst)
                 title(main = paste("Radiance at TOA of Band ", idx))
                 require("grid")
-                grid.text(expression(paste("[", W*sr^-1*m^-2*mu*m^-1,"]")), x=unit(0.97, "npc"), y=unit(0.50, "npc"), rot=-90)
+                grid.text(expression(paste("[", W*sr^-1*m^-2*mu*m^-1,"]")), x=unit(0.975, "npc"), y=unit(0.50, "npc"), rot=-90)
                 dev.off()
                 raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
         }
