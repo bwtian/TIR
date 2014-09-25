@@ -5,7 +5,7 @@ rs.tif2png <- function(dir = getwd()){
                 outName <- gsub("\\.tif", "\\.tif.png", i)
                 r <- raster(i)
                 png(filename = outName)
-                plot(r)
+                raster::plot(r)
                 dev.off()
         }
 }
