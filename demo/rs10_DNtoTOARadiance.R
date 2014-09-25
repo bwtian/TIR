@@ -35,7 +35,8 @@ for (i in l8.lst) {
                 png(filename = file.path(dir.toaRad, sceneName, pngName))
                 par(family = "times")
                 plot(Rad.rst, main = paste0("Radiance at Top of Atmosphere of Band ",
-                                     idx, expression(paste("[",W,sr^-1,m^-2,mu,m^-1,"]",sep=""))))
+                                     idx, "\n",
+                                     expression(paste("[",W,sr^-1,m^-2,mu,m^-1,"]",sep=""))))
                 dev.off()
                 raster::removeTmpFiles(h = 0.5) ## Improtant tips for save hardisk
         }
