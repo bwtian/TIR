@@ -36,7 +36,8 @@ for (i in l8.lst) {
                 par(family = "times")
                 plot(Rad.rst)
                 title(main = paste("Radiance at TOA of Band ", idx))
-                legend(title = expression(paste("[", W*sr^-1*m^-2*mu*m^-1,"]")))
+                require("grid")
+                grid.text(expression(paste("[", W*sr^-1*m^-2*mu*m^-1,"]")), x=unit(0.95, "npc"), y=unit(0.50, "npc"), rot=-90)
                 dev.off()
                 raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
         }
