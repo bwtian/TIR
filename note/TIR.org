@@ -294,11 +294,8 @@ rs.todown(worklist, dir.tar, "todown")
                     par(family = "times")
                     plot(Rad.rst, paste0(main =
                                          "Radiance at Top of Atmosphere of Band ",
-                                         idx ))
-                    require(lattice)
-                    trellis.focus("legend", side="right", clipp.off=TRUE, highlight=FALSE)
-                    grid.text(expression(paste("[",mg/m^3,"]",sep="")),1,0.50,rot=90)
-                    trellis.unfocus()
+                                         idx, expression(paste("[",W,sr^-1,m^-2,mu,m^-1,"]",sep="") ))
+                   
                     dev.off()
                     raster::removeTmpFiles(h = 0.5) ## Improtant tips for save hardisk
             }
