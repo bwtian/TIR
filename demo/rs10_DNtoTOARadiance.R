@@ -35,9 +35,9 @@ for (i in l8.lst) {
                 png(filename = file.path(dir.toaRad, sceneName, pngName))
                 par(family = "times")
                 plot(Rad.rst)
-                title(main = paste("Radiance at TOA of Band ", idx),
-                      sub = expression(paste("[", W*sr^-1*m^-2*mu*m^-1,"]")))
+                title(main = paste("Radiance at TOA of Band ", idx))
+                legend(title = expression(paste("[", W*sr^-1*m^-2*mu*m^-1,"]")))
                 dev.off()
-                raster::removeTmpFiles(h = 0.5) ## Improtant tips for save hardisk
+                raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
         }
 }
