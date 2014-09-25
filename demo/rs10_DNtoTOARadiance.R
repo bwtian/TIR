@@ -24,7 +24,7 @@ for (i in l8.lst) {
                 dir.create(file.path(dir.toaRad, sceneName), recursive = T)
         }
         for(j in bandnames){
-                idx <- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] # a number
+                idx <- seq_along(bandnames)[sapply(bamindnames, function(x) j %in% x)] # a number
                 bandidx <- paste0("file_name_band_", idx)
                 bandName <-  sapply(i, "[[", bandidx)[[1]]
                 pngName <- paste0(bandName, ".png")
@@ -34,9 +34,8 @@ for (i in l8.lst) {
                                      bandName), overwrite = T)
                 png(filename = file.path(dir.toaRad, sceneName, pngName))
                 par(family = "times")
-                plot(Rad.rst, main = paste0("Radiance at Top of Atmosphere of Band ",
-                                     idx, "\n",
-                                     expression(paste("[",W,sr^-1,m^-2,mu,m^-1,"]",sep=""))))
+                plot(Rad.rst, main = paste0("Radiance at TOA of Band ",idx, "\n",
+                              expression(paste("[", W*sr^-1*m^-2*mu*m^-1, "]"))))
                 dev.off()
                 raster::removeTmpFiles(h = 0.5) ## Improtant tips for save hardisk
         }
