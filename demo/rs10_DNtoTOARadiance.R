@@ -32,9 +32,15 @@ for (i in l8.lst) {
                 Rad.rst  <- ToTOARadiance(i, j)
                 writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName,
                                      bandName), overwrite = T)
-                png(filename = file.path(dir.toaRad, pngName))
+                png(filename = file.path(dir.toaRad, sceneName, pngName))
                 par(family = "times")
-                plot(Rad.rst, col = topo.colors(255))
+                plot(Rad.rst, paste0(main =
+                                     "Radiance at Top of Atmosphere of Band ",
+                                     idx ))
+                require(lattice)
+                trellis.focus("legend", side="right", clipp.off=TRUE, highlight=FALSE)
+                grid.text(expression(paste("[",mg/m^3,"]",sep="")),1,0.50,rot=90)
+                trellis.unfocus()
                 dev.off()
                 raster::removeTmpFiles(h = 0.5) ## Improtant tips for save hardisk
         }
