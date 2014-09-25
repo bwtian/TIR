@@ -32,9 +32,9 @@ for (i in l8.lst) {
                 Rad.rst  <- ToTOARadiance(i, j)
                 writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName,
                                      bandName), overwrite = T)
-                png(filename = file.path(dir.toRad, pngName))
+                png(filename = file.path(dir.toaRad, pngName))
                 par(family = "times")
-                plot(Rad.rst)
+                plot(Rad.rst, col = topo.colors(255))
                 dev.off()
                 raster::removeTmpFiles(h = 0.5) ## Improtant tips for save hardisk
         }
