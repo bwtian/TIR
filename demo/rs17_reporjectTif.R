@@ -27,7 +27,8 @@ tif <- list.files(path= dir.toaTbK ,
 r.rst  <- lapply(tif, raster)
 for (i in r.rst) {
         outName  <- paste0(names(i), ".tif")
-        projectRaster(i, crs = toCRS,
+        projectRaster(i, crs = toCRS,  method = "ngb",
                       filename =  file.path(dir.toaTbKlcc, outName))
         raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
 }
+test = projectRaster(r.rst[[1]], crs = toCRS, method = "ngb")
