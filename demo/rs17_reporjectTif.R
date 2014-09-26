@@ -15,5 +15,5 @@ tif <- list.files(path= dir.toaTbK ,
                   recursive=TRUE,
                   ignore.case=TRUE)
 r.lst  <- lapply(tif, raster)
-r.lst
+projectRaster
 
