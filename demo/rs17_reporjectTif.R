@@ -25,9 +25,10 @@ tif <- list.files(path= dir.toaTbK ,
                   recursive=TRUE,
                   ignore.case=TRUE)
 r.rst  <- lapply(tif, raster)
+hkd1h  <- readRDS("~/SparkleShare/TIR/hkdbb_grdi2d1h.Rds")
 for (i in r.rst) {
         outName  <- paste0(names(i), ".tif")
-        projectRaster(i, crs = toCRS,  method = "ngb",
+        projectRaster(from = i, to = hkd1h,
                       filename =  file.path(dir.toaTbKlcc, outName),
                       overwrite=TRUE)
         raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
