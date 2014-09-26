@@ -1,4 +1,4 @@
-#+BEGIN_SRC R
-#+INCLUDE: ../demo/rs10_DNtoTOARadiance.R
-#+END_SRC
+
+#+INCLUDE: ../demo/rs10_DNtoTOARadiance.R src R
+
 
