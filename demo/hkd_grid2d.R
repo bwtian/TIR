@@ -31,12 +31,13 @@ proj4string(hkd1h)
 ## Hokkaido Shape Raster
 
 shp  <- "~/Dropbox/2data/dataRaw/japan_ver71/HokkaidoUnion_lccWgs84.shp"
-
+str(hkdshp)
 hkdshp  <- readShapePoly(shp)
 proj4string(hkdshp) <- CRS(lccWgs84)
-hkdmask  <- mask(hkd1h, hkdshp)
-saveRDS(bbraster1h, file = "~/SparkleShare/TIR/hkdbb_grdi2d1h.Rds")
+hkdshpb  <- phd.largestPolys(hkdshp, Polygon = T)
 
-
-plot(hkdmask)
+hkdmaskb  <- mask(hkd1h, hkdshpb)
+saveRDS(hkdmaskb, file = "~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
+hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
+plot(hkdmaskb)
 plot(hkdshp, add = T)
