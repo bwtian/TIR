@@ -24,5 +24,5 @@ for (i in r.lst) {
         outName  <- paste0(names(i), ".tif")
         projectRaster(i, res = 30, crs = toCRS,
                       filename =  file.path(dir.toaTbKlcc, outName))
-
+        raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
 }
