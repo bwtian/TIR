@@ -29,6 +29,7 @@ for (i in r.rst) {
         outName  <- paste0(names(i), ".tif")
         #projectRaster(from = i, crs = toCRS,  method = "ngb",
         zscore  <- raster::scale(i)
+        writeRaster(zscore, filename = file.path(dir.toaTbKlccScale, outName), overwrite = T)
 
         raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
 }
