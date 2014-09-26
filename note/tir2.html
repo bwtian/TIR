@@ -138,11 +138,51 @@ for the JavaScript code in this tag.
 <body>
 <div id="content">
 <h1 class="title">tir2</h1>
-<div class="org-src-container">
-
-<pre class="src src-R"><span style="color: #00bfff;">#</span><span style="color: #00bfff;">+INCLUDE: ../demo/rs</span><span style="color: #daa520;">10</span><span style="color: #00bfff;">_DNtoTOARadiance.R</span>
-</pre>
-</div>
+<p>
+sourceDir(&ldquo;~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R&rdquo;)
+sourceDir(&ldquo;~/SparkleShare/TIR/R/&rdquo;)
+driver     &lt;- &ldquo;D://tian/Landsat8/&rdquo;      # Windows
+driver     &lt;- &ldquo;~/Share500sda/Landsat8/&rdquo; # Linux
+dir.tif    &lt;- file.path(driver, &ldquo;at0_Sensor&rdquo;)
+dir.toaRad &lt;- file.path(driver, &ldquo;at1_TOA/toaRad&rdquo;)
+dir.tmp    &lt;- file.path(driver, &ldquo;raster_tmp&rdquo;)
+rasterOptions(tmpdir = dir.tmp)
+library(raster)
+setwd(dir.tif)  ## very important tips for use rLandsat8
+## files  &lt;- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)
+## basename(files)
+## l8.lst  &lt;- lapply(basename(files), ReadLandsat8)
+l8.lst   &lt;- lapply(dir(dir.tif), ReadLandsat8)
+bandnames &lt;-c(&ldquo;aerosol&rdquo;, &ldquo;blue&rdquo;, &ldquo;green&rdquo;, &ldquo;red&rdquo;,
+              &ldquo;nir&rdquo;, &ldquo;swir1&rdquo;, &ldquo;swir2&rdquo;,
+              &ldquo;panchromatic&rdquo;,
+              &ldquo;cirrus&rdquo;,
+              &ldquo;tirs1&rdquo;, &ldquo;tirs2&rdquo;)
+for (i in l8.lst) {
+        sceneName  &lt;- i$metadata$landsat_scene_id
+        if (!file.exists(file.path(dir.toaRad, sceneName))) {
+                dir.create(file.path(dir.toaRad, sceneName), recursive = T)
+        }
+        for(j in bandnames){
+                idx &lt;- seq_along(bandnames)[sapply(bandnames, function(x) j %in% x)] # a number
+                bandidx &lt;- paste0(&ldquo;file_name_band_&rdquo;, idx)
+                bandName &lt;-  sapply(i, "[[&ldquo;, bandidx)<i>1</i>
+                pngName &lt;- paste0(bandName, &ldquo;.png&rdquo;)
+                #fileName &lt;- paste0(tools::file_path_sans_ext(bandName), &ldquo;_TOARad.tif&rdquo;)
+                Rad.rst  &lt;- ToTOARadiance(i, j)
+                writeRaster(Rad.rst, filename = file.path(dir.toaRad, sceneName,
+                                     bandName), overwrite = T)
+                png(filename = file.path(dir.toaRad, sceneName, pngName))
+                par(family = &ldquo;times&rdquo;)
+                plot(Rad.rst)
+                title(main = paste(&ldquo;Radiance at TOA of Band &ldquo;, idx))
+                require(&ldquo;grid&rdquo;)
+                grid.text(expression(paste("[&ldquo;, W*sr^-1*m^-2*mu*m^-1,&rdquo;]")), x=unit(0.975, &ldquo;npc&rdquo;), y=unit(0.50, &ldquo;npc&rdquo;), rot=-90)
+                dev.off()
+                raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
+        }
+}
+</p>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: tian</p>
