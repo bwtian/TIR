@@ -25,6 +25,3 @@ for (i in r.lst) {
                       filename =  file.path(dir.toaTbKlcc, outName))
 
 }
-
-projectRaster()
-
