@@ -516,6 +516,14 @@ rs.todown(worklist, dir.tar, "todown")
 - State "TODO"       from ""           [2014-09-24 Wed 22:22]
 *** TODO TIRS Atmospheric Correction
 - State "TODO"       from ""           [2014-09-24 Wed 22:22]
+*** Re-projection
+#+HEADER: :tangle ../demo/rs17_reproject.R
+#+BEGIN_SRC R
+  dir.toaTbK  <- "~/Share500sda/Landsat8/at1_TOA/toaTbK"
+
+  for (i in list.file )
+
+#+END_SRC
 *** CODE MergeTOA
 **** Demo
 #+HEADER: :tangle ../demo/rs14_mergeTOABrightTemperature.R
