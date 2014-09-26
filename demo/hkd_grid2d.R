@@ -6,6 +6,7 @@ library(plyr)
 library(rgdal)
 library(maptools)
 library(rgeos)
+library(raster)
 
 
 ## BBOX Raster
@@ -32,6 +33,12 @@ proj4string(hkd1h)
 shp  <- "~/Dropbox/2data/dataRaw/japan_ver71/HokkaidoUnion_lccWgs84.shp"
 
 hkdshp  <- readShapePoly(shp)
+mask  <- gIntersection(bbgrid1h, hkdshp)
 
-plot(hkd1h)
+proj4string(mask) <- CRS(lccWgs84)
+hkd1hs  <- rasterFromXYZ(mask)
+hkd1hs[]  <- 1: ncell(hkd1hs)
+proj4string(hkd1hs) <- CRS(lccWgs84)
+
+plot(hkd1hs)
 plot(hkdshp, add = T)
