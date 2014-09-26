@@ -25,7 +25,7 @@ tif <- list.files(path= dir.toaTbK ,
                   recursive=TRUE,
                   ignore.case=TRUE)
 r.rst  <- lapply(tif, raster)
-for (i in r.lst) {
+for (i in r.rst) {
         outName  <- paste0(names(i), ".tif")
         projectRaster(i, res = 30, crs = toCRS,
                       filename =  file.path(dir.toaTbKlcc, outName))
