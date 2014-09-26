@@ -537,7 +537,7 @@ rs.todown(worklist, dir.tar, "todown")
   dir.toaTb <- "~/Share500sda/Landsat8/at1_TOA/toaTb"
   dir.toaTs <- "~/Share500sda/Landsat8/at1_TOA/toaTs"
   dir.toaTe <- "~/Share500sda/Landsat8/at1_TOA/toaTe"
-  dir.tmp   <- "~/Share500sda/Landsat8/raster_tmp"
+  # dir.tmp   <- "~/Share500sda/Landsat8/raster_tmp"
   library(raster)
   rasterOptions(tmpdir = dir.tmp)
   setwd(dir.tif)  ## very important tips for use rLandsat8
