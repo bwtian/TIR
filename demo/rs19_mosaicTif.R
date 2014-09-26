@@ -28,12 +28,18 @@ r10.rst  <- lapply(tif10, raster)
 mosaic(r10.rst, fun = mean,
         filename = file.path(dir.toaTbKlccScaleMos, "B10Mosaic.tif")
 )
+png("B10Mosaic.png")
+plot(B10)
+dev.off()
 tif11 <- list.files(path= dir.toaTbKlccScale,
                     pattern= "B11.tif$",
                     all.files=TRUE,
                     full.names=TRUE,
                     recursive=TRUE,
                     ignore.case=TRUE)
-mosaic(r11.rst, fun = mean,
+B11  <- mosaic(r11.rst, fun = mean,
        filename = file.path(dir.toaTbKlccScaleMos, "B11Mosaic.tif")
 )
+png("B11Mosaic.png")
+plot(B11)
+dev.off()
