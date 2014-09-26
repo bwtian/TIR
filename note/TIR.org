@@ -516,7 +516,9 @@ rs.todown(worklist, dir.tar, "todown")
 - State "TODO"       from ""           [2014-09-24 Wed 22:22]
 *** TODO TIRS Atmospheric Correction
 - State "TODO"       from ""           [2014-09-24 Wed 22:22]
+** Possessing
 *** Re-projection
+*** 
 #+HEADER: :tangle ../demo/rs17_reproject.R
 #+BEGIN_SRC R
   dir.toaTbK  <- "~/Share500sda/Landsat8/at1_TOA/toaTbK"
@@ -653,11 +655,6 @@ sourceDir("~/SparkleShare/TIR/R/")
 dataDir <- "~/Share500sda/Landsat8/at1_TOA"
 setwd(dataDir)
 rs.tif2png()
-#+END_SRC
-*** Project Raster
-#+BEGIN_SRC R
-
-
 #+END_SRC
 *** Mosaic
 *** 
