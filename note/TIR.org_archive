@@ -1,0 +1,18 @@
+
+Archived entries from file /home/tian/SparkleShare/TIR/note/TIR.org
+
+
+* 
+:PROPERTIES:
+:ARCHIVE_TIME: 2014-09-26 Fri 14:33
+:ARCHIVE_FILE: ~/SparkleShare/TIR/note/TIR.org
+:ARCHIVE_OLPATH: R and Demo/Possessing
+:ARCHIVE_CATEGORY: TIR
+:END:
+#+HEADER: :tangle ../demo/rs17_reproject.R
+#+BEGIN_SRC R
+  dir.toaTbK  <- "~/Share500sda/Landsat8/at1_TOA/toaTbK"
+
+  for (i in list.file )
+
+#+END_SRC
