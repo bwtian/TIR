@@ -1,4 +1,4 @@
-#' Reproject Raster
+#' Scale Raster
 #'
 #' @author Bingwei Tian
 #' @param tif a list of tif files
@@ -13,25 +13,23 @@ dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
 rasterOptions(tmpdir = dir.tmp)
 dir.toaTbK  <- "~/Share500sda/Landsat8/at1_TOA/toaTbK/"
 dir.toaTbKlcc  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlcc"
-
+dir.toaTbKlccScale  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlccScale"
 toCRS  <- sp::CRS(lccWgs84)
-if (!file.exists(dir.toaTbKlcc)){
-        dir.create(dir.toaTbKlcc)
+if (!file.exists(dir.toaTbKlccScale)){
+        dir.create(dir.toaTbKlccScale)
 }
-tif <- list.files(path= dir.toaTbK ,
+tif <- list.files(path= dir.toaTbKlcc,
                   pattern= ".tif$",
                   all.files=TRUE,
                   full.names=TRUE,
                   recursive=TRUE,
                   ignore.case=TRUE)
 r.rst  <- lapply(tif, raster)
-hkd1h  <- readRDS("~/SparkleShare/TIR/hkdbb_grdi2d1h.Rds")
 for (i in r.rst) {
         outName  <- paste0(names(i), ".tif")
         #projectRaster(from = i, crs = toCRS,  method = "ngb",
-        projectRaster(from = i,  to = hkd1h,
-                      filename =  file.path(dir.toaTbKlcc, outName),
-                      overwrite=TRUE)
+        zscore  <- raster::scale(i)
+
         raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
 }
 #test = projectRaster(r.rst[[1]], crs = toCRS, method = "ngb")
