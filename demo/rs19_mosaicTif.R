@@ -1,4 +1,4 @@
-#' Scale Raster
+#' Mosaic Rasters
 #'
 #' @author Bingwei Tian
 #' @param tif a list of tif files
@@ -11,26 +11,29 @@ source("~/SparkleShare/Rprofile/R/sourceDir.R")
 sourceDir("~/SparkleShare/Rprofile/R/")
 dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
 rasterOptions(tmpdir = dir.tmp)
-dir.toaTbKlcc  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlcc"
+
 dir.toaTbKlccScale  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlccScale"
+dir.toaTbKlccScaleMos  <- "~/Share500sda/Landsat8/at1_TOA/toaTbKlccScaleMos"
 toCRS  <- sp::CRS(lccWgs84)
-if (!file.exists(dir.toaTbKlccScale)){
-        dir.create(dir.toaTbKlccScale)
+if (!file.exists(dir.toaTbKlccScaleMos)){
+        dir.create(dir.toaTbKlccScaleMos)
 }
-tif <- list.files(path= dir.toaTbKlcc,
-                  pattern= ".tif$",
+tif10 <- list.files(path= dir.toaTbKlccScale,
+                  pattern= "B10.tif$",
                   all.files=TRUE,
                   full.names=TRUE,
                   recursive=TRUE,
                   ignore.case=TRUE)
-r.rst  <- lapply(tif, raster)
-for (i in r.rst) {
-        outName  <- paste0(names(i), ".tif")
-        #projectRaster(from = i, crs = toCRS,  method = "ngb",
-        zscore  <- raster::scale(i)
-        writeRaster(zscore,
-                    filename = file.path(dir.toaTbKlccScale, outName),
-                    overwrite = T)
-        raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
-}
-#test = projectRaster(r.rst[[1]], crs = toCRS, method = "ngb")
+r10.rst  <- lapply(tif10, raster)
+mosaic(r10.rst, fun = mean,
+        filename = file.path(dir.toaTbKlccScaleMos, "B10Mosaic.tif")
+)
+tif11 <- list.files(path= dir.toaTbKlccScale,
+                    pattern= "B11.tif$",
+                    all.files=TRUE,
+                    full.names=TRUE,
+                    recursive=TRUE,
+                    ignore.case=TRUE)
+mosaic(r11.rst, fun = mean,
+       filename = file.path(dir.toaTbKlccScaleMos, "B11Mosaic.tif")
+)
