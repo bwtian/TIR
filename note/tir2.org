@@ -1,7 +1,0 @@
-THis is a test of [[file:~/SparkleShare/TIR/demo/rs10_DNtoTOARadiance.R]]
-#+INCLUDE: ../demo/rs10_DNtoTOARadiance.R src R
-
-another
-#+INCLUDE: ../demo/rs15_tif2png.R src R
-
-* 
