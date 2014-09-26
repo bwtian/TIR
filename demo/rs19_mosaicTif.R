@@ -28,7 +28,7 @@ r10.rst  <- lapply(tif10, raster)
 B10 <- mosaic(r10.rst, fun = mean,
         filename = file.path(dir.toaTbKlccScaleMos, "B10Mosaic.tif")
 )
-png("B10Mosaic.png")
+jpeg("B10Mosaic.jpeg")
 plot(B10)
 dev.off()
 tif11 <- list.files(path= dir.toaTbKlccScale,
@@ -41,6 +41,6 @@ r11.rst  <- lapply(tif10, raster)
 B11  <- mosaic(r11.rst, fun = mean,
          filename = file.path(dir.toaTbKlccScaleMos, "B11Mosaic.tif")
 )
-png("B11Mosaic.png")
+jpeg("B11Mosaic.jpeg", res = 300)
 plot(B11)
 dev.off()
