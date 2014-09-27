@@ -31,7 +31,7 @@ tif10 <- list.files(path= dir.toaTbKlcc,
                             ignore.case=TRUE)
 r10.rst  <- lapply(tif10, raster)
 hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
-r10.msk  <- lapply(tif10, function(x) mask(x, hkdmaskb))
+r10.msk  <- lapply(r10.rst, function(x) mask(x, hkdmaskb))
 for (i in r10.msk) {
         outName  <- paste0(names(i), ".tif")
         #projectRaster(from = i, crs = toCRS,  method = "ngb",
@@ -49,7 +49,7 @@ tif11 <- list.files(path= dir.toaTbKlcc,
                     ignore.case=TRUE)
 r11.rst  <- lapply(tif11, raster)
 hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
-r11.msk  <- lapply(tif11, function(x) mask(x, hkdmaskb))
+r11.msk  <- lapply(r11.rst, function(x) mask(x, hkdmaskb))
 for (i in r11.msk) {
         outName  <- paste0(names(i), ".tif")
         #projectRaster(from = i, crs = toCRS,  method = "ngb",
