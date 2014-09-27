@@ -29,4 +29,5 @@ m  <- c(1, 0.95, # Rice paddy
         17, 0.95 # Railway
         )
 rclmat  <- matrix(m, ncol=2, byrow=TRUE)
+emiName
 emi <- reclassify(lulc, rclmat, filename = "hkdEmissivity.tif")
