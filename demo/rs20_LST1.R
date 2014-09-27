@@ -12,7 +12,7 @@ dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
 rasterOptions(tmpdir = dir.tmp)
 dir.toaTbKlcc  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlcc"
 dir.sufTsKlcc  <-  "~/Share500sda/Landsat8/at2_Surface/toaTsKlcc"
-dir.lulc  <- "~/Share500sda/Landsat8/at9_Database/LULC/"
+dir.lulc  <- "~/Share500sda/Landsat8/at9_Database/LULC/hkdEmissivity.tif"
 if (!file.exists(dir.sufTsKlcc)){
         dir.create(dir.sufTsKlcc)
 }
