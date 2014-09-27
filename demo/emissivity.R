@@ -30,7 +30,7 @@ m  <- c(1, 0.95, # Rice paddy
         17, 0.95 # Railway
         )
 
-rclmat  <- matrix(m, ncol=2, byrow=TRUE)  <-
+rclmat <- matrix(m, ncol=2, byrow=TRUE)
 now <- format(Sys.time(), "_%y%m%d_%H%M%S")
 emiName  <- paste0("hkdEmissivity", now, ".tif")
 hkdEmi <- reclassify(hkdlulc, rclmat, filename = emiName)
