@@ -9,7 +9,7 @@ rasterOptions(tmpdir = dir.tmp)
 setwd(dir.lulc)
 hkdLulc   <- raster("hkdLulc100.tif")
 hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
-projectRaster(from = hkdLulc,  to = hkdmaskb,
+projectRaster(from = hkdLulc,  to = hkdmaskb, method = "ngb"
               filename =  "hkdLulc100lcc.tif",
               overwrite=TRUE)
 raster::removeTmpFiles(h = 1)
