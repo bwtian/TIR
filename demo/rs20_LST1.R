@@ -12,6 +12,7 @@ dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
 rasterOptions(tmpdir = dir.tmp)
 dir.toaTbKlcc  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlcc"
 dir.sufTsKlcc  <-  "~/Share500sda/Landsat8/at2_Surface/toaTsKlcc"
+dir.lulc  <- "~/Share500sda/Landsat8/at9_Database/LULC/"
 if (!file.exists(dir.sufTsKlcc)){
         dir.create(dir.sufTsKlcc)
 }
@@ -20,7 +21,10 @@ L11  = 12
 h = 6.626*10^-34
 c = 2.998*10^8
 j = 1.38*10^-23
-a = h*c/j
+p = h*c/j
+
+e  <- raster::raster("~/Share500sda/Landsat8/at9_Database/LULC/")
+tb  <-
 tif10 <- list.files(path= dir.toaTbKlcc,
                             pattern= "B10.tif$",
                             all.files=TRUE,
@@ -28,6 +32,8 @@ tif10 <- list.files(path= dir.toaTbKlcc,
                             recursive=TRUE,
                             ignore.case=TRUE)
 r10.rst  <- lapply(tif10, raster)
+hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
+r10.msk  <- lapply(tif10, function(x) mask(x, hkdmaskb))
 for (i in r.rst) {
         outName  <- paste0(names(i), ".tif")
         #projectRaster(from = i, crs = toCRS,  method = "ngb",
