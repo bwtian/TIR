@@ -15,7 +15,7 @@ projectRaster(from = hkdLulc,  to = hkdmaskb,
 raster::removeTmpFiles(h = 1)
 ### Reclassify("is", "become")
 lulc  <- raster("hkdLulc100lcc.tif")
-hkdlulc <-  mask(lulc, hkdmaskb))
+hkdlulc <-  mask(lulc, hkdmaskb)
 m  <- c(1, 0.95, # Rice paddy
         2, 0.96, # Farm land
         5, 0.97, # Forest
