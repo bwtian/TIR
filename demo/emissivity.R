@@ -14,8 +14,11 @@ projectRaster(from = hkdLulc,  to = hkdmaskb,
               filename =  "hkdLulc100lcc.tif",
               overwrite=TRUE)
 raster::removeTmpFiles(h = 1)
-
+### Reclassify("is", "become")
 emi  <- raster("hkdLulc100lcc.tif")
+m  <-
+rclmat  <- matrix(m, ncol=3, byrow=TRUE)
+
 p$emi[p$emi == 1]  <- 0.95  # Rice paddy
 p$emi[p$emi == 2]  <- 0.96  # Farm land
 p$emi[p$emi == 5]  <- 0.97  # Forest
