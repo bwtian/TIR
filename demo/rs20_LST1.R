@@ -34,12 +34,10 @@ tif10 <- list.files(path= dir.toaTbKlcc,
 r10.rst  <- lapply(tif10, raster)
 hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
 r10.msk  <- lapply(tif10, function(x) mask(x, hkdmaskb))
-for (i in r.rst) {
+for (i in r10.msk) {
         outName  <- paste0(names(i), ".tif")
         #projectRaster(from = i, crs = toCRS,  method = "ngb",
-        projectRaster(from = i,  to = hkdmaskb,
-                      filename =  file.path(dir.toaTbKlcc, outName),
-                      overwrite=TRUE)
+        Tsk  <- i/(1+(10.9*i/p)*log(e))
         raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
 }
 B10 <- mosaic(r10.rst, fun = mean,
