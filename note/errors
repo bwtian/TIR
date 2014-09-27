@@ -1,2 +1,4 @@
 Error in ToTOAReflectance(i, j) : tirs1 band not allowed  :: delete band
 
+Error in no permission to cover the file due to it opened in QGIS :: Turn off QGIS
+
