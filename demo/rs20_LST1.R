@@ -24,7 +24,6 @@ j = 1.38*10^-23
 p = h*c/j
 
 e  <- raster::raster("~/Share500sda/Landsat8/at9_Database/LULC/")
-tb  <-
 tif10 <- list.files(path= dir.toaTbKlcc,
                             pattern= "B10.tif$",
                             all.files=TRUE,
@@ -38,28 +37,9 @@ for (i in r10.msk) {
         outName  <- paste0(names(i), ".tif")
         #projectRaster(from = i, crs = toCRS,  method = "ngb",
         Tsk  <- i/(1+(10.9*i/p)*log(e))
+        writeRaster(Tsk,
+                    filename = file.path(dir.toaTbKlccScale, outName),
+                    overwrite = T)
         raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
 }
-B10 <- mosaic(r10.rst, fun = mean,
-              filename = file.path(dir.toaTbKlccScaleMos, "B10Mosaic.tif")
-)
-jpeg("B10Mosaic.jpeg")
-plot(B10)
-dev.off()
 
-tif11 <- list.files(path= dir.toaTbKlccScale,
-                    pattern= "B11.tif$",
-                    all.files=TRUE,
-                    full.names=TRUE,
-                    recursive=TRUE,
-                    ignore.case=TRUE)
-r11.rst  <- lapply(tif11, raster)
-B11  <- mosaic(r11.rst, fun = mean,
-               filename = file.path(dir.toaTbKlccScaleMos, "B11Mosaic.tif")
-)
-jpeg("B11Mosaic.jpeg", res = 300)
-plot(B11)
-dev.off()
-
-
-raster::mosaic
