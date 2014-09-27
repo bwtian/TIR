@@ -28,6 +28,8 @@ r10.rst  <- lapply(tif10, raster)
 B10 <- mosaic(r10.rst, fun = mean,
         filename = file.path(dir.toaTbKlccScaleMos, "B10Mosaic.tif")
 )
+r10.rs$fun <- mean
+mos <- do.call(mosaic, r10.rs)
 jpeg("B10Mosaic.jpeg")
 plot(B10)
 dev.off()
