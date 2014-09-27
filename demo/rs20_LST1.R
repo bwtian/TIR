@@ -58,3 +58,4 @@ plot(B11)
 dev.off()
 
 
+raster::mosaic
