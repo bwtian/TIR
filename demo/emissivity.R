@@ -28,6 +28,7 @@ m  <- c(1, 0.95, # Rice paddy
         16, 0.97, # Golf Courses
         17, 0.95 # Railway
         )
-rclmat  <- matrix(m, ncol=2, byrow=TRUE)
-emiName
-emi <- reclassify(lulc, rclmat, filename = "hkdEmissivity.tif")
+rclmat  <- matrix(m, ncol=2, byrow=TRUE)  <-
+now <- format(Sys.time(), "_%y%m%d_%H%M%S")
+emiName  <- paste0("hkdEmissivity", now, ".tif")
+emi <- reclassify(lulc, rclmat, filename = emiName)
