@@ -38,7 +38,7 @@ for (i in r10.msk) {
         #projectRaster(from = i, crs = toCRS,  method = "ngb",
         Tsk  <- i/(1+(10.9*i/p)*log(e))
         writeRaster(Tsk,
-                    filename = file.path(dir.toaTbKlccScale, outName),
+                    filename = file.path(dir.sufTsKlcc, outName),
                     overwrite = T)
         raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
 }
