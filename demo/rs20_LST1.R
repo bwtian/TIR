@@ -12,7 +12,7 @@ dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
 rasterOptions(tmpdir = dir.tmp)
 dir.toaTbKlcc  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlcc"
 dir.sufTsKlcc  <-  "~/Share500sda/Landsat8/at2_Surface/toaTsKlcc"
-dir.lulc  <- "~/Share500sda/Landsat8/at9_Database/LULC/hkdEmissivity.tif"
+dir.lulc  <- "~/Share500sda/Landsat8/at9_Database/LULC/"
 if (!file.exists(dir.sufTsKlcc)){
         dir.create(dir.sufTsKlcc)
 }
@@ -22,7 +22,7 @@ h = 6.626*10^-34
 c = 2.998*10^8
 j = 1.38*10^-23
 p = h*c/j
-e  <- raster::raster("~/Share500sda/Landsat8/at9_Database/LULC/")
+e  <- raster::raster("~/Share500sda/Landsat8/at9_Database/LULC/hkdEmissivity.tif")
 tif10 <- list.files(path= dir.toaTbKlcc,
                             pattern= "B10.tif$",
                             all.files=TRUE,
