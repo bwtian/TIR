@@ -16,8 +16,8 @@ dir.lulc  <- "~/Share500sda/Landsat8/at9_Database/LULC/"
 if (!file.exists(dir.sufTsKlcc)){
         dir.create(dir.sufTsKlcc)
 }
-L10  = 10.9
-L11  = 12
+L10  = 10.9*10^-6
+L11  = 12*10^-6
 h = 6.626*10^-34
 c = 2.998*10^8
 j = 1.38*10^-23
