@@ -22,7 +22,6 @@ h = 6.626*10^-34
 c = 2.998*10^8
 j = 1.38*10^-23
 p = h*c/j
-
 e  <- raster::raster("~/Share500sda/Landsat8/at9_Database/LULC/")
 tif10 <- list.files(path= dir.toaTbKlcc,
                             pattern= "B10.tif$",
@@ -36,7 +35,25 @@ r10.msk  <- lapply(tif10, function(x) mask(x, hkdmaskb))
 for (i in r10.msk) {
         outName  <- paste0(names(i), ".tif")
         #projectRaster(from = i, crs = toCRS,  method = "ngb",
-        Tsk  <- i/(1+(10.9*i/p)*log(e))
+        Tsk  <- i/(1+(L10*i/p)*log(e))
+        writeRaster(Tsk,
+                    filename = file.path(dir.sufTsKlcc, outName),
+                    overwrite = T)
+        raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
+}
+tif11 <- list.files(path= dir.toaTbKlcc,
+                    pattern= "B11.tif$",
+                    all.files=TRUE,
+                    full.names=TRUE,
+                    recursive=TRUE,
+                    ignore.case=TRUE)
+r11.rst  <- lapply(tif11, raster)
+hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
+r11.msk  <- lapply(tif11, function(x) mask(x, hkdmaskb))
+for (i in r11.msk) {
+        outName  <- paste0(names(i), ".tif")
+        #projectRaster(from = i, crs = toCRS,  method = "ngb",
+        Tsk  <- i/(1+(L11*i/p)*log(e))
         writeRaster(Tsk,
                     filename = file.path(dir.sufTsKlcc, outName),
                     overwrite = T)
