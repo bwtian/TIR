@@ -11,7 +11,7 @@ sourceDir("~/SparkleShare/Rprofile/R/")
 dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
 rasterOptions(tmpdir = dir.tmp)
 dir.toaTbKlcc  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlcc"
-dir.sufTsKlcc  <-  "~/Share500sda/Landsat8/at2_Surface/toaTsKlcc"
+dir.sufTsKlcc  <-  "~/Share500sda/Landsat8/at2_Surface/toaTsKlcc2"
 dir.lulc  <- "~/Share500sda/Landsat8/at9_Database/LULC/"
 if (!file.exists(dir.sufTsKlcc)){
         dir.create(dir.sufTsKlcc)
