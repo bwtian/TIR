@@ -50,6 +50,6 @@ mos11 <- do.call(mosaic, r11.rst)
 writeRaster(mos11,
             filename = file.path(dir.toaTbKlccScaleMos, "B11Mosaic.tif"),
             overwrite = T)
-jpeg(filename = file.path(dir.toaTbKlccScaleMos, "B11Mosaic.jpeg")
+jpeg(filename = file.path(dir.toaTbKlccScaleMos, "B11Mosaic.jpeg"))
 plot(mos11)
 dev.off()
