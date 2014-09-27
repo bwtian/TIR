@@ -16,7 +16,19 @@ projectRaster(from = hkdLulc,  to = hkdmaskb,
 raster::removeTmpFiles(h = 1)
 ### Reclassify("is", "become")
 emi  <- raster("hkdLulc100lcc.tif")
-m  <-
+m  <- c(1, 0.95, # Rice paddy
+        2, 0.96, # Farm land
+        5, 0.97, # Forest
+        6, 0.93, # Vacant land
+        7, 0.94, # Buildings
+        9, 0.92, # Roads
+        10, 0.95 # Other lands
+        11, 0.99 # Inland water
+        14, 0.96 # Seashore
+        15, 0.99 # Ocean water
+        16, 0.97 # Golf Courses
+        17, 0.95 # Railway
+        )
 rclmat  <- matrix(m, ncol=3, byrow=TRUE)
 
 p$emi[p$emi == 1]  <- 0.95  # Rice paddy
