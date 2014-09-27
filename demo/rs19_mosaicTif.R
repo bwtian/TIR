@@ -33,8 +33,8 @@ r10.rst$fun <- mean
 mos10 <- do.call(mosaic, r10.rst)
 writeRaster(mos10,
             filename = file.path(dir.toaTbKlccScaleMos, "B10Mosaic.tif"),
-            overwrite = T)
-jpeg("B10Mosaic.jpeg")
+            overwrite = TRUE)
+jpeg(filename = file.path(dir.toaTbKlccScaleMos, "B10Mosaic.jpeg"))
 plot(mos10)
 dev.off()
 
@@ -50,6 +50,6 @@ mos11 <- do.call(mosaic, r11.rst)
 writeRaster(mos11,
             filename = file.path(dir.toaTbKlccScaleMos, "B11Mosaic.tif"),
             overwrite = T)
-jpeg("B11Mosaic.jpeg")
+jpeg(filename = file.path(dir.toaTbKlccScaleMos, "B11Mosaic.jpeg")
 plot(mos11)
 dev.off()
