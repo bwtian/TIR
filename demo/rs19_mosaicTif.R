@@ -25,13 +25,17 @@ tif10 <- list.files(path= dir.toaTbKlccScale,
                   recursive=TRUE,
                   ignore.case=TRUE)
 r10.rst  <- lapply(tif10, raster)
-B10 <- mosaic(r10.rst, fun = mean,
-        filename = file.path(dir.toaTbKlccScaleMos, "B10Mosaic.tif")
-)
+# B10 <- mosaic(r10.rst, fun = mean,
+#         filename = file.path(dir.toaTbKlccScaleMos, "B10Mosaic.tif")
+# )
+## Mosaic a list of raster*
 r10.rst$fun <- mean
-mos <- do.call(mosaic, r10.rst)
+mos10 <- do.call(mosaic, r10.rst)
+writeRaster(mos10,
+            filename = file.path(dir.toaTbKlccScaleMos, "B10Mosaic.tif"),
+            overwrite = T)
 jpeg("B10Mosaic.jpeg")
-plot(B10)
+plot(mos10)
 dev.off()
 
 tif11 <- list.files(path= dir.toaTbKlccScale,
@@ -41,9 +45,11 @@ tif11 <- list.files(path= dir.toaTbKlccScale,
                     recursive=TRUE,
                     ignore.case=TRUE)
 r11.rst  <- lapply(tif11, raster)
-B11  <- mosaic(r11.rst, fun = mean,
-         filename = file.path(dir.toaTbKlccScaleMos, "B11Mosaic.tif")
-)
-jpeg("B11Mosaic.jpeg", res = 300)
-plot(B11)
+r11.rst$fun <- mean
+mos11 <- do.call(mosaic, r11.rst)
+writeRaster(mos11,
+            filename = file.path(dir.toaTbKlccScaleMos, "B11Mosaic.tif"),
+            overwrite = T)
+jpeg("B11Mosaic.jpeg")
+plot(mos11)
 dev.off()
