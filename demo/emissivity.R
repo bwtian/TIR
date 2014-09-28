@@ -18,7 +18,7 @@ lulc  <- raster("hkdLulc100lcc.tif")
 hkdlulc <-  mask(lulc, hkdmaskb)
 m  <- c(1, 0.95, # Rice paddy
         2, 0.96, # Farm land
-        5, 0.97, # Forest
+        5, 0.98, # Forest
         6, 0.93, # Vacant land
         7, 0.94, # Buildings
         9, 0.92, # Roads
@@ -27,10 +27,11 @@ m  <- c(1, 0.95, # Rice paddy
         14, 0.96, # Seashore
         15, 0.99, # Ocean water
         16, 0.97, # Golf Courses
-        17, 0.95)# Railway
+        17, 0.95) # Railway
 
 
 rclmat <- matrix(m, ncol=2, byrow=TRUE)
 #now <- format(Sys.time(), "_%y%m%d_%H%M%S")
 #emiName  <- paste0("hkdEmissivity", now, ".tif")
 hkdEmi <- reclassify(hkdlulc, rclmat, filename = "hkdEmissivity.tif")
+log(seq(0.910,0.999,0.001))
