@@ -659,9 +659,8 @@ rs.tif2png()
 *** Mosaic
 *** 
 * Man 
-
-
-
+* GTD
+<2014-09-26 Fri> make study grid
 
 
 
