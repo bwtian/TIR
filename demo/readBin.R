@@ -17,9 +17,11 @@
 #' @param LSTs    layer12 is  LST sdev scaled by 100, Unit Kelvin(K)
 #' @param NDVIm   layer13 is  NDVI mean scaled by 100 at TOA
 #' @param NDVIs   layer14 is  NDVI sdev scaled by 100 at TOA
-#' @param
-#' @param
-#' @param
+#' @param Water   layer15 is  Land-Water Map
+#' @param obs   layer16 is  Observations
+#' @param Water   layer17 is  Land-Water Map
+#' @param Water   layer18 is  Land-Water Map
+#' @param Water   layer19 is  Land-Water Map
 
 
 
