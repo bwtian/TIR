@@ -1,4 +1,4 @@
-#'
+#' Read NASA ASTER Global Emissivity Database (ASTER GED) Binary Datasets
 #'
 #'
 #'
@@ -8,14 +8,13 @@
 #' @param emiB12m  layer3 is  Emissivity mean of Band12 scaled by 1000
 #' @param emiB13m  layer4 is  Emissivity mean of Band13 scaled by 1000
 #' @param emiB14m  layer5 is  Emissivity mean of Band14 scaled by 1000
-#' @param emiB10s  layer6 is  Emissivity sdev of Band10 scaled by 1000
-#' @param emiB11s  layer7 is  Emissivity sdev of Band11 scaled by 1000
-#' @param emiB12s  layer8 is  Emissivity sdev of Band12 scaled by 1000
-#' @param emiB13s  layer9 is  Emissivity sdev of Band13 scaled by 1000
-#' @param emiB14s layer10 is  Emissivity sdev of Band14 scaled by 1000
-#'
-#' @param
-#' @param
+#' @param emiB10s  layer6 is  Emissivity sdev of Band10 scaled by 10000
+#' @param emiB11s  layer7 is  Emissivity sdev of Band11 scaled by 10000
+#' @param emiB12s  layer8 is  Emissivity sdev of Band12 scaled by 10000
+#' @param emiB13s  layer9 is  Emissivity sdev of Band13 scaled by 10000
+#' @param emiB14s layer10 is  Emissivity sdev of Band14 scaled by 10000
+#' @param LSTm    layer11 is  LST mean scaled by 100, Unit Kelvin(K)
+#' @param LSTs    layer11 is  LST sdev scaled by 100, Unit Kelvin(K)
 #' @param
 #' @param
 #' @param
