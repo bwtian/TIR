@@ -14,9 +14,9 @@
 #' @param emiB13s  layer9 is  Emissivity sdev of Band13 scaled by 10000
 #' @param emiB14s layer10 is  Emissivity sdev of Band14 scaled by 10000
 #' @param LSTm    layer11 is  LST mean scaled by 100, Unit Kelvin(K)
-#' @param LSTs    layer11 is  LST sdev scaled by 100, Unit Kelvin(K)
-#' @param
-#' @param
+#' @param LSTs    layer12 is  LST sdev scaled by 100, Unit Kelvin(K)
+#' @param NDVIm   layer13 is  NDVI mean scaled by 100 at TOA
+#' @param NDVIs   layer14 is  NDVI sdev scaled by 100 at TOA
 #' @param
 #' @param
 #' @param
