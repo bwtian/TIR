@@ -18,10 +18,10 @@
 #' @param NDVIm   layer13 is  NDVI mean scaled by 100 at TOA
 #' @param NDVIs   layer14 is  NDVI sdev scaled by 100 at TOA
 #' @param Water   layer15 is  Land-Water Map
-#' @param obs   layer16 is  Observations
-#' @param Water   layer17 is  Land-Water Map
-#' @param Water   layer18 is  Land-Water Map
-#' @param Water   layer19 is  Land-Water Map
+#' @param obs     layer16 is  Observations
+#' @param Lat     layer17 is  Latitude scaled by 1000
+#' @param Lon     layer18 is  Longitude scaled by 1000
+#' @param GDEM    layer19 is  ASTER Global DEM
 
 
 
