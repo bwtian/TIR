@@ -30,5 +30,13 @@ toRead  <- file("~/ASTB/AG100B.v003.43.142.0001.bin", "rb")
 data.v  <- readBin(toRead, integer(), size = 4, n = 19000000)
 close(toRead)
 
-layer.l <-  split(data.v, ceiling(seq_along(data.v)/1000000))
-layer.m  <- as.matrix(layer.l)
+layer.l <- split(data.v, ceiling(seq_along(data.v)/1000000))
+layer.d <- as.data.frame(layer.l)
+layer.m  <- as.matrix(layer.d)
+scales  <- c(1000, 1000, 1000, 1000, 1000,
+             10000, 10000, 10000, 10000, 10000,
+             100, 100, 100, 100,
+             1, 1, 1000, 1000, 1)
+layer.t  <- mapply("/",layer.d, scales)
+head(t)
+raster::ras
