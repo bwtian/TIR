@@ -1,9 +1,9 @@
 #' Read NASA ASTER Global Emissivity Database (ASTER GED) Binary Datasets
 #'
 #'
-#' @details layers: 19
-#'          resolution: 100m
-#'          dimensions: 1000*1000*19
+#' @details Layers: 19
+#'          Resolution: 100 m * 100 m
+#'          Dimensions: 1000*1000*19
 #'          NA: -9999
 
 #' @author Bingwei Tian
