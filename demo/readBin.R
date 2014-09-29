@@ -37,6 +37,7 @@ scales  <- c(1000, 1000, 1000, 1000, 1000,
              10000, 10000, 10000, 10000, 10000,
              100, 100, 100, 100,
              1, 1, 1000, 1000, 1)
-layer.t  <- mapply("/",layer.d, scales)
+#layer.t  <- mapply("/",layer.d, scales)
+layer.t  <- layer.m/scales
 head(t)
 raster::ras
