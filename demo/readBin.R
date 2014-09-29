@@ -1,7 +1,8 @@
 #' Read NASA ASTER Global Emissivity Database (ASTER GED) Binary Datasets
 #'
 #'
-#' @details
+#' @details resolution 100m, 19 layers, dimensions 1000*1000*19
+
 #' @author Bingwei Tian
 #'
 #' @param emiB10m  layer1 is  Emissivity mean of Band10 scaled by 1000
@@ -24,15 +25,10 @@
 #' @param Lon     layer18 is  Longitude scaled by 1000
 #' @param GDEM    layer19 is  ASTER Global DEM
 
-
-
 toRead  <- file("~/ASTB/AG100B.v003.43.142.0001.bin", "rb")
-layers  <- 19
-res  <- 100
-dims  <- 1000*1000*19
-data.v  <- readBin(toRead, integer(), size = 4, n = dim)
+
+data.v  <- readBin(toRead, integer(), size = 4, n = 19000000)
 close(toRead)
 
 layer.l <-  split(data.v, ceiling(seq_along(data.v)/1000000))
-
-layer.df  <- as.matr(layer.l)
+layer.m  <- as.matrix(layer.l)
