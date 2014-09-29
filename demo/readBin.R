@@ -1,7 +1,10 @@
 #' Read NASA ASTER Global Emissivity Database (ASTER GED) Binary Datasets
 #'
 #'
-#' @details resolution 100m, 19 layers, dimensions 1000*1000*19
+#' @details layers: 19
+#'          resolution: 100m
+#'          dimensions: 1000*1000*19
+#'          NA: -9999
 
 #' @author Bingwei Tian
 #'
@@ -37,7 +40,30 @@ scales  <- c(1000, 1000, 1000, 1000, 1000,
              10000, 10000, 10000, 10000, 10000,
              100, 100, 100, 100,
              1, 1, 1000, 1000, 1)
-#layer.t  <- mapply("/",layer.d, scales)
-layer.t  <- layer.m/scales
-head(t)
-raster::ras
+layer.t  <- mapply("/",layer.d, scales)
+
+#layer.t  <- layer.m/scales
+if(!require(raster)){
+        install.packages("raster")
+}
+emiB10m <- raster::rasterFromXYZ(layer.t[,c(17,18,1)])
+summary(layer.d)
+
+emiB11m
+emiB12m
+emiB13m
+emiB14m
+emiB10s
+emiB11s
+emiB12s
+emiB13s
+emiB14s
+LSTm
+LSTs
+NDVIm
+NDVIs
+Water
+obs
+Lat
+Lon
+GDEM  <- raster::rasterFromXYZ(layer.t[,17:19])
