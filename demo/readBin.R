@@ -1,0 +1,16 @@
+toRead  <- file("~/ASTB/AG100B.v003.43.142.0001.bin", "rb")
+a  <- readBin(toRead, integer(), size = 4, n = 1000*1000*19)
+close(toRead)
+layers  <- 19
+qs <- quantile(seqa, seq(0, 1, length.out =20))
+y <- cut(x, round(qs), include.lowest = TRUE)
+split(1:1900, 1:100)
+splitAt <- function(x, pos) unname(split(x, cumsum(seq_along(x) %in% pos)))
+splitAt(1:1900, 1:10*10)
+cut(1:12, 2)
+d  <- 1:1900
+ceiling(seq_along(d)/100)
+s  <- split(d, ceiling(seq_along(d)/100))
+class(s)
+split(1:1900, )
+ceiling(0.2)
