@@ -28,7 +28,7 @@
 #' @param Lon     layer18 is  Longitude scaled by 1000
 #' @param GDEM    layer19 is  ASTER Global DEM
 #' @param bins    A list of Binary files need to read
-#' 
+#' @return A list of dataframes
 dir.AG100B  <- "~/Share500sda/AG100B/"
 bins <- list.files(path=dir.AG100B,
                    pattern="bin$",
