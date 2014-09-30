@@ -27,7 +27,8 @@
 #' @param Lat     layer17 is  Latitude scaled by 1000
 #' @param Lon     layer18 is  Longitude scaled by 1000
 #' @param GDEM    layer19 is  ASTER Global DEM
-#' @param bin     A  files need to read
+#' @param bins    A list of Binary files need to read
+#' 
 dir.AG100B  <- "~/Share500sda/AG100B/"
 bins <- list.files(path=dir.AG100B,
                    pattern="bin$",
