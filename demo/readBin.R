@@ -35,35 +35,48 @@ close(toRead)
 
 layer.l <- split(data.v, ceiling(seq_along(data.v)/1000000))
 layer.d <- as.data.frame(layer.l)
+layer.d[layer.d == -9999]  <- NA
 layer.m  <- as.matrix(layer.d)
 scales  <- c(1000, 1000, 1000, 1000, 1000,
              10000, 10000, 10000, 10000, 10000,
              100, 100, 100, 100,
              1, 1, 1000, 1000, 1)
-layer.t  <- mapply("/",layer.d, scales)
-
+layer.ok  <- mapply("/",layer.d, scales)
+summary(layer.t)
 #layer.t  <- layer.m/scales
-if(!require(raster)){
-        install.packages("raster")
+## Make SPDF
+if(!require(sp)){
+        install.packages("sp")
 }
-emiB10m <- raster::rasterFromXYZ(layer.t[,c(17,18,1)])
-summary(layer.d)
+wgs84GRS <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+coords  <- layer.ok[, c(17,18)]
+m  <- as.matrix(coords) #sp need numeric matrix
+mode(m)  <- "numeric"
+sp  <- sp::SpatialPoints(m)
+spdf <- sp::SpatialPointsDataFrame(m, data = as.data.frame(layer.ok))
+#return(spdf)
+spdf@data
+}
+# if(!require(raster)){
+#         install.packages("raster")
+# }
+# emiB10m <- raster::rasterFromXYZ(layer.t[,c(17,18,1)])
+# emiB11m <- raster::rasterFromXYZ(layer.t[,c(17,18,2)])
+# emiB12m <- raster::rasterFromXYZ(layer.t[,c(17,18,3)])
+# emiB13m <- raster::rasterFromXYZ(layer.t[,c(17,18,4)])
+# emiB14m <- raster::rasterFromXYZ(layer.t[,c(17,18,5)])
+# emiB10s <- raster::rasterFromXYZ(layer.t[,c(17,18,6)])
+# emiB11s <- raster::rasterFromXYZ(layer.t[,c(17,18,7)])
+# emiB12s <- raster::rasterFromXYZ(layer.t[,c(17,18,8)])
+# emiB13s <- raster::rasterFromXYZ(layer.t[,c(17,18,9)])
+# emiB14s <- raster::rasterFromXYZ(layer.t[,c(17,18,10)])
+# LSTm <- raster::rasterFromXYZ(layer.t[,c(17,18,11)])
+# LSTs <- raster::rasterFromXYZ(layer.t[,c(17,18,12)])
+# NDVIm <- raster::rasterFromXYZ(layer.t[,c(17,18,13)])
+# NDVIs <- raster::rasterFromXYZ(layer.t[,c(17,18,14)])
+# Water <- raster::rasterFromXYZ(layer.t[,c(17,18,15)])
+# obs <- raster::rasterFromXYZ(layer.t[,c(17,18,16)])
+# Lat <- raster::rasterFromXYZ(layer.t[,c(17,18,17)])
+# Lon <- raster::rasterFromXYZ(layer.t[,c(17,18,18)])
+# GDEM  <- raster::rasterFromXYZ(layer.t[,17:19])
 
-emiB11m
-emiB12m
-emiB13m
-emiB14m
-emiB10s
-emiB11s
-emiB12s
-emiB13s
-emiB14s
-LSTm
-LSTs
-NDVIm
-NDVIs
-Water
-obs
-Lat
-Lon
-GDEM  <- raster::rasterFromXYZ(layer.t[,17:19])
