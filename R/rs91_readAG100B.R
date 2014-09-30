@@ -21,4 +21,5 @@ bins.df[4:5]  <-  sapply(bins.df[, 4:5], as.numeric)
 hkd  <- subset(bins.df, Lon >= 139 & Lon <=146 & Lat <=46 )
 plot(hkd$Lon, hkd$Lat)
 hkd.l  <- hkd[[1]]
-hkdAG100B.l  <- readAG100B(hkd.l)
+hkdAG100B.l   <- readAG100B(hkd.l)
+hkdAG100B.df  <- do.call(rbind, hkdAG100B.l)
