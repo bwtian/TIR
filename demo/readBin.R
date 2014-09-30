@@ -29,13 +29,14 @@
 #' @param GDEM    layer19 is  ASTER Global DEM
 #' @param bin     A  files need to read
 dir.AG100B  <- "~/Share500sda/AG100B/"
-bins <- list.files(path="dir.AG100B" ,
+bins <- list.files(path=dir.AG100B,
                    pattern="bin$",
                    all.files=TRUE,
                    full.names=TRUE,
                    recursive=TRUE,
                    ignore.case=TRUE)
 readAG100B <- function(bins){
+        out  <- list()
         for (i in bins) {
                 toRead  <- file(i, "rb")
                 data.v  <- readBin(toRead, integer(), size = 4, n = 19000000)
@@ -48,15 +49,17 @@ readAG100B <- function(bins){
                              10000, 10000, 10000, 10000, 10000,
                              100, 100, 100, 100,
                              1, 1, 1000, 1000, 1)
-                #layer.ok  <- mapply("/",layer.d, scales)
-                layer.ok  <- layer.d/scales
+                layer.ok  <- mapply("/",layer.d, scales)
+                #layer.ok  <- layer.d/scales
                 layer.df  <- as.data.frame(layer.ok)
-                return(layer.df)
+                out[[seq_along(i)]]  <- layer.df
         }
+        return(out)
 
 }
+bins[[1]]
 
-
+st  <- readAG100B(bins[1])
 
 ## Make SPDF
 if(!require(sp)){
