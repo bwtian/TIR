@@ -55,8 +55,8 @@ readAG100B <- function(bins){
                 out[[seq_along(i)]]  <- layer.df
         }
         return(out)
-
 }
+
 bins[[1]]
 
 st  <- readAG100B(bins[1])
