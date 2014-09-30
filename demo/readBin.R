@@ -6,7 +6,7 @@
 #'          Dimensions: 1000*1000*19
 #'          NA: -9999
 
-#' @author Bingwei Tian
+#' @author Bingwei Tian [2014-09-30 Tue]
 #'
 #' @param emiB10m  layer1 is  Emissivity mean of Band10 scaled by 1000
 #' @param emiB11m  layer2 is  Emissivity mean of Band11 scaled by 1000
