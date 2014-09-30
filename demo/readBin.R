@@ -27,29 +27,37 @@
 #' @param Lat     layer17 is  Latitude scaled by 1000
 #' @param Lon     layer18 is  Longitude scaled by 1000
 #' @param GDEM    layer19 is  ASTER Global DEM
-
-readAG100B <- function(list){
-        
-
+#' @param bin     A  files need to read
+dir.AG100B  <- "~/Share500sda/AG100B/"
+bins <- list.files(path="dir.AG100B" ,
+                   pattern="bin$",
+                   all.files=TRUE,
+                   full.names=TRUE,
+                   recursive=TRUE,
+                   ignore.case=TRUE)
+readAG100B <- function(bins){
+        for (i in bins) {
+                toRead  <- file(i, "rb")
+                data.v  <- readBin(toRead, integer(), size = 4, n = 19000000)
+                close(toRead)
+                layer.l <- split(data.v, ceiling(seq_along(data.v)/1000000))
+                layer.d <- as.data.frame(layer.l)
+                layer.d[layer.d == -9999]  <- NA
+                layer.m  <- as.matrix(layer.d)
+                scales  <- c(1000, 1000, 1000, 1000, 1000,
+                             10000, 10000, 10000, 10000, 10000,
+                             100, 100, 100, 100,
+                             1, 1, 1000, 1000, 1)
+                #layer.ok  <- mapply("/",layer.d, scales)
+                layer.ok  <- layer.d/scales
+                layer.df  <- as.data.frame(layer.ok)
+                return(layer.df)
+        }
 
 }
-toRead  <- file("~/ASTB/AG100B.v003.43.142.0001.bin", "rb")
-dir.AG100B  <- "~/Share500sda/AG100B/"
-files  <- list.files(dir.)
-data.v  <- readBin(toRead, integer(), size = 4, n = 19000000)
-close(toRead)
 
-layer.l <- split(data.v, ceiling(seq_along(data.v)/1000000))
-layer.d <- as.data.frame(layer.l)
-layer.d[layer.d == -9999]  <- NA
-layer.m  <- as.matrix(layer.d)
-scales  <- c(1000, 1000, 1000, 1000, 1000,
-             10000, 10000, 10000, 10000, 10000,
-             100, 100, 100, 100,
-             1, 1, 1000, 1000, 1)
-layer.ok  <- mapply("/",layer.d, scales)
-summary(layer.ok)
-layer.t  <- layer.d/scales
+
+
 ## Make SPDF
 if(!require(sp)){
         install.packages("sp")
