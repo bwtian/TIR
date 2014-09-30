@@ -55,7 +55,9 @@ readAG100B <- function(bins){
                 colnames(layer.df)  <- c("emiB10m", "emiB11m", "emiB12m",
                                          "emiB13m", "emiB14m", "emiB10sd",
                                          "emiB11sd", "emiB12sd", "emiB13sd",
-                                         "emiB14sd", "LSTm"
+                                         "emiB14sd", "LSTm", "LSTsd", "NDVIm",
+                                         "NDVIsd", "Water", "Obs",
+                                         "Lat", "Lon", "GDEM")
                 out[[seq_along(i)]]  <- layer.df
         }
         return(out)
