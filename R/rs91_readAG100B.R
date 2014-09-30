@@ -2,11 +2,8 @@ source("~/SparkleShare/Rprofile/R/sourceDir.R")
 sourceDir("~/SparkleShare/Rprofile/R/")
 sourceDir("~/SparkleShare/TIR/R/")
 
-dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
-rasterOptions(tmpdir = dir.tmp)
-
 dir.AG100B  <- "~/Share500sda/AG100B/"
-
+setwd(dir.AG100B)
 ### Hokkaido Area
 bins.l <- list.files(path=dir.AG100B,
                    pattern="bin$",
