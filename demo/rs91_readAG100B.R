@@ -20,3 +20,4 @@ plot(hkd$Lon, hkd$Lat)
 hkd.l  <- hkd[[1]]
 hkdAG100B.l   <- readAG100B(hkd.l)
 hkdAG100B.df  <- do.call(rbind, hkdAG100B.l)
+saveRDS(hkdAG100B.df, file = "hkdAG100B.Rds")
