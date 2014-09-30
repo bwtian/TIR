@@ -67,20 +67,24 @@ readAG100B <- function(bins){
 
 st  <- readAG100B(bins[1])
 head(st[[1]])
+summary(st[[1]])
 ## Make SPDF
 if(!require(sp)){
         install.packages("sp")
 }
-
+layer.ok  <- st[[1]]
+spatial
 wgs84GRS <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
-coords  <- layer.ok[, c(17,18)]
+coords  <- layer.ok[, c(18,17)]
+length(layer.ok)
 m  <- as.matrix(coords) #sp need numeric matrix
 mode(m)  <- "numeric"
 sp  <- sp::SpatialPoints(m)
 spdf <- sp::SpatialPointsDataFrame(m, data = as.data.frame(layer.ok))
 #return(spdf)
-spdf@data
+summary(spdf@data)
 }
+plot(spdf)
 # if(!require(raster)){
 #         install.packages("raster")
 # }
