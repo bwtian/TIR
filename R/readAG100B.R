@@ -29,13 +29,7 @@
 #' @param GDEM    layer19 is  ASTER Global DEM
 #' @param bins    A list of Binary files need to read
 #' @return A list of dataframes
-dir.AG100B  <- "~/Share500sda/AG100B/"
-bins <- list.files(path=dir.AG100B,
-                   pattern="bin$",
-                   all.files=TRUE,
-                   full.names=TRUE,
-                   recursive=TRUE,
-                   ignore.case=TRUE)
+
 readAG100B <- function(bins){
         out  <- list()
         for (i in bins) {
