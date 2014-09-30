@@ -59,7 +59,7 @@ readAG100B <- function(bins){
                                          "emiB14sd", "LSTm", "LSTsd", "NDVIm",
                                          "NDVIsd", "Water", "Obs",
                                          "Lat", "Lon", "GDEM")
-                idx <- seq_along(bins)[sapply(bins, function(x) i %in% x)
+                idx <- seq_along(bins)[sapply(bins, function(x) i %in% x)]
                 out[[idx]]  <- layer.df
         }
         return(out)
