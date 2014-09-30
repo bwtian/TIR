@@ -49,7 +49,7 @@ readAG100B <- function(bins){
                              10000, 10000, 10000, 10000, 10000,
                              100, 100, 100, 100,
                              1, 1, 1000, 1000, 1)
-                layer.ok  <- mapply("/",layer.d, scales)
+                layer.ok  <- mapply("/", layer.d, scales)
                 #layer.ok  <- layer.d/scales
                 layer.df  <- as.data.frame(layer.ok)
                 colnames(layer.df)  <- c("emiB10m", "emiB11m", "emiB12m",
@@ -63,8 +63,6 @@ readAG100B <- function(bins){
         return(out)
 }
 
-
-col
 
 st  <- readAG100B(bins[1])
 head(st[[1]])
