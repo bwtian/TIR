@@ -52,15 +52,16 @@ readAG100B <- function(bins){
                 layer.ok  <- mapply("/",layer.d, scales)
                 #layer.ok  <- layer.d/scales
                 layer.df  <- as.data.frame(layer.ok)
+                colnames(layer.df)  <- c("")
                 out[[seq_along(i)]]  <- layer.df
         }
         return(out)
 }
 
-bins[[1]]
+col
 
 st  <- readAG100B(bins[1])
-
+head(st[[1]])
 ## Make SPDF
 if(!require(sp)){
         install.packages("sp")
