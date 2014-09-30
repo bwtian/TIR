@@ -13,17 +13,17 @@
 #' @param emiB12m  layer3 is  Emissivity mean of Band12 scaled by 1000
 #' @param emiB13m  layer4 is  Emissivity mean of Band13 scaled by 1000
 #' @param emiB14m  layer5 is  Emissivity mean of Band14 scaled by 1000
-#' @param emiB10s  layer6 is  Emissivity sdev of Band10 scaled by 10000
-#' @param emiB11s  layer7 is  Emissivity sdev of Band11 scaled by 10000
-#' @param emiB12s  layer8 is  Emissivity sdev of Band12 scaled by 10000
-#' @param emiB13s  layer9 is  Emissivity sdev of Band13 scaled by 10000
-#' @param emiB14s layer10 is  Emissivity sdev of Band14 scaled by 10000
+#' @param emiB10sd  layer6 is  Emissivity sdev of Band10 scaled by 10000
+#' @param emiB11sd  layer7 is  Emissivity sdev of Band11 scaled by 10000
+#' @param emiB12sd  layer8 is  Emissivity sdev of Band12 scaled by 10000
+#' @param emiB13sd  layer9 is  Emissivity sdev of Band13 scaled by 10000
+#' @param emiB14sd layer10 is  Emissivity sdev of Band14 scaled by 10000
 #' @param LSTm    layer11 is  LST mean scaled by 100, Unit Kelvin(K)
-#' @param LSTs    layer12 is  LST sdev scaled by 100, Unit Kelvin(K)
+#' @param LSTsd    layer12 is  LST sdev scaled by 100, Unit Kelvin(K)
 #' @param NDVIm   layer13 is  NDVI mean scaled by 100 at TOA
-#' @param NDVIs   layer14 is  NDVI sdev scaled by 100 at TOA
+#' @param NDVIsd   layer14 is  NDVI sdev scaled by 100 at TOA
 #' @param Water   layer15 is  Land-Water Map
-#' @param obs     layer16 is  Observations, Images used
+#' @param Obs     layer16 is  Observations, Images used
 #' @param Lat     layer17 is  Latitude scaled by 1000
 #' @param Lon     layer18 is  Longitude scaled by 1000
 #' @param GDEM    layer19 is  ASTER Global DEM
@@ -52,11 +52,15 @@ readAG100B <- function(bins){
                 layer.ok  <- mapply("/",layer.d, scales)
                 #layer.ok  <- layer.d/scales
                 layer.df  <- as.data.frame(layer.ok)
-                colnames(layer.df)  <- c("")
+                colnames(layer.df)  <- c("emiB10m", "emiB11m", "emiB12m",
+                                         "emiB13m", "emiB14m", "emiB10sd",
+                                         "emiB11sd", "emiB12sd", "emiB13sd",
+                                         "emiB14sd", "LSTm"
                 out[[seq_along(i)]]  <- layer.df
         }
         return(out)
 }
+
 
 col
 
