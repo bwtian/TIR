@@ -29,7 +29,8 @@
 #' @param GDEM    layer19 is  ASTER Global DEM
 
 toRead  <- file("~/ASTB/AG100B.v003.43.142.0001.bin", "rb")
-
+dir.AG100B  <- "~/Share500sda/AG100B/"
+files  <- list.files(dir.)
 data.v  <- readBin(toRead, integer(), size = 4, n = 19000000)
 close(toRead)
 
