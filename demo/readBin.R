@@ -28,6 +28,11 @@
 #' @param Lon     layer18 is  Longitude scaled by 1000
 #' @param GDEM    layer19 is  ASTER Global DEM
 
+readAG100B <- function(list){
+        
+
+
+}
 toRead  <- file("~/ASTB/AG100B.v003.43.142.0001.bin", "rb")
 dir.AG100B  <- "~/Share500sda/AG100B/"
 files  <- list.files(dir.)
