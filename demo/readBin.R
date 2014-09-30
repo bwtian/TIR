@@ -23,7 +23,7 @@
 #' @param NDVIm   layer13 is  NDVI mean scaled by 100 at TOA
 #' @param NDVIs   layer14 is  NDVI sdev scaled by 100 at TOA
 #' @param Water   layer15 is  Land-Water Map
-#' @param obs     layer16 is  Observations
+#' @param obs     layer16 is  Observations, Images used
 #' @param Lat     layer17 is  Latitude scaled by 1000
 #' @param Lon     layer18 is  Longitude scaled by 1000
 #' @param GDEM    layer19 is  ASTER Global DEM
@@ -42,13 +42,14 @@ scales  <- c(1000, 1000, 1000, 1000, 1000,
              100, 100, 100, 100,
              1, 1, 1000, 1000, 1)
 layer.ok  <- mapply("/",layer.d, scales)
-summary(layer.t)
-#layer.t  <- layer.m/scales
+summary(layer.ok)
+layer.t  <- layer.d/scales
 ## Make SPDF
 if(!require(sp)){
         install.packages("sp")
 }
-wgs84GRS <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+
+wgs84GRS <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
 coords  <- layer.ok[, c(17,18)]
 m  <- as.matrix(coords) #sp need numeric matrix
 mode(m)  <- "numeric"
