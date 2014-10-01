@@ -1,3 +1,4 @@
+source("./tirSettings.R")
 setwd(dir.tif)  ## very important tips for use rLandsat8
 ## files  <- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)
 ## l8.lst  <- lapply(basename(files), ReadLandsat8)
