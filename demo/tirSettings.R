@@ -1,3 +1,4 @@
+#' @usage source("./tirSettings.R")
 ### Source Functions
 source("~/SparkleShare/Rprofile/R/sourceDir.R")
 sourceDir("~/SparkleShare/Rprofile/R/")
