@@ -1,7 +1,6 @@
 #' @usage source("./tirSettings.R")
 #' @author Bingwei Tian <bwtian@gmail.com>
 #'
-#'
 ### Load Library
 library(sp)
 library(rgdal)
