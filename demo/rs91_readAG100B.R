@@ -1,8 +1,4 @@
-source("~/SparkleShare/Rprofile/R/sourceDir.R")
-sourceDir("~/SparkleShare/Rprofile/R/")
-sourceDir("~/SparkleShare/TIR/R/")
-
-dir.AG100B  <- "~/Share500sda/AG100B/"
+source("./tirSettings.R")
 setwd(dir.AG100B)
 ### Hokkaido Area
 bins.l <- list.files(path=dir.AG100B,
