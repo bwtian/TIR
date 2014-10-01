@@ -1,11 +1,4 @@
-library(raster)
-library(sp)
-
-source("~/SparkleShare/Rprofile/R/sourceDir.R")
-sourceDir("~/SparkleShare/Rprofile/R/")
-dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
-dir.lulc  <- "~/Share500sda/Landsat8/at9_Database/LULC/hkdEmissivity.tif"
-rasterOptions(tmpdir = dir.tmp)
+source("./tirSettings.R")
 setwd(dir.lulc)
 hkdLulc   <- raster("hkdLulc100.tif")
 hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
