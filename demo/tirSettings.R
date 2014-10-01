@@ -1,4 +1,5 @@
 #' @usage source("./tirSettings.R")
+#' @author Bingwei Tian <bwtian@gmail.com>
 ### Source Functions
 source("~/SparkleShare/Rprofile/R/sourceDir.R")
 sourceDir("~/SparkleShare/Rprofile/R/")
