@@ -3,17 +3,6 @@
 #' @author Bingwei Tian
 #' @param tif a list of tif files
 #' @date 926
-library(sp)
-library(rgdal)
-library(raster)
-
-source("~/SparkleShare/Rprofile/R/sourceDir.R")
-sourceDir("~/SparkleShare/Rprofile/R/")
-dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
-rasterOptions(tmpdir = dir.tmp)
-dir.toaTbKlcc  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlcc"
-dir.toaTbKlccScale  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlccScale"
-toCRS  <- sp::CRS(lccWgs84)
 if (!file.exists(dir.toaTbKlccScale)){
         dir.create(dir.toaTbKlccScale)
 }
