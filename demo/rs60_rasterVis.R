@@ -1,12 +1,4 @@
-library(maptools)
-library(raster)
-source("~/SparkleShare/Rprofile/R/sourceDir.R")
-sourceDir("~/SparkleShare/Rprofile/R/")
-dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
-rasterOptions(tmpdir = dir.tmp)
-dir.toaTbK  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbK"
-dir.toaTbKlcc  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlcc"
-
+source("./tirSettings.R")
 tif <- list.files(path= dir.toaTbK ,
                   pattern= "B10.tif$",
                   all.files=TRUE,
@@ -19,7 +11,6 @@ par(mfcol =  c(4,4))
 lapply(r.rst, plot)
 
 lapply(r.rst, function(x) plot(x, col = terrain.colors(225)))
-library(rasterVis)
 
 
 
