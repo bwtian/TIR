@@ -1,5 +1,3 @@
-
-rs.todown()
+source("./tirSettings.R")
 worklist  <- paste0(hkdMinCloud$ID,".tgz")
-dir.tar  <- "~/Share300sdb/Landsat8/N0/LISTEJapan"
-rs.todown(worklist, dir.tar, "todown")
+rs.todown(worklist, dir.tar, "todown.txt")
