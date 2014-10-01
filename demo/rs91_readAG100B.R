@@ -24,13 +24,22 @@ saveRDS(hkdAG100B.df, file = "hkdAG100B.Rds")
 ### Rasterlize
 library(sp)
 library(raster)
-hkdAG100  <- readRDS("~/Share500sda/AG100B/hkdAG100B.Rds")
-hohead(hkdAG100)
-coordinates(hkdAG100)  <- ~Lon+Lat
-proj4string(hkdAG100)  <- wgs84GRS
+library(plotKML)
+hkdAG100spdf  <- readRDS("~/Share500sda/AG100B/hkdAG100B.Rds")
+head(hkdAG100spdf)
+coordinates(hkdAG100spdf)  <- ~Lon+Lat
+proj4string(hkdAG100spdf)  <- wgs84GRS
+gc()
 hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
 proj4string(hkdmaskb)
-dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
+gc()
+dir.tmp <- "D:./rasterTmp/"
 rasterOptions(tmpdir = dir.tmp)
-rasterize(hkdAG100, hkdmaskb, filename = "hkdAG100r.tif")
 
+
+hkdAG100sgdfLSTm  <- vect2rast(hkdAG100spdf, fname = "LSTm", cell.size = 100)
+
+hkdAG100rb  <- rasterize(hkdAG100spdf, hkdmaskb)
+
+class(hkdAG100r)
+saveRDS(hkdAG100r, file = "hkdAG100Br.Rds")
