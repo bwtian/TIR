@@ -29,6 +29,7 @@ dir.toaTbK <- file.path(dir.toa, "toaTbK")
 dir.toaTbC <- file.path(dir.toa, "toaTbC")
 dir.toaTbKE <- file.path(dir.toa, "toaTbKE")
 dir.toaEmi  <-   file.path(dir.toa, "toaEmi")
+dir.toaTbKlcc  <-  file.path(dir.toa,"toaTbKlcc")
 
 ###  Options
 dir.tmp    <- file.path(driver, "raster_tmp")
