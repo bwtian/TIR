@@ -34,8 +34,8 @@ dir.toaTbKlccScale  <-  file.path(dir.toa,"toaTbKlccScale")
 dir.toaTbKlccScaleMos <-  file.path(dir.toa,"toaTbKlccScaleMos")
 dir.surface  <- file.path(driver, "at2_Surface")
 dir.sufTsKlcc  <-  file.path(dir.surface, "sufTsK")
-
-dir.lulc  <- "~/Share500sda/Landsat8/at9_Database/LULC/"
+dir.database  <- file.path(driver, "at9_Database")
+dir.lulc  <- file.path(dir.database, "LULC")
 ###  Options
 dir.tmp    <- file.path(driver, "raster_tmp")
 rasterOptions(tmpdir = dir.tmp)
