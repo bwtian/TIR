@@ -8,11 +8,11 @@ library(rgdal)
 library(maptools)
 library(raster)
 library(rasterVis)
+library(plotKML)
 library(gstat)
 library(plyr)
 library(rgeos)
 library(ggplot2)
-
 
 ### Source Functions
 source("~/SparkleShare/Rprofile/R/sourceDir.R")
