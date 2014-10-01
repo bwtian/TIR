@@ -39,7 +39,7 @@ readAG100B <- function(bins){
                 layer.l <- split(data.v, ceiling(seq_along(data.v)/1000000))
                 layer.d <- as.data.frame(layer.l)
                 layer.d[layer.d == -9999]  <- NA
-                layer.m  <- as.matrix(layer.d)
+                layer.m <- as.matrix(layer.d)
                 scales  <- c(1000, 1000, 1000, 1000, 1000,
                              10000, 10000, 10000, 10000, 10000,
                              100, 100, 100, 100,
