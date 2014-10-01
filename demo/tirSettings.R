@@ -21,7 +21,7 @@ rasterOptions(tmpdir = dir.tmp)
 raster::removeTmpFiles(h = 24)
 gc()
 ### Define Drivers
-#dir.tar  <- "~/Share300sdb/Landsat8/N0/LISTEJapan"
+#dir.tar  <- file.path(driver, "Landsat8/L1T")
 dir.tif <- file.path(driver, "at0_Sensor")
 dir.toa <- file.path(driver, "at1_TOA")
 dir.toaRad <- file.path(dir.toa, "toaRad")
