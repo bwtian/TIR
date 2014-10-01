@@ -5,14 +5,7 @@
 #' @param j is Bolzman constant (1.38*10^-23 J/K)
 #' @param a is h*c/j (1.439*10^-2 m/K)
 #' @param e is a Raster* object with Emmissvity Value caluateed by NDVI or LULC
-#' @param
-source("~/SparkleShare/Rprofile/R/sourceDir.R")
-sourceDir("~/SparkleShare/Rprofile/R/")
-dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
-rasterOptions(tmpdir = dir.tmp)
-dir.toaTbKlcc  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlcc"
-dir.sufTsKlcc  <-  "~/Share500sda/Landsat8/at2_Surface/toaTsKlcc2"
-dir.lulc  <- "~/Share500sda/Landsat8/at9_Database/LULC/"
+source("./tirSettings.R")
 if (!file.exists(dir.sufTsKlcc)){
         dir.create(dir.sufTsKlcc)
 }

@@ -3,6 +3,7 @@
 #' @author Bingwei Tian
 #' @param tif a list of tif files
 #' @date 926
+source("./tirSettings.R")
 if (!file.exists(dir.toaTbKlccScale)){
         dir.create(dir.toaTbKlccScale)
 }
