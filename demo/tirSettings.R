@@ -10,8 +10,8 @@ dir.tif <- file.path(driver, "at0_Sensor")
 dir.toa <- file.path(driver, "at1_TOA")
 dir.toaRad <- file.path(dir.toa, "toaRad")
 
-dir.toaTbKlccScale  <-  file.path(dir.toa,"toaTbKlccScale")
-dir.toaTbKlccScaleMos  <-  file.path(dir.toa,"toaTbKlccScaleMos")
+dir.toaTbKlccScale  <- file.path(dir.toa,"toaTbKlccScale")
+dir.toaTbKlccScaleMos <- file.path(dir.toa,"toaTbKlccScaleMos")
 
 
 ### Raster Options
