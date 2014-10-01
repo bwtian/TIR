@@ -39,14 +39,15 @@ readAG100B <- function(bins){
                 layer.l <- split(data.v, ceiling(seq_along(data.v)/1000000))
                 layer.d <- as.data.frame(layer.l)
                 layer.d[layer.d == -9999]  <- NA
-                layer.m <- as.matrix(layer.d)
-                scales  <- c(1000, 1000, 1000, 1000, 1000,
-                             10000, 10000, 10000, 10000, 10000,
-                             100, 100, 100, 100,
-                             1, 1, 1000, 1000, 1)
-                layer.ok  <- mapply("/", layer.d, scales)
+                #layer.m <- as.matrix(layer.d)
+#                 scales  <- c(1000, 1000, 1000, 1000, 1000,
+#                              10000, 10000, 10000, 10000, 10000,
+#                              100, 100, 100, 100,
+#                              1, 1, 1000, 1000, 1)
+                #layer.ok  <- mapply("/", layer.d, scales)
                 #layer.ok  <- layer.d/scales
-                layer.df  <- as.data.frame(layer.ok)
+                #layer.df  <- as.data.frame(layer.ok)
+                layer.df  <- as.data.frame(layer.d)
                 colnames(layer.df)  <- c("emiB10m", "emiB11m", "emiB12m",
                                          "emiB13m", "emiB14m", "emiB10sd",
                                          "emiB11sd", "emiB12sd", "emiB13sd",
