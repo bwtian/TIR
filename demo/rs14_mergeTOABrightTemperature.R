@@ -1,21 +1,8 @@
-
-source("~/SparkleShare/Rprofile/R/sourceDir.R")
-sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
-sourceDir("~/SparkleShare/TIR/R/")
-dir.tif   <- "~/Share500sda/Landsat8/at0_Sensor"
-dir.toaTb <- "~/Share500sda/Landsat8/at1_TOA/toaTb"
-dir.toaTs <- "~/Share500sda/Landsat8/at1_TOA/toaTs"
-dir.toaTe <- "~/Share500sda/Landsat8/at1_TOA/toaTe"
-dir.tmp   <- "~/Share500sda/Landsat8/raster_tmp"
-library(raster)
-rasterOptions(tmpdir = dir.tmp)
+source("./tirSettings.R")
 setwd(dir.tif)  ## very important tips for use rLandsat8
-## files  <- sapply(file.path(dir.tif,list.files(dir.tif)), tools::file_path_as_absolute)
-## basename(files)
-## l8.lst  <- lapply(basename(files), ReadLandsat8)
 l8.lst   <- lapply(dir(dir.tif), ReadLandsat8)
 bandnames <-c("tirs1", "tirs2")
-sceneList <- list.files(dir.toaTb, full.names = TRUE) 
+sceneList <- list.files(dir.toaTbk, full.names = TRUE)
 for (i in sceneList) {
         bandList <- list.files(sceneList, full.names = TRUE)
         emiName <- paste0(basename(i), ".tif")
@@ -30,8 +17,8 @@ for (i in sceneList) {
         Ts10  <- Tb10/(1 + (L10*Tb10/a)*log(TbE)
         writeRaster(TbE, filename = file.path(dir.toaTe,emiName), overwrite = T)
         png(file.path(dir.toaTe,pngName))
-        plot(TbE)                       
-        dev.off()                       
+        plot(TbE)
+        dev.off()
         raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
         }
 }
