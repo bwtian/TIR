@@ -1,5 +1,26 @@
+source("~/SparkleShare/Rprofile/R/sourceDir.R")
+sourceDir("~/SparkleShare/Rprofile/R/")
+dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
+rasterOptions(tmpdir = dir.tmp)
+dir.toaTbKlcc  <-  "~/Share500sda/Landsat8/at1_TOA/toaTbKlcc"
 
-dir.toaTb <- path.expand("~/Share500sda/Landsat8/at1_TOA/toaTb")
-setwd(dir.toaTb)
-library(raster)
-library(rasterVis)
+tif <- list.files(path= dir.toaTbKlcc ,
+                  pattern= ".tif$",
+                  all.files=TRUE,
+                  full.names=TRUE,
+                  recursive=TRUE,
+                  ignore.case=TRUE)
+r.rst  <- lapply(tif, raster)
+plot(r.rst)
+r.stack  <- stack(r.rst)
+plot(r.stack)
+hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
+for (i in r.rst) {
+        outName  <- paste0(names(i), ".tif")
+        #projectRaster(from = i, crs = toCRS,  method = "ngb",
+        projectRaster(from = i,  to = hkdmaskb,
+                      filename =  file.path(dir.toaTbKlcc, outName),
+                      overwrite=TRUE)
+        raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
+}
+#test = projectRaster(r.rst[[1]], crs = toCRS, method = "ngb")
