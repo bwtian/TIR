@@ -5,6 +5,7 @@
 ### Load Library
 library(sp)
 library(rgdal)
+library(maptools)
 library(raster)
 library(rasterVis)
 
@@ -13,10 +14,13 @@ source("~/SparkleShare/Rprofile/R/sourceDir.R")
 sourceDir("~/SparkleShare/Rprofile/R/")
 sourceDir("~/SparkleShare/TIR/R/")
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
-
-
-### Define Drivers
+###  Options
 driver     <- "~/Share500sda/Landsat8/" # Linux and Windows Symbolink
+dir.tmp    <- file.path(driver, "raster_tmp")
+rasterOptions(tmpdir = dir.tmp)
+raster::removeTmpFiles(h = 24)
+gc()
+### Define Drivers
 #dir.tar  <- "~/Share300sdb/Landsat8/N0/LISTEJapan"
 dir.tif <- file.path(driver, "at0_Sensor")
 dir.toa <- file.path(driver, "at1_TOA")
@@ -36,8 +40,6 @@ dir.surface  <- file.path(driver, "at2_Surface")
 dir.sufTsKlcc  <-  file.path(dir.surface, "sufTsK")
 dir.database  <- file.path(driver, "at9_Database")
 dir.lulc  <- file.path(dir.database, "LULC")
-###  Options
-dir.tmp    <- file.path(driver, "raster_tmp")
-rasterOptions(tmpdir = dir.tmp)
-raster::removeTmpFiles(h = 24)
-gc()
+
+### Files
+#hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
