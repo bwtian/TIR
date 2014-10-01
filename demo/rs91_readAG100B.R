@@ -21,3 +21,13 @@ hkd.l  <- hkd[[1]]
 hkdAG100B.l   <- readAG100B(hkd.l)
 hkdAG100B.df  <- do.call(rbind, hkdAG100B.l)
 saveRDS(hkdAG100B.df, file = "hkdAG100B.Rds")
+hkdAG100  <- readRDS("~/Share500sda/AG100B/hkdAG100B.Rds")
+head(hkdAG100)
+coordinates(hkdAG100)  <- ~Lon+Lat
+proj4string(hkdAG100)  <- wgs84GRS
+hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
+proj4string(hkdmaskb)
+dir.tmp <- "~/Share500sda/Landsat8/raster_tmp"
+rasterOptions(tmpdir = dir.tmp)
+hkdAG100r  <- rasterize(hkdAG100, hkdmaskb)
+
