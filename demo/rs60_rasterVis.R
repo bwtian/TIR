@@ -6,8 +6,8 @@ tif <- list.files(path= dir.toaTbK ,
                   recursive=TRUE,
                   ignore.case=TRUE)
 r.rst  <- lapply(tif, raster)
-par()
-par(mfcol =  c(4,4))
+# par()
+# par(mfcol =  c(4,4))
 lapply(r.rst, plot)
 
 lapply(r.rst, function(x) plot(x, col = terrain.colors(225)))
@@ -29,19 +29,23 @@ tif <- list.files(path= dir.toaTbKlcc ,
                   recursive=TRUE,
                   ignore.case=TRUE)
 r.rst  <- lapply(tif, raster)
+
+hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
 r.stack  <- stack(r.rst)
 r.stackm  <- scale(r.stack,  center=TRUE, scale=FALSE)
+
 summary(r.stackm)
 #plot(r.stack, col = heat.colors(255), zlim = c(290, 320))
 #plot(r.stackm, col = heat.colors(255))
 
 levelplot(r.stackm)
+tcat  <- c(seq())
+levelplot(r.stackm, contour = TRUE, margin = FALSE, at = tcat, layout = c(4, 4))
 miat = c(0, 0.25, 0.5, 0.75, 1)
 # levelplot(rprob, contour = TRUE, margin = FALSE, at = miat)
 # levelplot(r.stack, col = heat.colors(255), zlim = c(290, 320))
 
 
-hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
 plot(hkdmaskb, add = T)
 for (i in r.rst) {
         outName  <- paste0(names(i), ".tif")
