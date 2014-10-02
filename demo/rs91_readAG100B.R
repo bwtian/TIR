@@ -32,10 +32,19 @@ gc()
 dir.tmp <- "D:./rasterTmp/"
 rasterOptions(tmpdir = dir.tmp)
 
-
+####sgdf
 hkdAG100sgdfLSTm  <- vect2rast(hkdAG100spdf, fname = "LSTm", cell.size = 100)
+summary(hkdAG100sgdfLSTm)
+
+
+
+
+
 
 hkdAG100rb  <- rasterize(hkdAG100spdf, hkdmaskb)
+
+
+
 
 class(hkdAG100r)
 saveRDS(hkdAG100r, file = "hkdAG100Br.Rds")
