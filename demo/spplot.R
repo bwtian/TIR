@@ -31,3 +31,24 @@ Loading required package: RColorBrewer
  spplot(meuse.grid, c("f","g"), col.regions=bpy.colors(10))
 
 
+f <- system.file("external/test.grd", package="raster")
+r <- raster(f)
+
+levelplot(r) +
+        layer({
+                xs <- seq(181000, 181400, by=100)
+                grid.rect(x=xs, y=330500,
+                          width=100, height=30,
+                          gp=gpar(fill=rep(c('transparent', 'black'), 2)),
+                          default.units='native')
+                grid.text(x= xs - 50, y=330560, seq(0, 400, by=100),
+                          gp=gpar(cex=0.5), rot=30,
+                          default.units='native')
+        })
+levelplot(r, margin=FALSE, auto.key=FALSE, scales=list(draw=FALSE)) +
+        layer({
+                SpatialPolygonsRescale(layout.north.arrow(),
+                                       offset = c(179000,332500),
+                                       scale = 400)
+        })
+
