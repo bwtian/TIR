@@ -67,13 +67,13 @@ levelplot(LSTCenter, par.settings = BuRdTheme, FUN.margin=median, axis.margin = 
                   yc <- yscale.components.default(...)
                   yc$left$labels$labels <- yc$left$labels$at/1000 ## convert to strings as pct
                   return(yc)
-          },
+                  },
           xscale.components=function(...){
                           xc <- xscale.components.default(...)
                           xc$bottom$labels$labels <- xc$bottom$labels$at/1000 ## convert to strings as pct
                           return(xc)
-
-          })
+                          }
+          )
 
 + spplot()
         layer({SpatialPolygonsRescale(layout.north.arrow(),
