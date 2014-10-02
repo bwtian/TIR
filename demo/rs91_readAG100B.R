@@ -74,8 +74,9 @@ mapRaster  <- levelplot(LSTCenter, par.settings = BuRdTheme, FUN.margin=median, 
                           return(xc)
                           }
           )
-
-
+volA  <- readRDS("~/Dropbox/2data/dataProduct/jpVolcanoes/jpVol110_140812_174525.Rds")
+volQ  <- readRDS("~/Dropbox/2data/dataProduct/jpVolcanoes/jpVol455_140812_172148.Rds")
+mapVector  <-
 + spplot()
         layer({SpatialPolygonsRescale(layout.north.arrow(),
                                        offset = c(1800000,1600000),
