@@ -74,7 +74,8 @@ levelplot(LSTCenter, par.settings = BuRdTheme, FUN.margin=median, axis.margin = 
                           return(xc)
 
           })
-+
+
++ spplot()
         layer({SpatialPolygonsRescale(layout.north.arrow(),
                                        offset = c(1800000,1600000),
                                        scale = 400)
