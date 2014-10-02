@@ -29,16 +29,17 @@ tif <- list.files(path= dir.toaTbKlcc ,
                   recursive=TRUE,
                   ignore.case=TRUE)
 r.rst  <- lapply(tif, raster)
-
-hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
 r.stack  <- stack(r.rst)
-r.stackm  <- scale(r.stack,  center=TRUE, scale=FALSE)
+hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
+r.mask  <- mask(r.stack, hkdmaskb)
+r.center  <- scale(r.mask,  center=TRUE, scale=FALSE)
+
+levelplot(r.center)
 
 summary(r.stackm)
 #plot(r.stack, col = heat.colors(255), zlim = c(290, 320))
 #plot(r.stackm, col = heat.colors(255))
 
-levelplot(r.stackm)
 tcat  <- c(seq())
 levelplot(r.stackm, contour = TRUE, margin = FALSE, at = tcat, layout = c(4, 4))
 miat = c(0, 0.25, 0.5, 0.75, 1)
