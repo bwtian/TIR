@@ -1,4 +1,4 @@
-source("./tirSettings.R")
+source("~/SparkleShare/TIR/demo/tirSettings.R")
 setwd(dir.AG100B)
 ### Hokkaido Area
 bins.l <- list.files(path=dir.AG100B,
@@ -37,7 +37,7 @@ hkdAG100sgdfLSTm  <- vect2rast(hkdAG100spdf, fname = "LSTm", cell.size = 100)
 summary(hkdAG100sgdfLSTm)
 hkdAG100sgdfLSTmR  <- raster(hkdAG100sgdfLSTm)
 LSTcrop  <- crop(hkdAG100sgdfLSTmR, hkdmaskb, filename = "hkdAG100sgdfLSTm.tif", overwrite=TRUE)
-LSTmask  <- mask(LSTcrop, hkdmaskb, filename = "hkdAG100LSTmask.tif", overwrite=TRUE)
+
 # plot(LSTcrop)
 # proj4string(hkdAG100sgdfLSTmR)
 # proj4string(hkdmaskb)
@@ -45,10 +45,51 @@ LSTmask  <- mask(LSTcrop, hkdmaskb, filename = "hkdAG100LSTmask.tif", overwrite=
 # extent(hkdmaskb)
 LSTrsp  <- resample(LSTcrop, hkdmaskb)
 LSTrsp2  <- resample(hkdAG100sgdfLSTmR, hkdmaskb)
+compareRaster(LSTrsp, LSTrsp2)
+extent(LSTrsp2)
+extent(hkdmaskb)
+plot(LSTrsp)
+summary(LSTrsp)
+LSTmask  <- mask(LSTrsp2, hkdmaskb, filename = "hkdAG100LSTmask.tif", overwrite=TRUE)
+plot(LSTmask, zlim =c(252, 320))
+
+levelplot(LSTmask, par.settings = BuRdTheme)
+
+levelplot(LSTmask, par.settings = BuRdTheme, at  = seq(252,320, 2))
+plotKML(LSTmask)
+LSTCenter  <- scale(LSTmask, center = TRUE, scale = FALSE)
+summary(LSTCenter)
+windowsFonts(Times=windowsFont("TT Times New Roman"))
+levelplot(LSTCenter, par.settings = BuRdTheme, axis.margin = TRUE,
+          at = seq(-40, 40,2),
+          xlab='Easting (km)', ylab='Northing (km)',
+          yscale.components=function(...){
+                  yc <- yscale.components.default(...)
+                  yc$left$labels$labels <- yc$left$labels$at/1000 ## convert to strings as pct
+                  return(yc)
+          },
+          xscale.components=function(...){
+                          xc <- xscale.components.default(...)
+                          xc$bottom$labels$labels <- xc$bottom$labels$at/1000 ## convert to strings as pct
+                          return(xc)
+
+          })
+
+        layer({
+                SpatialPolygonsRescale(layout.north.arrow(),
+                                       offset = c(1800000,1600000),
+                                       scale = 400)
+        })
+)
+
+# levelplot(LSTCenter, at=seq(min(LSTCenter[], na.rm=T), max(LSTCenter[], na.rm=T), len=100),
+#           col.regions=colorRampPalette(c('#2c7bb6', '#abd9e9', '#ffffbf',
+#                                          '#fdae61', '#d7191c')))
+summary(LSTmask)
+
+show.settings()
+
+####
 hkdAG100rb  <- rasterize(hkdAG100spdf, hkdmaskb)
-
-
-
-
 class(hkdAG100r)
 saveRDS(hkdAG100r, file = "hkdAG100Br.Rds")
