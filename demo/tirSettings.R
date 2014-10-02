@@ -19,6 +19,7 @@ sourceDir("~/SparkleShare/Rprofile/R/")
 sourceDir("~/SparkleShare/TIR/R/")
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
 ###  Options
+windowsFonts(Times=windowsFont("TT Times New Roman"))
 driver     <- "~/Share500sda/" # Linux and Windows Symbolink
 dir.tmp    <- file.path(driver, "raster_tmp")
 rasterOptions(tmpdir = dir.tmp)
