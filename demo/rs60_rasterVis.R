@@ -31,12 +31,14 @@ tif <- list.files(path= dir.toaTbKlcc ,
 r.rst  <- lapply(tif, raster)
 r.stack  <- stack(r.rst)
 r.stackm  <- scale(r.stack,  center=TRUE, scale=FALSE)
+summary(r.stackm)
 #plot(r.stack, col = heat.colors(255), zlim = c(290, 320))
-plot(r.stackm, col = heat.colors(255))
-levelplot(r.stack)
+#plot(r.stackm, col = heat.colors(255))
+
+levelplot(r.stackm)
 miat = c(0, 0.25, 0.5, 0.75, 1)
-levelplot(rprob, contour = TRUE, margin = FALSE, at = miat)
-levelplot(r.stack, col = heat.colors(255), zlim = c(290, 320))
+# levelplot(rprob, contour = TRUE, margin = FALSE, at = miat)
+# levelplot(r.stack, col = heat.colors(255), zlim = c(290, 320))
 
 
 hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
