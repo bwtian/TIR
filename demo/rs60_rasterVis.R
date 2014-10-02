@@ -8,17 +8,16 @@ tif <- list.files(path= dir.toaTbK ,
 r.rst  <- lapply(tif, raster)
 # par()
 # par(mfcol =  c(4,4))
-lapply(r.rst, plot)
+# lapply(r.rst, plot)
+#
+# lapply(r.rst, function(x) plot(x, col = terrain.colors(225)))
 
-lapply(r.rst, function(x) plot(x, col = terrain.colors(225)))
 
 
-
-hkdshp  <- "~/Dropbox/2data/dataRaw/japan_ver71/HokkaidoUnion_lccWgs84.shp"
+hkdshp  <- "~/Share500sda/2data/dataRaw/japan_ver71/HokkaidoUnion_lccWgs84.shp"
 
 hkdshp  <- readShapePoly(hkdshp)
 proj4string(hkdshp) <- CRS(lccWgs84)
-hkdshpb  <- phd.largestPolys(hkdshp, Polygon = T)
 
 
 ### Raster Stacked
@@ -33,7 +32,7 @@ r.stack  <- stack(r.rst)
 hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
 r.mask  <- mask(r.stack, hkdmaskb)
 r.center  <- scale(r.mask,  center=TRUE, scale=FALSE)
-
+r.mosaic  <- mosaic(r.center)
 levelplot(r.center)
 
 summary(r.stackm)
