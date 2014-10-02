@@ -21,7 +21,7 @@ sourceDir("~/SparkleShare/Rprofile/R/")
 sourceDir("~/SparkleShare/TIR/R/")
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
 ###  Options
-if(.Platform$OS.type = "windows"){
+if(.Platform$OS.type == "windows"){
         windowsFonts(Times=windowsFont("TT Times New Roman"))
         windowsFonts(times=windowsFont("TT Times New Roman"))
 }
