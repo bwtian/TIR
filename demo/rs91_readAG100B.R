@@ -60,7 +60,7 @@ plotKML(LSTmask)
 LSTCenter  <- scale(LSTmask, center = TRUE, scale = FALSE)
 summary(LSTCenter)
 windowsFonts(Times=windowsFont("TT Times New Roman"))
-levelplot(LSTCenter, par.settings = BuRdTheme, FUN.margin=median, axis.margin = TRUE,
+mapRaster  <- levelplot(LSTCenter, par.settings = BuRdTheme, FUN.margin=median, axis.margin = TRUE,
           at = seq(-40, 40,2),
           xlab='Easting (km)', ylab='Northing (km)',
           yscale.components=function(...){
@@ -74,6 +74,7 @@ levelplot(LSTCenter, par.settings = BuRdTheme, FUN.margin=median, axis.margin = 
                           return(xc)
                           }
           )
+
 
 + spplot()
         layer({SpatialPolygonsRescale(layout.north.arrow(),
