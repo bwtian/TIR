@@ -12,6 +12,8 @@ library(gstat)
 library(plyr)
 library(rgeos)
 library(ggplot2)
+library(lattice)
+library(latticeExtra)
 
 ### Source Functions
 source("~/SparkleShare/Rprofile/R/sourceDir.R")
