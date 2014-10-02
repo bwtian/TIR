@@ -1,4 +1,4 @@
-source("./tirSettings.R")
+source("~/SparkleShare/TIR/demo/tirSettings.R")
 tif <- list.files(path= dir.toaTbK ,
                   pattern= "B10.tif$",
                   all.files=TRUE,
