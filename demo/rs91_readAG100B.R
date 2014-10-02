@@ -31,16 +31,20 @@ proj4string(hkdmaskb)
 gc()
 dir.tmp <- "D:./rasterTmp/"
 rasterOptions(tmpdir = dir.tmp)
-
+extract
 ####sgdf
 hkdAG100sgdfLSTm  <- vect2rast(hkdAG100spdf, fname = "LSTm", cell.size = 100)
 summary(hkdAG100sgdfLSTm)
-
-
-
-
-
-
+hkdAG100sgdfLSTmR  <- raster(hkdAG100sgdfLSTm)
+LSTcrop  <- crop(hkdAG100sgdfLSTmR, hkdmaskb, filename = "hkdAG100sgdfLSTm.tif", overwrite=TRUE)
+LSTmask  <- mask(LSTcrop, hkdmaskb, filename = "hkdAG100LSTmask.tif", overwrite=TRUE)
+# plot(LSTcrop)
+# proj4string(hkdAG100sgdfLSTmR)
+# proj4string(hkdmaskb)
+# extent(LSTcrop)
+# extent(hkdmaskb)
+LSTrsp  <- resample(LSTcrop, hkdmaskb)
+LSTrsp2  <- resample(hkdAG100sgdfLSTmR, hkdmaskb)
 hkdAG100rb  <- rasterize(hkdAG100spdf, hkdmaskb)
 
 
