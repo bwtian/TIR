@@ -47,7 +47,7 @@ plot(volAlcc, pch = 2, size = 6,add =T)
 ## Center valuse and Mosaic
 r.center$fun <- mean
 r.centerMos10 <- do.call(mosaic, r.center)
-plot(r.centerMerge, col = bpy.colors(255))
+plot(r.centerMos10, col = oceColorsJet(255))
 
 levelplot(r.centerMerge,maxpixels=1e6, par.settings =  BuRdTheme)
 
