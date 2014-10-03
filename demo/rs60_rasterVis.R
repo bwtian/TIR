@@ -49,6 +49,7 @@ r.centerMos10 <- do.call(mosaic, r.center)
 plot(r.centerMos10, col = oceColorsJet(255))
 plot(volAlcc, pch = 2, size = 6,add =T)
 levelplot(r.centerMerge,maxpixels=1e6, par.settings =  BuRdTheme)
+writeRaster(r.centerMos10, "L8B10CenterMos.tif")
 
 # levelplot(rprob, contour = TRUE, margin = FALSE, at = miat)
 # levelplot(r.stack, col = heat.colors(255), zlim = c(290, 320))
