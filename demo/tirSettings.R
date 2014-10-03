@@ -31,6 +31,10 @@ dir.tmp    <- file.path(driver, "raster_tmp")
 rasterOptions(tmpdir = dir.tmp)
 raster::removeTmpFiles(h = 24)
 gc()
+
+### Colors
+
+
 ### Define Drivers
 #dir.tar  <- file.path(driver, "Landsat8/L1T")
 dir.sat  <- file.path(driver, "Landsat8")
