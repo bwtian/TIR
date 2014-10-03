@@ -14,7 +14,7 @@ library(rgeos)
 library(ggplot2)
 library(lattice)
 library(latticeExtra)
-
+library(oce)
 ### Source Functions
 source("~/SparkleShare/Rprofile/R/sourceDir.R")
 sourceDir("~/SparkleShare/Rprofile/R/")
@@ -33,7 +33,7 @@ raster::removeTmpFiles(h = 24)
 gc()
 
 ### Colors
-
+rainbow1  <- rainbow()
 
 ### Define Drivers
 #dir.tar  <- file.path(driver, "Landsat8/L1T")
