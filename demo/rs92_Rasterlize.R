@@ -1,21 +1,25 @@
 source("~/SparkleShare/TIR/demo/tirSettings.R")
-### Rasterlize
+### Import df to spdf
 hkdAG100df  <- readRDS("~/Share500sda/AG100B/hkdAG100B.Rds")
 head(hkdAG100df)
 hkdAG100spdf  <- hkdAG100df
+
 coordinates(hkdAG100spdf)  <- ~Lon+Lat
 proj4string(hkdAG100spdf)  <- wgs84GRS
-gc()
-hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
-proj4string(hkdmaskb)
-gc()
-dir.tmp <- "D:/rasterTmp/"
-rasterOptions(tmpdir = dir.tmp)
-extract
-####sgdf
+setwd(dir.AG100B)
+getwd()
+### Subset spdf
+hkdBoudary  <- readRDS
+sub  <- hkdAG100spdf[hkdBoudary]
+#phd.saveshp.geo(hkdAG100spdf)  ## This will take a lot of time
+####sgdf Crop spdf using Vector
+###
 hkdAG100sgdfLSTm  <- vect2rast(hkdAG100spdf, fname = "LSTm", cell.size = 100)
 summary(hkdAG100sgdfLSTm)
+##mask
 hkdAG100sgdfLSTmR  <- raster(hkdAG100sgdfLSTm)
+hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
+proj4string(hkdmaskb)
 LSTcrop  <- crop(hkdAG100sgdfLSTmR, hkdmaskb, filename = "hkdAG100sgdfLSTm.tif", overwrite=TRUE)
 
 # plot(LSTcrop)
