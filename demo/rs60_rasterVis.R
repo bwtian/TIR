@@ -41,9 +41,10 @@ plot(r.centerMerge, col = oceColorsJet(2))
 levelplot(r.centerMerge,maxpixels=1e6, par.settings =  BuRdTheme)
 
 ## Center valuse and Mosaic
-r.center$fun <- mean
-r.centerMos10 <- do.call(mosaic, r.center)
-plot(r.centerMerge, col = bpy.colors(255))
+r.unstack  <- unstack(r.center)
+r.unstack$fun <- mean
+r.centerMos10 <- do.call(mosaic, r.unstack)
+plot(r.centerMos10, col = bpy.colors(255))
 
 levelplot(r.centerMerge,maxpixels=1e6, par.settings =  BuRdTheme)
 
