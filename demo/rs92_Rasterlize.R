@@ -1,8 +1,5 @@
 source("~/SparkleShare/TIR/demo/tirSettings.R")
 ### Rasterlize
-library(sp)
-library(raster)
-library(plotKML)
 hkdAG100spdf  <- readRDS("~/Share500sda/AG100B/hkdAG100B.Rds")
 head(hkdAG100spdf)
 coordinates(hkdAG100spdf)  <- ~Lon+Lat
