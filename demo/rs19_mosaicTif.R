@@ -33,6 +33,7 @@ tif11 <- list.files(path= dir.toaTbKlccScale,
                     full.names=TRUE,
                     recursive=TRUE,
                     ignore.case=TRUE)
+###Core Code
 r11.rst  <- lapply(tif11, raster)
 r11.rst$fun <- mean
 mos11 <- do.call(mosaic, r11.rst)
