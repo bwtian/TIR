@@ -1,14 +1,15 @@
 source("~/SparkleShare/TIR/demo/tirSettings.R")
 ### Rasterlize
-hkdAG100spdf  <- readRDS("~/Share500sda/AG100B/hkdAG100B.Rds")
-head(hkdAG100spdf)
+hkdAG100df  <- readRDS("~/Share500sda/AG100B/hkdAG100B.Rds")
+head(hkdAG100df)
+hkdAG100spdf  <- hkdAG100df
 coordinates(hkdAG100spdf)  <- ~Lon+Lat
 proj4string(hkdAG100spdf)  <- wgs84GRS
 gc()
 hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
 proj4string(hkdmaskb)
 gc()
-dir.tmp <- "D:./rasterTmp/"
+dir.tmp <- "D:/rasterTmp/"
 rasterOptions(tmpdir = dir.tmp)
 extract
 ####sgdf
@@ -38,7 +39,6 @@ levelplot(LSTmask, par.settings = BuRdTheme, at  = seq(252,320, 2))
 plotKML(LSTmask)
 LSTCenter  <- scale(LSTmask, center = TRUE, scale = FALSE)
 summary(LSTCenter)
-windowsFonts(Times=windowsFont("TT Times New Roman"))
 
 
 #### rasterlize
