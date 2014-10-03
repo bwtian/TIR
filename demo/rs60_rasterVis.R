@@ -52,15 +52,3 @@ levelplot(r.centerMerge,maxpixels=1e6, par.settings =  BuRdTheme)
 
 # levelplot(rprob, contour = TRUE, margin = FALSE, at = miat)
 # levelplot(r.stack, col = heat.colors(255), zlim = c(290, 320))
-
-
-plot(hkdmaskb, add = T)
-for (i in r.rst) {
-        outName  <- paste0(names(i), ".tif")
-        #projectRaster(from = i, crs = toCRS,  method = "ngb",
-        projectRaster(from = i,  to = hkdmaskb,
-                      filename =  file.path(dir.toaTbKlcc, outName),
-                      overwrite=TRUE)
-        raster::removeTmpFiles(h = 1) ## Improtant tips for save hardisk
-}
-#test = projectRaster(r.rst[[1]], crs = toCRS, method = "ngb")
