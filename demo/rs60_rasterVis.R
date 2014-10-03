@@ -1,11 +1,11 @@
 source("~/SparkleShare/TIR/demo/tirSettings.R")
-tif <- list.files(path= dir.toaTbK ,
-                  pattern= "B10.tif$",
-                  all.files=TRUE,
-                  full.names=TRUE,
-                  recursive=TRUE,
-                  ignore.case=TRUE)
-r.rst  <- lapply(tif, raster)
+# tif <- list.files(path= dir.toaTbK ,
+#                   pattern= "B10.tif$",
+#                   all.files=TRUE,
+#                   full.names=TRUE,
+#                   recursive=TRUE,
+#                   ignore.case=TRUE)
+# r.rst  <- lapply(tif, raster)
 # par()
 # par(mfcol =  c(4,4))
 # lapply(r.rst, plot)
@@ -13,35 +13,40 @@ r.rst  <- lapply(tif, raster)
 # lapply(r.rst, function(x) plot(x, col = terrain.colors(225)))
 
 
-
+## lOAD Additional data
 hkdshp  <- "~/Share500sda/2data/dataRaw/japan_ver71/HokkaidoUnion_lccWgs84.shp"
-
 hkdshp  <- readShapePoly(hkdshp)
 proj4string(hkdshp) <- CRS(lccWgs84)
-
-
+hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
 ### Raster Stacked
-tif <- list.files(path= dir.toaTbKlcc ,
+tif10 <- list.files(path= dir.toaTbKlcc ,
                   pattern= "B10.tif$",
                   all.files=TRUE,
                   full.names=TRUE,
                   recursive=TRUE,
                   ignore.case=TRUE)
-r.rst  <- lapply(tif, raster)
+r.rst  <- lapply(tif10, raster)
 r.stack  <- stack(r.rst)
-hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
+
 r.mask  <- mask(r.stack, hkdmaskb)
-r.center  <- scale(r.mask,  center=TRUE, scale=FALSE)
-r.mosaic  <- mosaic(r.center)
-levelplot(r.center)
+r.merge  <- merge(r.mask)
+plot(r.mask)
+plot(r.merge, col = bpy.colors(255))
+levelplot(r.merge, par.settings =  BuRdTheme)
+## Center values and Merge
+r.center  <- scale(r.mask,center=TRUE, scale=FALSE)
+r.centerMerge  <- merge(r.center)
+plot(r.centerMerge, col = bpy.colors(255))
+plot(r.centerMerge, col = oceColorsJet(2))
+levelplot(r.centerMerge,maxpixels=1e6, par.settings =  BuRdTheme)
 
-summary(r.stackm)
-#plot(r.stack, col = heat.colors(255), zlim = c(290, 320))
-#plot(r.stackm, col = heat.colors(255))
+## Center valuse and Mosaic
+r.center$fun <- mean
+r.centerMos10 <- do.call(mosaic, r.center)
+plot(r.centerMerge, col = bpy.colors(255))
 
-tcat  <- c(seq())
-levelplot(r.stackm, contour = TRUE, margin = FALSE, at = tcat, layout = c(4, 4))
-miat = c(0, 0.25, 0.5, 0.75, 1)
+levelplot(r.centerMerge,maxpixels=1e6, par.settings =  BuRdTheme)
+
 # levelplot(rprob, contour = TRUE, margin = FALSE, at = miat)
 # levelplot(r.stack, col = heat.colors(255), zlim = c(290, 320))
 
