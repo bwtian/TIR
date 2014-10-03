@@ -33,8 +33,17 @@ raster::removeTmpFiles(h = 24)
 gc()
 
 ### Colors
-rainbow1  <- rainbow()
-
+rainbow1  <- rainbow(n = 255, start = 2/6)
+oceColorsJet  <- function (n)
+{
+        if (missing(n) || n <= 0)
+                colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan",
+                                   "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))
+        else {
+                colorRampPalette(c("#00007F", "blue", "#007FFF", "cyan",
+                                   "#7FFF7F", "yellow", "#FF7F00", "red", "#7F0000"))(n)
+        }
+}
 ### Define Drivers
 #dir.tar  <- file.path(driver, "Landsat8/L1T")
 dir.sat  <- file.path(driver, "Landsat8")
