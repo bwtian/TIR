@@ -37,14 +37,17 @@ levelplot(r.merge, par.settings =  BuRdTheme)
 r.center  <- scale(r.mask,center=TRUE, scale=FALSE)
 r.centerMerge  <- merge(r.center)
 plot(r.centerMerge, col = bpy.colors(255))
-plot(r.centerMerge, col = oceColorsJet(2))
+plot(r.centerMerge, maxpixels= 1e6, col = oceColorsJet(255))
 levelplot(r.centerMerge,maxpixels=1e6, par.settings =  BuRdTheme)
-
+volA  <- readRDS("~/Share500sda//2data/dataProduct/hkd/")
+volAlcc  <- spTransform(volA, CRS(lccWgs84))
+phd.crsTransfer
+proj4string(volA)
+plot(volAlcc, pch = 2, size = 6,add =T)
 ## Center valuse and Mosaic
-r.unstack  <- unstack(r.center)
-r.unstack$fun <- mean
-r.centerMos10 <- do.call(mosaic, r.unstack)
-plot(r.centerMos10, col = bpy.colors(255))
+r.center$fun <- mean
+r.centerMos10 <- do.call(mosaic, r.center)
+plot(r.centerMerge, col = bpy.colors(255))
 
 levelplot(r.centerMerge,maxpixels=1e6, par.settings =  BuRdTheme)
 
