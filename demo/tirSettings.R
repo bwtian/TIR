@@ -4,6 +4,7 @@
 ### Load Library
 library(sp)
 library(rgdal)
+library(gdalUtils)
 library(maptools)
 library(raster)
 library(rasterVis)
@@ -12,9 +13,11 @@ library(gstat)
 library(plyr)
 library(rgeos)
 library(ggplot2)
+library(ggmap)
+
 library(lattice)
 library(latticeExtra)
-library(oce)
+#library(oce)
 ### Source Functions
 source("~/SparkleShare/Rprofile/R/sourceDir.R")
 sourceDir("~/SparkleShare/Rprofile/R/")
