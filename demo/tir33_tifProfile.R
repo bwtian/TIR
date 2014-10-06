@@ -36,3 +36,5 @@ cells <- extract(ids, line)
 # compute xy
 xy = lapply(cells, function(x) xyFromCell(mos, x))
 head(xy)
+topo_profile = extract(x=mos, y=line, along=TRUE)[[1]]
+plot(topo_profile, type='l')
