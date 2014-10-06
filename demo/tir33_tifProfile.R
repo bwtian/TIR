@@ -33,8 +33,13 @@ class(pf1)
 idx <- init(mos, v='cell')
 # extract these
 cells <- extract(ids, line)
+cells
 # compute xy
 xy = lapply(cells, function(x) xyFromCell(mos, x))
 head(xy)
-topo_profile = extract(x=mos, y=line, along=TRUE)[[1]]
+topo_profile = extract(x=mos, y=line, along=TRUE, cellnumbers=TRUE)
+class(topo_profile)
+
+summary(topo_profile)
 plot(topo_profile, type='l')
+
