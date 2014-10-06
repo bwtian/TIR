@@ -33,7 +33,8 @@ proj4string(line)  <- CRS(lccWgs84)
 pf1  <- extract(mos, line)
 ##
 # create raster index raster 1~ncell = cellnumbers=TRUE in extract
-# idx <- init(mos, v='cell')
+idx <- init(mos, v='cell')
+plot(idx)
 # extract raster idx along line
 # cells <- extract(idx, line)
 # range(cells)
@@ -47,6 +48,9 @@ idvxy  <- cbind(idv_df,xy_df)
 pairs  <- length(idvxy$x) - 1
 dx  <- idvxy$x[2:(pairs+1)] - idvxy$x[1:pairs]
 dy  <- idvxy$y[2:(pairs+1)] - idvxy$y[1:pairs]
-
-
-
+dx^2
+dy^2
+dist  <- sqrt(dx^2+dy^2)
+cumdist  <- cumsum(dist[1:pairs])
+cumdist
+plot(cumdist, idvxy$L8B10CenterMos[1:pairs], type = "l")
