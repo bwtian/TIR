@@ -1,5 +1,7 @@
 TIR
 ===
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.11971.png)](http://dx.doi.org/10.5281/zenodo.11971)
+
 [![Build Status](https://travis-ci.org/bwtian/TIR.svg?branch=master)](https://travis-ci.org/bwtian/TIR)
 
 ## TIR: A package for Thermal Infrared Remote Sensing data analysis and mapping
