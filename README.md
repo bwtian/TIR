@@ -4,7 +4,7 @@ TIR
 
 ## TIR: A package for Thermal Infrared Remote Sensing data analysis and mapping
 
-"Programers have invested a lot of time and effort in coding and creating package, please kindly cite it when using code, demo, or data for your data analysis and mapping."
+"Programers have invested a lot of time and effort in coding and creating package, please kindly cite it when using codes, demos, data or notes for your data analysis and mapping."
 
 To cite TIR in publications use:
 
