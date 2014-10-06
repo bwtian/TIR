@@ -56,3 +56,10 @@ cumdist
 ### Plot Profile
 plot(cumdist, idvxy$L8B10CenterMos[1:pairs], type = "l")
 ### Fractal dimension
+spec  <- spectrum(idvxy$L8B10CenterMos[1:pairs])
+fmodel  <- log(spec$spec) ~ log(1/spec$freq)
+lmodel  <- lm(fmodel)
+slopes  <- coef(lmodel)[2]
+fractal  <- (5 - slopes) /2
+plot(fmodel, main = paste0("Fractal Dimension", round(fractal,3)), xlab = "Log(1/freq)", ylab = "Log(Power)")
+abline(lmodel)
