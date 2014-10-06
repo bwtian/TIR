@@ -20,6 +20,6 @@ publisher = {GitHub},
 title = {{TIR: A package for Thermal Infrared Remote Sensing data analysis and mapping}},  
 howpublished={GitHub: https://github.com/bwtian/TIR},  
 url = {https://github.com/bwtian/TIR},  
-year = {2014},
-doi = {10.5281/zenodo.11971}
+year = {2014},  
+doi = {10.5281/zenodo.11971}  
 }  
