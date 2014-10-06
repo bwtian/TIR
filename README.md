@@ -10,13 +10,13 @@ To cite TIR in publications use:
 
 Tian, Bingwei. (2014). TIR: A package for Thermal Infrared Remote Sensing data analysis and mapping. URL https://github.com/bwtian/TIR.
 
-A BibTeX entry for LaTeX users is
-* @misc{R-TIR,
-* author = {Tian, Bingwei},
-* booktitle = {GitHub repository},
-* publisher = {GitHub},
-* title = {{TIR: A package for Thermal Infrared Remote Sensing data analysis and mapping}},
-* howpublished={GitHub: https://github.com/bwtian/TIR},
-* url = {https://github.com/bwtian/TIR},
-* year = {2014}
-* }
+A BibTeX entry for LaTeX users is  
+@misc{R-TIR,  
+author = {Tian, Bingwei},  
+booktitle = {GitHub repository},  
+publisher = {GitHub},  
+title = {{TIR: A package for Thermal Infrared Remote Sensing data analysis and mapping}},  
+howpublished={GitHub: https://github.com/bwtian/TIR},  
+url = {https://github.com/bwtian/TIR},  
+year = {2014}  
+}  
