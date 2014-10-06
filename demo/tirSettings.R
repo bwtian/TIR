@@ -19,7 +19,7 @@ library(lattice)
 library(latticeExtra)
 #library(oce)
 ### Source Functions
-source("~/SparkleShare/Rprofile/R/RprofileAuto/sourceDir.R")
+source("~/SparkleShare/Rprofiles/R/RprofileAuto/sourceDir.R")
 sourceDir("~/SparkleShare/Rprofile/R/")
 sourceDir("~/SparkleShare/TIR/R/")
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
