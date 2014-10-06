@@ -27,19 +27,24 @@ point2  <- c(1540000, 1680000)
 pnts  <- rbind(point1, point2)
 line <- SpatialLines(list(Lines(list(Line(pnts)), "1")))
 proj4string(line)  <- CRS(lccWgs84)
+##only value
 pf1  <- extract(mos, line)
-class(pf1)
-# create raster with cell numbers
-idx <- init(mos, v='cell')
-# extract these
-cells <- extract(ids, line)
-cells
-# compute xy
-xy = lapply(cells, function(x) xyFromCell(mos, x))
-head(xy)
-topo_profile = extract(x=mos, y=line, along=TRUE, cellnumbers=TRUE)
-class(topo_profile)
+##
+# create raster index raster 1~ncell = cellnumbers=TRUE in extract
+# idx <- init(mos, v='cell')
+# extract raster idx along line
+# cells <- extract(idx, line)
+# range(cells)
 
-summary(topo_profile)
-plot(topo_profile, type='l')
+profile  <-  extract(x=mos, y=line, along=TRUE, cellnumbers=TRUE)[[1]]
+idv_df  <- as.data.frame(profile)
+cells  <- idv_df[,1]
+xy = lapply(cells, function(x) xyFromCell(mos, x))
+xy_df  <- as.data.frame(do.call(rbind, xy))
+idvxy  <- cbind(idv_df,xy_df)
+pairs  <- length(idvxy$x) - 1
+dx  <- idvxy$x[2:(pairs+1)] - idvxy$x[1:pairs]
+dy  <- idvxy$y[2:(pairs+1)] - idvxy$y[1:pairs]
+
+
 
