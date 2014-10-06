@@ -19,7 +19,7 @@ library(lattice)
 library(latticeExtra)
 #library(oce)
 ### Source Functions
-source("~/SparkleShare/Rprofiles/R/RprofileAuto/sourceDir.R")
+source("~/SparkleShare/Rprofile/R/RprofilesAuto/sourceDir.R")
 sourceDir("~/SparkleShare/Rprofile/R/")
 sourceDir("~/SparkleShare/TIR/R/")
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
@@ -71,3 +71,4 @@ dir.lulc  <- file.path(dir.database, "LULC")
 dir.AG100B  <- "~/Share500sda/AG100B/"
 ### Files
 #hkdmaskb  <- readRDS("~/SparkleShare/TIR/hkdmskb_grdi2d1h.Rds")
+
