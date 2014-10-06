@@ -59,3 +59,86 @@ qplot(x, y, fill=col[z], data=example, geom="tile", width=w, group=1) +
 
 [Package ggplot2 version 1.0.0 Index]
 
+### Plot
+
+p0 <- ggplot(data=df,aes(x=Distance,y=Elevation)) +
+        xlab("Distance(Km)") +
+        ylab("Elevation(m)") +
+        theme_classic() +
+        scale_x_continuous(expand = c(0,0), breaks = seq(0,3000000,500000),labels = function(x) x/1000) +
+        scale_y_continuous(expand = c(0,0), limit = c(0,6000),breaks = seq(0,6000,1000)) +
+        coord_fixed(ratio = 100)
+
+
+p12  <- p0 + geom_area(fill="cyan") +
+        geom_line(aes(group=1),size = 0,colour="sienna2") #sienna2
+
+p12
+p10  <- p0 + geom_point(size =1, colour="red")
+p10
+p11  <- p0 + geom_line(aes(group=1),colour="red")
+p11
+
+p14  <- p0 + geom_step()
+p14
+p20  <- p11 + stat_summary(geom="ribbon", fun.ymin="min", fun.ymax="max")
+p20
+source("~/Dropbox/workbox/R/")
+
+p  <- p12
+ggsave(p, file="curen-wuhan6.png",dpi = 600, unit = "cm")
+png("test.png")
+plot(p)
+dev.off()
+### Control the Graphy
+p <- p + geom_line(aes(fill = "Elevation"))
+p
+p <- p + geom_smooth()
+p
+
+
+library(ggplot2)
+ggplot(df, aes(x = Distance)) +
+        geom_ribbon(aes(ymin = 0, # change this to match your min below
+                        ymax = 6000),
+                    fill = "#1B9E77") + # put your altitude variable here if not using moving averages
+        labs(x = "Miles",
+             y = "Elevation")
++
+        scale_y_continuous(limits = c(600,1200)) # change this to limits appropriate for your region
+
+
+
+
+
+# Geometry Layers
+geom_line() +
+        # Smooth Zone and Curve
+        geom_smooth()
+# Title
+# labs(title = "willing")+
+# X,Y Labels
+xlab(expression(paste("Temperature (",degree,"C)"))) +
+        coord_cartesian(xlim=c(10.5, 23)) +
+        scale_x_continuous(breaks=seq(10.5, 23, by = 2.5)) +
+        ylab(expression(paste("NPP (g C ",m^-2," ",yr^-1,")"))) +
+        coord_cartesian(ylim=c(600, 850)) +
+        scale_y_continuous(breaks=seq(600, 850, by = 50))
+
+# Theme with white background, grey grid, and Font
+p <- p + theme_bw(base_size = 12, base_family = "Times New Roman")
+
+# Eliminates baground, gridlines, and chart border
+p <- p + theme(
+        plot.background = element_blank()
+        ,panel.grid.major = element_blank()
+        ,panel.grid.minor = element_blank()
+        ,panel.border = element_blank()
+        ,panel.background = element_blank())
+## Axes:
+# Axes:draws x and y axis line
+p <- p + theme(axis.line = element_line(color = 'black'))
+
+# Axes:Scales of X and Y
+
+
