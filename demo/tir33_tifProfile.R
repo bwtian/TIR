@@ -1,5 +1,6 @@
 source("~/SparkleShare/TIR/demo/tirSettings.R")
 setwd(dir.toaTbKlccCenterMos)
+setwd("~/toaTbKlccCenterMos/")
 mos  <- raster("L8B10CenterMos.tif")
 proj4string(mos)
 ## Decide the point
@@ -11,6 +12,7 @@ line <- SpatialLines(list(Lines(list(Line(pnts)), "1")))
 proj4string(line)  <- CRS(lccWgs84)
 
 volA  <- readRDS("~/Share500sda//2data/dataProduct/hkd/hkdVol20a_140812_175023.Rds")
+volA  <- readRDS("~/Dropbox/2data/dataProduct/hkd/hkdVol20a_140812_175023.Rds")
 volAlcc  <- spTransform(volA, CRS(lccWgs84))
 
 plot(mos)
