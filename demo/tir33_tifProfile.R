@@ -53,4 +53,6 @@ dy^2
 dist  <- sqrt(dx^2+dy^2)
 cumdist  <- cumsum(dist[1:pairs])
 cumdist
+### Plot Profile
 plot(cumdist, idvxy$L8B10CenterMos[1:pairs], type = "l")
+### Fractal dimension
