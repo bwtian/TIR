@@ -22,6 +22,7 @@ library(latticeExtra)
 source("~/SparkleShare/Rprofile/R/RprofilesAuto/sourceDir.R")
 sourceDir("~/SparkleShare/Rprofile/R/")
 sourceDir("~/SparkleShare/TIR/R/")
+sourceDir("~/SparkleShare/phd/R/")
 sourceDir("~/SparkleShare/rLandsat8/src/main/R/rLandsat8/R")
 ###  Options
 if(.Platform$OS.type == "windows"){
