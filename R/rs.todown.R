@@ -1,5 +1,5 @@
 
-rs.todown <- function(list, downeddir, tolistName){
+tir.todown <- function(list, downeddir, tolistName){
         downedFiles  <- list.files(downeddir)
         todownList   <-  setdiff(list, downedFiles)
         Now <- format(Sys.time(), "_%y%m%d_%H%M%S")
