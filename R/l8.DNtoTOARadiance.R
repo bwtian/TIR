@@ -9,7 +9,7 @@
  #' ls8 <- ReadLandsat8("LC81880342014174LGN00")
  #' r <- ToTOARadiance(ls8, "red")
  #' }
- #' @note form rLandsat8
+ #' @note code form rLandsat8
  #' @export
  #' @import raster
 
