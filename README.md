@@ -10,7 +10,7 @@ TIR
 
 To cite TIR in publications use:
 
-### Tian, Bingwei. (2014). TIR: A package for Thermal Infrared Remote Sensing data analysis and mapping. URL https://github.com/bwtian/TIR.
+##### Tian, Bingwei. (2014). TIR: A package for Thermal Infrared Remote Sensing data analysis and mapping. URL https://github.com/bwtian/TIR.
 
 ### A BibTeX entry for LaTeX users is  
 @misc{R-TIR,  
