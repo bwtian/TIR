@@ -106,7 +106,7 @@ p5  <- p4 + geom_point(data = as.data.frame(volQhkdlcc@coords),
                 color="red"),  shape = 2, size = 3
                 ) +
         scale_color_manual(name =  "Volcanoes", values = c("blue","red"), labels = c("Quaternary Volcanoes","Active Volcanoes"))
-ge.ggsave(p5)
+#ge.ggsave(p5)
 
 ### focused on rect
 d  <- as.data.frame(rbind(c(41.92, 140.87),
