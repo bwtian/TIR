@@ -70,7 +70,7 @@ p4  <- p3 + geom_segment(data = north[1,], mapping = aes(x=x,y=y, xend=x+dx, yen
                    #size = 1
                    ) +
         geom_text(x = north[1,]$x, y = north[1,]$y+north[1,]$dy/2,
-                   shape = "N",
+                   label = "N",
                    #size =
                    ) +
         geom_text(x = north[1,]$x+north[1,]$dx/2, y = north[1,]$y -north[1,]$dy/5,
