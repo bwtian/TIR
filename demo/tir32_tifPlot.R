@@ -14,20 +14,20 @@ mos  <- raster("L8B10CenterMos.tif")
 # plot(mos, maxpixels=1e6, col=cols, xlim = xlims, ylim = ylims, lab.breaks=brks, xlab = "Easting", ylab = "Northing")
 # p1  <- gplot(mos, maxpixels=1e4) + geom_tile(aes(fill = value))
 # p1
- p11  <- gplot(mos, maxpixels=1e4) +geom_raster(aes(fill = value))
+# p11  <- gplot(mos, maxpixels=1e4) +geom_raster(aes(fill = value))
 # p11
-# mos.p  <- rasterToPoints(mos)
-#
-# mos.df  <- as.data.frame(mos.p)
-# names(mos.df)  <- c("x", "y", "t")
-# p12  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_raster()
+mos.p  <- rasterToPoints(mos)
+
+mos.df  <- as.data.frame(mos.p)
+names(mos.df)  <- c("x", "y", "t")
+p12  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_raster()
 #p12
 # p13  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_point()
 # p13
 # p14  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_jitter()
 # p14
 # gc()
-p2  <- p11 + scale_x_continuous(label = function(x) x/1000) +
+p2  <- p12 + scale_x_continuous(label = function(x) x/1000) +
      scale_y_continuous(label = function(x) x/1000) +
      xlab("Easting (km)") +
      ylab("Northing (km)") +
@@ -40,7 +40,7 @@ p3  <- p2 + scale_fill_gradientn(colours = cols,
                           breaks = brks,
                           name = expression(Temperature~(degree*C)))
 #p3
-sourceDir("~/SparkleShare/geothermaR/R")
+
 #ge.ggsave(p3
 ### North Arror and scale bar
 
@@ -80,8 +80,8 @@ p4  <- p3 +
                   label = "100 km"
                   ) +
         theme_bw(base_size = 12, base_family = "Times")
-p4
-ge.ggsave(p4)
+sourceDir("~/SparkleShare/geothermaR/R")
+ge.ggsave(p4, paper = 2)
 # d  <- as.data.frame(rbind(c(41.92, 140.87),
 #                  c(42.23, 139.92),
 #                  c(42.78, 141.31),
