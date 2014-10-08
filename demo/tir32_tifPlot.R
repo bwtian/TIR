@@ -55,7 +55,6 @@ library(grid)
 #         geom_text(data = north, x = x+dx, y = y+dy/2, label = "N", size = 12 )
 north  <- data.frame(rbind(c(1600000,1400000,0,80000),c(1550000,1400000,100000,0)))
 names(north)  <- c("x", "y", "dx", "dy")
-north
 p4  <- p3 +
 
         geom_segment(data = north[1,], aes(x=x,y=y, xend=x+dx, yend = y+dy),
@@ -81,7 +80,8 @@ p4  <- p3 +
                   ) +
         theme_bw(base_size = 12, base_family = "Times")
 sourceDir("~/SparkleShare/geothermaR/R")
-ge.ggsave(p4, paper = 2)
+p4
+ge.ggsave(p4)
 # d  <- as.data.frame(rbind(c(41.92, 140.87),
 #                  c(42.23, 139.92),
 #                  c(42.78, 141.31),
