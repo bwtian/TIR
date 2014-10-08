@@ -46,24 +46,26 @@ sourceDir("~/SparkleShare/geothermaR/R")
 
 library(ggplot2)
 library(grid)
-x = 1600000
-y = 1700000
-dx = 0
-dy =10000
+
 # north  <- geom_segment(mapping = aes(x=x,y=y, xend=x+dx, yend = y+dy),
 #                         arrow = arrow(),
 #                         size = 3,
 #                         color = "blue") +
 #         geom_point(data = north, mapping = aes(x,y),size = 5, shape =21, fill = "white") +
 #         geom_text(data = north, x = x+dx, y = y+dy/2, label = "N", size = 12 )
-
-p4  <- p3 + geom_segment(mapping = aes(x=x,y=y, xend=x+dx, yend = y+dy),
-                       arrow = arrow(),
-                       size = 3,
+x = 1600000
+y = 1750000
+dx = 0
+dy =80000
+north  <- data.frame(x,y,dx,dy)
+p4  <- p3 + geom_segment(data = north, mapping = aes(x=x,y=y, xend=x+dx, yend = y+dy),
+                       arrow = arrow(angle =25),
+                       size = 2,
                        color = "blue") +
-        geom_point(data = north, mapping = aes(x,y),size = 5, shape =21, fill = "white") +
-        geom_text(data = north, x = x+dx, y = y+dy/2, label = "N", size = 12 )
+        #geom_point(data = north, mapping = aes(x,y),size = 5, shape =21, fill = "white") +
+        geom_text(data = north, x = x+dx, y = y+dy/2, label = "N", size = 8 )
 p4
+ge.ggsave(p4)
 # d  <- as.data.frame(rbind(c(41.92, 140.87),
 #                  c(42.23, 139.92),
 #                  c(42.78, 141.31),
