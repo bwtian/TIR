@@ -128,7 +128,7 @@ dlcc
 p6  <- p5 + geom_rect(data = dlcc,
                aes(NULL, NULL, xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = NULL, color = NULL), alpha =0.1, color = "red")
 
-
+p6
 p7  <-   p5 +  coord_cartesian(xlim = c(dlcc[1,]$xmin, dlcc[1,]$xmax),
                          ylim = c(dlcc[1,]$ymin, dlcc[1,]$ymax))
 
