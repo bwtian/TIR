@@ -12,7 +12,7 @@ mos  <- raster("L8B10CenterMos.tif")
 # xlims  <- c(1273000,1283000)
 # ylims  <- c(1433000,1443000)
 # plot(mos, maxpixels=1e6, col=cols, xlim = xlims, ylim = ylims, lab.breaks=brks, xlab = "Easting", ylab = "Northing")
-# p1  <- gplot(mos, maxpixels=1e4) + geom_tile(aes(fill = value))
+ p1  <- gplot(mos, maxpixels=1e4) + geom_tile(aes(fill = value))
 # p1
  p11  <- gplot(mos, maxpixels=1e6) +geom_raster(aes(fill = value))
 # p11
@@ -82,12 +82,31 @@ p4  <- p3 +
 sourceDir("~/SparkleShare/geothermaR/R")
 # p4
 # ge.ggsave(p4)
-p5  <- p4 + geom_point(data = volQsub@data, aes(as.numeric(lon), as.numeric(lat),
-                                         color="blue"), shape = 17, alpha = 0.7) +
-        geom_point(data = volAsub@data, aes(as.numeric(lon), as.numeric(lat), color="red"),  shape = 17, size = 3)  +
-        scale_color_manual(name =  "Volcanoes", values = c("orange","red"), labels = c("Quaternary Volcanoes","Active Volcanoes")) +
+jp1  <- raster::getData('GADM', country='JPN', level=1, path = "~/Dropbox/2data//dataRaw/gadm2")
+plot(jp1)
+hkd  <- ge.LargestPolys(jp1, Polygon =T)
+plot(hkd)
+volA  <- readRDS("~/Dropbox/2data/dataProduct/jpVolcanoes/jpVol110_140812_174525.Rds")
+volQ  <- readRDS("~/Dropbox/2data/dataProduct/jpVolcanoes/jpVol455_140812_172148.Rds")
+proj4string(volA)  <- proj4string(hkd)
+proj4string(volQ)  <- proj4string(hkd)
+volQhkd <- volQ[hkd,]
+volAhkd <- volA[hkd,]
+volQhkdlcc  <- spTransform(volQhkd, CRS(lccWgs84))
+volAhkdlcc  <- spTransform(volAhkd, CRS(lccWgs84))
+volQhkdlcc@coords
 
-
+plot(volAhkd)
+p5  <- p4 + geom_point(data = as.data.frame(volQhkdlcc@coords),
+                aes(as.numeric(lon), as.numeric(lat),
+                color="blue"), shape = 2, alpha = 0.7
+                ) +
+     geom_point(data = as.data.frame(volAhkdlcc@coords),
+                aes(as.numeric(lon), as.numeric(lat),
+                color="red"),  shape = 2, size = 3
+                ) +
+        scale_color_manual(name =  "Volcanoes", values = c("orange","red"), labels = c("Quaternary Volcanoes","Active Volcanoes"))
+p5
 # d  <- as.data.frame(rbind(c(41.92, 140.87),
 #                  c(42.23, 139.92),
 #                  c(42.78, 141.31),
