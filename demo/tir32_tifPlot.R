@@ -12,32 +12,34 @@ cellStats(mos,min)
 xlims  <- c(1273000,1283000)
 ylims  <- c(1433000,1443000)
 plot(mos, maxpixels=1e6, col=cols, xlim = xlims, ylim = ylims, lab.breaks=brks, xlab = "Easting", ylab = "Northing")
-p1  <- gplot(mos, maxpixels=1e4) + geom_tile(aes(fill = value))
-p1
-p11  <- gplot(mos, maxpixels=1e4) +geom_raster(aes(fill = value))
-p11
+# p1  <- gplot(mos, maxpixels=1e4) + geom_tile(aes(fill = value))
+# p1
+# p11  <- gplot(mos, maxpixels=1e4) +geom_raster(aes(fill = value))
+# p11
 mos.p  <- rasterToPoints(mos)
 
 mos.df  <- as.data.frame(mos.p)
 names(mos.df)  <- c("x", "y", "t")
 p12  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_raster()
-p12
-p13  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_point()
-p13
-p14  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_jitter()
-p14
-gc()
+#p12
+# p13  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_point()
+# p13
+# p14  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_jitter()
+# p14
+# gc()
 p2  <- p12 + scale_x_continuous(label = function(x) x/1000) +
      scale_y_continuous(label = function(x) x/1000) +
      xlab("Easting (km)") +
      ylab("Northing (km)") +
      theme_bw(base_size = 12, base_family = "times")
-p2
-col  <-
-p2 + scale_fill_gradientn(colours = cols,
+#p2
+cols  <-  bpy.colors(8)
+cols = oceColorsJet(255)
+brks  <- c(-20, -15,-10,-5, seq(0,20,4))
+p3  <- p2 + scale_fill_gradientn(colours = cols,
                           breaks = brks,
                           name = expression(Temperature~(degree*C)))
-
+p3
 
 
 
