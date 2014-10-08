@@ -69,7 +69,7 @@ p4  <- p3 +
                    ) +
         geom_point(data = north[1,],
                    mapping = aes(x,y),
-                   #size = 4,
+                   size = 3,
                    shape =21, fill = "white"
         ) +
         geom_text(x = north[1,]$x, y = north[1,]$y+north[1,]$dy/2,
