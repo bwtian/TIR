@@ -53,19 +53,20 @@ library(grid)
 #                         color = "blue") +
 #         geom_point(data = north, mapping = aes(x,y),size = 5, shape =21, fill = "white") +
 #         geom_text(data = north, x = x+dx, y = y+dy/2, label = "N", size = 12 )
-north  <- data.frame(rbind(c(1600000,1750000,0,80000),c(1550000,1400000,100000,0)))
+north  <- data.frame(rbind(c(1600000,1400000,0,80000),c(1550000,1400000,100000,0)))
 names(north)  <- c("x", "y", "dx", "dy")
 north
 p4  <- p3 + geom_segment(data = north[1,], mapping = aes(x=x,y=y, xend=x+dx, yend = y+dy),
                        arrow = arrow(angle =25),
                        size = 2,
                        color = "blue") +
-        #geom_point(data = north, mapping = aes(x,y),size = 4, shape =21, fill = "white") +
-        geom_text(data = north, x = x+dx, y = y+dy/2, label = "N", size = 8 )
-p4 + geom_segment(data = north[2,], mapping = aes(x=x,y=y, xend=x+dx, yend = y+dy),
-                 arrow = arrow(angle =90, ends = "both", length = unit(0.2, "cm")),
-                 size = 1)
-
+        geom_point(data = north[1,], mapping = aes(x,y),size = 4, shape =21, fill = "white") + geom_segment(data = north[2,], mapping = aes(x=x,y=y, xend=x+dx, yend = y+dy),
+                                                                                                            arrow = arrow(angle =90, ends = "both", length = unit(0.2, "cm")),
+                                                                                                            size = 1) +
+        geom_text(data = north[1,], x = x+dx, y = y+dy/2, label = "N", size = 8 ) +
+        geom_text(data = north[1,], x = x+dx/2, y = y -dy/5, label = "100 km") +
+        theme_bw(base_size = 12, base_family = "times")
+p4
 # d  <- as.data.frame(rbind(c(41.92, 140.87),
 #                  c(42.23, 139.92),
 #                  c(42.78, 141.31),
