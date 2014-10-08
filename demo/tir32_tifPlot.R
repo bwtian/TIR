@@ -62,7 +62,7 @@ p4  <- p3 + geom_segment(data = north, mapping = aes(x=x,y=y, xend=x+dx, yend = 
                        arrow = arrow(angle =25),
                        size = 2,
                        color = "blue") +
-        #geom_point(data = north, mapping = aes(x,y),size = 5, shape =21, fill = "white") +
+        #geom_point(data = north, mapping = aes(x,y),size = 4, shape =21, fill = "white") +
         geom_text(data = north, x = x+dx, y = y+dy/2, label = "N", size = 8 )
 p4
 ge.ggsave(p4)
