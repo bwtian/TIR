@@ -115,6 +115,21 @@ d  <- as.data.frame(rbind(c(41.92, 140.87),
                   c(43.47, 144.16)))
 names(d)  <- c("lat", "lon")
 dlcc  <- ge.crsTransform(d, lon, lat, xlcc, ylcc, wgs84GRS,lccWgs84)
+dlcc$xmin  <- round(dlcc$xlcc, -3) -2500
+dlcc$xmax  <- round(dlcc$xlcc, -3) +2500
+dlcc$ymin  <- round(dlcc$ylcc, -3) -2500
+dlcc$ymax  <- round(dlcc$ylcc, -3) +2500
+ggplot() +
+        geom_rect(data = dlcc,
+                  aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax))
+p1
+p4 + geom_rect(data = dlcc,
+               aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax))
+
+
+        xlim(dlcc[1,]$xmin, dlcc[1,]$xmax)+
+     ylim(dlcc[1,]$ymin, dlcc[1,]$ymax)
+geom_rect
 
 # round(dlcc)
 # names(d)  <- c("lat","lon")
