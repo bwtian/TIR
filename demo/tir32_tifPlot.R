@@ -108,13 +108,14 @@ p5  <- p4 + geom_point(data = as.data.frame(volQhkdlcc@coords),
         scale_color_manual(name =  "Volcanoes", values = c("blue","red"), labels = c("Quaternary Volcanoes","Active Volcanoes"))
 ge.ggsave(p5)
 
-### focued on rect
-# d  <- as.data.frame(rbind(c(41.92, 140.87),
-#                  c(42.23, 139.92),
-#                  c(42.78, 141.31),
-#                  c(43.47, 144.16)))
-# d  <- d[,2:1]
-# dlcc  <- phd.crsTransform(d, lon, lat, xlcc, ylcc, wgs84GRS,lccWgs84)
+### focused on rect
+d  <- as.data.frame(rbind(c(41.92, 140.87),
+                  c(42.23, 139.92),
+                  c(42.78, 141.31),
+                  c(43.47, 144.16)))
+names(d)  <- c("lat", "lon")
+dlcc  <- ge.crsTransform(d, lon, lat, xlcc, ylcc, wgs84GRS,lccWgs84)
+
 # round(dlcc)
 # names(d)  <- c("lat","lon")
 #
