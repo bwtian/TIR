@@ -57,19 +57,21 @@ north  <- data.frame(rbind(c(1600000,1400000,0,80000),c(1550000,1400000,100000,0
 names(north)  <- c("x", "y", "dx", "dy")
 north
 p4  <- p3 +
-        geom_point(data = north[1,],
-                   mapping = aes(x,y),
-                   #size = 4,
-                   shape =21, fill = "white"
-                   ) +
+
         geom_segment(data = north[1,], aes(x=x,y=y, xend=x+dx, yend = y+dy),
                      arrow = arrow(angle =25),
                      size = 2,
-                     color = "blue") +
+                     color = "blue"
+                     ) +
         geom_segment(data = north[2,], aes(x=x,y=y, xend=x+dx, yend = y+dy),
                    arrow = arrow(angle =90, ends = "both", length = unit(0.2, "cm")),
                    size = 1
                    ) +
+        geom_point(data = north[1,],
+                   mapping = aes(x,y),
+                   #size = 4,
+                   shape =21, fill = "white"
+        ) +
         geom_text(x = north[1,]$x, y = north[1,]$y+north[1,]$dy/2,
                    label = "N",
                    #size =
