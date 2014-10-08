@@ -14,7 +14,7 @@ mos  <- raster("L8B10CenterMos.tif")
 # plot(mos, maxpixels=1e6, col=cols, xlim = xlims, ylim = ylims, lab.breaks=brks, xlab = "Easting", ylab = "Northing")
 # p1  <- gplot(mos, maxpixels=1e4) + geom_tile(aes(fill = value))
 # p1
-# p11  <- gplot(mos, maxpixels=1e4) +geom_raster(aes(fill = value))
+ p11  <- gplot(mos, maxpixels=1e6) +geom_raster(aes(fill = value))
 # p11
 mos.p  <- rasterToPoints(mos)
 
@@ -27,7 +27,7 @@ p13  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_point()
 # p14  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_jitter()
 # p14
 # gc()
-p2  <- p13 + scale_x_continuous(label = function(x) x/1000) +
+p2  <- p11 + scale_x_continuous(label = function(x) x/1000) +
      scale_y_continuous(label = function(x) x/1000) +
      xlab("Easting (km)") +
      ylab("Northing (km)") +
@@ -80,8 +80,14 @@ p4  <- p3 +
                   ) +
         theme_bw(base_size = 12, base_family = "Times")
 sourceDir("~/SparkleShare/geothermaR/R")
-p4
-ge.ggsave(p4)
+# p4
+# ge.ggsave(p4)
+p5  <- p4 + geom_point(data = volQsub@data, aes(as.numeric(lon), as.numeric(lat),
+                                         color="blue"), shape = 17, alpha = 0.7) +
+        geom_point(data = volAsub@data, aes(as.numeric(lon), as.numeric(lat), color="red"),  shape = 17, size = 3)  +
+        scale_color_manual(name =  "Volcanoes", values = c("orange","red"), labels = c("Quaternary Volcanoes","Active Volcanoes")) +
+
+
 # d  <- as.data.frame(rbind(c(41.92, 140.87),
 #                  c(42.23, 139.92),
 #                  c(42.78, 141.31),
