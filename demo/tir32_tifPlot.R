@@ -20,14 +20,14 @@ mos.p  <- rasterToPoints(mos)
 
 mos.df  <- as.data.frame(mos.p)
 names(mos.df)  <- c("x", "y", "t")
-p12  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_raster()
+#p12  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_raster()
 #p12
-# p13  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_point()
+p13  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_point()
 # p13
 # p14  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_jitter()
 # p14
 # gc()
-p2  <- p12 + scale_x_continuous(label = function(x) x/1000) +
+p2  <- p13 + scale_x_continuous(label = function(x) x/1000) +
      scale_y_continuous(label = function(x) x/1000) +
      xlab("Easting (km)") +
      ylab("Northing (km)") +
