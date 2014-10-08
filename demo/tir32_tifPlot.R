@@ -20,7 +20,7 @@ mos.p  <- rasterToPoints(mos)
 
 mos.df  <- as.data.frame(mos.p)
 names(mos.df)  <- c("x", "y", "t")
-#p12  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_raster()
+p12  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_raster()
 #p12
 p13  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_point()
 # p13
@@ -119,17 +119,20 @@ dlcc$xmin  <- round(dlcc$xlcc, -3) -2500
 dlcc$xmax  <- round(dlcc$xlcc, -3) +2500
 dlcc$ymin  <- round(dlcc$ylcc, -3) -2500
 dlcc$ymax  <- round(dlcc$ylcc, -3) +2500
-ggplot() +
-        geom_rect(data = dlcc,
-                  aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax))
-p1
-p4 + geom_rect(data = dlcc,
-               aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax))
+dlcc$id  <- 1:nrow(dlcc)
+dlcc
+# ggplot() +
+#         geom_rect(data = dlcc,
+#                   aes(NULL, NULL, xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = NULL, color = NULL), alpha =0.1, color = "red")
+
+p6  <- p5 + geom_rect(data = dlcc,
+               aes(NULL, NULL, xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = NULL, color = NULL), alpha =0.1, color = "red")
 
 
-        xlim(dlcc[1,]$xmin, dlcc[1,]$xmax)+
-     ylim(dlcc[1,]$ymin, dlcc[1,]$ymax)
-geom_rect
+p7  <-   p5 +  coord_cartesian(xlim = c(dlcc[1,]$xmin, dlcc[1,]$xmax),
+                         ylim = c(dlcc[1,]$ymin, dlcc[1,]$ymax))
+
+
 
 # round(dlcc)
 # names(d)  <- c("lat","lon")
