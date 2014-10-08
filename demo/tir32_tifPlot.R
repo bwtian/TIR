@@ -53,19 +53,19 @@ library(grid)
 #                         color = "blue") +
 #         geom_point(data = north, mapping = aes(x,y),size = 5, shape =21, fill = "white") +
 #         geom_text(data = north, x = x+dx, y = y+dy/2, label = "N", size = 12 )
-x = 1600000
-y = 1750000
-dx = 0
-dy =80000
-north  <- data.frame(x,y,dx,dy)
-p4  <- p3 + geom_segment(data = north, mapping = aes(x=x,y=y, xend=x+dx, yend = y+dy),
+north  <- data.frame(rbind(c(1600000,1750000,0,80000),c(1550000,1400000,100000,0)))
+names(north)  <- c("x", "y", "dx", "dy")
+north
+p4  <- p3 + geom_segment(data = north[1,], mapping = aes(x=x,y=y, xend=x+dx, yend = y+dy),
                        arrow = arrow(angle =25),
                        size = 2,
                        color = "blue") +
         #geom_point(data = north, mapping = aes(x,y),size = 4, shape =21, fill = "white") +
         geom_text(data = north, x = x+dx, y = y+dy/2, label = "N", size = 8 )
-p4
-ge.ggsave(p4)
+p4 + geom_segment(data = north[2,], mapping = aes(x=x,y=y, xend=x+dx, yend = y+dy),
+                 arrow = arrow(angle =90, ends = "both", length = unit(0.2, "cm")),
+                 size = 1)
+
 # d  <- as.data.frame(rbind(c(41.92, 140.87),
 #                  c(42.23, 139.92),
 #                  c(42.78, 141.31),
