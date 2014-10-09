@@ -131,6 +131,7 @@ p6  <- p4 + geom_rect(data = dlcc,
 # p3 +  coord_cartesian(xlim = c(dlcc[1,]$xmin, dlcc[1,]$xmax),                          ylim = c(dlcc[1,]$ymin, dlcc[1,]$ymax))
 # p3)
 p7  <- p6 + theme_bw(base_size = 12, base_family = "Times") + coord_equal()
+ggsave("p71009.pdf")
 #ge.ggsave(p7)
 
 # round(dlcc)
@@ -155,4 +156,7 @@ ps3  <- p7 +  coord_cartesian(xlim = c(dlcc[3,]$xmin, dlcc[3,]$xmax),
 ps4  <- p7 +  coord_cartesian(xlim = c(dlcc[4,]$xmin, dlcc[4,]$xmax),
                               ylim = c(dlcc[4,]$ymin, dlcc[4,]$ymax))
 library(gridExtra)
+png("ps.pdf")
 grid.arrange(ps1, ps2, ps3, ps4, ncol=2)
+dev.off()
+
