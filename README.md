@@ -4,7 +4,6 @@ TIR
 
 [![Build Status](https://travis-ci.org/bwtian/TIR.svg?branch=master)](https://travis-ci.org/bwtian/TIR)
 
-<script id='fb01hhh'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=bwtian&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=62;f.width=55;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('fb01hhh');</script>
 
 ## TIR: A package for Thermal Infrared Remote Sensing data analysis and mapping
 
