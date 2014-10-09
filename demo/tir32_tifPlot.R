@@ -131,7 +131,7 @@ p6  <- p4 + geom_rect(data = dlcc,
 # p3 +  coord_cartesian(xlim = c(dlcc[1,]$xmin, dlcc[1,]$xmax),                          ylim = c(dlcc[1,]$ymin, dlcc[1,]$ymax))
 # p3)
 p7  <- p6 + theme_bw(base_size = 12, base_family = "Times") + coord_equal()
-ge.ggsave(p7)
+#ge.ggsave(p7)
 
 # round(dlcc)
 # names(d)  <- c("lat","lon")
