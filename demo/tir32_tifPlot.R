@@ -13,10 +13,10 @@ mos  <- raster("L8B10CenterMos.tif")
 # ylims  <- c(1433000,1443000)
 # plot(mos, maxpixels=1e6, col=cols, xlim = xlims, ylim = ylims, lab.breaks=brks, xlab = "Easting", ylab = "Northing")
 #p1  <- gplot(mos, maxpixels=100000) + geom_tile(aes(fill = value))
- p11  <- gplot(mos, maxpixels=1e6) + geom_tile(aes(fill = value))
+# p11  <- gplot(mos, maxpixels=1e6) + geom_tile(aes(fill = value))
 # p1
 #ncell(mos)
-# p11  <- gplot(mos, maxpixels=24539100) + geom_raster(aes(fill = value))
+p11  <- gplot(mos, maxpixels=24539100) + geom_raster(aes(fill = value))
 # p11
 #mos.p  <- rasterToPoints(mos)
 
@@ -131,10 +131,7 @@ p6  <- p4 + geom_rect(data = dlcc,
 # p3 +  coord_cartesian(xlim = c(dlcc[1,]$xmin, dlcc[1,]$xmax),                          ylim = c(dlcc[1,]$ymin, dlcc[1,]$ymax))
 # p3)
 p7  <- p6 + theme_bw(base_size = 12, base_family = "Times") + coord_equal()
-pdf("test.pdf")
-print(p7)
-dev.off()
-# ge.ggsave(p7)
+ge.ggsave(p7)
 
 # round(dlcc)
 # names(d)  <- c("lat","lon")
