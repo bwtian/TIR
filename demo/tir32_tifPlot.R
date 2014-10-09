@@ -145,3 +145,14 @@ ge.ggsave(p7)
 # }
 #
 #
+ps1  <- p7 +  coord_cartesian(xlim = c(dlcc[1,]$xmin, dlcc[1,]$xmax),
+                              ylim = c(dlcc[1,]$ymin, dlcc[1,]$ymax))
+
+ps2  <- p7 +  coord_cartesian(xlim = c(dlcc[2,]$xmin, dlcc[2,]$xmax),
+                              ylim = c(dlcc[2,]$ymin, dlcc[2,]$ymax))
+ps3  <- p7 +  coord_cartesian(xlim = c(dlcc[3,]$xmin, dlcc[3,]$xmax),
+                              ylim = c(dlcc[3,]$ymin, dlcc[3,]$ymax))
+ps4  <- p7 +  coord_cartesian(xlim = c(dlcc[4,]$xmin, dlcc[4,]$xmax),
+                              ylim = c(dlcc[4,]$ymin, dlcc[4,]$ymax))
+
+
