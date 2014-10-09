@@ -154,5 +154,5 @@ ps3  <- p7 +  coord_cartesian(xlim = c(dlcc[3,]$xmin, dlcc[3,]$xmax),
                               ylim = c(dlcc[3,]$ymin, dlcc[3,]$ymax))
 ps4  <- p7 +  coord_cartesian(xlim = c(dlcc[4,]$xmin, dlcc[4,]$xmax),
                               ylim = c(dlcc[4,]$ymin, dlcc[4,]$ymax))
-
-
+library(gridExtra)
+grid.arrange(ps1, ps2, ps3, ps4, ncol=2)
