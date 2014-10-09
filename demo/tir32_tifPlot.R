@@ -16,20 +16,22 @@ mos  <- raster("L8B10CenterMos.tif")
 # p11  <- gplot(mos, maxpixels=1e6) + geom_tile(aes(fill = value))
 # p1
 #ncell(mos)
-p11  <- gplot(mos, maxpixels=24539100) + geom_raster(aes(fill = value))
+# p11  <- gplot(mos, maxpixels=24539100) + geom_raster(aes(fill = value))
 # p11
 #mos.p  <- rasterToPoints(mos)
-
 #mos.df  <- as.data.frame(mos.p)
+mos.spdf  <- rasterToPoints(mos, spatial=TRUE)
+mos.df  <- as.data.frame(mos.spdf)
+names(mos.df)  <- c("x", "y", "tc")
 #names(mos.df)  <- c("x", "y", "t")
-#p12  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_raster()
+p12  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_raster()
 #p12
 #p13  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_point()
 # p13
 # p14  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_jitter()
 # p14
 # gc()
-p2  <- p11 + scale_x_continuous(label = function(x) x/1000) +
+p2  <- p12 + scale_x_continuous(label = function(x) x/1000) +
      scale_y_continuous(label = function(x) x/1000) +
      xlab("Easting (km)") +
      ylab("Northing (km)")
@@ -132,7 +134,7 @@ p6  <- p4 + geom_rect(data = dlcc,
 # p3)
 p7  <- p6 + theme_bw(base_size = 12, base_family = "Times") + coord_equal()
 #ggsave("p71009.pdf")
-#ge.ggsave(p7)
+ge.ggsave(p7)
 
 # round(dlcc)
 # names(d)  <- c("lat","lon")
@@ -156,7 +158,7 @@ ps3  <- p7 +  xlim(dlcc[3,]$xmin, dlcc[3,]$xmax) +
 ps4  <- p7 +  xlim(dlcc[4,]$xmin, dlcc[4,]$xmax) +
         ylim(dlcc[4,]$ymin, dlcc[4,]$ymax)
 library(gridExtra)
-tiff("ps.tif")
-grid.arrange(ps1, ps2, ps3, ps4, ncol=2)
-dev.off()
+# tiff("ps.tif")
+# grid.arrange(ps1, ps2, ps3, ps4, ncol=2)
+# dev.off()
 
