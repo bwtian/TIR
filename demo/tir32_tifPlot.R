@@ -12,17 +12,19 @@ mos  <- raster("L8B10CenterMos.tif")
 # xlims  <- c(1273000,1283000)
 # ylims  <- c(1433000,1443000)
 # plot(mos, maxpixels=1e6, col=cols, xlim = xlims, ylim = ylims, lab.breaks=brks, xlab = "Easting", ylab = "Northing")
- p1  <- gplot(mos, maxpixels=1e4) + geom_tile(aes(fill = value))
+#p1  <- gplot(mos, maxpixels=100000) + geom_tile(aes(fill = value))
+ p11  <- gplot(mos, maxpixels=1e6) + geom_tile(aes(fill = value))
 # p1
- p11  <- gplot(mos, maxpixels=1e6) +geom_raster(aes(fill = value))
+#ncell(mos)
+# p11  <- gplot(mos, maxpixels=24539100) + geom_raster(aes(fill = value))
 # p11
-mos.p  <- rasterToPoints(mos)
+#mos.p  <- rasterToPoints(mos)
 
-mos.df  <- as.data.frame(mos.p)
-names(mos.df)  <- c("x", "y", "t")
-p12  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_raster()
+#mos.df  <- as.data.frame(mos.p)
+#names(mos.df)  <- c("x", "y", "t")
+#p12  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_raster()
 #p12
-p13  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_point()
+#p13  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_point()
 # p13
 # p14  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_jitter()
 # p14
@@ -30,13 +32,13 @@ p13  <- ggplot(mos.df, aes(x,y, fill = t)) + geom_point()
 p2  <- p11 + scale_x_continuous(label = function(x) x/1000) +
      scale_y_continuous(label = function(x) x/1000) +
      xlab("Easting (km)") +
-     ylab("Northing (km)") +
-     theme_bw(base_size = 12, base_family = "times")
+     ylab("Northing (km)")
 #p2
-cols  <-  bpy.colors(8)
-cols = oceColorsJet(255)
-brks  <- c(-20, -15,-10,-5, seq(0,20,4))
+#cols  <-  bpy.colors(8)
+cols = oceColorsJet(10)
+brks  <- c(-20, -15,-10,-5, 0, 5, 10, 15, 20)
 p3  <- p2 + scale_fill_gradientn(colours = cols,
+                                 na.value="white",
                           breaks = brks,
                           name = expression(Temperature~(degree*C)))
 #p3
@@ -53,17 +55,17 @@ library(grid)
 #                         color = "blue") +
 #         geom_point(data = north, mapping = aes(x,y),size = 5, shape =21, fill = "white") +
 #         geom_text(data = north, x = x+dx, y = y+dy/2, label = "N", size = 12 )
-north  <- data.frame(rbind(c(1600000,1400000,0,80000),c(1550000,1400000,100000,0)))
+north  <- data.frame(rbind(c(1600000,1400000,0,60000),c(1550000,1400000,100000,0)))
 names(north)  <- c("x", "y", "dx", "dy")
 p4  <- p3 +
 
         geom_segment(data = north[1,], aes(x=x,y=y, xend=x+dx, yend = y+dy),
                      arrow = arrow(angle =25),
-                     size = 2,
-                     color = "blue"
+                     size = 1,
+                     color = "black"
                      ) +
         geom_segment(data = north[2,], aes(x=x,y=y, xend=x+dx, yend = y+dy),
-                   arrow = arrow(angle =90, ends = "both", length = unit(0.2, "cm")),
+                   arrow = arrow(angle =90, ends = "both", length = unit(0.1, "cm")),
                    size = 1
                    ) +
         geom_point(data = north[1,],
@@ -72,41 +74,40 @@ p4  <- p3 +
                    shape =21, fill = "white"
         ) +
         geom_text(x = north[1,]$x, y = north[1,]$y+north[1,]$dy/2,
-                   label = "N",
+                   label = "N"
                    #size =
                    ) +
-        geom_text(x = north[1,]$x+north[1,]$dx/2, y = north[1,]$y -north[1,]$dy/5,
+        geom_text(x = north[1,]$x+north[1,]$dx/2, y = north[1,]$y -north[1,]$dy/4,
                   label = "100 km"
-                  ) +
-        theme_bw(base_size = 12, base_family = "Times")
+                  )
 sourceDir("~/SparkleShare/geothermaR/R")
 # p4
 # ge.ggsave(p4)
-jp1  <- raster::getData('GADM', country='JPN', level=1, path = "~/Dropbox/2data//dataRaw/gadm2")
-plot(jp1)
-hkd  <- ge.LargestPolys(jp1, Polygon =T)
-plot(hkd)
-volA  <- readRDS("~/Dropbox/2data/dataProduct/jpVolcanoes/jpVol110_140812_174525.Rds")
-volQ  <- readRDS("~/Dropbox/2data/dataProduct/jpVolcanoes/jpVol455_140812_172148.Rds")
-proj4string(volA)  <- proj4string(hkd)
-proj4string(volQ)  <- proj4string(hkd)
-volQhkd <- volQ[hkd,]
-volAhkd <- volA[hkd,]
-volQhkdlcc  <- spTransform(volQhkd, CRS(lccWgs84))
-volAhkdlcc  <- spTransform(volAhkd, CRS(lccWgs84))
-volQhkdlcc@coords
+# jp1  <- raster::getData('GADM', country='JPN', level=1, path = "~/Dropbox/2data//dataRaw/gadm2")
+# plot(jp1)
+# hkd  <- ge.LargestPolys(jp1, Polygon =T)
+# plot(hkd)
+# volA  <- readRDS("~/Dropbox/2data/dataProduct/jpVolcanoes/jpVol110_140812_174525.Rds")
+# volQ  <- readRDS("~/Dropbox/2data/dataProduct/jpVolcanoes/jpVol455_140812_172148.Rds")
+# proj4string(volA)  <- proj4string(hkd)
+# proj4string(volQ)  <- proj4string(hkd)
+# volQhkd <- volQ[hkd,]
+# volAhkd <- volA[hkd,]
+# volQhkdlcc  <- spTransform(volQhkd, CRS(lccWgs84))
+# volAhkdlcc  <- spTransform(volAhkd, CRS(lccWgs84))
+# volQhkdlcc@coords
 
-plot(volAhkd)
-p5  <- p4 + geom_point(data = as.data.frame(volQhkdlcc@coords),
-                aes(as.numeric(lon), as.numeric(lat),
-                color="blue"), shape = 2, alpha = 0.7
-                ) +
-     geom_point(data = as.data.frame(volAhkdlcc@coords),
-                aes(as.numeric(lon), as.numeric(lat),
-                color="red"),  shape = 2, size = 3
-                ) +
-        scale_color_manual(name =  "Volcanoes", values = c("blue","red"), labels = c("Quaternary Volcanoes","Active Volcanoes"))
-#ge.ggsave(p5)
+# plot(volAhkd)
+# p5  <- p4 + geom_point(data = as.data.frame(volQhkdlcc@coords),
+#                 aes(as.numeric(lon), as.numeric(lat),
+#                 color="blue"), shape = 2, alpha = 0.7
+#                 ) +
+#      geom_point(data = as.data.frame(volAhkdlcc@coords),
+#                 aes(as.numeric(lon), as.numeric(lat),
+#                 color="red"),  shape = 2, size = 3
+#                 ) +
+#         scale_color_manual(name =  "Volcanoes", values = c("blue","red"), labels = c("Quaternary Volcanoes","Active Volcanoes"))
+# #ge.ggsave(p5)
 
 ### focused on rect
 d  <- as.data.frame(rbind(c(41.92, 140.87),
@@ -120,19 +121,20 @@ dlcc$xmax  <- round(dlcc$xlcc, -3) +2500
 dlcc$ymin  <- round(dlcc$ylcc, -3) -2500
 dlcc$ymax  <- round(dlcc$ylcc, -3) +2500
 dlcc$id  <- 1:nrow(dlcc)
-dlcc
 # ggplot() +
 #         geom_rect(data = dlcc,
 #                   aes(NULL, NULL, xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = NULL, color = NULL), alpha =0.1, color = "red")
 
-p6  <- p5 + geom_rect(data = dlcc,
+p6  <- p4 + geom_rect(data = dlcc,
                aes(NULL, NULL, xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = NULL, color = NULL), alpha =0.1, color = "red")
-
-p6
-p7  <-   p5 +  coord_cartesian(xlim = c(dlcc[1,]$xmin, dlcc[1,]$xmax),
-                         ylim = c(dlcc[1,]$ymin, dlcc[1,]$ymax))
-
-
+#
+# p3 +  coord_cartesian(xlim = c(dlcc[1,]$xmin, dlcc[1,]$xmax),                          ylim = c(dlcc[1,]$ymin, dlcc[1,]$ymax))
+# p3)
+p7  <- p6 + theme_bw(base_size = 12, base_family = "Times") + coord_equal()
+pdf("test.pdf")
+print(p7)
+dev.off()
+# ge.ggsave(p7)
 
 # round(dlcc)
 # names(d)  <- c("lat","lon")
@@ -146,17 +148,3 @@ p7  <-   p5 +  coord_cartesian(xlim = c(dlcc[1,]$xmin, dlcc[1,]$xmax),
 # }
 #
 #
-#
-#
-#
-#
-# plot(mos, col = )
-# volA  <- readRDS("~/Share500sda//2data/dataProduct/hkd/hkdVol20a_140812_175023.Rds")
-# volAlcc  <- spTransform(volA, CRS(lccWgs84))
-# proj4string(volA)
-# plot(volAlcc, pch = 2, size = 6,add =T)
-# plot(mos, col = oceColorsJet(255))
-# plot(mos, col = bpy.colors(255))
-# plot(volAlcc, pch = 2, size = 6,add =T)
-# levelplot(mos)
-# levelplot(mos,maxpixels=1e6, par.settings =  BuRdThem
