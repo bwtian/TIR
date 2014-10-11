@@ -1,4 +1,4 @@
-
+#' @export
 tir.todown <- function(list, downeddir, tolistName){
         downedFiles  <- list.files(downeddir)
         todownList   <-  setdiff(list, downedFiles)
