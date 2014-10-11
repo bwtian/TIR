@@ -39,5 +39,6 @@ library(gridExtra)
 gl  <- lapply(out, function(df){
         ggplot(df) + geom_point(aes(x =x,y =y))
 })
-grid.arrange(gl[[1]], gl[[2]], ncol =2)
+
 do.call(grid.arrange, gl)
+grid.arrange(gl[[1]], gl[[2]], ncol =2)
