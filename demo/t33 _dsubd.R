@@ -40,3 +40,4 @@ gl  <- lapply(out, function(df){
         ggplot(df) + geom_point(aes(x =x,y =y))
 })
 do.call(grid.arrange, c(gl, list(ncol = 2)))
+
