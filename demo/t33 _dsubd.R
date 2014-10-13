@@ -26,7 +26,7 @@ d  <- as.data.frame(rbind(c(41.92, 140.87),
                           c(43.47, 144.16)))
 names(d)  <- c("lat", "lon")
 dlcc  <- ge.crsTransform(d, lon, lat, xlcc, ylcc, wgs84GRS,lccWgs84)
-rad  <- 3000
+rad  <- 4000
 dlcc$xmin  <- round(dlcc$xlcc, -3) -rad
 dlcc$xmax  <- round(dlcc$xlcc, -3) +rad
 dlcc$ymin  <- round(dlcc$ylcc, -3) -rad
@@ -85,7 +85,7 @@ grobs  <- lapply(clipper.l, function(d) {
 #library(gridExtra)
 # tiff("clipper.tiff", h = 2000, w = 2000, res = 300)
 # png("clipper.png")
-do.call(grid.arrange, c(grobs, nrow =2))
+# do.call(grid.arrange, c(grobs, nrow =2))
 
 ### Better
 grid.newpage()
@@ -139,3 +139,4 @@ grid.draw(rbind(
 # })
 # do.call(grid.arrange, c(gl, list(ncol = 2)))
 #
+
