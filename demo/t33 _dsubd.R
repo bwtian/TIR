@@ -26,10 +26,11 @@ d  <- as.data.frame(rbind(c(41.92, 140.87),
                           c(43.47, 144.16)))
 names(d)  <- c("lat", "lon")
 dlcc  <- ge.crsTransform(d, lon, lat, xlcc, ylcc, wgs84GRS,lccWgs84)
-dlcc$xmin  <- round(dlcc$xlcc, -3) -2500
-dlcc$xmax  <- round(dlcc$xlcc, -3) +2500
-dlcc$ymin  <- round(dlcc$ylcc, -3) -2500
-dlcc$ymax  <- round(dlcc$ylcc, -3) +2500
+rad  <- 5000
+dlcc$xmin  <- round(dlcc$xlcc, -3) -rad
+dlcc$xmax  <- round(dlcc$xlcc, -3) +rad
+dlcc$ymin  <- round(dlcc$ylcc, -3) -rad
+dlcc$ymax  <- round(dlcc$ylcc, -3) +rad
 dlcc$id  <- 1:nrow(dlcc)
 
 
@@ -75,15 +76,15 @@ grobs  <- lapply(clipper.l, function(d) {
                              breaks = brks,
                              name = expression(~(degree*C))) +
                 theme_bw(base_size = 12, base_family = "Times") +
-                coord_equal() +
-                theme(axis.title.y = element_blank())
+                coord_equal() # +
+                #theme(axis.title.y = element_blank())
 
         })
 
 #library(gridExtra)
 # tiff("clipper.tiff", h = 2000, w = 2000, res = 300)
 # png("clipper.png")
-do.call(grid.arrange, c(grobs, ncol =2))
+# do.call(grid.arrange, c(grobs, ncol =2))
 ### Better
 grid.draw(rbind(
         cbind(ggplotGrob(grobs[[1]]), ggplotGrob(grobs[[2]]), size="last"),
