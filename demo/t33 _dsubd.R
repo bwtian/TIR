@@ -1,4 +1,4 @@
-
+#' clip a data frame by a xmin, xmax
 dsubd  <- function(data, sub){
         out  <- list() # a list of dataframe
         for (i in 1:nrow(sub)){
@@ -11,6 +11,55 @@ dsubd  <- function(data, sub){
         return(out)
 
 }
+source("~/SparkleShare/TIR/demo/tirSettings.R")
+setwd(dir.toaTbKlccCenterMos)
+setwd("~/toaTbKlccCenterMos/")
+mos  <- raster("L8B10CenterMos.tif")
+mos.spdf  <- rasterToPoints(mos, spatial=TRUE)
+mos.df  <- as.data.frame(mos.spdf)
+names(mos.df)  <- c("x", "y", "tCenter")
+head(mos.df)
+
+d  <- as.data.frame(rbind(c(41.92, 140.87),
+                          c(42.23, 139.92),
+                          c(42.78, 141.31),
+                          c(43.47, 144.16)))
+names(d)  <- c("lat", "lon")
+dlcc  <- ge.crsTransform(d, lon, lat, xlcc, ylcc, wgs84GRS,lccWgs84)
+dlcc$xmin  <- round(dlcc$xlcc, -3) -2500
+dlcc$xmax  <- round(dlcc$xlcc, -3) +2500
+dlcc$ymin  <- round(dlcc$ylcc, -3) -2500
+dlcc$ymax  <- round(dlcc$ylcc, -3) +2500
+dlcc$id  <- 1:nrow(dlcc)
+
+
+
+small  <- function(){
+        data  <- mos.df
+        sub  <- dlcc
+        out  <- list() # a list of dataframe
+        for (i in 1:nrow(sub)){
+                xmin  <- sub[i,]$xmin
+                xmax  <- sub[i,]$xmax
+                ymin  <- sub[i,]$ymin
+                ymax  <- sub[i,]$ymax
+                x  <- data$x
+                y  <- data$y
+                out[[i]]  <-  data[x >= xmin & x <= xmax & y  >= ymin & y <= ymax,]
+        }
+        return(out)
+
+}
+
+x  <- small()
+
+
+
+
+
+
+
+
 
 set.seed(1011)
 x  <- rnorm(100,mean  =50, sd = 25)
