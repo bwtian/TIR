@@ -34,7 +34,6 @@ dlcc$ymax  <- round(dlcc$ylcc, -3) +rad
 dlcc$id  <- 1:nrow(dlcc)
 
 
-
 small  <- function(){
         data  <- mos.df
         sub  <- dlcc
@@ -63,17 +62,19 @@ clipper.df$id  <- as.factor(substr(row.names(clipper.df),1,1))
 # ggplot(clipper.df,aes(x,y, fill = tCenter)) + geom_point() +
 # facet_wrap(~ id)
 cols = oceColorsJet(10)
-brks  <- seq(-20, 20, 2)
+col.brks  <- seq(-20, 20, 2)
+col.labs  <- as.character(colbrks)
 grobs  <- lapply(clipper.l, function(d) {
         ggplot(d) +
         geom_raster(aes(x,y, fill = tCenter)) +
-        scale_x_continuous(label = function(x) x/1000) +
-        scale_y_continuous(label = function(x) x/1000) +
+        scale_x_continuous(labels = function(x) x/1000) +
+        scale_y_continuous(labels = function(x) x/1000) +
         xlab("x (km)") +
         ylab("y (km)") +
         scale_fill_gradientn(colours = cols,
                              na.value="white",
-                             breaks = brks,
+                             breaks = col.brks,
+                             labels = col.labs,
                              name = expression(~(degree*C))) +
                 theme_bw(base_size = 12, base_family = "Times") +
                 coord_equal() # +
@@ -84,8 +85,10 @@ grobs  <- lapply(clipper.l, function(d) {
 #library(gridExtra)
 # tiff("clipper.tiff", h = 2000, w = 2000, res = 300)
 # png("clipper.png")
-# do.call(grid.arrange, c(grobs, ncol =2))
+do.call(grid.arrange, c(grobs, nrow =2))
+
 ### Better
+grid.newpage()
 grid.draw(rbind(
         cbind(ggplotGrob(grobs[[1]]), ggplotGrob(grobs[[2]]), size="last"),
         cbind(ggplotGrob(grobs[[3]]), ggplotGrob(grobs[[4]]), size="last"),
