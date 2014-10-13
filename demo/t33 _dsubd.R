@@ -11,14 +11,14 @@
 #         return(out)
 #
 # }
-# source("~/SparkleShare/TIR/demo/tirSettings.R")
+source("~/SparkleShare/TIR/demo/tirSettings.R")
 #setwd(dir.toaTbKlccCenterMos)
-# setwd("~/toaTbKlccCenterMos/")
-# mos  <- raster("L8B10CenterMos.tif")
-# mos.spdf  <- rasterToPoints(mos, spatial=TRUE)
-# mos.df  <- as.data.frame(mos.spdf)
-# names(mos.df)  <- c("x", "y", "tCenter")
-# head(mos.df)
+setwd("~/toaTbKlccCenterMos/")
+mos  <- raster("L8B10CenterMos.tif")
+mos.spdf  <- rasterToPoints(mos, spatial=TRUE)
+mos.df  <- as.data.frame(mos.spdf)
+names(mos.df)  <- c("x", "y", "tCenter")
+head(mos.df)
 
 d  <- as.data.frame(rbind(c(41.92, 140.87),
                           c(42.23, 139.92),
@@ -55,12 +55,12 @@ clipper.l  <- small()
 
 names(clipper.l)  <- c("a", "b", "c", "d")
 str(clipper.l)
-dfs <- lapply(clipper.l, get)
+#dfs <- lapply(clipper.l, get)
 clipper.df  <- do.call(rbind, clipper.l)
 clipper.df$id  <- as.factor(substr(row.names(clipper.df),1,1))
-summary(clipper.df)
-ggplot(clipper.l[[1]],aes(x,y, fill = tCenter)) + geom_point() +
-facet_wrap(~ id)
+# summary(clipper.df)
+# ggplot(clipper.df,aes(x,y, fill = tCenter)) + geom_point() +
+# facet_wrap(~ id)
 cols = oceColorsJet(10)
 brks  <- seq(-20, 20, 2)
 grobs  <- lapply(clipper.l, function(d) {
@@ -84,22 +84,27 @@ grobs  <- lapply(clipper.l, function(d) {
 # tiff("clipper.tiff", h = 2000, w = 2000, res = 300)
 # png("clipper.png")
 do.call(grid.arrange, c(grobs, ncol =2))
-# Extracxt the legend from p1
-legend = gtable_filter(ggplot_gtable(ggplot_build(grobs[[1]])), "guide-box")
-grid.draw(legend)    # Make sure the legend has been extracted
-grid.newpage()
-# Arrange and draw the plot as before
-label = textGrob("p value", rot = 90, vjust = 0.5)
-grid.arrange(arrangeGrob(grobs[[1]] + theme(legend.position="none"),
-                         grobs[[2]] + theme(legend.position="none"),
-                         grobs[[3]] + theme(legend.position="none"),
-                         grobs[[4]] + theme(legend.position="none"),
-                         nrow = 2,
-                         main = textGrob("Main Title", vjust = 1, gp = gpar(fontface = "bold", cex = 1.5)),
-                         left = textGrob("Global Y-axis Label", rot = 90, vjust = 1)),
-             legend,
-             widths=unit.c(unit(1, "npc") - legend$width, legend$width),
-             nrow=1)
+### Better
+grid.draw(rbind(
+        cbind(ggplotGrob(grobs[[1]]), ggplotGrob(grobs[[2]]), size="last"),
+        cbind(ggplotGrob(grobs[[3]]), ggplotGrob(grobs[[4]]), size="last"),
+        size = "last"))
+# Extracxt the legend from p1 !!!but that is just for p1
+# legend = gtable_filter(ggplot_gtable(ggplot_build(grobs[[1]])), "guide-box")
+#
+# grid.draw(legend)    # Make sure the legend has been extracted
+# grid.newpage()
+# # Arrange and draw the plot as before
+# grid.arrange(arrangeGrob(grobs[[1]] + theme(legend.position="none"),
+#                          grobs[[2]] + theme(legend.position="none"),
+#                          grobs[[3]] + theme(legend.position="none"),
+#                          grobs[[4]] + theme(legend.position="none"),
+#                          nrow = 2,
+#                          main = textGrob("Main Title", vjust = 1, gp = gpar(fontface = "bold", cex = 1.5)),
+#                          left = textGrob("Global Y-axis Label", rot = 90, vjust = 1)),
+#              legend,
+#              widths=unit.c(unit(1, "npc") - legend$width, legend$width),
+#              nrow=1)
 #dev.off()
 # set.seed(1011)
 # x  <- rnorm(100,mean  =50, sd = 25)
