@@ -1,6 +1,6 @@
 source("~/SparkleShare/TIR/demo/tirSettings.R")
 setwd(dir.toaTbKlccCenterMos)
-#setwd("~/toaTbKlccCenterMos/")
+setwd("~/toaTbKlccCenterMos/")
 mos  <- raster("L8B10CenterMos.tif")
 # cols  <-  bpy.colors(8)
 # cols = oceColorsJet(255)
