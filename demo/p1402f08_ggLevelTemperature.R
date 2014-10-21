@@ -8,7 +8,7 @@ g1 <- ggplot(df) +
 geom_raster(aes(x = X, y =Y, col = Temperatrue)) +
 facet_wrap(~Z)
 
-g2  <- q1 + scale_x_continuous(label = function(x) x/1000) +
+g2  <- g1 + scale_x_continuous(label = function(x) x/1000) +
 scale_y_continuous(label = function(x) x/1000) +
 xlab("Easting (km)") +
 ylab("Northing (km)")
@@ -21,7 +21,7 @@ labelsY = as.character(breaksY)
 g3  <- g2 +  scale_colour_gradientn(name = expression(Temperature~(degree*C)),
                                     colours = rev(rainbow(7)),
                                     breaks = breaksY,
-                                    labels = format(breaksY)) +
+                                    labels = labelsY +
         theme_bw(base_size = 12, base_family = "Times")
 g3
 
