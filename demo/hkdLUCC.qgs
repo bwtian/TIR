@@ -73,16 +73,16 @@
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="0 Unknow" color="#000000" text="0 Unknow"/>
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="1 Water" color="#000064" text="1 Water"/>
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="2 Urban" color="#ff0000" text="2 Urban"/>
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#0080ff" text="3"/>
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#ffff00" text="4"/>
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#c7ff00" text="5"/>
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#00ff65" text="6"/>
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#000000" text="7"/>
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#2f8000" text="8"/>
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#000000" text="9"/>
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#826300" text="10"/>
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#ffffff" text="11"/>
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#000000" text="255"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="3 Paddy" color="#0080ff" text="3 Paddy"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="4 Crop" color="#ffff00" text="4 Crop"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="5 Grass" color="#c7ff00" text="5 Grass"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="6 Deciduous forest" color="#00ff65" text="6 Deciduous forest"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="7 Not used now" color="#000000" text="7 Not used now"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="8 Evergreen forest" color="#2f8000" text="8 Evergreen forest"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="9 Not used now" color="#000000" text="9 Not used now"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="10 Bare land" color="#826300" text="10 Bare land"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="11 Snow and ice" color="#ffffff" text="11 Snow and ice"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="255 No data" color="#000000" text="255 No data"/>
                     </LayerItem>
                 </Model>
                 <ComposerItem pagey="47.673" page="1" id="" lastValidViewScaleFactor="1.99274" positionMode="0" positionLock="false" x="66.7422" y="47.673" zValue="5" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="50.4" outlineWidth="0.3" uuid="{33a7c440-88fc-4879-be5a-43daee0b0b5b}" height="96.1" itemRotation="0" frame="false" pagex="66.7422">
