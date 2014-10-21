@@ -11,10 +11,10 @@
     <mapcanvas>
         <units>degrees</units>
         <extent>
-            <xmin>138.82499999999998863</xmin>
-            <ymin>41.28999999999999204</ymin>
-            <xmax>146.17500000000001137</xmax>
-            <ymax>45.90999999999999659</ymax>
+            <xmin>140.82287671232876392</xmin>
+            <ymin>42.45053767123285837</ymin>
+            <xmax>142.75947945205479073</xmax>
+            <ymax>43.60553767123285951</ymax>
         </extent>
         <projections>0</projections>
         <destinationsrs>
@@ -44,7 +44,7 @@
         </legendlayer>
     </legend>
     <Composer title="hkdLULC" visible="1">
-        <Composition snapGridTolerance="2" gridVisible="0" printResolution="300" paperWidth="297" snapGridOffsetX="0" guidesVisible="1" snapGridResolution="10" snapGridOffsetY="0" alignmentSnap="1" snapping="0" numPages="1" paperHeight="210" alignmentSnapTolerance="2" smartGuides="1" printAsRaster="0" generateWorldFile="0">
+        <Composition snapGridTolerance="2" gridVisible="1" printResolution="300" paperWidth="297" snapGridOffsetX="0" guidesVisible="1" snapGridResolution="10" snapGridOffsetY="0" alignmentSnap="1" snapping="1" numPages="1" paperHeight="210" alignmentSnapTolerance="2" smartGuides="1" printAsRaster="0" generateWorldFile="0">
             <symbol alpha="1" type="fill" name="">
                 <layer pass="0" class="SimpleFill" locked="0">
                     <prop k="border_width_map_unit_scale" v="0,0"/>
@@ -60,6 +60,34 @@
                     <prop k="width_border" v="0.26"/>
                 </layer>
             </symbol>
+            <ComposerLegend symbolWidth="7" title="Legend" boxSpace="2" splitLayer="0" equalColumnWidth="0" titleAlignment="1" symbolHeight="4" wmsLegendHeight="25" wrapChar="" fontColor="#000000" columnSpace="2" wmsLegendWidth="50" columnCount="1">
+                <styles>
+                    <style marginBottom="2" name="title" font="MS UI Gothic,16,-1,5,50,0,0,0,0,0"/>
+                    <style marginTop="2" name="group" font="MS UI Gothic,14,-1,5,50,0,0,0,0,0"/>
+                    <style marginTop="2" name="subgroup" font="MS UI Gothic,12,-1,5,50,0,0,0,0,0"/>
+                    <style marginTop="2" name="symbol" font="MS UI Gothic,9,-1,5,50,0,0,0,0,0"/>
+                    <style marginTop="2" marginLeft="2" name="symbolLabel" font="MS UI Gothic,12,-1,5,50,0,0,0,0,0"/>
+                </styles>
+                <Model autoUpdate="1">
+                    <LayerItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" style="subgroup" text="hkdBigLULCver1402Merge" showFeatureCount="0">
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="1 Water' " color="#000064" text="1 Water' "/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="2 Urban" color="#ff0000" text="2 Urban"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="3 Paddy" color="#0080ff" text="3 Paddy"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#ffff00" text="4"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#c7ff00" text="5"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#00ff65" text="6"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#000000" text="7"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#2f8000" text="8"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#000000" text="9"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#826300" text="10"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#ffffff" text="11"/>
+                    </LayerItem>
+                </Model>
+                <ComposerItem pagey="41.6511" page="1" id="" lastValidViewScaleFactor="1.99274" positionMode="0" positionLock="false" x="42.153" y="41.6511" zValue="4" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="50.4" outlineWidth="0.3" uuid="{81fd252e-e5bb-4e3f-ae24-7f7430f8f80a}" height="84.1" itemRotation="0" frame="false" pagex="42.153">
+                    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+                    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+                </ComposerItem>
+            </ComposerLegend>
             <ComposerMap mapRotation="0" keepLayerSet="false" overviewFrameMap="-1" id="0" previewMode="Cache" drawCanvasItems="true">
                 <overviewFrame overviewBlendMode="0" overviewFrameMap="-1" overviewCentered="false" overviewInverted="false">
                     <symbol alpha="0.3" type="fill" name="">
@@ -78,7 +106,7 @@
                         </layer>
                     </symbol>
                 </overviewFrame>
-                <Extent ymin="41.28999999999999204" xmin="138.62679452054794638" ymax="46.63654246575341489" xmax="146.37320547945205362"/>
+                <Extent ymin="40.80218055085537543" xmin="138.44386222711872847" ymax="46.14872301660879828" xmax="146.19027318602283572"/>
                 <LayerSet/>
                 <Grid gridStyle="0" crossLength="3" gridFramePenThickness="0.5" intervalX="0" offsetX="0" intervalY="0" offsetY="0" gridFrameStyle="0" gridFrameWidth="2" gridBlendMode="0" show="0">
                     <framePenColor alpha="255" red="0" blue="0" green="0"/>
@@ -108,7 +136,7 @@
                     </Annotation>
                 </Grid>
                 <AtlasMap scalingMode="2" atlasDriven="0" margin="0.10000000000000001"/>
-                <ComposerItem pagey="21" page="1" id="" lastValidViewScaleFactor="1.99274" positionMode="0" positionLock="false" x="28" y="21" zValue="1" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="255" outlineWidth="0.3" uuid="{5104bd98-8272-490a-8d78-e82f84574af2}" height="176" itemRotation="0" frame="false" pagex="28">
+                <ComposerItem pagey="14.9781" page="1" id="" lastValidViewScaleFactor="1.99274" positionMode="0" positionLock="false" x="21" y="14.9781" zValue="1" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="255" outlineWidth="0.3" uuid="{5104bd98-8272-490a-8d78-e82f84574af2}" height="176" itemRotation="0" frame="false" pagex="21">
                     <FrameColor alpha="255" red="0" blue="0" green="0"/>
                     <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
                 </ComposerItem>
