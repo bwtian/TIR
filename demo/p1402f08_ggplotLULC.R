@@ -1,10 +1,8 @@
 source("~/SparkleShare/Rprofile/R/Rsettings/phdRsettings.R")
 setwd(dir.lulc)
 getwd()
-hkdLULC <- raster("hkdLULCver1402Merge.tif")
 jpLULC <- raster("jpLULCver1402Merge.tif")
-
-plot(hkdLULC)
+summary(jpLULC)
 brks  <- c(1,2,3,4,5,6,8,10,11)
 labs  <- c("Water", "Urban", "Paddy", "Crop","Grass", "DeciduousForest",
            "EvergreenForest", "Bare", "SnowAndIce")
