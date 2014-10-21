@@ -70,9 +70,10 @@
                 </styles>
                 <Model autoUpdate="1">
                     <LayerItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" style="subgroup" text="hkdBigLULCver1402Merge" showFeatureCount="0">
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="1 Water' " color="#000064" text="1 Water' "/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="0 Unknow" color="#000000" text="0 Unknow"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="1 Water" color="#000064" text="1 Water"/>
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="2 Urban" color="#ff0000" text="2 Urban"/>
-                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="3 Paddy" color="#0080ff" text="3 Paddy"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#0080ff" text="3"/>
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#ffff00" text="4"/>
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#c7ff00" text="5"/>
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#00ff65" text="6"/>
@@ -81,9 +82,10 @@
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#000000" text="9"/>
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#826300" text="10"/>
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#ffffff" text="11"/>
+                        <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" color="#000000" text="255"/>
                     </LayerItem>
                 </Model>
-                <ComposerItem pagey="41.6511" page="1" id="" lastValidViewScaleFactor="1.99274" positionMode="0" positionLock="false" x="42.153" y="41.6511" zValue="4" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="50.4" outlineWidth="0.3" uuid="{81fd252e-e5bb-4e3f-ae24-7f7430f8f80a}" height="84.1" itemRotation="0" frame="false" pagex="42.153">
+                <ComposerItem pagey="47.673" page="1" id="" lastValidViewScaleFactor="1.99274" positionMode="0" positionLock="false" x="66.7422" y="47.673" zValue="5" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="50.4" outlineWidth="0.3" uuid="{33a7c440-88fc-4879-be5a-43daee0b0b5b}" height="96.1" itemRotation="0" frame="false" pagex="66.7422">
                     <FrameColor alpha="255" red="0" blue="0" green="0"/>
                     <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
                 </ComposerItem>
