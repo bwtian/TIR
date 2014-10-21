@@ -9,14 +9,14 @@
     </layer-tree-group>
     <relations/>
     <mapcanvas>
-        <units>degrees</units>
+        <units>meters</units>
         <extent>
-            <xmin>138.44386222711872847</xmin>
-            <ymin>40.80218055085537543</ymin>
-            <xmax>146.19027318602283572</xmax>
-            <ymax>46.46991974417473159</ymax>
+            <xmin>15236450.50646788440644741</xmin>
+            <ymin>4983206.98154219053685665</ymin>
+            <xmax>16448876.51010670699179173</xmax>
+            <ymax>5855976.64879448432475328</ymax>
         </extent>
-        <projections>0</projections>
+        <projections>1</projections>
         <destinationsrs>
             <spatialrefsys>
                 <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
@@ -29,7 +29,10 @@
                 <geographicflag>true</geographicflag>
             </spatialrefsys>
         </destinationsrs>
-        <layer_coordinate_transform_info/>
+        <layer_coordinate_transform_info>
+            <layer_coordinate_transform destAuthId="EPSG:4326" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="hkdBigLULCver1402Merge20141021130941498"/>
+            <layer_coordinate_transform destAuthId="EPSG:4326" srcAuthId="EPSG:3857" srcDatumTransform="-1" destDatumTransform="-1" layerid="OpenLayers_plugin_layer20141021142211909"/>
+        </layer_coordinate_transform_info>
     </mapcanvas>
     <layer-tree-canvas>
         <custom-order enabled="0">
@@ -44,7 +47,7 @@
         </legendlayer>
     </legend>
     <Composer title="hkdLULC" visible="1">
-        <Composition snapGridTolerance="2" gridVisible="1" printResolution="300" paperWidth="297" snapGridOffsetX="0" guidesVisible="1" snapGridResolution="10" snapGridOffsetY="0" alignmentSnap="1" snapping="1" numPages="1" paperHeight="210" alignmentSnapTolerance="2" smartGuides="1" printAsRaster="0" generateWorldFile="0">
+        <Composition snapGridTolerance="2" gridVisible="1" printResolution="300" paperWidth="297" snapGridOffsetX="0" guidesVisible="1" snapGridResolution="10" snapGridOffsetY="0" alignmentSnap="1" snapping="1" numPages="1" paperHeight="210" alignmentSnapTolerance="2" smartGuides="1" printAsRaster="1" generateWorldFile="0">
             <symbol alpha="1" type="fill" name="">
                 <layer pass="0" class="SimpleFill" locked="0">
                     <prop k="border_width_map_unit_scale" v="0,0"/>
@@ -60,8 +63,8 @@
                     <prop k="width_border" v="0.26"/>
                 </layer>
             </symbol>
-            <ComposerScaleBar penColor="#000000" lineCapStyle="square" style="Numeric" numMapUnitsPerScaleBarUnit="1" alignment="0" brushColor="#000000" numSegments="4" segmentMillimeters="19.1844" lineJoinStyle="round" fontColor="#000000" font="Times New Roman,16,-1,5,75,0,0,0,0,0" numUnitsPerSegment="0.5" units="0" labelBarSpace="3" outlineWidth="1" numSegmentsLeft="2" height="3" mapId="0" boxContentSpace="1" unitLabel="units">
-                <ComposerItem pagey="176.186" page="1" id="1" lastValidViewScaleFactor="4.19518" positionMode="0" positionLock="false" x="193.972" y="176.186" zValue="13" background="false" transparency="0" frameJoinStyle="miter" blendMode="5" width="30.2009" outlineWidth="0.3" uuid="{ca41fe4b-24f9-42a6-a2b9-70305bb7a946}" height="10.3698" itemRotation="0" frame="false" pagex="193.972">
+            <ComposerScaleBar penColor="#000000" lineCapStyle="square" style="Line Ticks Up" numMapUnitsPerScaleBarUnit="1000" alignment="0" brushColor="#000000" numSegments="2" segmentMillimeters="22.8044" lineJoinStyle="miter" fontColor="#000000" font="Times New Roman,16,-1,5,50,0,0,0,0,0" numUnitsPerSegment="50000" units="1" labelBarSpace="3" outlineWidth="1" numSegmentsLeft="0" height="3" mapId="0" boxContentSpace="1" unitLabel="km">
+                <ComposerItem pagey="165.233" page="1" id="" lastValidViewScaleFactor="4.19518" positionMode="0" positionLock="false" x="194.019" y="165.233" zValue="15" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="63.6088" outlineWidth="0.3" uuid="{8fc7c1c8-6cb0-4768-a527-7080821c37c7}" height="13" itemRotation="0" frame="false" pagex="194.019">
                     <FrameColor alpha="255" red="0" blue="0" green="0"/>
                     <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
                 </ComposerItem>
@@ -81,10 +84,10 @@
             <ComposerLegend symbolWidth="7" title="" boxSpace="2" splitLayer="1" equalColumnWidth="1" map="0" titleAlignment="4" symbolHeight="4" wmsLegendHeight="25" wrapChar="" fontColor="#000000" columnSpace="2" wmsLegendWidth="50" columnCount="1">
                 <styles>
                     <style marginBottom="2" name="title" font="Times New Roman,16,-1,5,50,0,0,0,0,0"/>
-                    <style marginTop="2" name="group" font="Times New Roman,14,-1,5,50,0,0,0,0,0"/>
-                    <style marginTop="2" name="subgroup" font="Times New Roman,12,-1,5,50,0,0,0,0,0"/>
+                    <style marginTop="2" name="group" font="Times New Roman,16,-1,5,50,0,0,0,0,0"/>
+                    <style marginTop="2" name="subgroup" font="Times New Roman,16,-1,5,50,0,0,0,0,0"/>
                     <style marginTop="2" name="symbol" font="MS UI Gothic,9,-1,5,50,0,0,0,0,0"/>
-                    <style marginTop="2" marginLeft="2" name="symbolLabel" font="Times New Roman,12,-1,5,50,0,0,0,0,0"/>
+                    <style marginTop="2" marginLeft="2" name="symbolLabel" font="Times New Roman,16,-1,5,50,0,0,0,0,0"/>
                 </styles>
                 <Model autoUpdate="1">
                     <LayerItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="Legend" style="group" text="Legend" showFeatureCount="0">
@@ -99,7 +102,7 @@
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="11 Snow and ice" color="#ffffff" text="11 Snow and ice"/>
                     </LayerItem>
                 </Model>
-                <ComposerItem pagey="30" page="1" id="" lastValidViewScaleFactor="3.29379" positionMode="0" positionLock="false" x="46.7943" y="30" zValue="5" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="51.0792" outlineWidth="0.3" uuid="{33a7c440-88fc-4879-be5a-43daee0b0b5b}" height="70" itemRotation="0" frame="false" pagex="46.7943">
+                <ComposerItem pagey="30" page="1" id="" lastValidViewScaleFactor="4.19518" positionMode="0" positionLock="false" x="45.3641" y="30" zValue="5" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="55.4" outlineWidth="0.3" uuid="{33a7c440-88fc-4879-be5a-43daee0b0b5b}" height="66.5" itemRotation="0" frame="false" pagex="45.3641">
                     <FrameColor alpha="255" red="0" blue="0" green="0"/>
                     <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
                 </ComposerItem>
@@ -149,7 +152,7 @@
                             <prop k="width_unit" v="MM"/>
                         </layer>
                     </symbol>
-                    <Annotation rightDirection="0" bottomDirection="0" format="0" topPosition="1" precision="0" leftDirection="0" rightPosition="1" bottomPosition="1" frameDistance="2" show="1" font="Times New Roman,12,-1,5,50,0,0,0,0,0" leftPosition="1" topDirection="0">
+                    <Annotation rightDirection="0" bottomDirection="0" format="0" topPosition="1" precision="0" leftDirection="0" rightPosition="1" bottomPosition="1" frameDistance="2" show="1" font="Times New Roman,16,-1,5,50,0,0,0,0,0" leftPosition="1" topDirection="0">
                         <fontColor alpha="255" red="0" blue="0" green="0"/>
                     </Annotation>
                 </Grid>
@@ -464,6 +467,7 @@
             <ProjectCRSProj4String type="QString">+proj=longlat +datum=WGS84 +no_defs</ProjectCRSProj4String>
             <ProjectCrs type="QString">EPSG:4326</ProjectCrs>
             <ProjectCRSID type="int">3452</ProjectCRSID>
+            <ProjectionsEnabled type="int">1</ProjectionsEnabled>
         </SpatialRefSys>
         <Paths>
             <Absolute type="bool">false</Absolute>
