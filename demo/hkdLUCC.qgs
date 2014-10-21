@@ -60,13 +60,13 @@
                     <prop k="width_border" v="0.26"/>
                 </layer>
             </symbol>
-            <ComposerLegend symbolWidth="7" title="Legend" boxSpace="2" splitLayer="0" equalColumnWidth="0" titleAlignment="1" symbolHeight="4" wmsLegendHeight="25" wrapChar="" fontColor="#000000" columnSpace="2" wmsLegendWidth="50" columnCount="1">
+            <ComposerLegend symbolWidth="7" title="Legend" boxSpace="2" splitLayer="1" equalColumnWidth="1" titleAlignment="4" symbolHeight="4" wmsLegendHeight="25" wrapChar="" fontColor="#000000" columnSpace="2" wmsLegendWidth="50" columnCount="3">
                 <styles>
-                    <style marginBottom="2" name="title" font="MS UI Gothic,16,-1,5,50,0,0,0,0,0"/>
-                    <style marginTop="2" name="group" font="MS UI Gothic,14,-1,5,50,0,0,0,0,0"/>
-                    <style marginTop="2" name="subgroup" font="MS UI Gothic,12,-1,5,50,0,0,0,0,0"/>
+                    <style marginBottom="2" name="title" font="Times New Roman,16,-1,5,50,0,0,0,0,0"/>
+                    <style marginTop="2" name="group" font="Times New Roman,14,-1,5,50,0,0,0,0,0"/>
+                    <style marginTop="2" name="subgroup" font="Times New Roman,12,-1,5,50,0,0,0,0,0"/>
                     <style marginTop="2" name="symbol" font="MS UI Gothic,9,-1,5,50,0,0,0,0,0"/>
-                    <style marginTop="2" marginLeft="2" name="symbolLabel" font="MS UI Gothic,12,-1,5,50,0,0,0,0,0"/>
+                    <style marginTop="2" marginLeft="2" name="symbolLabel" font="Times New Roman,12,-1,5,50,0,0,0,0,0"/>
                 </styles>
                 <Model autoUpdate="1">
                     <LayerItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="" style="subgroup" text="hkdBigLULCver1402Merge" showFeatureCount="0">
@@ -85,12 +85,12 @@
                         <RasterClassificationItem layerId="hkdBigLULCver1402Merge20141021130941498" userText="255 No data" color="#000000" text="255 No data"/>
                     </LayerItem>
                 </Model>
-                <ComposerItem pagey="47.673" page="1" id="" lastValidViewScaleFactor="1.99274" positionMode="0" positionLock="false" x="66.7422" y="47.673" zValue="5" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="50.4" outlineWidth="0.3" uuid="{33a7c440-88fc-4879-be5a-43daee0b0b5b}" height="96.1" itemRotation="0" frame="false" pagex="66.7422">
+                <ComposerItem pagey="140.15" page="1" id="" lastValidViewScaleFactor="3.29379" positionMode="0" positionLock="false" x="124.952" y="140.15" zValue="5" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="143.1" outlineWidth="0.3" uuid="{33a7c440-88fc-4879-be5a-43daee0b0b5b}" height="41.8" itemRotation="0" frame="true" pagex="124.952">
                     <FrameColor alpha="255" red="0" blue="0" green="0"/>
                     <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
                 </ComposerItem>
             </ComposerLegend>
-            <ComposerMap mapRotation="0" keepLayerSet="false" overviewFrameMap="-1" id="0" previewMode="Cache" drawCanvasItems="true">
+            <ComposerMap mapRotation="0" keepLayerSet="true" overviewFrameMap="-1" id="0" previewMode="Cache" drawCanvasItems="true">
                 <overviewFrame overviewBlendMode="0" overviewFrameMap="-1" overviewCentered="false" overviewInverted="false">
                     <symbol alpha="0.3" type="fill" name="">
                         <layer pass="0" class="SimpleFill" locked="0">
@@ -109,7 +109,9 @@
                     </symbol>
                 </overviewFrame>
                 <Extent ymin="40.80218055085537543" xmin="138.44386222711872847" ymax="46.14872301660879828" xmax="146.19027318602283572"/>
-                <LayerSet/>
+                <LayerSet>
+                    <Layer>hkdBigLULCver1402Merge20141021130941498</Layer>
+                </LayerSet>
                 <Grid gridStyle="0" crossLength="3" gridFramePenThickness="0.5" intervalX="0" offsetX="0" intervalY="0" offsetY="0" gridFrameStyle="0" gridFrameWidth="2" gridBlendMode="0" show="0">
                     <framePenColor alpha="255" red="0" blue="0" green="0"/>
                     <frameFillColor1 alpha="255" red="255" blue="255" green="255"/>
@@ -138,7 +140,7 @@
                     </Annotation>
                 </Grid>
                 <AtlasMap scalingMode="2" atlasDriven="0" margin="0.10000000000000001"/>
-                <ComposerItem pagey="14.9781" page="1" id="" lastValidViewScaleFactor="1.99274" positionMode="0" positionLock="false" x="21" y="14.9781" zValue="1" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="255" outlineWidth="0.3" uuid="{5104bd98-8272-490a-8d78-e82f84574af2}" height="176" itemRotation="0" frame="false" pagex="21">
+                <ComposerItem pagey="12.1252" page="1" id="" lastValidViewScaleFactor="3.29379" positionMode="0" positionLock="false" x="20" y="12.1252" zValue="1" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="255" outlineWidth="0.3" uuid="{5104bd98-8272-490a-8d78-e82f84574af2}" height="176" itemRotation="0" frame="false" pagex="20">
                     <FrameColor alpha="255" red="0" blue="0" green="0"/>
                     <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
                 </ComposerItem>
