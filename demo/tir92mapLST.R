@@ -24,9 +24,9 @@ layer({SpatialPolygonsRescale(layout.north.arrow(),
                               scale = 400)
 })
 
-# levelplot(LSTCenter, at=seq(min(LSTCenter[], na.rm=T), max(LSTCenter[], na.rm=T), len=100),
-#           col.regions=colorRampPalette(c('#2c7bb6', '#abd9e9', '#ffffbf',
-#                                          '#fdae61', '#d7191c')))
+levelplot(LSTCenter, at=seq(min(LSTCenter[], na.rm=T), max(LSTCenter[], na.rm=T), len=100),
+           col.regions=colorRampPalette(c('#2c7bb6', '#abd9e9', '#ffffbf',
+'#fdae61', '#d7191c')))
 summary(LSTmask)
 
 show.settings()
