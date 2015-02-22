@@ -5,9 +5,10 @@ rs.tif2png <- function(dir = getwd()){
                 outName <- gsub("\\.tif", "\\.tif.png", i)
                 ras <- raster(i)
                 p <- rasterToPoints(ras, fun=function(x){x>250})
+                ras2  <- cellFromXY(ras, p[,1:2])
                 png(filename = outName)
                 #plot(r)
-                pict <- spplot(p, col.regions = rainbow(200, start = 2/6, end = 1))
+                pict <- spplot(ras2, col.regions = rainbow(200, start = 2/6, end = 1))
                 print(pict)
                 dev.off()
         }
