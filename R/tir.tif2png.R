@@ -1,9 +1,9 @@
 
 rs.tif2png <- function(dir = getwd()){
-        inRaster <- list.files(path = dir, pattern = ".tif$", full.names = TRUE, recursive = TRUE)
+        inRaster <- list.files(path = getwd(), pattern = ".tif$", full.names = TRUE, recursive = TRUE)
         for (i in inRaster) {
                 outName <- gsub("\\.tif", "\\.tif.png", i)
-                r <- raster(i)
+                r <- raster(i) *0.02
 #                 p <- rasterToPoints(r, fun=function(x){x>250})
 #                 ra2  <- cellFromXY(ras, p[,1:2])
 #                 m  <- r[]
@@ -12,13 +12,13 @@ rs.tif2png <- function(dir = getwd()){
                 #mr <- mask(r, m)
 cols = bpy.colors(30)
 #cols = rainbow(200, start = 2/6, end = 1)
-zmin = 250
-zmax = 320
+# zmin = 250
+# zmax = 320
 
 
 #                 m  <- r < 250
 #                 r  <- mask(r,m)
-#                 png(filename = outName)
+                png(filename = outName)
                 #plot(r)
                 pict <- spplot(r, col.regions = cols )
                 #pict   <- image(r, zlim=c(zmin,zmax),col=cols)
