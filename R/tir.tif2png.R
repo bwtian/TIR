@@ -3,12 +3,18 @@ rs.tif2png <- function(dir = getwd()){
         inRaster <- list.files(path = dir, pattern = ".tif$", full.names = TRUE, recursive = TRUE)
         for (i in inRaster) {
                 outName <- gsub("\\.tif", "\\.tif.png", i)
-                ras <- raster(i)
-                p <- rasterToPoints(ras, fun=function(x){x>250})
-                ras2  <- cellFromXY(ras, p[,1:2])
+                r <- raster(i)
+#                 p <- rasterToPoints(r, fun=function(x){x>250})
+#                 ra2  <- cellFromXY(ras, p[,1:2])
+#                 m  <- r[]
+#                 m[m < 250] <- NA
+#                 mr   <- mask[r,m]
+                #mr <- mask(r, m)
+                m  <- r < 250
+                r  <- mask(r,m, maskvalue=TRUE)
                 png(filename = outName)
                 #plot(r)
-                pict <- spplot(ras, col.regions = rainbow(200, start = 2/6, end = 1))
+                pict <- spplot(r, col.regions = rainbow(200, start = 2/6, end = 1))
                 print(pict)
                 dev.off()
         }
