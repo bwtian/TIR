@@ -21,7 +21,7 @@ zmax = 320
                 #plot(r)
                 #pict <- spplot(m, col.regions = rainbow(200, start = 2/6, end = 1))
                 #pict   <- image(r, zlim=c(zmin,zmax),col=cols)
-                pict  <- image(r)
+                pict  <- image(r, col=cols)
                 print(pict)
                 dev.off()
         }
