@@ -11,7 +11,7 @@ rs.tif2png <- function(dir = getwd()){
 #                 mr   <- mask[r,m]
                 #mr <- mask(r, m)
                 m  <- r < 250
-                r  <- mask(r,m, maskvalue=TRUE)
+                r  <- mask(r,m)
                 png(filename = outName)
                 #plot(r)
                 pict <- spplot(r, col.regions = rainbow(200, start = 2/6, end = 1))
