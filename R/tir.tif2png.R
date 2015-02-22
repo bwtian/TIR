@@ -53,6 +53,6 @@ for (infile in files)
         dev.off()
         ####
         # delete original files  #unlink(infile)
-        file.remove(infile)
+        #file.remove(infile)
 }
 }
