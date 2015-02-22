@@ -16,11 +16,11 @@ cols = bpy.colors(30)
 # zmax = 320
 
 
-#                 m  <- r < 250
+                 m  <- r > 250
 #                 r  <- mask(r,m)
                 png(filename = outName)
                 #plot(r)
-                pict <- spplot(r, col.regions = cols )
+                pict <- spplot(m, col.regions = cols )
                 #pict   <- image(r, zlim=c(zmin,zmax),col=cols)
                 #pict  <- image(r, col=cols)
                 print(pict)
