@@ -10,11 +10,18 @@ rs.tif2png <- function(dir = getwd()){
 #                 m[m < 250] <- NA
 #                 mr   <- mask[r,m]
                 #mr <- mask(r, m)
+cols = bpy.colors(30)
+zmin = 250
+zmax = 320
+
+
                 m  <- r < 250
                 r  <- mask(r,m)
                 png(filename = outName)
                 #plot(r)
-                pict <- spplot(m, col.regions = rainbow(200, start = 2/6, end = 1))
+                #pict <- spplot(m, col.regions = rainbow(200, start = 2/6, end = 1))
+                #pict   <- image(r, zlim=c(zmin,zmax),col=cols)
+                pict  <- image(r)
                 print(pict)
                 dev.off()
         }
