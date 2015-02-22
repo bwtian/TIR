@@ -16,11 +16,11 @@ zmin = 250
 zmax = 320
 
 
-                m  <- r < 250
-                r  <- mask(r,m)
-                png(filename = outName)
+#                 m  <- r < 250
+#                 r  <- mask(r,m)
+#                 png(filename = outName)
                 #plot(r)
-                pict <- spplot(m, col.regions = cols )
+                pict <- spplot(r, col.regions = cols )
                 #pict   <- image(r, zlim=c(zmin,zmax),col=cols)
                 #pict  <- image(r, col=cols)
                 print(pict)
