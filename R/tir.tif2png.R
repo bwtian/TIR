@@ -8,7 +8,7 @@ rs.tif2png <- function(dir = getwd()){
                 ras2  <- cellFromXY(ras, p[,1:2])
                 png(filename = outName)
                 #plot(r)
-                pict <- spplot(ras2, col.regions = rainbow(200, start = 2/6, end = 1))
+                pict <- spplot(ras, col.regions = rainbow(200, start = 2/6, end = 1))
                 print(pict)
                 dev.off()
         }
