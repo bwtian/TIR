@@ -14,7 +14,7 @@ rs.tif2png <- function(dir = getwd()){
                 r  <- mask(r,m)
                 png(filename = outName)
                 #plot(r)
-                pict <- spplot(r, col.regions = rainbow(200, start = 2/6, end = 1))
+                pict <- spplot(m, col.regions = rainbow(200, start = 2/6, end = 1))
                 print(pict)
                 dev.off()
         }
